@@ -4,6 +4,7 @@ import { GsapProvider } from "@/lib/gsap-provider";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { CustomCursor } from "@/components/ui/custom-cursor";
+import { Murmuration } from "@/components/layout/murmuration";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -47,6 +48,7 @@ export default function RootLayout({
           <div className="blob blob-3" />
           <div className="blob blob-4" />
           <div className="blob blob-5" />
+          <Murmuration />
         </div>
         <GsapProvider>
           {children}

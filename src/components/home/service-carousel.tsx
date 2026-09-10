@@ -7,28 +7,28 @@ import { BlobArrow } from "@/components/ui/blob-arrow";
 // Unique abstract glyphs per card
 const cardGlyphs: Record<string, React.ReactNode> = {
   "Customer Service Agent": (
-    <svg viewBox="0 0 24 24" fill="none" className="w-7 h-7 text-white/40">
+    <svg viewBox="0 0 24 24" fill="none" className="w-7 h-7 text-ink/40">
       <circle cx="6" cy="8" r="2.5" fill="currentColor" />
       <circle cx="18" cy="8" r="1.5" fill="currentColor" />
       <circle cx="12" cy="16" r="4" fill="currentColor" />
     </svg>
   ),
   "Sales Agent": (
-    <svg viewBox="0 0 24 24" fill="none" className="w-7 h-7 text-white/40">
+    <svg viewBox="0 0 24 24" fill="none" className="w-7 h-7 text-ink/40">
       <circle cx="8" cy="12" r="1.5" fill="currentColor" />
       <path d="M18 6C18 9.3 15.3 12 12 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" fill="none" />
       <circle cx="18" cy="18" r="3" fill="currentColor" />
     </svg>
   ),
   "Receptionist Agent": (
-    <svg viewBox="0 0 24 24" fill="none" className="w-7 h-7 text-white/40">
+    <svg viewBox="0 0 24 24" fill="none" className="w-7 h-7 text-ink/40">
       <circle cx="12" cy="6" r="3" fill="currentColor" />
       <circle cx="5" cy="14" r="1.5" fill="currentColor" />
       <path d="M12 18C15.3 18 18 15.3 18 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" fill="none" />
     </svg>
   ),
   "Operations Agent": (
-    <svg viewBox="0 0 24 24" fill="none" className="w-7 h-7 text-white/40">
+    <svg viewBox="0 0 24 24" fill="none" className="w-7 h-7 text-ink/40">
       <circle cx="12" cy="12" r="3.5" fill="currentColor" />
       <circle cx="12" cy="3" r="1.2" fill="currentColor" />
       <circle cx="12" cy="21" r="1.2" fill="currentColor" />
@@ -41,34 +41,34 @@ const cardGlyphs: Record<string, React.ReactNode> = {
     </svg>
   ),
   "HR Agent": (
-    <svg viewBox="0 0 24 24" fill="none" className="w-7 h-7 text-white/40">
+    <svg viewBox="0 0 24 24" fill="none" className="w-7 h-7 text-ink/40">
       <circle cx="8" cy="8" r="3" fill="currentColor" />
       <circle cx="16" cy="12" r="1.5" fill="currentColor" />
       <circle cx="8" cy="18" r="2" fill="currentColor" />
     </svg>
   ),
   "Finance Agent": (
-    <svg viewBox="0 0 24 24" fill="none" className="w-7 h-7 text-white/40">
+    <svg viewBox="0 0 24 24" fill="none" className="w-7 h-7 text-ink/40">
       <path d="M6 6C6 9.3 8.7 12 12 12C15.3 12 18 9.3 18 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" fill="none" />
       <circle cx="12" cy="18" r="2" fill="currentColor" />
       <circle cx="6" cy="18" r="1" fill="currentColor" />
     </svg>
   ),
   "Marketing Agent": (
-    <svg viewBox="0 0 24 24" fill="none" className="w-7 h-7 text-white/40">
+    <svg viewBox="0 0 24 24" fill="none" className="w-7 h-7 text-ink/40">
       <circle cx="12" cy="6" r="1.5" fill="currentColor" />
       <path d="M6 12C6 15.3 8.7 18 12 18C15.3 18 18 15.3 18 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" fill="none" />
       <circle cx="18" cy="6" r="3" fill="currentColor" />
     </svg>
   ),
   "Compliance Agent": (
-    <svg viewBox="0 0 24 24" fill="none" className="w-7 h-7 text-white/40">
+    <svg viewBox="0 0 24 24" fill="none" className="w-7 h-7 text-ink/40">
       <path d="M18 12C18 15.3 15.3 18 12 18C8.7 18 6 15.3 6 12C6 8.7 8.7 6 12 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" fill="none" />
       <circle cx="18" cy="6" r="2.5" fill="currentColor" />
     </svg>
   ),
   "Reporting Agent": (
-    <svg viewBox="0 0 24 24" fill="none" className="w-7 h-7 text-white/40">
+    <svg viewBox="0 0 24 24" fill="none" className="w-7 h-7 text-ink/40">
       <circle cx="6" cy="6" r="1" fill="currentColor" />
       <circle cx="12" cy="6" r="2" fill="currentColor" />
       <circle cx="18" cy="6" r="3.5" fill="currentColor" />
@@ -76,7 +76,7 @@ const cardGlyphs: Record<string, React.ReactNode> = {
     </svg>
   ),
   "Quotes & Bookings Tool": (
-    <svg viewBox="0 0 24 24" fill="none" className="w-6 h-6 text-white/40">
+    <svg viewBox="0 0 24 24" fill="none" className="w-6 h-6 text-ink/40">
       <path d="M4 4H16L20 8V20H4V4Z" stroke="currentColor" strokeWidth="1" strokeLinejoin="round" />
       <path d="M16 4V8H20" stroke="currentColor" strokeWidth="0.8" />
       <line x1="8" y1="12" x2="16" y2="12" stroke="currentColor" strokeWidth="0.8" strokeLinecap="round" />
@@ -84,7 +84,7 @@ const cardGlyphs: Record<string, React.ReactNode> = {
     </svg>
   ),
   "CRM Tool": (
-    <svg viewBox="0 0 24 24" fill="none" className="w-6 h-6 text-white/40">
+    <svg viewBox="0 0 24 24" fill="none" className="w-6 h-6 text-ink/40">
       <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="0.8" />
       <circle cx="12" cy="12" r="4" stroke="currentColor" strokeWidth="1" />
       <line x1="12" y1="3" x2="12" y2="8" stroke="currentColor" strokeWidth="0.6" />
@@ -94,13 +94,13 @@ const cardGlyphs: Record<string, React.ReactNode> = {
     </svg>
   ),
   "Unified Inbox Tool": (
-    <svg viewBox="0 0 24 24" fill="none" className="w-6 h-6 text-white/40">
+    <svg viewBox="0 0 24 24" fill="none" className="w-6 h-6 text-ink/40">
       <rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" strokeWidth="1" />
       <path d="M3 7L12 13L21 7" stroke="currentColor" strokeWidth="0.8" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   ),
   "Resource Allocation Tool": (
-    <svg viewBox="0 0 24 24" fill="none" className="w-6 h-6 text-white/40">
+    <svg viewBox="0 0 24 24" fill="none" className="w-6 h-6 text-ink/40">
       <circle cx="6" cy="6" r="3" stroke="currentColor" strokeWidth="0.8" />
       <circle cx="18" cy="6" r="3" stroke="currentColor" strokeWidth="0.8" />
       <circle cx="12" cy="18" r="3" stroke="currentColor" strokeWidth="0.8" />
@@ -110,14 +110,14 @@ const cardGlyphs: Record<string, React.ReactNode> = {
     </svg>
   ),
   "Inventory Tool": (
-    <svg viewBox="0 0 24 24" fill="none" className="w-6 h-6 text-white/40">
+    <svg viewBox="0 0 24 24" fill="none" className="w-6 h-6 text-ink/40">
       <rect x="4" y="10" width="6" height="10" stroke="currentColor" strokeWidth="0.8" />
       <rect x="14" y="6" width="6" height="14" stroke="currentColor" strokeWidth="0.8" />
       <rect x="9" y="14" width="6" height="6" stroke="currentColor" strokeWidth="0.8" />
     </svg>
   ),
   "Ops Dashboard Tool": (
-    <svg viewBox="0 0 24 24" fill="none" className="w-6 h-6 text-white/40">
+    <svg viewBox="0 0 24 24" fill="none" className="w-6 h-6 text-ink/40">
       <rect x="2" y="3" width="20" height="14" rx="2" stroke="currentColor" strokeWidth="1" />
       <line x1="8" y1="21" x2="16" y2="21" stroke="currentColor" strokeWidth="0.8" strokeLinecap="round" />
       <line x1="12" y1="17" x2="12" y2="21" stroke="currentColor" strokeWidth="0.8" />
@@ -125,7 +125,7 @@ const cardGlyphs: Record<string, React.ReactNode> = {
     </svg>
   ),
   "Assessment Tool": (
-    <svg viewBox="0 0 24 24" fill="none" className="w-6 h-6 text-white/40">
+    <svg viewBox="0 0 24 24" fill="none" className="w-6 h-6 text-ink/40">
       <rect x="5" y="3" width="14" height="18" rx="2" stroke="currentColor" strokeWidth="1" />
       <path d="M9 8L11 10L15 6" stroke="currentColor" strokeWidth="0.8" strokeLinecap="round" strokeLinejoin="round" />
       <line x1="9" y1="14" x2="15" y2="14" stroke="currentColor" strokeWidth="0.8" strokeLinecap="round" />
@@ -133,7 +133,7 @@ const cardGlyphs: Record<string, React.ReactNode> = {
     </svg>
   ),
   "Web Design Tool": (
-    <svg viewBox="0 0 24 24" fill="none" className="w-6 h-6 text-white/40">
+    <svg viewBox="0 0 24 24" fill="none" className="w-6 h-6 text-ink/40">
       <rect x="2" y="4" width="20" height="16" rx="2" stroke="currentColor" strokeWidth="1" />
       <line x1="2" y1="8" x2="22" y2="8" stroke="currentColor" strokeWidth="0.6" />
       <circle cx="5" cy="6" r="0.8" fill="currentColor" />
@@ -260,15 +260,15 @@ export function ServiceCarousel({ filter }: { filter?: "AGENT" | "TOOL" }) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1 + i * 0.06, duration: 0.5 }}
           >
-            <div className="rounded-2xl border border-white/15 bg-white/8 backdrop-blur-2xl p-4 md:p-5 flex flex-col justify-between h-full min-h-[200px] shadow-[0_8px_32px_rgba(0,0,0,0.12),inset_0_1px_0_rgba(255,255,255,0.15)] hover:bg-white/12 transition-colors duration-300">
+            <div className="rounded-2xl border border-ink/10 bg-white/55 backdrop-blur-2xl p-4 md:p-5 flex flex-col justify-between h-full min-h-[200px] shadow-[0_8px_32px_rgba(10,10,10,0.06),inset_0_1px_0_rgba(255,255,255,0.9)] hover:bg-white/65 transition-colors duration-300">
               <div>
                 <div className="w-6 h-6 mb-3 flex items-center justify-center">
                   {cardGlyphs[card.name] || null}
                 </div>
-                <h3 className="font-body text-xs md:text-sm text-white font-medium leading-snug">{card.name}</h3>
+                <h3 className="font-body text-xs md:text-sm text-ink font-medium leading-snug">{card.name}</h3>
               </div>
               <div>
-                <p className="font-body text-[9px] md:text-[10px] text-white/40 leading-relaxed mt-3">{card.desc}</p>
+                <p className="font-body text-[9px] md:text-[10px] text-ink/40 leading-relaxed mt-3">{card.desc}</p>
               </div>
             </div>
           </motion.div>

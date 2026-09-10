@@ -26,7 +26,7 @@ export function CustomCursor() {
 
   return (
     <div
-      className="fixed pointer-events-none z-[9999] rounded-full bg-white transition-transform duration-150 ease-out"
+      className="fixed pointer-events-none z-[9999] rounded-full bg-ink transition-transform duration-150 ease-out"
       style={{
         left: pos.x,
         top: pos.y,

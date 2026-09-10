@@ -19,7 +19,7 @@ export function RotatingWord() {
     <AnimatePresence mode="wait">
       <motion.span
         key={words[index]}
-        className="text-white"
+        className="text-ink"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}

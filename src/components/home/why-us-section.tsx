@@ -29,7 +29,7 @@ export function WhyUsSection({ onReady }: { onReady: () => void }) {
       <AnimatePresence>
         {phase >= 3 && (
           <motion.h2
-            className="absolute top-6 left-8 font-body text-lg md:text-2xl font-light text-white/80 z-10"
+            className="absolute top-6 left-8 font-body text-lg md:text-2xl font-light text-ink/80 z-10"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, ease: "easeOut" }}
@@ -49,7 +49,7 @@ export function WhyUsSection({ onReady }: { onReady: () => void }) {
         {phase === 2 && (
           <>
             <motion.span
-              className="absolute font-body text-5xl md:text-7xl lg:text-[6rem] font-light text-white z-10"
+              className="absolute font-body text-5xl md:text-7xl lg:text-[6rem] font-light text-ink z-10"
               style={{ top: "2%", left: "3%" }}
               initial={{ x: "-60vw", y: "30vh", opacity: 0 }}
               animate={{ x: 0, y: 0, opacity: 1 }}
@@ -59,7 +59,7 @@ export function WhyUsSection({ onReady }: { onReady: () => void }) {
               Why
             </motion.span>
             <motion.span
-              className="absolute font-body text-5xl md:text-7xl lg:text-[6rem] font-light text-white z-10"
+              className="absolute font-body text-5xl md:text-7xl lg:text-[6rem] font-light text-ink z-10"
               style={{ top: "20%", left: "10%" }}
               initial={{ x: "-50vw", y: "25vh", opacity: 0 }}
               animate={{ x: 0, y: 0, opacity: 1 }}
@@ -69,7 +69,7 @@ export function WhyUsSection({ onReady }: { onReady: () => void }) {
               work
             </motion.span>
             <motion.span
-              className="absolute font-body text-5xl md:text-7xl lg:text-[6rem] font-light text-white z-10"
+              className="absolute font-body text-5xl md:text-7xl lg:text-[6rem] font-light text-ink z-10"
               style={{ bottom: "22%", right: "10%" }}
               initial={{ x: "50vw", y: "25vh", opacity: 0 }}
               animate={{ x: 0, y: 0, opacity: 1 }}
@@ -79,7 +79,7 @@ export function WhyUsSection({ onReady }: { onReady: () => void }) {
               with
             </motion.span>
             <motion.span
-              className="absolute font-body text-5xl md:text-7xl lg:text-[6rem] font-light text-white z-10"
+              className="absolute font-body text-5xl md:text-7xl lg:text-[6rem] font-light text-ink z-10"
               style={{ bottom: "2%", right: "3%" }}
               initial={{ x: "60vw", y: "30vh", opacity: 0 }}
               animate={{ x: 0, y: 0, opacity: 1 }}

@@ -9,11 +9,11 @@ export const metadata: Metadata = {
 
 export default function BlogPage() {
   return (
-    <div className="pt-32 pb-20 text-white">
+    <div className="pt-32 pb-20 text-ink">
       <section className="px-6">
         <div className="mx-auto max-w-[1280px]">
           <SectionReveal>
-            <p className="font-sans text-xs font-medium uppercase tracking-widest text-white/50">Insights</p>
+            <p className="font-sans text-xs font-medium uppercase tracking-widest text-ink/50">Insights</p>
           </SectionReveal>
 
           <div className="mt-16 grid gap-8 md:grid-cols-2 lg:grid-cols-3">

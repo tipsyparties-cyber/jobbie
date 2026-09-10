@@ -28,9 +28,9 @@ export function Button({
     "inline-flex items-center gap-2 rounded-full px-8 py-4 font-sans text-sm font-medium tracking-wide uppercase transition-all duration-300";
   const variants = {
     primary:
-      "glass text-white hover:bg-white/20",
+      "glass text-ink hover:bg-white/70",
     outline:
-      "glass text-white hover:bg-white/20",
+      "glass text-ink hover:bg-white/70",
   };
 
   const styles = `${baseStyles} ${variants[variant]} ${className}`;

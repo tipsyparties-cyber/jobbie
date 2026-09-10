@@ -106,9 +106,9 @@ export default function ServicesPage() {
       <section className="px-6">
         <div className="mx-auto max-w-[1280px]">
           <SectionReveal>
-            <p className="font-sans text-xs font-medium uppercase tracking-widest text-white/70">What we build for you</p>
+            <p className="font-sans text-xs font-medium uppercase tracking-widest text-ink/70">What we build for you</p>
             <h1 className="mt-4 font-display text-5xl font-light md:text-6xl lg:text-7xl">Services</h1>
-            <p className="mt-6 max-w-2xl text-white/50 leading-relaxed">
+            <p className="mt-6 max-w-2xl text-ink/50 leading-relaxed">
               Every agent knows your business. Every agent works with every other. One team. One voice. Always on.
             </p>
           </SectionReveal>
@@ -117,7 +117,7 @@ export default function ServicesPage() {
           <SectionReveal delay={0.1}>
             <div className="mt-24">
               <h2 className="font-display text-3xl font-light md:text-4xl lg:text-5xl">Your AI Team</h2>
-              <p className="mt-4 max-w-3xl text-white/50 leading-relaxed">
+              <p className="mt-4 max-w-3xl text-ink/50 leading-relaxed">
                 The team that never sleeps, never calls in sick, and never needs managing. Every member of your AI team is built specifically around your business &mdash; your policies, your data, your voice. Not a generic tool anyone else is using. Yours.
               </p>
             </div>
@@ -126,13 +126,13 @@ export default function ServicesPage() {
           <div className="mt-12 space-y-6">
             {aiTeam.map((agent, i) => (
               <SectionReveal key={agent.name} delay={i * 0.05}>
-                <div className="rounded-2xl border border-white/15 bg-white/8 backdrop-blur-2xl p-8 md:p-10 shadow-[0_8px_32px_rgba(0,0,0,0.12),inset_0_1px_0_rgba(255,255,255,0.15)]">
+                <div className="rounded-2xl border border-ink/10 bg-white/55 backdrop-blur-2xl p-8 md:p-10 shadow-[0_8px_32px_rgba(10,10,10,0.06),inset_0_1px_0_rgba(255,255,255,0.9)]">
                   <h3 className="font-display text-2xl font-light md:text-3xl">{agent.name}</h3>
-                  <p className="mt-4 text-white/50 leading-relaxed">{agent.intro}</p>
+                  <p className="mt-4 text-ink/50 leading-relaxed">{agent.intro}</p>
                   <ul className="mt-6 grid gap-2 sm:grid-cols-2">
                     {agent.features.map((feature) => (
-                      <li key={feature} className="flex items-start gap-2 text-sm text-white/70">
-                        <svg className="mt-1 h-3 w-3 shrink-0 text-white/70" viewBox="0 0 12 12" fill="none">
+                      <li key={feature} className="flex items-start gap-2 text-sm text-ink/70">
+                        <svg className="mt-1 h-3 w-3 shrink-0 text-ink/70" viewBox="0 0 12 12" fill="none">
                           <path d="M6 10V2M6 2L2 6M6 2L10 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                         </svg>
                         {feature}
@@ -148,7 +148,7 @@ export default function ServicesPage() {
           <SectionReveal delay={0.1}>
             <div className="mt-24">
               <h2 className="font-display text-3xl font-light md:text-4xl lg:text-5xl">Tools</h2>
-              <p className="mt-4 max-w-3xl text-white/50 leading-relaxed">
+              <p className="mt-4 max-w-3xl text-ink/50 leading-relaxed">
                 The systems your AI team and your people work in. Built for your business. Connected from day one. Everything talking to everything.
               </p>
             </div>
@@ -157,14 +157,14 @@ export default function ServicesPage() {
           <div className="mt-12 space-y-6">
             {tools.map((tool, i) => (
               <SectionReveal key={tool.name} delay={i * 0.05}>
-                <div className="rounded-2xl border border-white/15 bg-white/8 backdrop-blur-2xl p-8 md:p-10 shadow-[0_8px_32px_rgba(0,0,0,0.12),inset_0_1px_0_rgba(255,255,255,0.15)]">
+                <div className="rounded-2xl border border-ink/10 bg-white/55 backdrop-blur-2xl p-8 md:p-10 shadow-[0_8px_32px_rgba(10,10,10,0.06),inset_0_1px_0_rgba(255,255,255,0.9)]">
                   <h3 className="font-display text-2xl font-light md:text-3xl">{tool.name}</h3>
-                  <p className="mt-4 text-white/50 leading-relaxed">{tool.intro}</p>
-                  <p className="mt-2 text-sm text-white/50/80 leading-relaxed">{tool.desc}</p>
+                  <p className="mt-4 text-ink/50 leading-relaxed">{tool.intro}</p>
+                  <p className="mt-2 text-sm text-ink/50/80 leading-relaxed">{tool.desc}</p>
                   <ul className="mt-6 grid gap-2 sm:grid-cols-2">
                     {tool.features.map((feature) => (
-                      <li key={feature} className="flex items-start gap-2 text-sm text-white/70">
-                        <svg className="mt-1 h-3 w-3 shrink-0 text-white/70" viewBox="0 0 12 12" fill="none">
+                      <li key={feature} className="flex items-start gap-2 text-sm text-ink/70">
+                        <svg className="mt-1 h-3 w-3 shrink-0 text-ink/70" viewBox="0 0 12 12" fill="none">
                           <path d="M6 10V2M6 2L2 6M6 2L10 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                         </svg>
                         {feature}
@@ -179,7 +179,7 @@ export default function ServicesPage() {
           {/* Bottom line */}
           <SectionReveal>
             <div className="mt-20 text-center">
-              <p className="font-display text-xl font-light md:text-2xl text-white/50 italic">
+              <p className="font-display text-xl font-light md:text-2xl text-ink/50 italic">
                 Every tool is connected to every other. Your AI team works across all of them. Add what you need now. Build what you want next. One system. One voice. Built for you.
               </p>
               <div className="mt-10">

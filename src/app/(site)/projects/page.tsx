@@ -60,13 +60,13 @@ const projects = [
 
 export default function ProjectsPage() {
   return (
-    <div className="pt-32 pb-20 text-white">
+    <div className="pt-32 pb-20 text-ink">
       <section className="px-6">
         <div className="mx-auto max-w-[1280px]">
           <SectionReveal>
-            <p className="font-sans text-xs font-medium uppercase tracking-widest text-white/50">Our work</p>
+            <p className="font-sans text-xs font-medium uppercase tracking-widest text-ink/50">Our work</p>
             <h1 className="mt-4 font-display text-5xl font-light md:text-6xl lg:text-7xl">Projects</h1>
-            <p className="mt-6 max-w-2xl text-white/50 leading-relaxed">
+            <p className="mt-6 max-w-2xl text-ink/50 leading-relaxed">
               Every project is different because every business is different. Here&apos;s a look at how we&apos;ve helped real businesses transform their operations.
             </p>
           </SectionReveal>
@@ -76,15 +76,15 @@ export default function ProjectsPage() {
             {projects.map((project, i) => (
               <SectionReveal key={project.slug} delay={i * 0.08}>
                 <Link href={project.slug === "hospitality" ? "/projects/tipsy-parties" : "#"} className="block">
-                  <div className="overflow-hidden rounded-2xl border border-white/15 bg-white/8 backdrop-blur-2xl shadow-[0_8px_32px_rgba(0,0,0,0.12),inset_0_1px_0_rgba(255,255,255,0.15)] hover:bg-white/12 transition-all duration-300 md:flex">
-                    <div className="flex aspect-[4/3] items-center justify-center bg-white/5 md:aspect-auto md:w-2/5 min-h-[200px]">
-                      <p className="font-display text-7xl font-light text-white/10">{project.initials}</p>
+                  <div className="overflow-hidden rounded-2xl border border-ink/10 bg-white/55 backdrop-blur-2xl shadow-[0_8px_32px_rgba(10,10,10,0.06),inset_0_1px_0_rgba(255,255,255,0.9)] hover:bg-white/65 transition-all duration-300 md:flex">
+                    <div className="flex aspect-[4/3] items-center justify-center bg-white/45 md:aspect-auto md:w-2/5 min-h-[200px]">
+                      <p className="font-display text-7xl font-light text-ink/10">{project.initials}</p>
                     </div>
                     <div className="p-8 md:w-3/5 md:p-10">
-                      <p className="font-sans text-xs font-medium uppercase tracking-widest text-white/40">Case Study</p>
+                      <p className="font-sans text-xs font-medium uppercase tracking-widest text-ink/40">Case Study</p>
                       <h2 className="mt-2 font-display text-3xl font-light md:text-4xl">{project.industry}</h2>
-                      <p className="mt-4 text-white/50 leading-relaxed">{project.description}</p>
-                      <span className="mt-6 inline-flex items-center gap-2 text-sm font-medium text-white/60">
+                      <p className="mt-4 text-ink/50 leading-relaxed">{project.description}</p>
+                      <span className="mt-6 inline-flex items-center gap-2 text-sm font-medium text-ink/60">
                         Read more
                         <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
                           <path d="M8 14V2M8 2L3 7M8 2L13 7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />

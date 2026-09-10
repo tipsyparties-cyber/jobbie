@@ -26,7 +26,7 @@ export function MobileMenu({ isOpen, onClose, links }: MobileMenuProps) {
 
           {/* Menu blob — drops down from top-right */}
           <motion.div
-            className="fixed right-6 top-4 z-[60] rounded-3xl border border-white/15 bg-white/10 backdrop-blur-2xl shadow-[0_12px_40px_rgba(0,0,0,0.15),inset_0_1px_0_rgba(255,255,255,0.15)] overflow-hidden"
+            className="fixed right-6 top-4 z-[60] rounded-3xl border border-ink/10 bg-white/60 backdrop-blur-2xl shadow-[0_12px_40px_rgba(0,0,0,0.15),inset_0_1px_0_rgba(255,255,255,0.9)] overflow-hidden"
             initial={{
               width: 44,
               height: 44,
@@ -56,7 +56,7 @@ export function MobileMenu({ isOpen, onClose, links }: MobileMenuProps) {
             <div className="flex justify-end p-3">
               <button
                 onClick={onClose}
-                className="p-1.5 text-white/60 hover:text-white transition-colors"
+                className="p-1.5 text-ink/60 hover:text-ink transition-colors"
                 aria-label="Close menu"
               >
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
@@ -78,7 +78,7 @@ export function MobileMenu({ isOpen, onClose, links }: MobileMenuProps) {
                   <Link
                     href={link.href}
                     onClick={onClose}
-                    className="block py-2 font-body text-sm font-light text-white/70 hover:text-white transition-colors duration-200 tracking-wide"
+                    className="block py-2 font-body text-sm font-light text-ink/70 hover:text-ink transition-colors duration-200 tracking-wide"
                   >
                     {link.label}
                   </Link>

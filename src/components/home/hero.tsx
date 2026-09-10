@@ -55,10 +55,10 @@ export function Hero() {
     <section className="relative flex min-h-screen items-center justify-center px-6 overflow-hidden">
       {/* Decorative thin lines */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
-        <div className="absolute left-1/4 top-0 h-full w-px bg-white/10" />
-        <div className="absolute left-2/4 top-0 h-full w-px bg-white/10" />
-        <div className="absolute left-3/4 top-0 h-full w-px bg-white/10" />
-        <svg className="absolute right-12 top-1/4 h-48 w-48 text-white/5" viewBox="0 0 200 200" fill="none" data-parallax="0.3">
+        <div className="absolute left-1/4 top-0 h-full w-px bg-ink/8" />
+        <div className="absolute left-2/4 top-0 h-full w-px bg-ink/8" />
+        <div className="absolute left-3/4 top-0 h-full w-px bg-ink/8" />
+        <svg className="absolute right-12 top-1/4 h-48 w-48 text-ink/5" viewBox="0 0 200 200" fill="none" data-parallax="0.3">
           <circle cx="100" cy="100" r="80" stroke="currentColor" strokeWidth="0.5" />
           <circle cx="100" cy="100" r="60" stroke="currentColor" strokeWidth="0.5" />
         </svg>
@@ -66,7 +66,7 @@ export function Hero() {
 
       {/* Stage 1: Logo fades in centre then animates to top-left */}
       <motion.div
-        className="fixed z-[100] tracking-tight text-white pointer-events-none"
+        className="fixed z-[100] tracking-tight text-ink pointer-events-none"
         initial={{
           top: "50%",
           left: "50%",
@@ -107,12 +107,12 @@ export function Hero() {
       >
         <span className="font-body font-light">up</span>
         <span className="font-display text-[1.15em]">+up</span>
-        <span className="text-white text-[0.7em] leading-none font-body -ml-[0.15em] relative -top-[0.35em]">^</span>
+        <span className="text-ink text-[0.7em] leading-none font-body -ml-[0.15em] relative -top-[0.35em]">^</span>
       </motion.div>
 
       {/* Stage 2: Headline letters float up into position */}
       {logoDone && (
-        <div className="relative z-10 mx-auto w-full text-center text-white px-4">
+        <div className="relative z-10 mx-auto w-full text-center text-ink px-4">
           <h1 className="text-3xl font-light leading-tight tracking-tight md:text-5xl lg:text-[4.5rem]">
             <span className="block font-body">
               <FloatingWords text={line1} startDelay={0} />

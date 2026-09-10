@@ -18,15 +18,24 @@ export function Navbar() {
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50">
-      <nav className="mx-auto flex max-w-[1280px] items-center justify-between px-6 py-4">
-        <Link href="/" className="text-2xl tracking-tight text-white">
+      {/* Three columns so the wordmark sits dead centre regardless of how wide
+          the items either side of it are. */}
+      <nav className="mx-auto grid max-w-[1280px] grid-cols-3 items-center px-6 py-4">
+        <Link
+          href="/contact"
+          className="justify-self-start font-body text-sm font-light tracking-wide text-ink/70 transition-colors hover:text-ink"
+        >
+          Contact
+        </Link>
+
+        <Link href="/" className="justify-self-center text-2xl tracking-tight text-ink">
           <span className="font-body font-light">up</span>
           <span className="font-display text-[1.15em]">+up</span>
           <span className="text-[0.7em] leading-none font-body -ml-[0.15em] relative -top-[0.35em]">^</span>
         </Link>
 
         <div
-          className="relative"
+          className="relative justify-self-end"
           onMouseEnter={() => setMenuOpen(true)}
           onMouseLeave={() => setMenuOpen(false)}
         >
@@ -35,8 +44,8 @@ export function Navbar() {
             className="flex flex-col gap-1.5 p-2"
             aria-label="Menu"
           >
-            <span className="block h-px w-6 bg-white" />
-            <span className="block h-px w-6 bg-white" />
+            <span className="block h-px w-6 bg-ink" />
+            <span className="block h-px w-6 bg-ink" />
           </button>
 
           <AnimatePresence>
@@ -59,7 +68,7 @@ export function Navbar() {
                       <Link
                         href={link.href}
                         onClick={() => setMenuOpen(false)}
-                        className="block py-1 font-body text-sm font-light text-white/60 hover:text-white transition-colors duration-200"
+                        className="block py-1 font-body text-sm font-light text-ink/60 hover:text-ink transition-colors duration-200"
                       >
                         {link.label}
                       </Link>

@@ -7,7 +7,7 @@ export default function TermsPage() {
     <div className="pt-32 pb-20">
       <div className="prose-upup mx-auto max-w-3xl px-6">
         <h1 className="font-display text-4xl font-light md:text-5xl">Terms of Service</h1>
-        <p className="mt-4 text-sm text-white/50">Last updated: March 2026</p>
+        <p className="mt-4 text-sm text-ink/50">Last updated: March 2026</p>
         <h2>Use of this website</h2>
         <p>This website is operated by up+up. By accessing and using this site, you agree to these terms. The content is for informational purposes and does not constitute a contract or guarantee of services.</p>
         <h2>Intellectual property</h2>

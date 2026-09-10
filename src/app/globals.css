@@ -1,23 +1,34 @@
 @import "tailwindcss";
 
 @theme inline {
-  --color-cream: #FAF7F2;
-  --color-warm-grey: #2B2B2B;
-  --color-mid-grey: #6B6B6B;
-  --color-light-grey: #E8E4DF;
-  --color-accent: #E8652E;
-  --color-accent-hover: #D4551E;
-  --color-peach: #F5C5A3;
-  --color-coral: #E8967A;
-  --color-lavender: #C5B8D4;
-  --color-silver: #D4D0DC;
+  /* Ink — everything that used to be white text is now this */
+  --color-ink: #0A0A0A;
+  --color-ink-soft: #3A3D42;
+
+  /* Ground and greys */
+  --color-cream: #F4F6F8;
+  --color-warm-grey: #1A1C1F;
+  --color-mid-grey: #6B7078;
+  --color-light-grey: #E2E6EA;
+  --color-silver: #DCE0E5;
+
+  /* The orange accent is retired. These remain so existing usages keep
+     compiling, but they now resolve to ink rather than a colour. */
+  --color-accent: #0A0A0A;
+  --color-accent-hover: #3A3D42;
+
+  /* Former warm pastels, now neutral surfaces */
+  --color-peach: #EDEFF2;
+  --color-coral: #E4E8EC;
+  --color-lavender: #E8EAEF;
 
   --font-display: var(--font-serif), "Georgia", serif;
   --font-body: var(--font-sans), system-ui, sans-serif;
 
-  --shadow-neo: 6px 6px 12px #d1cdc7, -6px -6px 12px #ffffff;
-  --shadow-neo-inset: inset 4px 4px 8px #d1cdc7, inset -4px -4px 8px #ffffff;
-  --shadow-neo-hover: 2px 2px 6px #d1cdc7, -2px -2px 6px #ffffff;
+  /* Neumorphic shadows recomputed for the off-white ground */
+  --shadow-neo: 6px 6px 14px #dfe3e8, -6px -6px 14px #ffffff;
+  --shadow-neo-inset: inset 4px 4px 8px #dfe3e8, inset -4px -4px 8px #ffffff;
+  --shadow-neo-hover: 2px 2px 6px #dfe3e8, -2px -2px 6px #ffffff;
 }
 
 html {
@@ -31,7 +42,7 @@ a, button, [role="button"] {
 
 body {
   background-color: var(--color-cream);
-  color: white;
+  color: var(--color-ink);
   font-family: var(--font-body);
   font-weight: 300;
   -webkit-font-smoothing: antialiased;
@@ -39,13 +50,16 @@ body {
   position: relative;
 }
 
-/* Full-page undulating gradient background */
+/* Full-page undulating background.
+   Same five blobs, same drift keyframes and durations as before — only the
+   fills changed, from blue/purple/orange to white and low-saturation
+   iridescence over off-white. */
 .bg-blobs {
   position: fixed;
   inset: 0;
   z-index: -1;
   overflow: hidden;
-  background-color: #C4BAB0;
+  background-color: #F4F6F8;
 }
 
 .bg-blobs .blob {
@@ -58,7 +72,7 @@ body {
 .blob-1 {
   width: 65vw;
   height: 65vw;
-  background: rgba(215, 110, 85, 0.75);
+  background: rgba(255, 218, 228, 0.55);
   top: 55%;
   left: -15%;
   animation: drift-1 12s ease-in-out infinite;
@@ -67,7 +81,7 @@ body {
 .blob-2 {
   width: 55vw;
   height: 55vw;
-  background: rgba(140, 160, 200, 0.65);
+  background: rgba(212, 240, 250, 0.5);
   top: -15%;
   right: -10%;
   animation: drift-2 15s ease-in-out infinite;
@@ -76,7 +90,7 @@ body {
 .blob-3 {
   width: 45vw;
   height: 45vw;
-  background: rgba(230, 210, 190, 0.6);
+  background: rgba(255, 255, 255, 0.9);
   top: 25%;
   left: 25%;
   animation: drift-3 13s ease-in-out infinite;
@@ -85,7 +99,7 @@ body {
 .blob-4 {
   width: 50vw;
   height: 50vw;
-  background: rgba(200, 160, 130, 0.5);
+  background: rgba(252, 246, 214, 0.45);
   bottom: 5%;
   right: 15%;
   animation: drift-4 16s ease-in-out infinite;
@@ -94,7 +108,7 @@ body {
 .blob-5 {
   width: 40vw;
   height: 40vw;
-  background: rgba(130, 155, 200, 0.5);
+  background: rgba(226, 222, 252, 0.45);
   top: 45%;
   left: 5%;
   animation: drift-5 14s ease-in-out infinite;
@@ -134,27 +148,27 @@ body {
 }
 
 ::selection {
-  background-color: oklch(from var(--color-accent) l c h / 0.2);
-  color: white;
+  background-color: rgba(10, 10, 10, 0.12);
+  color: var(--color-ink);
 }
 
-/* Glassmorphism utility */
+/* Glassmorphism utility — a lifted near-white panel on the off-white ground */
 .glass {
-  background: oklch(from white l c h / 0.4);
+  background: rgba(255, 255, 255, 0.6);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
-  border: 1px solid oklch(from white l c h / 0.3);
+  border: 1px solid rgba(10, 10, 10, 0.08);
 }
 
 /* Gradient backgrounds */
 .gradient-hero {
   background: linear-gradient(
     160deg,
-    #F5C5A3 0%,
-    #F0D5C0 25%,
-    #E8DDE8 50%,
-    #D4D0DC 75%,
-    #C5B8D4 100%
+    #FFFFFF 0%,
+    #F7F4F6 25%,
+    #F1F5F8 50%,
+    #EFEFF6 75%,
+    #F4F6F8 100%
   );
   background-size: 300% 300%;
   animation: gradient-undulate 12s ease-in-out infinite;
@@ -181,9 +195,9 @@ body {
 .gradient-section {
   background: linear-gradient(
     180deg,
-    #FAF7F2 0%,
-    #F0EDE8 50%,
-    #E8E4DF 100%
+    #FFFFFF 0%,
+    #F7F9FB 50%,
+    #EDF0F3 100%
   );
 }
 
@@ -197,7 +211,7 @@ body {
   content: "";
   position: absolute;
   inset: -8px -12px;
-  border: 2px solid var(--color-accent);
+  border: 2px solid var(--color-ink);
   border-radius: 50% 45% 55% 48% / 45% 55% 48% 52%;
   transform: rotate(-2deg);
   pointer-events: none;
@@ -210,7 +224,7 @@ body {
   font-weight: 300;
   margin-top: 4rem;
   margin-bottom: 1.5rem;
-  color: rgba(255, 255, 255, 0.9);
+  color: rgba(10, 10, 10, 0.9);
 }
 
 @media (min-width: 768px) {
@@ -225,7 +239,7 @@ body {
   font-weight: 300;
   margin-top: 3rem;
   margin-bottom: 1rem;
-  color: rgba(255, 255, 255, 0.85);
+  color: rgba(10, 10, 10, 0.85);
 }
 
 .prose-upup p {
@@ -233,7 +247,7 @@ body {
 }
 
 .prose-upup strong {
-  color: rgba(255, 255, 255, 0.95);
+  color: rgba(10, 10, 10, 0.95);
   font-weight: 500;
 }
 
@@ -244,7 +258,7 @@ body {
 }
 
 .prose-upup em {
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(10, 10, 10, 0.5);
   font-style: italic;
 }
 

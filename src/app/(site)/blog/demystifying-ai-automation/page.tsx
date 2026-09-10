@@ -11,16 +11,16 @@ export default function ArticlePage() {
     <article className="pt-32 pb-20">
       <header className="px-6">
         <div className="mx-auto max-w-3xl">
-          <Link href="/blog" className="font-sans text-xs text-white/70 hover:text-white/70-hover">&larr; Back to blog</Link>
+          <Link href="/blog" className="font-sans text-xs text-ink/70 hover:text-ink/70-hover">&larr; Back to blog</Link>
           <h1 className="mt-6 font-display text-4xl font-light leading-tight md:text-5xl text-balance">
             Demystifying AI Automation: How It&apos;s Revolutionising Industries and What It Actually Means for Your Business
           </h1>
-          <p className="mt-4 text-sm text-white/50">March 2026 &middot; 15 min read</p>
+          <p className="mt-4 text-sm text-ink/50">March 2026 &middot; 15 min read</p>
         </div>
       </header>
 
       <div className="mt-16 px-6">
-        <div className="prose-upup mx-auto max-w-3xl text-white/70 leading-relaxed">
+        <div className="prose-upup mx-auto max-w-3xl text-ink/70 leading-relaxed">
 
           <p>There&apos;s a lot of noise around AI automation right now. Some of it is genuinely exciting. Some of it is hype that doesn&apos;t survive contact with reality. And a lot of it is written for people who already understand the technology — not for the business owner who just wants to know whether any of this is actually relevant to them.</p>
 
@@ -166,7 +166,7 @@ export default function ArticlePage() {
 
           <hr />
 
-          <p><em>up+up helps businesses across hospitality, events, personal services and beyond implement AI automation that actually fits how they operate — built by founders who&apos;ve run these businesses themselves, designed bespoke solutions around real operational challenges, and understand the difference between automation that looks good in a demo and automation that works on a busy Saturday night. If you want to understand what&apos;s possible for your specific situation, <Link href="/contact" className="text-white/70 hover:text-white/70-hover font-medium">start a conversation</Link>.</em></p>
+          <p><em>up+up helps businesses across hospitality, events, personal services and beyond implement AI automation that actually fits how they operate — built by founders who&apos;ve run these businesses themselves, designed bespoke solutions around real operational challenges, and understand the difference between automation that looks good in a demo and automation that works on a busy Saturday night. If you want to understand what&apos;s possible for your specific situation, <Link href="/contact" className="text-ink/70 hover:text-ink/70-hover font-medium">start a conversation</Link>.</em></p>
         </div>
       </div>
     </article>

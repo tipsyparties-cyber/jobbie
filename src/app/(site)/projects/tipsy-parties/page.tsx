@@ -41,9 +41,9 @@ export default function TipsyPartiesPage() {
       <section className="px-6">
         <div className="mx-auto max-w-[1280px]">
           <SectionReveal>
-            <p className="font-sans text-xs font-medium uppercase tracking-widest text-white/70">Case Study</p>
+            <p className="font-sans text-xs font-medium uppercase tracking-widest text-ink/70">Case Study</p>
             <h1 className="mt-4 font-display text-5xl font-light md:text-6xl lg:text-7xl">Tipsy Parties</h1>
-            <p className="mt-6 max-w-2xl text-lg text-white/50 leading-relaxed">
+            <p className="mt-6 max-w-2xl text-lg text-ink/50 leading-relaxed">
               A mobile cocktail events company that needed to scale without scaling headcount. We built a fully autonomous operations system that runs the entire business — from first enquiry to final review.
             </p>
           </SectionReveal>
@@ -54,7 +54,7 @@ export default function TipsyPartiesPage() {
         <div className="mx-auto max-w-3xl">
           <SectionReveal>
             <h2 className="font-display text-3xl font-light md:text-4xl">The Problem</h2>
-            <div className="mt-8 space-y-6 text-white/50 leading-relaxed">
+            <div className="mt-8 space-y-6 text-ink/50 leading-relaxed">
               <p>Tipsy Parties was growing fast — but every new booking meant more manual work. Quoting was done by hand. Bartender allocation was a spreadsheet exercise. Stock was tracked on paper. Customer emails were answered between events. Recruitment was a constant, time-consuming cycle.</p>
               <p>The business was limited by the number of hours the founder could work. Growth meant more chaos, not more freedom.</p>
             </div>
@@ -66,14 +66,14 @@ export default function TipsyPartiesPage() {
         <div className="mx-auto max-w-[1280px]">
           <SectionReveal>
             <h2 className="font-display text-3xl font-light md:text-4xl">The System We Built</h2>
-            <p className="mt-4 max-w-2xl text-white/50">An end-to-end autonomous operations platform covering every stage of the business:</p>
+            <p className="mt-4 max-w-2xl text-ink/50">An end-to-end autonomous operations platform covering every stage of the business:</p>
           </SectionReveal>
           <div className="mt-16 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {automations.map((auto, i) => (
               <SectionReveal key={auto.title} delay={i * 0.05}>
                 <GlassPanel className="h-full">
                   <h3 className="font-display text-lg font-light">{auto.title}</h3>
-                  <p className="mt-3 text-sm text-white/50 leading-relaxed">{auto.description}</p>
+                  <p className="mt-3 text-sm text-ink/50 leading-relaxed">{auto.description}</p>
                 </GlassPanel>
               </SectionReveal>
             ))}
@@ -89,8 +89,8 @@ export default function TipsyPartiesPage() {
               {flowSteps.map((step, i) => (
                 <SectionReveal key={i} delay={i * 0.05}>
                   <div className="flex gap-4">
-                    <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-accent/10 font-sans text-xs font-medium text-white/70">{i + 1}</span>
-                    <p className="pt-1 text-sm text-white leading-relaxed">{step}</p>
+                    <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-accent/10 font-sans text-xs font-medium text-ink/70">{i + 1}</span>
+                    <p className="pt-1 text-sm text-ink leading-relaxed">{step}</p>
                   </div>
                 </SectionReveal>
               ))}
@@ -103,7 +103,7 @@ export default function TipsyPartiesPage() {
         <SectionReveal>
           <div className="mx-auto max-w-2xl text-center">
             <h2 className="font-display text-3xl font-light md:text-4xl">Want something like this for your business?</h2>
-            <p className="mt-4 text-white/50">Every system we build is bespoke. Tell us about your operations and we&apos;ll show you what&apos;s possible.</p>
+            <p className="mt-4 text-ink/50">Every system we build is bespoke. Tell us about your operations and we&apos;ll show you what&apos;s possible.</p>
             <div className="mt-8"><Button href="/contact">Start a conversation</Button></div>
           </div>
         </SectionReveal>

@@ -90,7 +90,7 @@ const sections = [
           <FloatingWords text="with smarter systems." startDelay={0.45} />
         </p>
         <motion.p
-          className="font-display text-2xl font-light md:text-4xl lg:text-[3rem] mt-12 text-white/70"
+          className="font-display text-2xl font-light md:text-4xl lg:text-[3rem] mt-12 text-ink/70"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 2, duration: 1.2 }}
@@ -118,14 +118,14 @@ const sections = [
           {glyphs.map(({ Glyph, title, description }, i) => (
             <motion.div
               key={title}
-              className="text-center rounded-2xl border border-white/15 bg-white/8 backdrop-blur-2xl p-5 shadow-[0_8px_32px_rgba(0,0,0,0.12),0_2px_8px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.15)]"
+              className="text-center rounded-2xl border border-ink/10 bg-white/55 backdrop-blur-2xl p-5 shadow-[0_8px_32px_rgba(10,10,10,0.06),0_2px_8px_rgba(10,10,10,0.05),inset_0_1px_0_rgba(255,255,255,0.9)]"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1 + i * 0.1, duration: 0.5 }}
             >
-              <Glyph className="mx-auto mb-3 h-10 w-10 text-white/50" />
-              <h3 className="font-body text-sm md:text-base font-medium text-white leading-tight">{title}</h3>
-              <p className="font-body text-[11px] md:text-xs text-white/40 mt-2 leading-snug">{description}</p>
+              <Glyph className="mx-auto mb-3 h-10 w-10 text-ink/50" />
+              <h3 className="font-body text-sm md:text-base font-medium text-ink leading-tight">{title}</h3>
+              <p className="font-body text-[11px] md:text-xs text-ink/40 mt-2 leading-snug">{description}</p>
             </motion.div>
           ))}
         </motion.div>
@@ -158,14 +158,14 @@ const sections = [
           ].map(({ stat, label, source }, i) => (
             <motion.div
               key={stat + label}
-              className="text-left rounded-2xl border border-white/15 bg-white/8 backdrop-blur-2xl p-5 shadow-[0_8px_32px_rgba(0,0,0,0.12),0_2px_8px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.15)]"
+              className="text-left rounded-2xl border border-ink/10 bg-white/55 backdrop-blur-2xl p-5 shadow-[0_8px_32px_rgba(10,10,10,0.06),0_2px_8px_rgba(10,10,10,0.05),inset_0_1px_0_rgba(255,255,255,0.9)]"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1 + i * 0.12, duration: 0.6 }}
             >
-              <p className="font-body text-4xl md:text-5xl lg:text-6xl font-light text-white">{stat}</p>
-              <p className="font-body text-xs md:text-sm text-white/70 mt-2 leading-snug">{label}</p>
-              <p className="font-body text-[9px] md:text-[10px] text-white/30 mt-1">{source}</p>
+              <p className="font-body text-4xl md:text-5xl lg:text-6xl font-light text-ink">{stat}</p>
+              <p className="font-body text-xs md:text-sm text-ink/70 mt-2 leading-snug">{label}</p>
+              <p className="font-body text-[9px] md:text-[10px] text-ink/30 mt-1">{source}</p>
             </motion.div>
           ))}
         </motion.div>
@@ -188,16 +188,16 @@ const sections = [
             transition={{ delay: 0.6, duration: 0.8 }}
           >
             <ChaosGlyph />
-            <h3 className="font-body text-sm uppercase tracking-widest text-white/40 mt-6 mb-4">Without us</h3>
+            <h3 className="font-body text-sm uppercase tracking-widest text-ink/40 mt-6 mb-4">Without us</h3>
             <div className="w-full grid gap-2">
               {["Slow response times", "Missed enquiries", "Manual everything", "Inconsistent service", "Limited by working hours", "Growth = more chaos"].map((item, i) => (
-                <motion.div key={item} className="rounded-xl border border-white/10 bg-white/5 backdrop-blur-xl px-4 py-2.5 flex items-center gap-3 shadow-[0_4px_16px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.1)]"
+                <motion.div key={item} className="rounded-xl border border-ink/8 bg-white/45 backdrop-blur-xl px-4 py-2.5 flex items-center gap-3 shadow-[0_4px_16px_rgba(10,10,10,0.05),inset_0_1px_0_rgba(255,255,255,0.1)]"
                   initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.5 + i * 0.1, duration: 0.4 }}>
-                  <svg className="w-3 h-3 shrink-0 text-white/40" viewBox="0 0 12 12" fill="none">
+                  <svg className="w-3 h-3 shrink-0 text-ink/40" viewBox="0 0 12 12" fill="none">
                     <line x1="2" y1="2" x2="10" y2="10" stroke="currentColor" strokeWidth="1" strokeLinecap="round" />
                     <line x1="10" y1="2" x2="2" y2="10" stroke="currentColor" strokeWidth="1" strokeLinecap="round" />
                   </svg>
-                  <span className="text-white/40 text-xs md:text-sm uppercase tracking-wider">{item}</span>
+                  <span className="text-ink/40 text-xs md:text-sm uppercase tracking-wider">{item}</span>
                 </motion.div>
               ))}
             </div>
@@ -210,17 +210,17 @@ const sections = [
             transition={{ delay: 0.8, duration: 0.8 }}
           >
             <HarmonyGlyph />
-            <h3 className="font-body text-sm uppercase tracking-widest text-white/70 mt-6 mb-4">With us</h3>
+            <h3 className="font-body text-sm uppercase tracking-widest text-ink/70 mt-6 mb-4">With us</h3>
             <div className="w-full grid gap-2">
               {["Instant responses, 24/7", "Every lead captured", "Fully automated", "Consistent every time", "Always on, 365 days", "Growth = more freedom"].map((item, i) => (
-                <motion.div key={item} className="rounded-xl border border-white/15 bg-white/8 backdrop-blur-xl px-4 py-2.5 flex items-center gap-3 shadow-[0_4px_16px_rgba(0,0,0,0.1),inset_0_1px_0_rgba(255,255,255,0.15)]"
+                <motion.div key={item} className="rounded-xl border border-ink/10 bg-white/55 backdrop-blur-xl px-4 py-2.5 flex items-center gap-3 shadow-[0_4px_16px_rgba(0,0,0,0.1),inset_0_1px_0_rgba(255,255,255,0.9)]"
                   initial={{ opacity: 0 }} animate={{ opacity: 1 }}
                   transition={{ delay: 1.7 + i * 0.1, duration: 0.4 }}
                   {...(i === 5 ? { onAnimationComplete: onReady } : {})}>
-                  <svg className="w-3 h-3 shrink-0 text-white" viewBox="0 0 12 12" fill="none">
+                  <svg className="w-3 h-3 shrink-0 text-ink" viewBox="0 0 12 12" fill="none">
                     <path d="M2 6L5 9L10 3" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
-                  <span className="text-white text-xs md:text-sm uppercase tracking-wider">{item}</span>
+                  <span className="text-ink text-xs md:text-sm uppercase tracking-wider">{item}</span>
                 </motion.div>
               ))}
             </div>
@@ -266,7 +266,7 @@ const sections = [
     particleShape: "question" as ParticleShape,
     content: (onReady: () => void) => (
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-        <motion.h2 className="font-display text-4xl md:text-6xl lg:text-[5rem] font-light text-white whitespace-nowrap"
+        <motion.h2 className="font-display text-4xl md:text-6xl lg:text-[5rem] font-light text-ink whitespace-nowrap"
           initial={{ opacity: 0 }} animate={{ opacity: 1 }}
           transition={{ duration: 1.2, delay: 0.3 }} onAnimationComplete={onReady}>
           Why work with us
@@ -279,11 +279,11 @@ const sections = [
     particleShape: "brain" as ParticleShape,
     content: (onReady: () => void) => (
       <div className="flex flex-col items-center justify-center text-center px-8">
-        <motion.h3 className="absolute top-16 left-8 font-body text-lg md:text-2xl font-light text-white/80 whitespace-nowrap"
+        <motion.h3 className="absolute top-16 left-8 font-body text-lg md:text-2xl font-light text-ink/80 whitespace-nowrap"
           initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.8 }}>Why work with us</motion.h3>
         <motion.h2 className="font-display text-5xl md:text-7xl lg:text-[6rem] font-light"
           initial={{ opacity: 0 }} animate={{ opacity: 0.9 }} transition={{ duration: 1.2 }}>Knowledge</motion.h2>
-        <motion.p className="font-body text-xs md:text-sm lg:text-base text-white/60 leading-relaxed max-w-2xl mt-8"
+        <motion.p className="font-body text-xs md:text-sm lg:text-base text-ink/60 leading-relaxed max-w-2xl mt-8"
           initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.8, duration: 0.8 }} onAnimationComplete={onReady}>
           We&apos;re entrepreneurs &times; coders. A decade of founding, scaling and automating real businesses has given us something no agency can replicate &mdash; our lived experience of every problem we solve, the knowledge to foresee them before they happen + the technical skill to solve them.
@@ -296,11 +296,11 @@ const sections = [
     particleShape: "orb" as ParticleShape,
     content: (onReady: () => void) => (
       <div className="flex flex-col items-center justify-center text-center px-8">
-        <motion.h3 className="absolute top-16 left-8 font-body text-lg md:text-2xl font-light text-white/80 whitespace-nowrap"
+        <motion.h3 className="absolute top-16 left-8 font-body text-lg md:text-2xl font-light text-ink/80 whitespace-nowrap"
           initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.8 }}>Why work with us</motion.h3>
         <motion.h2 className="font-display text-5xl md:text-7xl lg:text-[6rem] font-light"
           initial={{ opacity: 0 }} animate={{ opacity: 0.9 }} transition={{ duration: 1.2 }}>Continuity</motion.h2>
-        <motion.p className="font-body text-xs md:text-sm lg:text-base text-white/60 leading-relaxed max-w-2xl mt-8"
+        <motion.p className="font-body text-xs md:text-sm lg:text-base text-ink/60 leading-relaxed max-w-2xl mt-8"
           initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.8, duration: 0.8 }} onAnimationComplete={onReady}>
           One connected system with one voice. No stack of disconnected apps talking different languages. Everything speaks to everything, instantly, one entity, unified.
@@ -313,11 +313,11 @@ const sections = [
     particleShape: "head" as ParticleShape,
     content: (onReady: () => void) => (
       <div className="flex flex-col items-center justify-center text-center px-8">
-        <motion.h3 className="absolute top-16 left-8 font-body text-lg md:text-2xl font-light text-white/80 whitespace-nowrap"
+        <motion.h3 className="absolute top-16 left-8 font-body text-lg md:text-2xl font-light text-ink/80 whitespace-nowrap"
           initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.8 }}>Why work with us</motion.h3>
         <motion.h2 className="font-display text-5xl md:text-7xl lg:text-[6rem] font-light"
           initial={{ opacity: 0 }} animate={{ opacity: 0.9 }} transition={{ duration: 1.2 }}>Bespoke</motion.h2>
-        <motion.p className="font-body text-xs md:text-sm lg:text-base text-white/60 leading-relaxed max-w-2xl mt-8"
+        <motion.p className="font-body text-xs md:text-sm lg:text-base text-ink/60 leading-relaxed max-w-2xl mt-8"
           initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.8, duration: 0.8 }} onAnimationComplete={onReady}>
           No two businesses are built the same way. Your systems are designed around how you work now and where you want to go. You don&apos;t adapt to the tech, the tech adapts to you.
@@ -330,11 +330,11 @@ const sections = [
     particleShape: "infinity" as ParticleShape,
     content: (onReady: () => void) => (
       <div className="flex flex-col items-center justify-center text-center px-8">
-        <motion.h3 className="absolute top-16 left-8 font-body text-lg md:text-2xl font-light text-white/80 whitespace-nowrap"
+        <motion.h3 className="absolute top-16 left-8 font-body text-lg md:text-2xl font-light text-ink/80 whitespace-nowrap"
           initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.8 }}>Why work with us</motion.h3>
         <motion.h2 className="font-display text-5xl md:text-7xl lg:text-[6rem] font-light"
           initial={{ opacity: 0 }} animate={{ opacity: 0.9 }} transition={{ duration: 1.2 }}>Evolution</motion.h2>
-        <motion.p className="font-body text-xs md:text-sm lg:text-base text-white/60 leading-relaxed max-w-2xl mt-8"
+        <motion.p className="font-body text-xs md:text-sm lg:text-base text-ink/60 leading-relaxed max-w-2xl mt-8"
           initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.8, duration: 0.8 }} onAnimationComplete={onReady}>
           We don&apos;t build and disappear. Start with what you need, add what you want when you&apos;re ready. Your automation grows as your business grows &mdash; no big bang, no rip and replace, just steady progress on your terms. Growing with you.
@@ -352,42 +352,42 @@ const sections = [
         <div className="grid md:grid-cols-5 gap-5">
           {[
             {
-              glyph: (<svg viewBox="0 0 40 40" className="w-16 h-16 text-white/30"><circle cx="20" cy="20" r="2" fill="currentColor" /></svg>),
+              glyph: (<svg viewBox="0 0 40 40" className="w-16 h-16 text-ink/30"><circle cx="20" cy="20" r="2" fill="currentColor" /></svg>),
               title: "Let\u2019s see how we can help",
               desc: "Tell us about your business \u2014 your pain points, where it gets complicated, where time or money gets lost and where you want to take things.",
             },
             {
-              glyph: (<svg viewBox="0 0 40 40" className="w-16 h-16 text-white/30"><circle cx="20" cy="20" r="2" fill="currentColor" /><circle cx="20" cy="20" r="7" stroke="currentColor" strokeWidth="1" fill="none" /></svg>),
+              glyph: (<svg viewBox="0 0 40 40" className="w-16 h-16 text-ink/30"><circle cx="20" cy="20" r="2" fill="currentColor" /><circle cx="20" cy="20" r="7" stroke="currentColor" strokeWidth="1" fill="none" /></svg>),
               title: "We plan",
               desc: "A considered, tailored blueprint built around your business. The right solutions, in the right order, at the right investment. Honest, transparent and designed specifically for where you are and where you want to go.",
             },
             {
-              glyph: (<svg viewBox="0 0 40 40" className="w-16 h-16 text-white/30"><circle cx="20" cy="20" r="2" fill="currentColor" /><circle cx="20" cy="20" r="7" stroke="currentColor" strokeWidth="1" fill="none" /><circle cx="20" cy="20" r="12" stroke="currentColor" strokeWidth="0.8" fill="none" /></svg>),
+              glyph: (<svg viewBox="0 0 40 40" className="w-16 h-16 text-ink/30"><circle cx="20" cy="20" r="2" fill="currentColor" /><circle cx="20" cy="20" r="7" stroke="currentColor" strokeWidth="1" fill="none" /><circle cx="20" cy="20" r="12" stroke="currentColor" strokeWidth="0.8" fill="none" /></svg>),
               title: "You choose",
               desc: "No pressure to do everything at once. Start with what matters most, what will have the biggest immediate impact, or simply what fits right now. Your budget. Your priorities. Your choice.",
             },
             {
-              glyph: (<svg viewBox="0 0 40 40" className="w-16 h-16 text-white/30"><circle cx="20" cy="20" r="2" fill="currentColor" /><circle cx="20" cy="20" r="7" stroke="currentColor" strokeWidth="1" fill="none" /><circle cx="20" cy="20" r="12" stroke="currentColor" strokeWidth="0.8" fill="none" /><circle cx="20" cy="20" r="17" stroke="currentColor" strokeWidth="0.6" fill="none" /></svg>),
+              glyph: (<svg viewBox="0 0 40 40" className="w-16 h-16 text-ink/30"><circle cx="20" cy="20" r="2" fill="currentColor" /><circle cx="20" cy="20" r="7" stroke="currentColor" strokeWidth="1" fill="none" /><circle cx="20" cy="20" r="12" stroke="currentColor" strokeWidth="0.8" fill="none" /><circle cx="20" cy="20" r="17" stroke="currentColor" strokeWidth="0.6" fill="none" /></svg>),
               title: "We build",
               desc: "We handle everything \u2014 design, build, integrate, test and launch. You stay focused on your business while we do the work. No disruption, no confusion, no technical headaches.",
             },
             {
-              glyph: (<svg viewBox="0 0 40 40" className="w-16 h-16 text-white/30"><circle cx="20" cy="20" r="2" fill="currentColor" /><circle cx="20" cy="20" r="7" stroke="currentColor" strokeWidth="1" fill="none" /><circle cx="20" cy="20" r="12" stroke="currentColor" strokeWidth="0.8" fill="none" /><circle cx="20" cy="20" r="17" stroke="currentColor" strokeWidth="0.6" fill="none" /><circle cx="20" cy="20" r="19.5" stroke="currentColor" strokeWidth="0.4" fill="none" /></svg>),
+              glyph: (<svg viewBox="0 0 40 40" className="w-16 h-16 text-ink/30"><circle cx="20" cy="20" r="2" fill="currentColor" /><circle cx="20" cy="20" r="7" stroke="currentColor" strokeWidth="1" fill="none" /><circle cx="20" cy="20" r="12" stroke="currentColor" strokeWidth="0.8" fill="none" /><circle cx="20" cy="20" r="17" stroke="currentColor" strokeWidth="0.6" fill="none" /><circle cx="20" cy="20" r="19.5" stroke="currentColor" strokeWidth="0.4" fill="none" /></svg>),
               title: "You breathe, grow and evolve",
               desc: "And so do we. As your needs change and new opportunities emerge we are still here. Add what you need, adapt what you have, build what comes next. At your pace, on your terms.",
             },
           ].map(({ glyph, title, desc }, i) => (
             <motion.div
               key={title}
-              className="rounded-2xl border border-white/15 bg-white/8 backdrop-blur-2xl p-5 shadow-[0_8px_32px_rgba(0,0,0,0.12),0_2px_8px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.15)]"
+              className="rounded-2xl border border-ink/10 bg-white/55 backdrop-blur-2xl p-5 shadow-[0_8px_32px_rgba(10,10,10,0.06),0_2px_8px_rgba(10,10,10,0.05),inset_0_1px_0_rgba(255,255,255,0.9)]"
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1 + i * 0.2, duration: 0.7, ease: [0.15, 0.8, 0.3, 1] }}
               {...(i === 4 ? { onAnimationComplete: onReady } : {})}
             >
               <div className="mb-4">{glyph}</div>
-              <h3 className="font-body text-xs md:text-sm font-medium text-white uppercase tracking-wider">{title}</h3>
-              <p className="font-body text-[9px] md:text-[10px] text-white/50 mt-3 leading-relaxed font-light">{desc}</p>
+              <h3 className="font-body text-xs md:text-sm font-medium text-ink uppercase tracking-wider">{title}</h3>
+              <p className="font-body text-[9px] md:text-[10px] text-ink/50 mt-3 leading-relaxed font-light">{desc}</p>
             </motion.div>
           ))}
         </div>
@@ -404,7 +404,7 @@ const sections = [
           <h2 className="font-display text-3xl font-light md:text-5xl text-center">
             Ready to see what&apos;s possible?
           </h2>
-          <p className="text-white/50 text-center mt-4 font-light text-sm">
+          <p className="text-ink/50 text-center mt-4 font-light text-sm">
             Tell us a bit about your business, what you&apos;ve built and what you&apos;re looking for.
           </p>
           <div className="mt-8">
@@ -436,8 +436,8 @@ function HomeMenu() {
       onMouseLeave={() => setMenuOpen(false)}
     >
       <button onClick={() => setMenuOpen(!menuOpen)} className="flex flex-col gap-1.5 p-2" aria-label="Menu">
-        <span className="block h-px w-6 bg-white" />
-        <span className="block h-px w-6 bg-white" />
+        <span className="block h-px w-6 bg-ink" />
+        <span className="block h-px w-6 bg-ink" />
       </button>
       <AnimatePresence>
         {menuOpen && (
@@ -448,7 +448,7 @@ function HomeMenu() {
               {menuLinks.map((link, i) => (
                 <motion.div key={link.href} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: i * 0.04 }}>
                   <Link href={link.href} onClick={() => setMenuOpen(false)}
-                    className="block py-1 font-body text-sm font-light text-white/60 hover:text-white transition-colors">
+                    className="block py-1 font-body text-sm font-light text-ink/60 hover:text-ink transition-colors">
                     {link.label}
                   </Link>
                 </motion.div>
@@ -568,15 +568,16 @@ export default function Home() {
   }, [logoDone, currentSection]);
 
   return (
-    <div className="fixed inset-0 overflow-hidden text-white">
+    <div className="fixed inset-0 overflow-hidden text-ink">
       <div className="pointer-events-none absolute inset-0">
-        <div className="absolute left-1/4 top-0 h-full w-px bg-white/5" />
-        <div className="absolute left-2/4 top-0 h-full w-px bg-white/5" />
-        <div className="absolute left-3/4 top-0 h-full w-px bg-white/5" />
+        <div className="absolute left-1/4 top-0 h-full w-px bg-ink/8" />
+        <div className="absolute left-2/4 top-0 h-full w-px bg-ink/8" />
+        <div className="absolute left-3/4 top-0 h-full w-px bg-ink/8" />
       </div>
 
-      {/* Off-white ground for the intro. Fades out as the wordmark rises,
-          handing back to the existing page treatment. */}
+      {/* Clean off-white ground for the intro — same colour as the site, so its
+          fade-out simply reveals the murmuration and iridescent blobs behind
+          rather than changing the page colour. */}
       <motion.div
         aria-hidden="true"
         className="pointer-events-none fixed inset-0 z-[90]"
@@ -598,7 +599,7 @@ export default function Home() {
         initial={{ top: "50%", left: "50%", x: "-50%", y: "-50%", fontSize: `${wordmarkSize(viewportWidth)}px`, opacity: 0, color: "#0A0A0A", fontWeight: MASK_WEIGHT }}
         animate={
           logoDone
-            ? { top: "1.1rem", left: "50%", x: "-50%", y: "0%", fontSize: "1.5rem", opacity: 1, color: "#FFFFFF", fontWeight: 300 }
+            ? { top: "1.1rem", left: "50%", x: "-50%", y: "0%", fontSize: "1.5rem", opacity: 1, color: "#0A0A0A", fontWeight: 300 }
             : {
                 top: "50%",
                 left: "50%",
@@ -634,7 +635,7 @@ export default function Home() {
       >
         <Link
           href="/contact"
-          className="font-body text-sm font-light tracking-wide text-white/70 transition-colors hover:text-white"
+          className="font-body text-sm font-light tracking-wide text-ink/70 transition-colors hover:text-ink"
         >
           Contact
         </Link>
@@ -678,7 +679,7 @@ export default function Home() {
             <button
               key={s.id}
               onClick={() => { if (!transitioning) { setTransitioning(true); setTimeout(() => { setCurrentSection(i); setTransitioning(false); }, 400); } }}
-              className={`w-2 h-2 rounded-full transition-all duration-300 ${i === currentSection ? "bg-white scale-125" : "bg-white/30 hover:bg-white/60"}`}
+              className={`w-2 h-2 rounded-full transition-all duration-300 ${i === currentSection ? "bg-ink scale-125" : "bg-ink/25 hover:bg-ink/50"}`}
               aria-label={`Section ${i + 1}`}
             />
           ))}
@@ -689,7 +690,7 @@ export default function Home() {
       {currentSection >= 0 && currentSection < sections.length - 1 && (
         <motion.button
           key={`arrow-${currentSection}`}
-          className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 text-white/40 hover:text-white/80 transition-colors cursor-none"
+          className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 text-ink/40 hover:text-ink/80 transition-colors cursor-none"
           onClick={() => navigate(1)}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1, y: [0, 8, 0] }}

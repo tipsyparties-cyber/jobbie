@@ -202,3 +202,84 @@ steps) at mount, so the per-frame hot loop is `drawImage` rather than
 `fillText`. Cells are 18px desktop / 22px mobile — roughly 6,400 cells on a
 1920x1080 viewport. 2% of the field flips character each frame for the
 flicker.
+
+---
+
+## Addendum 2 — the palette flip and the murmuration, 2026-09-10
+
+§1, §2 and §6 are now implemented, plus the `(site)` half of §4.
+
+### Background: blobs kept, murmuration added
+
+Russ asked for the existing drift movement to stay but the *shapes* to become
+a starling murmuration (reference image 5). A blurred CSS blob cannot be a
+murmuration, so the background is now two layers:
+
+1. **The five blobs, unchanged in motion.** Same `drift-1`..`drift-5`
+   keyframes, same 12/15/13/16/14s durations, same `blur(100px)`. Only the
+   fills changed — from blue/purple/orange to white plus low-saturation
+   iridescence (pale pink, cyan, gold, lavender) over `#F4F6F8`.
+2. **`<Murmuration />`, a new canvas layer** inside `.bg-blobs`, mounted from
+   the root layout so it appears on every page.
+
+The murmuration is ~5,200 particles (1,800 on mobile) distributed along an
+undulating ribbon. Two sine terms of different frequency give the S-curve;
+a third modulates the band's width along its length, which produces the dark
+knot a real murmuration has. Lateral offset is drawn from the sum of three
+uniforms, approximating a normal distribution — dense core, thin fringe.
+
+Positions snap to a 2px grid. That is the "tech, not wildlife" part of the
+brief: it stipples like the reference but reads as sampled data.
+
+**Performance:** each particle's alpha derives from its lateral offset, which
+never changes, so alpha is fixed at creation. Particles are bucketed into 8
+alpha groups once, and the render loop sets `fillStyle` 8 times per frame
+rather than 5,200 times. Bucket 0 is invisible fringe and is skipped. DPR is
+capped at 1.5 — the background never needs retina density.
+
+### Class sweep
+
+Applied mechanically across 30 files, with three different rules because
+`text-white` and `bg-white` needed opposite treatment:
+
+| Pattern | Rule | Why |
+|---|---|---|
+| `text-white*` | -> `text-ink*`, opacity unchanged | white-on-dark and ink-on-light are roughly symmetric |
+| `border-white/15,20,10,50` | -> `border-ink/10,12,8,25` | borders need less opacity when dark-on-light |
+| `bg-white/5..60` | -> `bg-white/45..85`, stays white | these are glass surfaces, not text; on off-white they must get *more* opaque, not invert |
+| `rgba(0,0,0,0.12)` shadows | -> `rgba(10,10,10,0.06)` | shadows soften on a light ground |
+| `rgba(255,255,255,0.15)` insets | -> `rgba(255,255,255,0.9)` | the inset top highlight stays white and strengthens |
+
+Totals: 162 text, 24 border, 44 background.
+
+**The trap this created.** The `bg-white` rule is right for panels and wrong
+for hairlines. Three vertical rules, both hamburger bars, the custom cursor
+and two sets of section dots were `bg-white` used as *ink*, and the sweep made
+them more opaque white — invisible on off-white. Fixed in a second pass to
+`bg-ink` / `bg-ink/8`. Any future sweep of this kind must separate
+"white as surface" from "white as mark" before running.
+
+### Canvas particle systems
+
+`neural-network`, `particle-canvas`, `particle-journey` and `why-us-canvas`
+had their `ctx.*Style` colours changed from white to `rgba(10, 10, 10, …)`.
+Restricted to lines containing `ctx.` so the white inset highlights inside
+`shadow-[…]` class strings were not caught.
+
+### Intro no longer needs its temporary compensations
+
+Addendum 1 described an off-white ground that faded out and a wordmark that
+animated black-to-white, both temporary until the palette landed. The palette
+has now landed, so the wordmark stays `#0A0A0A` throughout. The ground is
+kept — but it is now the same colour as the site, so its fade-out simply
+reveals the murmuration and blobs rather than changing the page colour.
+
+### Gotcha: Turbopack served stale CSS
+
+After `globals.css` was rewritten, the dev server kept serving the previous
+stylesheet — still containing `#C4BAB0` and `#E8652E` — **under an unchanged
+chunk hash**. A plain edit did not invalidate it. Fixed by stopping the
+server, `rm -rf .next`, and restarting.
+
+Because the chunk URL does not change, a browser that already loaded the old
+CSS will keep it. **Hard reload is required**, not a normal refresh.

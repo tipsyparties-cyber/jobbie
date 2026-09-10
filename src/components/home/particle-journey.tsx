@@ -358,7 +358,7 @@ export function ParticleJourney({ onComplete }: { onComplete: () => void }) {
           const dy = particles[i].y - particles[j].y;
           const d = Math.sqrt(dx * dx + dy * dy);
           if (d < connDist) {
-            ctx.strokeStyle = `rgba(255,255,255,${(1 - d / connDist) * 0.15})`;
+            ctx.strokeStyle = `rgba(10, 10, 10,${(1 - d / connDist) * 0.15})`;
             ctx.lineWidth = 0.3;
             ctx.beginPath();
             ctx.moveTo(particles[i].x, particles[i].y);
@@ -372,7 +372,7 @@ export function ParticleJourney({ onComplete }: { onComplete: () => void }) {
       // Dots
       for (const p of particles) {
         const pulse = 0.7 + 0.3 * Math.sin(time * 2.5 + p.phase);
-        ctx.fillStyle = `rgba(255,255,255,${p.opacity * pulse})`;
+        ctx.fillStyle = `rgba(10, 10, 10,${p.opacity * pulse})`;
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
         ctx.fill();
@@ -388,7 +388,7 @@ export function ParticleJourney({ onComplete }: { onComplete: () => void }) {
   const section = sections[currentSection];
 
   return (
-    <div className="fixed inset-0 overflow-hidden text-white">
+    <div className="fixed inset-0 overflow-hidden text-ink">
       {/* Canvas — always visible */}
       <div className="absolute inset-0 flex items-center justify-center">
         <canvas
@@ -402,7 +402,7 @@ export function ParticleJourney({ onComplete }: { onComplete: () => void }) {
         {section.smallHeading && (
           <motion.h3
             key={`small-${currentSection}`}
-            className="absolute top-6 left-8 font-body text-lg md:text-2xl font-light text-white/80 z-10"
+            className="absolute top-6 left-8 font-body text-lg md:text-2xl font-light text-ink/80 z-10"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
@@ -420,7 +420,7 @@ export function ParticleJourney({ onComplete }: { onComplete: () => void }) {
             {section.words.map((word, i) => (
               <motion.span
                 key={`word-${word.text}-${currentSection}`}
-                className="absolute font-body text-5xl md:text-7xl lg:text-[6rem] font-light text-white z-10"
+                className="absolute font-body text-5xl md:text-7xl lg:text-[6rem] font-light text-ink z-10"
                 style={word.style as React.CSSProperties}
                 initial={{ x: word.from.x, y: word.from.y, opacity: 0 }}
                 animate={{ x: 0, y: 0, opacity: 1 }}
@@ -450,7 +450,7 @@ export function ParticleJourney({ onComplete }: { onComplete: () => void }) {
             </h2>
             {section.copy && (
               <motion.p
-                className="font-body text-xs md:text-sm lg:text-base text-white/60 leading-relaxed max-w-2xl text-center mt-8"
+                className="font-body text-xs md:text-sm lg:text-base text-ink/60 leading-relaxed max-w-2xl text-center mt-8"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.5, duration: 0.8 }}
@@ -469,7 +469,7 @@ export function ParticleJourney({ onComplete }: { onComplete: () => void }) {
             key={i}
             onClick={() => setCurrentSection(i)}
             className={`w-2 h-2 rounded-full transition-all duration-300 ${
-              i === currentSection ? "bg-white scale-125" : "bg-white/30 hover:bg-white/60"
+              i === currentSection ? "bg-ink scale-125" : "bg-ink/25 hover:bg-ink/50"
             }`}
           />
         ))}
@@ -482,7 +482,7 @@ export function ParticleJourney({ onComplete }: { onComplete: () => void }) {
           animate={{ y: [0, 8, 0] }}
           transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
         >
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="text-white/50">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="text-ink/50">
             <path d="M6 9L12 15L18 9" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
         </motion.div>
