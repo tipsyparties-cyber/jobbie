@@ -824,3 +824,35 @@ magnitude larger over the centre of the orb, wiping out the lattice that the
 approach exists to reveal. The heads have merged into the orb by then anyway,
 so they fade out from `rise` 0.3 and are gone by 0.75, while the tails carry on
 growing.
+
+---
+
+## Addendum 14 — the intro is page 1 and is reachable, 2026-09-11
+
+The binary intro was a one-shot: it played at `currentSection === -1` on load
+and could never be returned to, because `navigate()` bailed on `next < 0`.
+Russ wants it as page 1, scrollable back to.
+
+### Changes
+
+- **`navigate` lower bound is now `-1`.** Reaching it calls `goToIntro()`,
+  which resets `introResolved` and `logoDone` and sets the section to -1.
+  Resetting `logoDone` unmounts and remounts `BinaryIntro`, so the rain
+  actually replays rather than showing the already-resolved wordmark.
+- **The dot rail gains a first dot** for the intro, which replays it on click.
+  Remaining dots renumber to `Section i+2`.
+
+### The trap this would have hit
+
+Skipping was previously triggered by input in *any* direction. Scrolling up to
+reach the intro fires more upward wheel events as the trackpad decelerates —
+those would have hit the skip branch and killed the replay in the same gesture
+that requested it. Skip is now `dir === 1` only: scroll down to skip forward,
+scroll up does nothing.
+
+### Race fixed while here
+
+The hand-off effect (`logoDone && currentSection === -1` -> advance to 0 after
+500ms) had no cleanup. A pending timer from a previous run could fire after
+the user had scrolled back to the intro and yank them forward. It now clears
+on unmount.

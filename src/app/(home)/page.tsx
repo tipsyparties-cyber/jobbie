@@ -631,28 +631,46 @@ export default function Home() {
     return () => window.removeEventListener("resize", measure);
   }, []);
 
-  // Any interaction during the intro skips straight to the resolved wordmark.
+  // Skips the intro straight to the resolved wordmark.
   const skipIntro = useCallback(() => {
     setIntroResolved(true);
     setLogoDone(true);
   }, []);
 
+  // Returns to the intro and replays it from the start. Resetting logoDone
+  // remounts BinaryIntro, so the rain runs again rather than showing the
+  // already-resolved wordmark.
+  const goToIntro = useCallback(() => {
+    setIntroResolved(false);
+    setLogoDone(false);
+    setCurrentSection(-1);
+  }, []);
+
   const navigate = useCallback(
     (dir: 1 | -1) => {
       if (!logoDone) {
-        skipIntro();
+        // Scrolling down skips the intro; scrolling up does nothing. Skipping
+        // on *any* direction meant the trailing momentum of the scroll that
+        // brought you back here instantly killed the replay.
+        if (dir === 1) skipIntro();
         return;
       }
       if (transitioning) return;
       const next = currentSection + dir;
-      if (next < 0 || next >= sections.length) return;
+      // -1 is the intro. It is a real position you can return to, not a
+      // one-shot that disappears once passed.
+      if (next < -1 || next >= sections.length) return;
+      if (next === -1) {
+        goToIntro();
+        return;
+      }
       setTransitioning(true);
       setTimeout(() => {
         setCurrentSection(next);
         setTransitioning(false);
       }, 600);
     },
-    [transitioning, currentSection, logoDone, skipIntro]
+    [transitioning, currentSection, logoDone, skipIntro, goToIntro]
   );
 
   useEffect(() => {
@@ -712,9 +730,13 @@ export default function Home() {
     }
   }, [introResolved, logoDone]);
 
+  // Once the intro finishes, hand off to the first section. Cleared on unmount
+  // — without that, a pending timer from a previous run could fire after you
+  // had scrolled back to the intro and yank you forward again.
   useEffect(() => {
     if (logoDone && currentSection === -1) {
-      setTimeout(() => setCurrentSection(0), 500);
+      const t = setTimeout(() => setCurrentSection(0), 500);
+      return () => clearTimeout(t);
     }
   }, [logoDone, currentSection]);
 
@@ -836,12 +858,18 @@ export default function Home() {
       {/* Dots */}
       {logoDone && (
         <div className="fixed right-6 top-1/2 -translate-y-1/2 z-50 flex flex-col gap-2">
+          {/* The intro is page 1, so it takes the first dot and replays on click. */}
+          <button
+            onClick={goToIntro}
+            className="w-2 h-2 rounded-full bg-ink/25 transition-all duration-300 hover:bg-ink/50"
+            aria-label="Intro"
+          />
           {sections.map((s, i) => (
             <button
               key={s.id}
               onClick={() => { if (!transitioning) { setTransitioning(true); setTimeout(() => { setCurrentSection(i); setTransitioning(false); }, 400); } }}
               className={`w-2 h-2 rounded-full transition-all duration-300 ${i === currentSection ? "bg-ink scale-125" : "bg-ink/25 hover:bg-ink/50"}`}
-              aria-label={`Section ${i + 1}`}
+              aria-label={`Section ${i + 2}`}
             />
           ))}
         </div>
