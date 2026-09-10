@@ -10,6 +10,8 @@ import { ParticleCanvas, type ParticleShape } from "@/components/home/particle-c
 import { ContactForm } from "@/components/contact/contact-form";
 import { ServiceCarousel } from "@/components/home/service-carousel";
 import { BinaryIntro, wordmarkSize, MASK_WEIGHT } from "@/components/home/binary-intro";
+import { Flock } from "@/components/home/flock";
+import { Button } from "@/components/ui/button";
 
 function seededRandom(seed: number) {
   const x = Math.sin(seed * 9301 + 49297) * 49297;
@@ -72,6 +74,80 @@ const sections = [
             </motion.span>
           </span>
         </h1>
+      </div>
+    ),
+  },
+  // The flock. Each stage brings one more trail in from the left; the last
+  // stage converges them. The canvas itself is a persistent layer below,
+  // driven by flockStage — these sections only carry the copy.
+  {
+    id: "flock-1",
+    flockStage: 1,
+    content: () => (
+      <div className="w-full max-w-6xl mx-auto px-4">
+        <div className="ml-auto max-w-sm text-right">
+          <p className="font-display text-2xl font-light leading-snug md:text-4xl">
+            Every process starts as a single thread.
+          </p>
+        </div>
+      </div>
+    ),
+  },
+  {
+    id: "flock-2",
+    flockStage: 2,
+    content: () => (
+      <div className="w-full max-w-6xl mx-auto px-4">
+        <div className="ml-auto max-w-sm text-right">
+          <p className="font-display text-2xl font-light leading-snug md:text-4xl">
+            Then another. Then another.
+          </p>
+        </div>
+      </div>
+    ),
+  },
+  {
+    id: "flock-3",
+    flockStage: 3,
+    content: () => (
+      <div className="w-full max-w-6xl mx-auto px-4">
+        <div className="ml-auto max-w-sm text-right">
+          <p className="font-display text-2xl font-light leading-snug md:text-4xl">
+            Most businesses run every one of them separately.
+          </p>
+        </div>
+      </div>
+    ),
+  },
+  {
+    id: "flock-4",
+    flockStage: 4,
+    content: () => (
+      <div className="w-full max-w-6xl mx-auto px-4">
+        <div className="ml-auto max-w-sm text-right">
+          <p className="font-display text-2xl font-light leading-snug md:text-4xl">
+            Four systems. Four directions. Nothing joined up.
+          </p>
+        </div>
+      </div>
+    ),
+  },
+  {
+    id: "flock-converge",
+    flockStage: 5,
+    content: () => (
+      <div className="w-full max-w-6xl mx-auto px-4">
+        <div className="ml-auto max-w-md text-right">
+          <h2 className="font-display text-3xl font-light leading-tight md:text-5xl">
+            We bring them together.
+          </h2>
+          <p className="mt-5 font-body text-sm font-light leading-relaxed text-ink/60 md:text-base">
+            One connected system, built around how your business actually runs.
+          </p>
+          <div className="mt-8 flex justify-end">
+            <Button href="/contact">Start a conversation</Button>
+          </div>
+        </div>
       </div>
     ),
   },
@@ -644,6 +720,21 @@ export default function Home() {
       {/* Hamburger menu — top right. Held back during the intro, where its
           white bars would sit invisible on the off-white ground. */}
       {logoDone && <HomeMenu />}
+
+      {/* Flock — persistent layer so trails survive the section swap and
+          accumulate as you step, rather than restarting each time. */}
+      {(() => {
+        const sec = currentSection >= 0 ? sections[currentSection] : null;
+        const flockStage = (sec && "flockStage" in sec ? sec.flockStage : 0) as number;
+        return (
+          <div
+            className="absolute inset-0 z-0 pointer-events-none transition-opacity duration-700"
+            style={{ opacity: flockStage > 0 ? 1 : 0 }}
+          >
+            <Flock stage={flockStage} />
+          </div>
+        );
+      })()}
 
       {/* Particle Canvas — persistent layer, shape changes with section */}
       {(() => {

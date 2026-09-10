@@ -283,3 +283,67 @@ server, `rm -rf .next`, and restarting.
 
 Because the chunk URL does not change, a browser that already loaded the old
 CSS will keep it. **Hard reload is required**, not a normal refresh.
+
+---
+
+## Addendum 3 — the flock, 2026-09-10
+
+New section sequence after the hero, from davidecattaneo.it/en#case-histories:
+trails fly in from the left one at a time as you advance, each with a
+labelled head node, until they all converge on a single point.
+
+### Glow had to become chroma
+
+The reference works because it is **glowing green on near-black**. Glow is
+additive — nothing out-brightens an off-white page, so it cannot be
+reproduced on this ground. Russ specified off-white, so each trail carries its
+identity as **saturated colour** instead: a wide soft coloured halo, a mid
+coloured stroke, and a near-white 1.4px core. Reads as "white iridescent"
+without pretending to emit light.
+
+Four identities, one each: violet `150,120,235`, blue `90,170,240`,
+orange `245,150,90`, yellow `235,195,80`.
+
+### Mapped onto the stepper, not onto scroll
+
+The home page does not scroll — it steps. "More appear as you scroll"
+therefore means one more trail per step. Implemented by mirroring the existing
+`particleShape` pattern exactly: sections carry a `flockStage`, and a
+persistent `<Flock stage>` layer sits outside the `AnimatePresence` swap so
+trails survive section changes and accumulate rather than restarting.
+
+```
+flock-1        stage 1   first trail
+flock-2        stage 2   second
+flock-3        stage 3   third
+flock-4        stage 4   fourth
+flock-converge stage 5   all four merge to one point, headline + CTA
+```
+
+Sections go from 14 to 19; the five are inserted directly after `hero`.
+`navigate()` is untouched.
+
+### Motion
+
+Each tail is 96 points. Three terms stacked:
+- an arc, `f^1.5 * sweep`, giving the long lazy curve as it recedes left
+- a wave, `sin(f*9 - t*2.1 + phase)` with amplitude growing toward the tip, so
+  the head stays steady and the tail whips — it reads as swimming
+- a slow whole-body bob
+
+Arrival eases at 0.045/frame and merge at 0.055, so trails glide in but snap
+together decisively. Labels fade once merge passes 0.35, or four labels pile
+up on one point.
+
+### Copy
+
+Written to track the animation: one thread, then another, then "most
+businesses run every one of them separately", "four systems, four directions,
+nothing joined up", resolving on "We bring them together." Labels come from
+the site's own benefit language — TIME SAVING, DATA INSIGHTS, SCALABILITY,
+ACCURACY.
+
+### Known consequence
+
+The right-hand dot rail now has **19 dots** rather than 14. Not addressed —
+flagged for Russ, since it may want grouping or hiding.
