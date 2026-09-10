@@ -85,7 +85,7 @@ const sections = [
       <div className="w-full max-w-6xl mx-auto px-4">
         <div className="ml-auto max-w-sm text-right">
           <p className="font-display text-2xl font-light leading-snug md:text-4xl">
-            Most businesses run every one of them separately.
+            Soon every corner of the business has one.
           </p>
         </div>
       </div>
@@ -98,7 +98,33 @@ const sections = [
       <div className="w-full max-w-6xl mx-auto px-4">
         <div className="ml-auto max-w-sm text-right">
           <p className="font-display text-2xl font-light leading-snug md:text-4xl">
-            Four systems. Four directions. Nothing joined up.
+            Most companies run every one of them separately.
+          </p>
+        </div>
+      </div>
+    ),
+  },
+  {
+    id: "flock-5",
+    flockStage: 5,
+    content: () => (
+      <div className="w-full max-w-6xl mx-auto px-4">
+        <div className="ml-auto max-w-sm text-right">
+          <p className="font-display text-2xl font-light leading-snug md:text-4xl">
+            Six systems. Six directions. Nothing joined up.
+          </p>
+        </div>
+      </div>
+    ),
+  },
+  {
+    id: "flock-6",
+    flockStage: 6,
+    content: () => (
+      <div className="w-full max-w-6xl mx-auto px-4">
+        <div className="ml-auto max-w-sm text-right">
+          <p className="font-display text-2xl font-light leading-snug md:text-4xl">
+            Each one solving its own problem, alone.
           </p>
         </div>
       </div>
@@ -106,7 +132,7 @@ const sections = [
   },
   {
     id: "flock-converge",
-    flockStage: 5,
+    flockStage: 7,
     content: () => (
       <div className="w-full max-w-6xl mx-auto px-4">
         <div className="ml-auto max-w-md text-right">

@@ -34,11 +34,22 @@ export interface Creature {
   phase: number;
 }
 
+/**
+ * Six trails. Colours are pale — the same register as the background blobs —
+ * because each trail should read as *white* with an iridescent bloom around
+ * it, not as a coloured line. The white core does the drawing; the colour
+ * only tints the air around it.
+ *
+ * The pearl entry is the "white white" one: a neutral silver bloom, since a
+ * pure white glow on an off-white ground would be invisible.
+ */
 export const CREATURES: Creature[] = [
-  { label: "TIME SAVING",  rgb: [150, 120, 235], headX: 0.34, headY: 0.30, sweep:  0.22, phase: 0.0 },
-  { label: "DATA INSIGHTS", rgb: [ 90, 170, 240], headX: 0.46, headY: 0.46, sweep: -0.16, phase: 1.7 },
-  { label: "SCALABILITY",  rgb: [245, 150,  90], headX: 0.30, headY: 0.62, sweep:  0.10, phase: 3.1 },
-  { label: "ACCURACY",     rgb: [235, 195,  80], headX: 0.44, headY: 0.76, sweep: -0.26, phase: 4.6 },
+  { label: "TIME SAVING",   rgb: [242, 226, 150], headX: 0.34, headY: 0.19, sweep:  0.20, phase: 0.0 },
+  { label: "DATA INSIGHTS", rgb: [210, 194, 246], headX: 0.46, headY: 0.32, sweep: -0.15, phase: 1.1 },
+  { label: "SCALABILITY",   rgb: [182, 218, 246], headX: 0.31, headY: 0.44, sweep:  0.11, phase: 2.2 },
+  { label: "ACCURACY",      rgb: [226, 202, 248], headX: 0.45, headY: 0.57, sweep: -0.22, phase: 3.3 },
+  { label: "SPEED",         rgb: [228, 232, 240], headX: 0.33, headY: 0.69, sweep:  0.16, phase: 4.4 },
+  { label: "REDUCE COSTS",  rgb: [193, 236, 208], headX: 0.44, headY: 0.81, sweep: -0.12, phase: 5.5 },
 ];
 
 /** Where every trail meets on the final stage */
@@ -120,13 +131,19 @@ export function Flock({ stage }: FlockProps) {
         // reference its long lazy arcs rather than straight lines.
         const arc = Math.pow(f, 1.5) * c.sweep * h * (1 - s.merge * 0.55);
 
-        // A wave travelling down the body. Amplitude grows toward the tip so
-        // the head stays steady and the tail whips — it reads as swimming.
+        // Two waves travelling down the body at different rates, stacked the
+        // same way the background murmuration stacks its sines. Amplitude is a
+        // fraction of viewport height, not a fixed pixel count, so these
+        // undulate as broadly as the background does — a fixed 16px wobble is
+        // what made them read as straight lines.
+        const amp = h * 0.085;
         const wave =
-          Math.sin(f * 9 - time * 2.1 + c.phase) * 16 * Math.pow(f, 0.8) * (1 - s.merge * 0.8);
+          (Math.sin(f * 4.2 - time * 1.15 + c.phase) * amp * Math.pow(f, 0.55) +
+            Math.sin(f * 9.0 - time * 1.9 + c.phase * 1.7) * amp * 0.3 * Math.pow(f, 0.85)) *
+          (1 - s.merge * 0.85);
 
-        // Slow bob of the whole creature.
-        const bob = Math.sin(time * 0.5 + c.phase) * 9 * (1 - s.merge);
+        // Slow bob of the whole creature, head included.
+        const bob = Math.sin(time * 0.45 + c.phase) * h * 0.02 * (1 - s.merge);
 
         pts.push([x, hy + arc + wave + bob]);
       }
@@ -145,22 +162,25 @@ export function Flock({ stage }: FlockProps) {
         ctx!.quadraticCurveTo(px, py, (px + cx) / 2, (py + cy) / 2);
       }
 
-      // Wide, soft, saturated halo — this is the part doing the visible work
-      // on a light ground.
       ctx!.lineCap = "round";
       ctx!.lineJoin = "round";
-      ctx!.strokeStyle = `rgba(${r}, ${g}, ${b}, ${0.16 * alpha})`;
-      ctx!.lineWidth = 11;
+
+      // Wide faint bloom. This is the iridescence, and it is the only thing
+      // separating the trail from the off-white ground — so it has to be broad
+      // and soft rather than a tight saturated line.
+      ctx!.strokeStyle = `rgba(${r}, ${g}, ${b}, ${0.3 * alpha})`;
+      ctx!.lineWidth = 26;
       ctx!.stroke();
 
-      ctx!.strokeStyle = `rgba(${r}, ${g}, ${b}, ${0.4 * alpha})`;
-      ctx!.lineWidth = 4;
+      ctx!.strokeStyle = `rgba(${r}, ${g}, ${b}, ${0.38 * alpha})`;
+      ctx!.lineWidth = 10;
       ctx!.stroke();
 
-      // Near-white core so it still reads as "white iridescent" rather than
-      // as a plain coloured line.
-      ctx!.strokeStyle = `rgba(255, 255, 255, ${0.85 * alpha})`;
-      ctx!.lineWidth = 1.4;
+      // White filament down the middle. It reads as bright because it sits
+      // inside the tinted bloom rather than directly on the page — this is
+      // what makes the trail white-with-a-glow instead of a coloured line.
+      ctx!.strokeStyle = `rgba(255, 255, 255, ${0.98 * alpha})`;
+      ctx!.lineWidth = 2.4;
       ctx!.stroke();
     }
 
@@ -174,23 +194,27 @@ export function Flock({ stage }: FlockProps) {
     ) {
       const [r, g, b] = rgb;
 
-      const bloom = ctx!.createRadialGradient(x, y, 0, x, y, 26);
-      bloom.addColorStop(0, `rgba(${r}, ${g}, ${b}, ${0.42 * alpha})`);
+      const bloom = ctx!.createRadialGradient(x, y, 0, x, y, 34);
+      bloom.addColorStop(0, `rgba(${r}, ${g}, ${b}, ${0.55 * alpha})`);
+      bloom.addColorStop(0.55, `rgba(${r}, ${g}, ${b}, ${0.22 * alpha})`);
       bloom.addColorStop(1, `rgba(${r}, ${g}, ${b}, 0)`);
       ctx!.fillStyle = bloom;
       ctx!.beginPath();
-      ctx!.arc(x, y, 26, 0, Math.PI * 2);
+      ctx!.arc(x, y, 34, 0, Math.PI * 2);
       ctx!.fill();
 
-      ctx!.fillStyle = `rgba(${r}, ${g}, ${b}, ${0.9 * alpha})`;
+      // White head — the colour stays in the air around it, never in the dot.
+      ctx!.fillStyle = `rgba(255, 255, 255, ${0.98 * alpha})`;
       ctx!.beginPath();
-      ctx!.arc(x, y, 6, 0, Math.PI * 2);
+      ctx!.arc(x, y, 5, 0, Math.PI * 2);
       ctx!.fill();
 
-      ctx!.fillStyle = `rgba(255, 255, 255, ${0.95 * alpha})`;
+      // Faint tinted rim, or a white dot on a near-white page has no edge.
+      ctx!.strokeStyle = `rgba(${r}, ${g}, ${b}, ${0.75 * alpha})`;
+      ctx!.lineWidth = 1.6;
       ctx!.beginPath();
-      ctx!.arc(x, y, 2.6, 0, Math.PI * 2);
-      ctx!.fill();
+      ctx!.arc(x, y, 5, 0, Math.PI * 2);
+      ctx!.stroke();
 
       if (showLabel) {
         ctx!.font = `500 11px ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace`;

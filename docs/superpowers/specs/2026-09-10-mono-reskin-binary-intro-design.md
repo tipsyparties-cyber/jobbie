@@ -376,3 +376,58 @@ trail flying in. Section count stays 19; only the order changed.
 **Terminology note for future sessions:** to Russ, "the hero section" means
 the binary intro screen, not the headline section whose id is literally
 `hero`.
+
+---
+
+## Addendum 5 — flock tuning from a real screenshot, 2026-09-10
+
+First actual screenshot of the running site arrived. Three problems visible,
+all fixed:
+
+### 1. Trails read as straight lines
+
+The wave amplitude was a **fixed 16px**, which is nothing against a
+~1000px-tall viewport, so the arc term dominated and the trails looked
+straight. Now two stacked sines with amplitude as a **fraction of viewport
+height** (`h * 0.085`), matching how the background murmuration is built —
+which is what Russ pointed at as the reference for the motion.
+
+```
+wave = sin(f*4.2 - t*1.15 + phase) * amp * f^0.55
+     + sin(f*9.0 - t*1.90 + phase*1.7) * amp*0.3 * f^0.85
+bob  = sin(t*0.45 + phase) * h*0.02
+```
+
+Lesson: any amplitude that should read against the viewport must be expressed
+as a fraction of it, never as a pixel constant.
+
+### 2. Colour was doing the work, not white
+
+Trails read as violet/blue/orange lines. Brief was *white* with an iridescent
+glow. Inverted the layering — the bloom got much wider and softer while the
+white core got brighter and thicker:
+
+| Layer | Was | Now |
+|---|---|---|
+| outer bloom | colour 0.16 @ 11px | colour 0.30 @ **26px** |
+| inner bloom | colour 0.40 @ 4px | colour 0.38 @ 10px |
+| core | white 0.85 @ 1.4px | white **0.98 @ 2.4px** |
+
+The white core reads as bright because it sits inside the tinted bloom rather
+than directly on the page. Head nodes are now white dots with a tinted rim and
+a coloured bloom, rather than coloured dots.
+
+### 3. Colours too saturated, and there should be six
+
+Palette moved into the same pale register as the background blobs:
+yellow-white, purple-white, blue-white, purple-white, pearl, green-white.
+
+The **pearl** entry is Russ's "white white". A pure white glow on an off-white
+ground is invisible, so it carries a neutral silver bloom instead.
+
+Creatures 4 -> 6, so flock stages 1..6 with convergence at **stage 7**.
+Copy re-paced across six beats. Sections 19 -> **21**.
+
+### Still outstanding
+
+The right-hand dot rail is now **21 dots**. Flagged twice; unaddressed.
