@@ -719,3 +719,61 @@ additive and the ground is dark. On `#F4F6F8` nothing can out-brighten white,
 so this will always be a softer effect than the reference. It reads as a bright
 bead in a haze, not as emitted light. Unchanged from Addenda 3 and 6 — the only
 way to get the reference's actual punch is a dark section.
+
+---
+
+## Addendum 12 — the orb absorbs us, 2026-09-10
+
+Brief: after the merge, the orb should grow on scroll so it feels like it is
+**coming toward the viewer and swallowing them**, revealing the intricacy of
+what it is made of. Reference is a geodesic lattice with bright vertices and
+sparkle motes suspended inside.
+
+### Trails scale with the approach — the load-bearing change
+
+An orb that grows while the trails stay the same size reads as the orb
+*inflating*, not as the viewer moving closer. Everything about a trail now
+scales by `approach = 1 + rise * 2.4`:
+
+| | scaled by |
+|---|---|
+| tail length | `approach` |
+| stipple spread | `approach` |
+| grain size | `1 + (approach-1) * 0.65` |
+| bloom widths (30 / 13) | `approach` |
+| head halo / glow / bead radii | `approach` |
+
+Grains grow slightly slower than the geometry so the stipple coarsens
+believably instead of turning into blocks.
+
+### The trails had to stop fading early
+
+They previously faded out from `rise` 0.45 — barely after the orb starts
+moving. But the trails growing *is* the approach cue, so fading them there
+deleted the effect. They now hold to `rise` 0.86.
+
+### Orb interior
+
+- **Vertices** scale with orb radius (`min(4.5, 0.5 + r/110)`) instead of
+  staying a fixed pixel size, so coming closer genuinely resolves more detail.
+- **260 sparkle motes** suspended inside the shell, each twinkling on its own
+  rate and phase, depth-faded. These make the interior read as a volume with
+  something in it rather than a hollow wireframe.
+  Uniform fill inside a sphere needs `r = cbrt(u)`; using `u` directly piles
+  everything at the centre and leaves the outer volume empty.
+- **Structure now intensifies all the way in** — `netStrength` was fading out
+  after progress 0.72 to allow the whiteout, which hid the lattice at exactly
+  the moment the orb is closest.
+
+### The whiteout is now a wash
+
+Reduced from a full opaque white fill to a maximum of **0.3 alpha**. Blanking
+the screen to solid white would erase the very structure the viewer is
+supposed to be absorbed into. This softens Addendum 6's "brilliant white"
+ending deliberately — the two briefs conflict, and this one is later.
+
+### Standing limitation
+
+The reference is white lattice on black. Here it is ink lattice on off-white,
+so the motes *darken* as they twinkle rather than sparkling with light. On a
+light ground that is the only direction available.

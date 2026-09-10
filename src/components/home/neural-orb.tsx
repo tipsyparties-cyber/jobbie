@@ -18,6 +18,8 @@ import { convergeAt, MERGE_STAGE, ORB_STAGES } from "./flock";
 const NODES = 170;
 /** 3D distance below which two nodes are wired together, on a unit sphere. */
 const LINK_DIST = 0.42;
+/** Motes suspended inside the shell, twinkling. */
+const SPARKS = 260;
 
 interface Node {
   x: number;
@@ -73,6 +75,30 @@ export function NeuralOrb({ stage }: OrbProps) {
         const dz = nodes[i].z - nodes[j].z;
         if (dx * dx + dy * dy + dz * dz < LINK_DIST * LINK_DIST) edges.push([i, j]);
       }
+    }
+
+    // Sparkle motes suspended inside the shell — the dust in the reference.
+    // For a uniform fill the radius must be cbrt(u); using u directly piles
+    // them up in the middle and leaves the outer volume empty.
+    const sparks: {
+      x: number;
+      y: number;
+      z: number;
+      phase: number;
+      rate: number;
+    }[] = [];
+    for (let i = 0; i < SPARKS; i++) {
+      const rr = Math.cbrt(Math.random()) * 0.93;
+      const theta = Math.random() * Math.PI * 2;
+      const cosPhi = Math.random() * 2 - 1;
+      const sinPhi = Math.sqrt(Math.max(0, 1 - cosPhi * cosPhi));
+      sparks.push({
+        x: rr * sinPhi * Math.cos(theta),
+        y: rr * cosPhi,
+        z: rr * sinPhi * Math.sin(theta),
+        phase: Math.random() * Math.PI * 2,
+        rate: 1.4 + Math.random() * 3.6,
+      });
     }
 
     function resize() {
@@ -174,8 +200,10 @@ export function NeuralOrb({ stage }: OrbProps) {
         pz[i] = z2;
       }
 
-      // Network fades back in as the orb grows, then out again at the whiteout.
-      const netStrength = Math.min(1, progress * 2.4) * (1 - Math.max(0, (progress - 0.72) / 0.28));
+      // The structure now *intensifies* all the way in. It used to fade out
+      // after 0.72 for the whiteout, which hid the lattice at exactly the point
+      // the orb is closest — the opposite of showing what it is made of.
+      const netStrength = Math.min(1, 0.35 + progress * 1.1);
 
       if (netStrength > 0.01) {
         ctx!.lineWidth = 1;
@@ -192,20 +220,52 @@ export function NeuralOrb({ stage }: OrbProps) {
           ctx!.stroke();
         }
 
+        // Vertices. They grow with the orb rather than staying a fixed pixel
+        // size, so coming closer actually resolves more detail.
+        const vertexScale = Math.min(4.5, 0.5 + r / 110);
         for (let i = 0; i < NODES; i++) {
-          const a = (0.3 + 0.5 * ((pz[i] + 1) / 2)) * netStrength;
-          const size = (1.1 + 1.5 * ((pz[i] + 1) / 2)) * Math.min(2.2, 0.4 + r / 150);
+          const a = (0.32 + 0.55 * ((pz[i] + 1) / 2)) * netStrength;
+          const size = (1.0 + 1.4 * ((pz[i] + 1) / 2)) * vertexScale;
           ctx!.fillStyle = `rgba(10, 10, 10, ${a.toFixed(3)})`;
           ctx!.beginPath();
           ctx!.arc(px[i], py[i], size, 0, Math.PI * 2);
           ctx!.fill();
         }
+
+        // Motes suspended inside, twinkling on their own clocks. These are what
+        // make the interior read as a volume with stuff in it rather than a
+        // hollow wireframe.
+        const moteScale = Math.min(3, 0.4 + r / 190);
+        for (let i = 0; i < SPARKS; i++) {
+          const sp = sparks[i];
+          const x1 = sp.x * cosR - sp.z * sinR;
+          const z1 = sp.x * sinR + sp.z * cosR;
+          const y2 = sp.y * cosT - z1 * sinT;
+          const z2 = sp.y * sinT + z1 * cosT;
+
+          const twinkle = 0.5 + 0.5 * Math.sin(time * sp.rate + sp.phase);
+          const a = (0.1 + 0.55 * twinkle) * ((z2 + 1) / 2) * netStrength;
+          if (a < 0.02) continue;
+
+          ctx!.fillStyle = `rgba(10, 10, 10, ${a.toFixed(3)})`;
+          ctx!.beginPath();
+          ctx!.arc(
+            cx + x1 * nodeR,
+            cy + y2 * nodeR,
+            (0.7 + 0.9 * twinkle) * moteScale,
+            0,
+            Math.PI * 2
+          );
+          ctx!.fill();
+        }
       }
 
-      // Whiteout. The last of the travel blows the whole screen to pure white.
-      const flash = Math.max(0, (progress - 0.8) / 0.2);
+      // A wash of white rather than a full whiteout. Russ wants to be absorbed
+      // *into* the orb and see what it is made of, so blanking the screen to
+      // solid white at the end would erase the very thing being approached.
+      const flash = Math.max(0, (progress - 0.82) / 0.18);
       if (flash > 0) {
-        ctx!.fillStyle = `rgba(255, 255, 255, ${Math.min(1, flash).toFixed(3)})`;
+        ctx!.fillStyle = `rgba(255, 255, 255, ${(Math.min(1, flash) * 0.3).toFixed(3)})`;
         ctx!.fillRect(0, 0, w, h);
       }
 
