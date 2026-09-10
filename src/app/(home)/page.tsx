@@ -688,24 +688,19 @@ export default function Home() {
     window.addEventListener("wheel", handleWheel, { passive: false });
     window.addEventListener("touchstart", handleTouchStart, { passive: true });
     window.addEventListener("touchend", handleTouchEnd, { passive: true });
-    // Mouse at bottom edge triggers scroll
-    const handleMouseMove = (e: MouseEvent) => {
-      const now = Date.now();
-      if (now - lastNav < 1500) return;
-      if (e.clientY > window.innerHeight - 40) {
-        lastNav = now;
-        navigate(1);
-      }
-    };
+    // Deliberately no mousemove handler. There used to be one that advanced a
+    // section whenever the cursor came within 40px of the bottom of the
+    // window, which meant the page walked forward on its own without any
+    // scroll — and the scroll-hint chevron sits inside that zone, so reaching
+    // for it made the page run away. Progression is now scroll, touch, key or
+    // an explicit click only.
 
     window.addEventListener("keydown", handleKey);
-    window.addEventListener("mousemove", handleMouseMove);
     return () => {
       window.removeEventListener("wheel", handleWheel);
       window.removeEventListener("touchstart", handleTouchStart);
       window.removeEventListener("touchend", handleTouchEnd);
       window.removeEventListener("keydown", handleKey);
-      window.removeEventListener("mousemove", handleMouseMove);
     };
   }, [navigate]);
 
