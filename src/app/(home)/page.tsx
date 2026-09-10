@@ -11,6 +11,7 @@ import { ContactForm } from "@/components/contact/contact-form";
 import { ServiceCarousel } from "@/components/home/service-carousel";
 import { BinaryIntro, wordmarkSize, MASK_WEIGHT } from "@/components/home/binary-intro";
 import { Flock } from "@/components/home/flock";
+import { NeuralOrb } from "@/components/home/neural-orb";
 import { Button } from "@/components/ui/button";
 
 function seededRandom(seed: number) {
@@ -142,9 +143,62 @@ const sections = [
           <p className="mt-5 font-body text-sm font-light leading-relaxed text-ink/60 md:text-base">
             One connected system, built around how your business actually runs.
           </p>
-          <div className="mt-8 flex justify-end">
-            <Button href="/contact">Start a conversation</Button>
-          </div>
+        </div>
+      </div>
+    ),
+  },
+  // The orb. Grows out of the convergence point, brightening and swelling
+  // until it fills the screen and whites out. Across these stages the trails
+  // angle upward and are absorbed into it.
+  {
+    id: "orb-1",
+    flockStage: 8,
+    content: () => (
+      <div className="w-full max-w-6xl mx-auto px-4">
+        <div className="ml-auto max-w-sm text-right">
+          <p className="font-display text-2xl font-light leading-snug md:text-4xl">
+            And then it starts to learn.
+          </p>
+        </div>
+      </div>
+    ),
+  },
+  {
+    id: "orb-2",
+    flockStage: 9,
+    content: () => (
+      <div className="w-full max-w-6xl mx-auto px-4">
+        <div className="ml-auto max-w-sm text-right">
+          <p className="font-display text-2xl font-light leading-snug md:text-4xl">
+            Every process it touches makes it sharper.
+          </p>
+        </div>
+      </div>
+    ),
+  },
+  {
+    id: "orb-3",
+    flockStage: 10,
+    content: () => (
+      <div className="w-full max-w-6xl mx-auto px-4">
+        <div className="ml-auto max-w-sm text-right">
+          <p className="font-display text-2xl font-light leading-snug md:text-4xl">
+            Until it understands how the whole business runs.
+          </p>
+        </div>
+      </div>
+    ),
+  },
+  {
+    id: "orb-4",
+    flockStage: 11,
+    content: () => (
+      <div className="mx-auto max-w-2xl text-center">
+        <h2 className="font-display text-3xl font-light leading-tight md:text-5xl lg:text-6xl">
+          This is what we build.
+        </h2>
+        <div className="mt-10 flex justify-center">
+          <Button href="/contact">Start a conversation</Button>
         </div>
       </div>
     ),
@@ -758,6 +812,7 @@ export default function Home() {
             style={{ opacity: flockStage > 0 ? 1 : 0 }}
           >
             <Flock stage={flockStage} />
+            <NeuralOrb stage={flockStage} />
           </div>
         );
       })()}

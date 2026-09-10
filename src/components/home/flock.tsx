@@ -52,8 +52,14 @@ export const CREATURES: Creature[] = [
   { label: "REDUCE COSTS",  rgb: [193, 236, 208], headX: 0.44, headY: 0.81, sweep: -0.12, phase: 5.5 },
 ];
 
-/** Where every trail meets on the final stage */
-const CONVERGE = { x: 0.52, y: 0.5 };
+/** Where every trail meets on the final stage. Shared with the neural orb,
+ *  which grows out of exactly this point. */
+export const CONVERGE = { x: 0.52, y: 0.5 };
+
+/** First stage at which all trails have arrived and merge. */
+export const MERGE_STAGE = 7;
+/** Stages after the merge, during which the orb grows and the trails rise. */
+export const ORB_STAGES = 4;
 
 const TAIL_POINTS = 96;
 /** Length of the tail as a fraction of viewport width */
@@ -105,7 +111,7 @@ export function Flock({ stage }: FlockProps) {
     }
 
     /** Builds the tail polyline for one creature at the current time. */
-    function tailPoints(c: Creature, s: State, time: number) {
+    function tailPoints(c: Creature, s: State, time: number, rise: number) {
       const restX = c.headX * w;
       const restY = c.headY * h;
 
@@ -129,7 +135,11 @@ export function Flock({ stage }: FlockProps) {
 
         // The trail sweeps vertically as it recedes, which is what gives the
         // reference its long lazy arcs rather than straight lines.
-        const arc = Math.pow(f, 1.5) * c.sweep * h * (1 - s.merge * 0.55);
+        // Once the orb starts charging, every trail angles upward: the tail is
+        // pushed down relative to the head, so they read as climbing.
+        const arc =
+          Math.pow(f, 1.5) * c.sweep * h * (1 - s.merge * 0.55) +
+          Math.pow(f, 1.2) * rise * h * 0.6;
 
         // Two waves travelling down the body at different rates, stacked the
         // same way the background murmuration stacks its sines. Amplitude is a
@@ -235,7 +245,9 @@ export function Flock({ stage }: FlockProps) {
       ctx!.clearRect(0, 0, canvas!.width, canvas!.height);
       ctx!.scale(dpr, dpr);
 
-      const merged = stageNow >= CREATURES.length + 1;
+      const merged = stageNow >= MERGE_STAGE;
+      // 0 while the flock is still assembling, 1 once the orb is at full size.
+      const rise = Math.max(0, Math.min(1, (stageNow - MERGE_STAGE) / ORB_STAGES));
 
       for (let i = 0; i < CREATURES.length; i++) {
         const c = CREATURES[i];
@@ -251,10 +263,16 @@ export function Flock({ stage }: FlockProps) {
 
         if (s.arrival < 0.004) continue;
 
-        const pts = tailPoints(c, s, time);
-        strokeTail(pts, c.rgb, s.arrival);
+        const pts = tailPoints(c, s, time, rise);
+
+        // Trails brighten as the orb charges, then are absorbed into it.
+        const absorbed = 1 - Math.max(0, (rise - 0.45) / 0.55);
+        const a = s.arrival * absorbed;
+        if (a < 0.01) continue;
+
+        strokeTail(pts, c.rgb, a * (1 + rise * 0.6));
         // Labels fade out as the trails merge, or they would pile up.
-        drawHead(pts[0][0], pts[0][1], c.rgb, c.label, s.arrival, s.merge < 0.35);
+        drawHead(pts[0][0], pts[0][1], c.rgb, c.label, a, s.merge < 0.35);
       }
 
       if (!reduced) raf = requestAnimationFrame(frame);

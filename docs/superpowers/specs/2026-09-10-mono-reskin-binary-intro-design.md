@@ -431,3 +431,69 @@ Copy re-paced across six beats. Sections 19 -> **21**.
 ### Still outstanding
 
 The right-hand dot rail is now **21 dots**. Flagged twice; unaddressed.
+
+---
+
+## Addendum 6 — the neural orb, 2026-09-10
+
+Continues straight out of the flock convergence. Four more stages (8..11):
+the trails angle upward and brighten, while the convergence point swells into
+a neural sphere that fills the screen and blows out to white.
+
+### Components
+
+`CONVERGE`, `MERGE_STAGE` (7) and `ORB_STAGES` (4) are now exported from
+`flock.tsx`, so `neural-orb.tsx` grows from exactly the point the trails meet
+rather than duplicating the coordinate.
+
+### The sphere
+
+170 nodes on a Fibonacci sphere (even coverage, no polar clumping). Edges are
+computed **once at mount**: the sphere is rigid, so which nodes are neighbours
+never changes under rotation — only their projected positions do. Per frame
+the loop just yaws, tilts, projects orthographically, and draws.
+
+Depth drives both alpha and node size, so the far side of the sphere sits back.
+
+### Why the network is ink, not white
+
+A white network on a white orb is invisible, the same problem as the "white
+white" trail in Addendum 5. Nodes and edges are drawn in `rgba(10,10,10,…)`,
+which also keeps the orb consistent with the binary intro and the murmuration
+— everything structural on this site is ink on light.
+
+### Growth and whiteout
+
+```
+r        = 14 + progress^2 * diagonal * 0.62      (accelerating, runs away at the end)
+bloom    = white radial, widening and brightening with progress
+rim      = conic gradient through the six trail colours, slowly turning
+network  = fades in to progress 0.72, then back out
+whiteout = progress 0.8 -> 1.0 fills the viewport pure white
+```
+
+Progress is eased toward its stage target at 0.05/frame, so growth reads as
+continuous rather than stepping between sections.
+
+The rim uses `createConicGradient`, guarded with a `typeof` check — without it
+the orb simply has no rim rather than throwing.
+
+### Trails during the orb stages
+
+`rise` = the same 0..1 progress. It adds `f^1.2 * rise * h * 0.6` to the arc,
+pushing each tail down relative to its head so the trails read as climbing.
+Stroke alpha is multiplied by `1 + rise*0.6` (brightening), then faded out
+from `rise` 0.45 onward so they are absorbed into the orb.
+
+### Copy
+
+The CTA moved off `flock-converge` and onto `orb-4`, which is the actual
+climax — two CTAs four steps apart made no sense. Converge keeps its headline
+and supporting line.
+
+### Sections now 25 — this needs a decision
+
+The right-hand dot rail renders one dot per section and is now at **25**.
+Flagged in Addenda 3 and 5 and still unaddressed. At this count it is no
+longer a nitpick; it wants grouping, shrinking, or hiding during the
+flock/orb run.
