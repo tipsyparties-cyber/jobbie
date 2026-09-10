@@ -49,34 +49,6 @@ function FloatingWords({ text, startDelay = 0 }: { text: string; startDelay?: nu
 }
 
 const sections = [
-  {
-    id: "hero",
-    content: (onReady: () => void) => (
-      <div className="text-center">
-        <h1 className="font-light leading-tight tracking-tight">
-          <span className="block font-body text-3xl md:text-5xl lg:text-[4.5rem]">
-            <FloatingWords text="We use ai & automation" startDelay={0} />
-          </span>
-          <span className="relative block font-display mt-2 text-4xl md:text-6xl lg:text-[5.5rem]" style={{ marginLeft: "-0.5em" }}>
-            <span className="whitespace-nowrap">
-              <FloatingWords text="to make your business" startDelay={0.4} />
-              <span className="inline-block" style={{ width: "5em" }}></span>
-            </span>
-            <motion.span
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.8, delay: 1.5 }}
-              onAnimationComplete={onReady}
-              className="absolute top-0"
-              style={{ left: "calc(100% - 5em)" }}
-            >
-              <RotatingWord />
-            </motion.span>
-          </span>
-        </h1>
-      </div>
-    ),
-  },
   // The flock. Each stage brings one more trail in from the left; the last
   // stage converges them. The canvas itself is a persistent layer below,
   // driven by flockStage — these sections only carry the copy.
@@ -148,6 +120,34 @@ const sections = [
             <Button href="/contact">Start a conversation</Button>
           </div>
         </div>
+      </div>
+    ),
+  },
+  {
+    id: "hero",
+    content: (onReady: () => void) => (
+      <div className="text-center">
+        <h1 className="font-light leading-tight tracking-tight">
+          <span className="block font-body text-3xl md:text-5xl lg:text-[4.5rem]">
+            <FloatingWords text="We use ai & automation" startDelay={0} />
+          </span>
+          <span className="relative block font-display mt-2 text-4xl md:text-6xl lg:text-[5.5rem]" style={{ marginLeft: "-0.5em" }}>
+            <span className="whitespace-nowrap">
+              <FloatingWords text="to make your business" startDelay={0.4} />
+              <span className="inline-block" style={{ width: "5em" }}></span>
+            </span>
+            <motion.span
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.8, delay: 1.5 }}
+              onAnimationComplete={onReady}
+              className="absolute top-0"
+              style={{ left: "calc(100% - 5em)" }}
+            >
+              <RotatingWord />
+            </motion.span>
+          </span>
+        </h1>
       </div>
     ),
   },

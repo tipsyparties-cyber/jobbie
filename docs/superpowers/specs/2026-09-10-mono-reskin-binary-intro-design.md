@@ -347,3 +347,32 @@ ACCURACY.
 
 The right-hand dot rail now has **19 dots** rather than 14. Not addressed —
 flagged for Russ, since it may want grouping or hiding.
+
+---
+
+## Addendum 4 — flock repositioned, 2026-09-10
+
+Addendum 3 placed the flock *after* the `hero` headline section, reading
+Russ's "after the hero section" as the "We use ai & automation" headline.
+He meant after the **binary intro** — he refers to the intro as the hero.
+
+The five flock sections now sit at indices 0-4, ahead of `hero`:
+
+```
+binary intro (currentSection -1)
+  0  flock-1
+  1  flock-2
+  2  flock-3
+  3  flock-4
+  4  flock-converge
+  5  hero          "We use ai & automation…"
+  6  positioning
+  ... unchanged
+```
+
+So the first thing after the wordmark rises into the header is the first
+trail flying in. Section count stays 19; only the order changed.
+
+**Terminology note for future sessions:** to Russ, "the hero section" means
+the binary intro screen, not the headline section whose id is literally
+`hero`.
