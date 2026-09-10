@@ -910,3 +910,41 @@ so a second animated black wordmark would only duplicate it.
 
 Dropped with it: `viewportWidth` state, the `wordmarkSize`/`MASK_WEIGHT`
 imports in the page, and `skipIntro`.
+
+---
+
+## Addendum 16 — the matrix stays, 2026-09-11
+
+Correction to Addendum 15. The field was still fizzling out before the climb,
+so the wordmark travelled across a blank page rather than *through* the code.
+
+### Fizzle removed entirely
+
+`T_FIZZLE`, `Cell.fizzleAt` and the fizzle branch are gone. After the emerge
+phase every cell holds one of exactly two targets, for the rest of the intro:
+
+```
+target = isMask ? 1 : GHOST_ALPHA
+```
+
+Because `isMask` is recomputed each frame against the wordmark's current
+position, the climb needs no extra code at all: cells ahead of the wordmark
+darken to 1, cells behind settle back to the field. That *is* the logo moving
+through the matrix.
+
+### Field alpha raised
+
+`GHOST_ALPHA` 0.14 -> **0.2**. At 0.14 the field was a trace; it is now the
+medium the logo travels through, so it has to stay clearly present. Contrast
+against the wordmark is still 5:1.
+
+### Timeline shortened
+
+Losing the fizzle removes ~1.1s of waiting:
+
+```
+0     -> 900ms   fill     rain fills, columns staggered
+900   -> 1900ms  emerge   mask darkens, field settles to 0.2
+2100ms           settled  waits here for a scroll
+on scroll        climb    lift eases to 1, arrival at 0.97
+```

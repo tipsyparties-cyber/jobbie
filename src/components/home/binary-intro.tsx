@@ -7,14 +7,15 @@ import { useEffect, useRef } from "react";
  *
  * Phase 1  rain fills the screen, top to bottom
  * Phase 2  characters inside the up+up letterforms hold hard black; every
- *          character outside fades to a ghost, so the wordmark emerges out of
+ *          character outside settles to a ghost, so the wordmark emerges out of
  *          the noise as a density difference rather than being drawn
- * Phase 3  the field fizzles out a few characters at a time, until only the
- *          wordmark is left
- * Phase 4  on scroll, the wordmark *travels up the page still made of code* —
- *          characters fade in above it and out below it as it climbs, the same
- *          mechanism that made it appear. Only once it reaches the header does
- *          the caller swap in the black text.
+ * Phase 3  on scroll, the wordmark *travels up the page still made of code* —
+ *          characters darken ahead of it and lighten behind it as it climbs.
+ *          Only once it reaches the header does the caller swap in black text.
+ *
+ * The field never fizzles out. It stays a living matrix for the whole intro,
+ * and the wordmark is only ever the part of that matrix held dark — which is
+ * what lets the logo travel *through* the code rather than across a blank page.
  *
  * The mask is built ONCE at a reference size and position, then sampled
  * through an inverse transform. Re-rendering the wordmark offscreen and
@@ -24,16 +25,17 @@ import { useEffect, useRef } from "react";
 
 const T_FILL = 900;
 const T_EMERGE = 1900;
-const T_FIZZLE = 3000;
 /** Field is settled and the wordmark is waiting to travel. */
-const T_SETTLED = 3200;
+const T_SETTLED = 2100;
 
 const CELL_DESKTOP = 18;
 const CELL_MOBILE = 22;
 const MOBILE_MAX = 640;
 
 const INK = "10, 10, 10";
-const GHOST_ALPHA = 0.14;
+/** Resting alpha of every character outside the wordmark. This is the matrix
+ *  the logo moves through, so it has to stay clearly present — not a trace. */
+const GHOST_ALPHA = 0.2;
 const ALPHA_STEPS = 12;
 
 /** The characters the field rains — the wordmark's own letters. */
@@ -160,8 +162,6 @@ interface Cell {
   ch: number;
   /** ms after fill start at which this cell first appears */
   appearAt: number;
-  /** ms at which this cell begins to extinguish (non-mask cells only) */
-  fizzleAt: number;
   alpha: number;
 }
 
@@ -251,7 +251,6 @@ export function BinaryIntro({ onArrived, travel }: BinaryIntroProps) {
           cells[r * cols + c] = {
             ch: (Math.random() * CHARS.length) | 0,
             appearAt: colStart[c] + (r / Math.max(rows - 1, 1)) * (T_FILL - 320),
-            fizzleAt: T_EMERGE + Math.random() * (T_FIZZLE - T_EMERGE),
             alpha: 0,
           };
         }
@@ -301,12 +300,13 @@ export function BinaryIntro({ onArrived, travel }: BinaryIntroProps) {
           } else if (t < T_EMERGE) {
             const ramp = Math.min((t - cl.appearAt) / 260, 1);
             target = ramp * (isMask ? 1 : 0.72);
-          } else if (isMask) {
-            target = 1;
-          } else if (t < cl.fizzleAt) {
-            target = GHOST_ALPHA;
           } else {
-            target = 0;
+            // No fizzle. The matrix persists at its resting alpha for the whole
+            // intro; the wordmark is only ever the characters held dark inside
+            // it. As the mask climbs, cells ahead darken and cells behind
+            // settle back to the field — which is the logo travelling through
+            // the code, done entirely by these two targets.
+            target = isMask ? 1 : GHOST_ALPHA;
           }
 
           cl.alpha += (target - cl.alpha) * 0.18;
