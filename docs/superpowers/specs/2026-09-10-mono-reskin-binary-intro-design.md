@@ -497,3 +497,56 @@ The right-hand dot rail renders one dot per section and is now at **25**.
 Flagged in Addenda 3 and 5 and still unaddressed. At this count it is no
 longer a nitpick; it wants grouping, shrinking, or hiding during the
 flock/orb run.
+
+---
+
+## Addendum 7 — stipple trails, grid and background murmuration removed, 2026-09-10
+
+From a second screenshot. Russ wanted the grid lines and the background dot
+animation gone, and the trails rebuilt in that dot style.
+
+Reversal of Addendum 2's background decision, deliberately: the murmuration
+was a separate full-screen layer behind everything. The stipple texture is now
+carried **by the trails themselves** instead. Same aesthetic, one less layer,
+and the dots now mean something — they are the trail.
+
+### Removed
+
+- The three vertical rules in `(home)/page.tsx` (`w-px bg-ink/8`).
+- `<Murmuration />` unmounted from the root layout, and its import dropped.
+
+`src/components/layout/murmuration.tsx` is **kept on disk**, unmounted. It is
+a working component and may be wanted again; deleting it would throw the work
+away for no gain.
+
+Note `hero.tsx` also contains three vertical rules, but it is dead code
+(Addendum 1) and was left alone.
+
+### Trails rebuilt as stipple
+
+Each trail is now 720 ink grains (300 on mobile) scattered around a
+centreline, inside the soft coloured bloom:
+
+| Property | Rule |
+|---|---|
+| position along tail | `random()^1.35` — biased to the head, so it is dense at the front and dissolves behind |
+| lateral offset | sum of three uniforms ~ normal — dense core, thin fringe |
+| spread | `h*0.006 + f^0.85 * h*0.05` — tight at the head, dispersing toward the tail |
+| alpha | `(1-|off|)^1.8 * (1 - f*0.55)`, fixed at creation, bucketed into 7 groups |
+| colour | ink; the bloom underneath carries the iridescence |
+
+The centreline maths was extracted into `headPos` / `offsetAt` / `spreadAt` so
+the smooth bloom path and the grains sample the same curve, rather than each
+having their own copy.
+
+**Performance:** grain alpha is fixed at creation, so grains are bucketed once
+and `fillStyle` is set 7 times per trail per frame instead of 720. The
+per-frame trail alpha rides on `globalAlpha` on top. 6 trails x 720 = 4,320
+grains, against the 5,200 the removed background murmuration was costing —
+a net reduction.
+
+### Why the grains are ink and not white or coloured
+
+Same constraint as everywhere else on this site. Pale grains on off-white
+vanish; the murmuration read well precisely because it was ink. So the
+grains are ink and the colour lives in the bloom around them.

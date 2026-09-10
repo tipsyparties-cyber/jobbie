@@ -725,12 +725,6 @@ export default function Home() {
 
   return (
     <div className="fixed inset-0 overflow-hidden text-ink">
-      <div className="pointer-events-none absolute inset-0">
-        <div className="absolute left-1/4 top-0 h-full w-px bg-ink/8" />
-        <div className="absolute left-2/4 top-0 h-full w-px bg-ink/8" />
-        <div className="absolute left-3/4 top-0 h-full w-px bg-ink/8" />
-      </div>
-
       {/* Clean off-white ground for the intro — same colour as the site, so its
           fade-out simply reveals the murmuration and iridescent blobs behind
           rather than changing the page colour. */}

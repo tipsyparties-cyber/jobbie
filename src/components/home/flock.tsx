@@ -6,19 +6,17 @@ import { useEffect, useRef } from "react";
  * The flock.
  *
  * Long undulating trails that fly in from the left, one per stepper stage,
- * each with a labelled head node and its own iridescent colour. On the final
- * stage every trail converges to a single point on the right.
+ * each with a labelled head node and its own iridescent colour. On the merge
+ * stage every trail converges to a single point; on the orb stages after that
+ * they angle upward, brighten, and are absorbed.
+ *
+ * Each trail is drawn as a **stipple** — a dense scatter of ink particles
+ * around a centreline, tight at the head and dispersing toward the tail —
+ * sitting inside a soft coloured bloom. The bloom carries the iridescence; the
+ * particles carry the form.
  *
  * Driven by `stage`, which comes from section metadata the same way
- * ParticleCanvas is driven by `particleShape`:
- *   stage 0     nothing
- *   stage 1..4  that many trails present
- *   stage 5     all four converged
- *
- * Note on colour: the reference for this is glowing green on near-black.
- * Glow is additive and cannot be reproduced on an off-white ground — nothing
- * out-brightens white. So each trail carries its colour as chroma (a
- * saturated halo around a near-white core) rather than as emitted light.
+ * ParticleCanvas is driven by `particleShape`.
  */
 
 export interface Creature {
@@ -34,15 +32,6 @@ export interface Creature {
   phase: number;
 }
 
-/**
- * Six trails. Colours are pale — the same register as the background blobs —
- * because each trail should read as *white* with an iridescent bloom around
- * it, not as a coloured line. The white core does the drawing; the colour
- * only tints the air around it.
- *
- * The pearl entry is the "white white" one: a neutral silver bloom, since a
- * pure white glow on an off-white ground would be invisible.
- */
 export const CREATURES: Creature[] = [
   { label: "TIME SAVING",   rgb: [242, 226, 150], headX: 0.34, headY: 0.19, sweep:  0.20, phase: 0.0 },
   { label: "DATA INSIGHTS", rgb: [210, 194, 246], headX: 0.46, headY: 0.32, sweep: -0.15, phase: 1.1 },
@@ -61,12 +50,24 @@ export const MERGE_STAGE = 7;
 /** Stages after the merge, during which the orb grows and the trails rise. */
 export const ORB_STAGES = 4;
 
-const TAIL_POINTS = 96;
+/** Smooth-path samples, used for the bloom underneath. */
+const PATH_POINTS = 64;
+/** Stipple particles per trail. */
+const GRAINS = 720;
+const GRAINS_MOBILE = 300;
+const MOBILE_MAX = 640;
 /** Length of the tail as a fraction of viewport width */
 const TAIL_LEN = 0.95;
+const BUCKETS = 7;
+const INK = "10, 10, 10";
 
-interface FlockProps {
-  stage: number;
+interface Grain {
+  /** Position along the tail, 0 at head, 1 at tip. Biased toward the head. */
+  f: number;
+  /** Lateral offset in spread units, roughly -1..1 */
+  off: number;
+  size: number;
+  bucket: number;
 }
 
 interface State {
@@ -74,6 +75,10 @@ interface State {
   arrival: number;
   /** 0 = at rest, 1 = at the convergence point */
   merge: number;
+}
+
+interface FlockProps {
+  stage: number;
 }
 
 export function Flock({ stage }: FlockProps) {
@@ -99,8 +104,10 @@ export function Flock({ stage }: FlockProps) {
     let start = 0;
 
     const states: State[] = CREATURES.map(() => ({ arrival: 0, merge: 0 }));
+    /** Per creature, grains grouped by fixed alpha bucket. */
+    let grains: Grain[][][] = [];
 
-    function resize() {
+    function build() {
       w = window.innerWidth;
       h = window.innerHeight;
       dpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -108,90 +115,141 @@ export function Flock({ stage }: FlockProps) {
       canvas!.height = Math.round(h * dpr);
       canvas!.style.width = `${w}px`;
       canvas!.style.height = `${h}px`;
+
+      const count = w < MOBILE_MAX ? GRAINS_MOBILE : GRAINS;
+
+      grains = CREATURES.map(() => {
+        const buckets: Grain[][] = Array.from({ length: BUCKETS }, () => []);
+        for (let i = 0; i < count; i++) {
+          // Exponent > 1 biases mass toward the head, so the trail is dense at
+          // the front and dissolves behind it.
+          const f = Math.pow(Math.random(), 1.35);
+
+          // Sum of three uniforms ~ normal: dense core, thin fringe. Same
+          // trick the background murmuration used.
+          const off = ((Math.random() + Math.random() + Math.random()) / 3 - 0.5) * 2.4;
+
+          // Fringe grains fade; so does the far end of the tail.
+          const edge = Math.max(0, 1 - Math.abs(off));
+          const strength = Math.pow(edge, 1.8) * (1 - f * 0.55);
+          const bucket = Math.min(BUCKETS - 1, Math.max(0, Math.round(strength * (BUCKETS - 1))));
+
+          buckets[bucket].push({
+            f,
+            off,
+            size: Math.random() < 0.16 ? 2 : 1,
+            bucket,
+          });
+        }
+        return buckets;
+      });
     }
 
-    /** Builds the tail polyline for one creature at the current time. */
-    function tailPoints(c: Creature, s: State, time: number, rise: number) {
+    /** Head position, accounting for arrival and merge. */
+    function headPos(c: Creature, s: State): [number, number] {
       const restX = c.headX * w;
       const restY = c.headY * h;
-
-      // Arrival slides the head in from off-screen left.
       const enterX = -0.25 * w;
       let hx = enterX + (restX - enterX) * s.arrival;
       let hy = restY;
-
-      // Merge pulls it to the shared convergence point.
       if (s.merge > 0) {
         hx += (CONVERGE.x * w - hx) * s.merge;
         hy += (CONVERGE.y * h - hy) * s.merge;
       }
-
-      const pts: [number, number][] = [];
-      const len = TAIL_LEN * w;
-
-      for (let j = 0; j < TAIL_POINTS; j++) {
-        const f = j / (TAIL_POINTS - 1); // 0 at head, 1 at tail tip
-        const x = hx - f * len;
-
-        // The trail sweeps vertically as it recedes, which is what gives the
-        // reference its long lazy arcs rather than straight lines.
-        // Once the orb starts charging, every trail angles upward: the tail is
-        // pushed down relative to the head, so they read as climbing.
-        const arc =
-          Math.pow(f, 1.5) * c.sweep * h * (1 - s.merge * 0.55) +
-          Math.pow(f, 1.2) * rise * h * 0.6;
-
-        // Two waves travelling down the body at different rates, stacked the
-        // same way the background murmuration stacks its sines. Amplitude is a
-        // fraction of viewport height, not a fixed pixel count, so these
-        // undulate as broadly as the background does — a fixed 16px wobble is
-        // what made them read as straight lines.
-        const amp = h * 0.085;
-        const wave =
-          (Math.sin(f * 4.2 - time * 1.15 + c.phase) * amp * Math.pow(f, 0.55) +
-            Math.sin(f * 9.0 - time * 1.9 + c.phase * 1.7) * amp * 0.3 * Math.pow(f, 0.85)) *
-          (1 - s.merge * 0.85);
-
-        // Slow bob of the whole creature, head included.
-        const bob = Math.sin(time * 0.45 + c.phase) * h * 0.02 * (1 - s.merge);
-
-        pts.push([x, hy + arc + wave + bob]);
-      }
-      return pts;
+      return [hx, hy];
     }
 
-    function strokeTail(pts: [number, number][], rgb: [number, number, number], alpha: number) {
-      const [r, g, b] = rgb;
+    /** Vertical offset of the centreline at position f along the tail. */
+    function offsetAt(c: Creature, s: State, time: number, rise: number, f: number) {
+      // The trail sweeps vertically as it recedes, which gives the long lazy
+      // arcs. Once the orb charges, an upward bias is added so the tail is
+      // pushed down relative to the head and they read as climbing.
+      const arc =
+        Math.pow(f, 1.5) * c.sweep * h * (1 - s.merge * 0.55) +
+        Math.pow(f, 1.2) * rise * h * 0.6;
+
+      // Two waves travelling down the body at different rates. Amplitude is a
+      // fraction of viewport height, not a pixel constant, so it undulates as
+      // broadly as the page is tall.
+      const amp = h * 0.085;
+      const wave =
+        (Math.sin(f * 4.2 - time * 1.15 + c.phase) * amp * Math.pow(f, 0.55) +
+          Math.sin(f * 9.0 - time * 1.9 + c.phase * 1.7) * amp * 0.3 * Math.pow(f, 0.85)) *
+        (1 - s.merge * 0.85);
+
+      const bob = Math.sin(time * 0.45 + c.phase) * h * 0.02 * (1 - s.merge);
+
+      return arc + wave + bob;
+    }
+
+    /** How far the stipple disperses either side of the centreline at f. */
+    function spreadAt(f: number, merge: number) {
+      return (h * 0.006 + Math.pow(f, 0.85) * h * 0.05) * (1 - merge * 0.75);
+    }
+
+    /** Soft coloured bloom under the stipple — this is the iridescence. */
+    function drawBloom(
+      c: Creature,
+      s: State,
+      time: number,
+      rise: number,
+      hx: number,
+      hy: number,
+      alpha: number
+    ) {
+      const [r, g, b] = c.rgb;
+      const len = TAIL_LEN * w;
 
       ctx!.beginPath();
-      ctx!.moveTo(pts[0][0], pts[0][1]);
-      for (let j = 1; j < pts.length; j++) {
-        // Midpoint smoothing keeps the polyline reading as a continuous curve.
-        const [px, py] = pts[j - 1];
-        const [cx, cy] = pts[j];
-        ctx!.quadraticCurveTo(px, py, (px + cx) / 2, (py + cy) / 2);
+      for (let i = 0; i < PATH_POINTS; i++) {
+        const f = i / (PATH_POINTS - 1);
+        const x = hx - f * len;
+        const y = hy + offsetAt(c, s, time, rise, f);
+        if (i === 0) ctx!.moveTo(x, y);
+        else ctx!.lineTo(x, y);
       }
-
       ctx!.lineCap = "round";
       ctx!.lineJoin = "round";
 
-      // Wide faint bloom. This is the iridescence, and it is the only thing
-      // separating the trail from the off-white ground — so it has to be broad
-      // and soft rather than a tight saturated line.
       ctx!.strokeStyle = `rgba(${r}, ${g}, ${b}, ${0.3 * alpha})`;
-      ctx!.lineWidth = 26;
+      ctx!.lineWidth = 30;
       ctx!.stroke();
 
-      ctx!.strokeStyle = `rgba(${r}, ${g}, ${b}, ${0.38 * alpha})`;
-      ctx!.lineWidth = 10;
+      ctx!.strokeStyle = `rgba(${r}, ${g}, ${b}, ${0.34 * alpha})`;
+      ctx!.lineWidth = 13;
       ctx!.stroke();
+    }
 
-      // White filament down the middle. It reads as bright because it sits
-      // inside the tinted bloom rather than directly on the page — this is
-      // what makes the trail white-with-a-glow instead of a coloured line.
-      ctx!.strokeStyle = `rgba(255, 255, 255, ${0.98 * alpha})`;
-      ctx!.lineWidth = 2.4;
-      ctx!.stroke();
+    /** The stipple itself — ink grains scattered around the centreline. */
+    function drawStipple(
+      ci: number,
+      c: Creature,
+      s: State,
+      time: number,
+      rise: number,
+      hx: number,
+      hy: number,
+      alpha: number
+    ) {
+      const len = TAIL_LEN * w;
+      ctx!.globalAlpha = alpha;
+
+      for (let b = 1; b < BUCKETS; b++) {
+        const group = grains[ci][b];
+        if (group.length === 0) continue;
+
+        ctx!.fillStyle = `rgba(${INK}, ${((b / (BUCKETS - 1)) * 0.5).toFixed(3)})`;
+
+        for (let i = 0; i < group.length; i++) {
+          const gr = group[i];
+          const x = hx - gr.f * len;
+          const y =
+            hy + offsetAt(c, s, time, rise, gr.f) + gr.off * spreadAt(gr.f, s.merge);
+          ctx!.fillRect(x, y, gr.size, gr.size);
+        }
+      }
+
+      ctx!.globalAlpha = 1;
     }
 
     function drawHead(
@@ -230,7 +288,7 @@ export function Flock({ stage }: FlockProps) {
         ctx!.font = `500 11px ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace`;
         ctx!.textAlign = "center";
         ctx!.textBaseline = "alphabetic";
-        ctx!.fillStyle = `rgba(10, 10, 10, ${0.75 * alpha})`;
+        ctx!.fillStyle = `rgba(${INK}, ${0.75 * alpha})`;
         ctx!.fillText(label, x, y - 18);
       }
     }
@@ -256,41 +314,38 @@ export function Flock({ stage }: FlockProps) {
         const wantArrival = stageNow >= i + 1 ? 1 : 0;
         const wantMerge = merged ? 1 : 0;
 
-        // Ease toward the wanted state. Arrival is slower than merge so trails
-        // glide in but snap together decisively.
         s.arrival += (wantArrival - s.arrival) * (reduced ? 1 : 0.045);
         s.merge += (wantMerge - s.merge) * (reduced ? 1 : 0.055);
 
         if (s.arrival < 0.004) continue;
-
-        const pts = tailPoints(c, s, time, rise);
 
         // Trails brighten as the orb charges, then are absorbed into it.
         const absorbed = 1 - Math.max(0, (rise - 0.45) / 0.55);
         const a = s.arrival * absorbed;
         if (a < 0.01) continue;
 
-        strokeTail(pts, c.rgb, a * (1 + rise * 0.6));
-        // Labels fade out as the trails merge, or they would pile up.
-        drawHead(pts[0][0], pts[0][1], c.rgb, c.label, a, s.merge < 0.35);
+        const [hx, hy] = headPos(c, s);
+
+        drawBloom(c, s, time, rise, hx, hy, Math.min(1, a * (1 + rise * 0.6)));
+        drawStipple(i, c, s, time, rise, hx, hy, a);
+        drawHead(hx, hy + offsetAt(c, s, time, rise, 0), c.rgb, c.label, a, s.merge < 0.35);
       }
 
       if (!reduced) raf = requestAnimationFrame(frame);
     }
 
-    resize();
+    build();
     if (reduced) {
-      // Settle immediately and paint one frame.
       for (let i = 0; i < states.length; i++) {
         states[i].arrival = stageRef.current >= i + 1 ? 1 : 0;
-        states[i].merge = stageRef.current >= CREATURES.length + 1 ? 1 : 0;
+        states[i].merge = stageRef.current >= MERGE_STAGE ? 1 : 0;
       }
       frame(0);
     } else {
       raf = requestAnimationFrame(frame);
     }
 
-    const onResize = () => resize();
+    const onResize = () => build();
     window.addEventListener("resize", onResize);
 
     return () => {
