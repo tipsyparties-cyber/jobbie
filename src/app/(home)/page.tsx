@@ -9,6 +9,7 @@ import { HarmonyGlyph } from "@/components/home/harmony-glyph";
 import { ParticleCanvas, type ParticleShape } from "@/components/home/particle-canvas";
 import { ContactForm } from "@/components/contact/contact-form";
 import { ServiceCarousel } from "@/components/home/service-carousel";
+import { BinaryIntro, wordmarkSize } from "@/components/home/binary-intro";
 
 function seededRandom(seed: number) {
   const x = Math.sin(seed * 9301 + 49297) * 49297;
@@ -464,9 +465,28 @@ export default function Home() {
   const [currentSection, setCurrentSection] = useState(-1);
   const [logoDone, setLogoDone] = useState(false);
   const [transitioning, setTransitioning] = useState(false);
+  const [introResolved, setIntroResolved] = useState(false);
+  const [viewportWidth, setViewportWidth] = useState(1280);
+
+  useEffect(() => {
+    const measure = () => setViewportWidth(window.innerWidth);
+    measure();
+    window.addEventListener("resize", measure);
+    return () => window.removeEventListener("resize", measure);
+  }, []);
+
+  // Any interaction during the intro skips straight to the resolved wordmark.
+  const skipIntro = useCallback(() => {
+    setIntroResolved(true);
+    setLogoDone(true);
+  }, []);
 
   const navigate = useCallback(
     (dir: 1 | -1) => {
+      if (!logoDone) {
+        skipIntro();
+        return;
+      }
       if (transitioning) return;
       const next = currentSection + dir;
       if (next < 0 || next >= sections.length) return;
@@ -476,7 +496,7 @@ export default function Home() {
         setTransitioning(false);
       }, 600);
     },
-    [transitioning, currentSection]
+    [transitioning, currentSection, logoDone, skipIntro]
   );
 
   useEffect(() => {
@@ -533,6 +553,14 @@ export default function Home() {
     };
   }, [navigate]);
 
+  // Hold on the resolved wordmark for a beat, then send it up to the header.
+  useEffect(() => {
+    if (introResolved && !logoDone) {
+      const t = setTimeout(() => setLogoDone(true), 800);
+      return () => clearTimeout(t);
+    }
+  }, [introResolved, logoDone]);
+
   useEffect(() => {
     if (logoDone && currentSection === -1) {
       setTimeout(() => setCurrentSection(0), 500);
@@ -547,25 +575,69 @@ export default function Home() {
         <div className="absolute left-3/4 top-0 h-full w-px bg-white/5" />
       </div>
 
-      {/* Logo */}
+      {/* Off-white ground for the intro. Fades out as the wordmark rises,
+          handing back to the existing page treatment. */}
       <motion.div
-        className="fixed z-[100] tracking-tight text-white pointer-events-none"
-        initial={{ top: "50%", left: "50%", x: "-50%", y: "-50%", fontSize: "6rem", opacity: 0 }}
+        aria-hidden="true"
+        className="pointer-events-none fixed inset-0 z-[90]"
+        style={{ backgroundColor: "#F4F6F8" }}
+        initial={{ opacity: 1 }}
+        animate={{ opacity: logoDone ? 0 : 1 }}
+        transition={{ duration: 0.9, delay: logoDone ? 0.4 : 0, ease: "easeInOut" }}
+      />
+
+      {/* Binary rain — resolves into the up+up wordmark */}
+      {!logoDone && (
+        <BinaryIntro onResolved={() => setIntroResolved(true)} handedOff={introResolved} />
+      )}
+
+      {/* Logo. Hidden while the digits form it, then crossfades in at the exact
+          size and position the mask resolved at, and rises into the header. */}
+      <motion.div
+        className="fixed z-[100] tracking-tight pointer-events-none"
+        initial={{ top: "50%", left: "50%", x: "-50%", y: "-50%", fontSize: `${wordmarkSize(viewportWidth)}px`, opacity: 0, color: "#0A0A0A" }}
         animate={
           logoDone
-            ? { top: "1.1rem", left: "1.5rem", x: "0%", y: "0%", fontSize: "1.5rem", opacity: 1 }
-            : { top: "50%", left: "50%", x: "-50%", y: "-50%", fontSize: "6rem", opacity: 1 }
+            ? { top: "1.1rem", left: "50%", x: "-50%", y: "0%", fontSize: "1.5rem", opacity: 1, color: "#FFFFFF" }
+            : {
+                top: "50%",
+                left: "50%",
+                x: "-50%",
+                y: "-50%",
+                fontSize: `${wordmarkSize(viewportWidth)}px`,
+                opacity: introResolved ? 1 : 0,
+                color: "#0A0A0A",
+              }
         }
-        transition={logoDone ? { duration: 1.2, delay: 0.3, ease: [0.25, 0.1, 0.25, 1] } : { duration: 1, delay: 0.5, ease: "easeOut" }}
-        onAnimationComplete={() => { if (!logoDone) setTimeout(() => setLogoDone(true), 1500); }}
+        transition={
+          logoDone
+            ? { duration: 1.2, delay: 0.3, ease: [0.25, 0.1, 0.25, 1] }
+            : { duration: 0.45, ease: "easeOut" }
+        }
       >
         <span className="font-body font-light">up</span>
         <span className="font-display text-[1.15em]">+up</span>
-        <span className="text-white text-[0.7em] leading-none font-body -ml-[0.15em] relative -top-[0.35em]">^</span>
+        <span className="text-[0.7em] leading-none font-body -ml-[0.15em] relative -top-[0.35em]">^</span>
       </motion.div>
 
-      {/* Hamburger menu — top right */}
-      <HomeMenu />
+      {/* Contact — takes the top-left slot the logo used to occupy */}
+      <motion.div
+        className="fixed top-4 left-6 z-[100]"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: logoDone ? 1 : 0 }}
+        transition={{ duration: 0.5, delay: logoDone ? 1.1 : 0 }}
+      >
+        <Link
+          href="/contact"
+          className="font-body text-sm font-light tracking-wide text-white/70 transition-colors hover:text-white"
+        >
+          Contact
+        </Link>
+      </motion.div>
+
+      {/* Hamburger menu — top right. Held back during the intro, where its
+          white bars would sit invisible on the off-white ground. */}
+      {logoDone && <HomeMenu />}
 
       {/* Particle Canvas — persistent layer, shape changes with section */}
       {(() => {

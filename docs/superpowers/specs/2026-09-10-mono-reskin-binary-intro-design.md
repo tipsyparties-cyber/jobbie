@@ -125,3 +125,80 @@ particle counts, same durations.
   (most usable, least like the references).
 - **Typography left alone.** Offered a tighter single sans to match the
   starker COYOTE/binary feel; Russ chose to keep as-is for now.
+
+---
+
+## Addendum — findings during implementation, 2026-09-10
+
+Corrections to §4 and §5 above. The original text is left intact; these
+supersede it where they conflict.
+
+### `hero.tsx` is dead code
+
+Nothing imports `src/components/home/hero.tsx`. The real home hero is the
+section with `id: "hero"` inside the `sections` array in
+`src/app/(home)/page.tsx`. **The deletion described in §5 therefore does not
+apply and was not carried out** — `hero.tsx` is left exactly as it was.
+
+### The home page is a section stepper, not a scrolling page
+
+`(home)/page.tsx` renders `fixed inset-0 overflow-hidden` and steps between
+14 sections via wheel / touch / keyboard / mouse-at-bottom-edge, with a
+1500ms throttle. There is no document scroll on the home page at all.
+
+### The intro slot already existed
+
+`currentSection === -1` was already a dedicated pre-intro state: the logo
+faded in centred at 6rem, held 1.5s, flew to the top-left at 1.5rem, and
+then `currentSection` advanced to 0. The binary intro drops into exactly
+this slot rather than adding a new section to the array.
+
+### The home page has no Navbar
+
+`Navbar` is mounted only in `(site)/layout.tsx`. `(home)/layout.tsx` is a
+passthrough; the home page has its own `HomeMenu` hamburger, fixed top-right.
+So §4's header change splits in two:
+
+- **Home page (done)** — `Contact` top-left, wordmark rises to top-centre,
+  `HomeMenu` hamburger top-right.
+- **`(site)` pages via `navbar.tsx` (not yet done)** — same arrangement, to
+  follow with the palette work.
+
+### Intro is self-contained so the site stays working
+
+The palette flip (§1) has not happened yet, so the rest of the site is still
+white-text-on-warm-blobs. To avoid a half-flipped, unreadable site, the intro
+paints its own opaque `#F4F6F8` ground, and that ground fades out as the
+wordmark rises. The wordmark animates `color` from `#0A0A0A` to `#FFFFFF`
+across the same moment.
+
+**Both of these are temporary.** When §1 lands, the ground becomes permanent
+and the colour transition is removed.
+
+### Additions not in the original design
+
+- **Skip on interaction.** Any wheel / touch / key during the intro jumps
+  straight to the resolved state. Without it the user is held for ~5s with no
+  way out. Previously `navigate()` could advance to section 0 while the logo
+  intro was still playing; it now routes to the skip instead.
+- **`HomeMenu` held back until the intro finishes**, since its white bars
+  would otherwise sit invisible — but still clickable — on the off-white
+  ground.
+
+### Timings as built
+
+```
+0     -> 1000ms   fill      rain fills, columns staggered up to 260ms
+1000  -> 2200ms   hold      full noise density
+2200  -> 3600ms   fizzle    non-mask digits extinguish, randomly staggered
+3900ms            resolve   canvas hands off to the DOM wordmark
++800ms            rise      wordmark travels to header centre (1.2s, 0.3s delay)
+```
+
+### Performance approach
+
+`'0'` and `'1'` are pre-rendered into 24 small canvases (2 chars x 12 alpha
+steps) at mount, so the per-frame hot loop is `drawImage` rather than
+`fillText`. Cells are 18px desktop / 22px mobile — roughly 6,400 cells on a
+1920x1080 viewport. 2% of the field flips character each frame for the
+flicker.
