@@ -32,13 +32,19 @@ export interface Creature {
   phase: number;
 }
 
+/**
+ * Order is arrival order. The pearl one leads, dead centre at half height —
+ * it barely has to move on the merge, so it reads as the spine the rest of the
+ * flock gathers onto. The others then alternate above and below it, opening
+ * outward as they arrive.
+ */
 export const CREATURES: Creature[] = [
-  { label: "TIME SAVING",   rgb: [242, 226, 150], headX: 0.34, headY: 0.19, sweep:  0.20, phase: 0.0 },
-  { label: "DATA INSIGHTS", rgb: [210, 194, 246], headX: 0.46, headY: 0.32, sweep: -0.15, phase: 1.1 },
-  { label: "SCALABILITY",   rgb: [182, 218, 246], headX: 0.31, headY: 0.44, sweep:  0.11, phase: 2.2 },
-  { label: "ACCURACY",      rgb: [226, 202, 248], headX: 0.45, headY: 0.57, sweep: -0.22, phase: 3.3 },
-  { label: "SPEED",         rgb: [228, 232, 240], headX: 0.33, headY: 0.69, sweep:  0.16, phase: 4.4 },
-  { label: "REDUCE COSTS",  rgb: [193, 236, 208], headX: 0.44, headY: 0.81, sweep: -0.12, phase: 5.5 },
+  { label: "SPEED",         rgb: [228, 232, 240], headX: 0.38, headY: 0.50, sweep:  0.06, phase: 0.0 },
+  { label: "TIME SAVING",   rgb: [242, 226, 150], headX: 0.34, headY: 0.31, sweep:  0.18, phase: 1.1 },
+  { label: "DATA INSIGHTS", rgb: [210, 194, 246], headX: 0.46, headY: 0.69, sweep: -0.16, phase: 2.2 },
+  { label: "SCALABILITY",   rgb: [182, 218, 246], headX: 0.31, headY: 0.20, sweep:  0.22, phase: 3.3 },
+  { label: "ACCURACY",      rgb: [226, 202, 248], headX: 0.45, headY: 0.80, sweep: -0.24, phase: 4.4 },
+  { label: "REDUCE COSTS",  rgb: [193, 236, 208], headX: 0.42, headY: 0.41, sweep:  0.10, phase: 5.5 },
 ];
 
 /** Where every trail meets on the final stage. Shared with the neural orb,
