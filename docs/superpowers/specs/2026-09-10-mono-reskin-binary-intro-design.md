@@ -550,3 +550,42 @@ a net reduction.
 Same constraint as everywhere else on this site. Pale grains on off-white
 vanish; the murmuration read well precisely because it was ink. So the
 grains are ink and the colour lives in the bloom around them.
+
+---
+
+## Addendum 8 — colour removed, 2026-09-10
+
+Russ: "lets get rid of the colours and just do black and white and off white
+for now". This reverses the iridescence decision in §1/§2 and Addenda 5-7.
+
+| Where | Was | Now |
+|---|---|---|
+| background blobs | pale pink / cyan / gold / lavender | white through pale grey |
+| `gradient-hero` | faint pink and lavender stops | neutral grey stops |
+| flock blooms | six pale tints | pure white, all six |
+| flock head rim | the creature's tint | ink at 0.55 |
+| orb rim | conic gradient through the six tints | ink hairline, fading toward the whiteout |
+
+### Two knock-on fixes, not optional
+
+Removing the tints broke two things that had been relying on them:
+
+1. **The flock bloom got more opaque** (0.30/0.34 -> 0.45/0.55). A coloured
+   bloom separates itself from off-white by hue; a white one has only
+   lightness to work with and was nearly invisible at the old values.
+2. **The head rim and the orb rim became ink.** Both were previously drawn in
+   the creature's tint. White-on-white has no edge at all, so without an ink
+   rim the head dot and the orb outline simply vanish.
+
+Same principle as everywhere else here: on a light ground, structure is ink;
+white can only ever be a glow.
+
+### Kept deliberately
+
+`rgb` stays a per-creature field on `Creature` rather than being deleted, and
+`murmuration.tsx` stays on disk. Russ said "for now" — both let colour and the
+background dot field come back without restructuring.
+
+The remaining greys (`#6B7078`, `#DCE0E5`, `rgba(230,234,239)`) carry the same
+faint cool cast as the `#F4F6F8` ground. That is the off-white family, not
+hue.

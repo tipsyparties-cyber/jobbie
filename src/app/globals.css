@@ -51,9 +51,9 @@ body {
 }
 
 /* Full-page undulating background.
-   Same five blobs, same drift keyframes and durations as before — only the
-   fills changed, from blue/purple/orange to white and low-saturation
-   iridescence over off-white. */
+   Same five blobs, same drift keyframes and durations throughout. Fills are
+   now strictly neutral — white through pale grey over off-white. The
+   iridescent tints were removed; the field still moves, it just has no hue. */
 .bg-blobs {
   position: fixed;
   inset: 0;
@@ -72,7 +72,7 @@ body {
 .blob-1 {
   width: 65vw;
   height: 65vw;
-  background: rgba(255, 218, 228, 0.55);
+  background: rgba(255, 255, 255, 0.85);
   top: 55%;
   left: -15%;
   animation: drift-1 12s ease-in-out infinite;
@@ -81,7 +81,7 @@ body {
 .blob-2 {
   width: 55vw;
   height: 55vw;
-  background: rgba(212, 240, 250, 0.5);
+  background: rgba(230, 234, 239, 0.55);
   top: -15%;
   right: -10%;
   animation: drift-2 15s ease-in-out infinite;
@@ -99,7 +99,7 @@ body {
 .blob-4 {
   width: 50vw;
   height: 50vw;
-  background: rgba(252, 246, 214, 0.45);
+  background: rgba(224, 229, 234, 0.5);
   bottom: 5%;
   right: 15%;
   animation: drift-4 16s ease-in-out infinite;
@@ -108,7 +108,7 @@ body {
 .blob-5 {
   width: 40vw;
   height: 40vw;
-  background: rgba(226, 222, 252, 0.45);
+  background: rgba(241, 244, 247, 0.7);
   top: 45%;
   left: 5%;
   animation: drift-5 14s ease-in-out infinite;
@@ -165,9 +165,9 @@ body {
   background: linear-gradient(
     160deg,
     #FFFFFF 0%,
-    #F7F4F6 25%,
-    #F1F5F8 50%,
-    #EFEFF6 75%,
+    #F8F9FB 25%,
+    #F2F4F6 50%,
+    #EDEFF2 75%,
     #F4F6F8 100%
   );
   background-size: 300% 300%;

@@ -33,18 +33,22 @@ export interface Creature {
 }
 
 /**
- * Order is arrival order. The pearl one leads, dead centre at half height —
- * it barely has to move on the merge, so it reads as the spine the rest of the
+ * Order is arrival order. The first leads, dead centre at half height — it
+ * barely has to move on the merge, so it reads as the spine the rest of the
  * flock gathers onto. The others then alternate above and below it, opening
  * outward as they arrive.
+ *
+ * Every bloom is pure white for now — the site is black, white and off-white
+ * only. `rgb` is kept per creature so individual tints can come back without
+ * restructuring anything.
  */
 export const CREATURES: Creature[] = [
-  { label: "SPEED",         rgb: [228, 232, 240], headX: 0.38, headY: 0.50, sweep:  0.06, phase: 0.0 },
-  { label: "TIME SAVING",   rgb: [242, 226, 150], headX: 0.34, headY: 0.31, sweep:  0.18, phase: 1.1 },
-  { label: "DATA INSIGHTS", rgb: [210, 194, 246], headX: 0.46, headY: 0.69, sweep: -0.16, phase: 2.2 },
-  { label: "SCALABILITY",   rgb: [182, 218, 246], headX: 0.31, headY: 0.20, sweep:  0.22, phase: 3.3 },
-  { label: "ACCURACY",      rgb: [226, 202, 248], headX: 0.45, headY: 0.80, sweep: -0.24, phase: 4.4 },
-  { label: "REDUCE COSTS",  rgb: [193, 236, 208], headX: 0.42, headY: 0.41, sweep:  0.10, phase: 5.5 },
+  { label: "SPEED",         rgb: [255, 255, 255], headX: 0.38, headY: 0.50, sweep:  0.06, phase: 0.0 },
+  { label: "TIME SAVING",   rgb: [255, 255, 255], headX: 0.34, headY: 0.31, sweep:  0.18, phase: 1.1 },
+  { label: "DATA INSIGHTS", rgb: [255, 255, 255], headX: 0.46, headY: 0.69, sweep: -0.16, phase: 2.2 },
+  { label: "SCALABILITY",   rgb: [255, 255, 255], headX: 0.31, headY: 0.20, sweep:  0.22, phase: 3.3 },
+  { label: "ACCURACY",      rgb: [255, 255, 255], headX: 0.45, headY: 0.80, sweep: -0.24, phase: 4.4 },
+  { label: "REDUCE COSTS",  rgb: [255, 255, 255], headX: 0.42, headY: 0.41, sweep:  0.10, phase: 5.5 },
 ];
 
 /** Where every trail meets on the final stage. Shared with the neural orb,
@@ -217,11 +221,14 @@ export function Flock({ stage }: FlockProps) {
       ctx!.lineCap = "round";
       ctx!.lineJoin = "round";
 
-      ctx!.strokeStyle = `rgba(${r}, ${g}, ${b}, ${0.3 * alpha})`;
+      // Raised from the tinted version: a white bloom on off-white has far
+      // less to work with than a coloured one, so it needs more opacity to
+      // lift the ground at all.
+      ctx!.strokeStyle = `rgba(${r}, ${g}, ${b}, ${0.45 * alpha})`;
       ctx!.lineWidth = 30;
       ctx!.stroke();
 
-      ctx!.strokeStyle = `rgba(${r}, ${g}, ${b}, ${0.34 * alpha})`;
+      ctx!.strokeStyle = `rgba(${r}, ${g}, ${b}, ${0.55 * alpha})`;
       ctx!.lineWidth = 13;
       ctx!.stroke();
     }
@@ -283,8 +290,10 @@ export function Flock({ stage }: FlockProps) {
       ctx!.arc(x, y, 5, 0, Math.PI * 2);
       ctx!.fill();
 
-      // Faint tinted rim, or a white dot on a near-white page has no edge.
-      ctx!.strokeStyle = `rgba(${r}, ${g}, ${b}, ${0.75 * alpha})`;
+      // Ink rim. With the tints gone the rim can no longer be coloured, and a
+      // white dot inside a white bloom on an off-white page would have no
+      // edge at all without it.
+      ctx!.strokeStyle = `rgba(${INK}, ${0.55 * alpha})`;
       ctx!.lineWidth = 1.6;
       ctx!.beginPath();
       ctx!.arc(x, y, 5, 0, Math.PI * 2);

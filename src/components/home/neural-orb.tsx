@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { CONVERGE, MERGE_STAGE, ORB_STAGES, CREATURES } from "./flock";
+import { CONVERGE, MERGE_STAGE, ORB_STAGES } from "./flock";
 
 /**
  * The neural orb.
@@ -134,20 +134,15 @@ export function NeuralOrb({ stage }: OrbProps) {
       ctx!.arc(cx, cy, r, 0, Math.PI * 2);
       ctx!.fill();
 
-      // Iridescent rim, built from the same pale palette as the trails so the
-      // orb reads as the flock gathered up rather than a new object.
-      if (typeof ctx!.createConicGradient === "function") {
-        const rim = ctx!.createConicGradient(time * 0.15, cx, cy);
-        for (let i = 0; i <= CREATURES.length; i++) {
-          const [cr, cg, cb] = CREATURES[i % CREATURES.length].rgb;
-          rim.addColorStop(i / CREATURES.length, `rgba(${cr}, ${cg}, ${cb}, ${0.75 * (1 - progress * 0.55)})`);
-        }
-        ctx!.strokeStyle = rim;
-        ctx!.lineWidth = Math.max(2, r * 0.035);
-        ctx!.beginPath();
-        ctx!.arc(cx, cy, r, 0, Math.PI * 2);
-        ctx!.stroke();
-      }
+      // Ink hairline rim. This was an iridescent conic gradient through the six
+      // trail colours; with the palette reduced to black and white there is no
+      // iridescence to put here, and a white rim on a white orb would be
+      // invisible. It fades out as the orb approaches the whiteout.
+      ctx!.strokeStyle = `rgba(10, 10, 10, ${(0.2 * (1 - progress * 0.75)).toFixed(3)})`;
+      ctx!.lineWidth = Math.max(1, r * 0.003);
+      ctx!.beginPath();
+      ctx!.arc(cx, cy, r, 0, Math.PI * 2);
+      ctx!.stroke();
 
       // The network inside. Drawn in ink, because a white network on a white
       // orb would be invisible — the same reason the rest of the site is ink
