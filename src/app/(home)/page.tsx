@@ -9,7 +9,7 @@ import { HarmonyGlyph } from "@/components/home/harmony-glyph";
 import { ParticleCanvas, type ParticleShape } from "@/components/home/particle-canvas";
 import { ContactForm } from "@/components/contact/contact-form";
 import { ServiceCarousel } from "@/components/home/service-carousel";
-import { BinaryIntro, wordmarkSize } from "@/components/home/binary-intro";
+import { BinaryIntro, wordmarkSize, MASK_WEIGHT } from "@/components/home/binary-intro";
 
 function seededRandom(seed: number) {
   const x = Math.sin(seed * 9301 + 49297) * 49297;
@@ -595,10 +595,10 @@ export default function Home() {
           size and position the mask resolved at, and rises into the header. */}
       <motion.div
         className="fixed z-[100] tracking-tight pointer-events-none"
-        initial={{ top: "50%", left: "50%", x: "-50%", y: "-50%", fontSize: `${wordmarkSize(viewportWidth)}px`, opacity: 0, color: "#0A0A0A" }}
+        initial={{ top: "50%", left: "50%", x: "-50%", y: "-50%", fontSize: `${wordmarkSize(viewportWidth)}px`, opacity: 0, color: "#0A0A0A", fontWeight: MASK_WEIGHT }}
         animate={
           logoDone
-            ? { top: "1.1rem", left: "50%", x: "-50%", y: "0%", fontSize: "1.5rem", opacity: 1, color: "#FFFFFF" }
+            ? { top: "1.1rem", left: "50%", x: "-50%", y: "0%", fontSize: "1.5rem", opacity: 1, color: "#FFFFFF", fontWeight: 300 }
             : {
                 top: "50%",
                 left: "50%",
@@ -607,6 +607,9 @@ export default function Home() {
                 fontSize: `${wordmarkSize(viewportWidth)}px`,
                 opacity: introResolved ? 1 : 0,
                 color: "#0A0A0A",
+                // Matches the weight the mask was drawn at, so the handover
+                // from digits to real text does not visibly thin out.
+                fontWeight: MASK_WEIGHT,
               }
         }
         transition={
@@ -615,7 +618,9 @@ export default function Home() {
             : { duration: 0.45, ease: "easeOut" }
         }
       >
-        <span className="font-body font-light">up</span>
+        {/* No weight class here — the container's animated fontWeight carries
+            it from the bold mask weight down to 300 as it rises. */}
+        <span className="font-body">up</span>
         <span className="font-display text-[1.15em]">+up</span>
         <span className="text-[0.7em] leading-none font-body -ml-[0.15em] relative -top-[0.35em]">^</span>
       </motion.div>

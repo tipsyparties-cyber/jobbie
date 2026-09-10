@@ -28,10 +28,26 @@ const INK = "10, 10, 10";
 const GHOST_ALPHA = 0.14;
 const ALPHA_STEPS = 12;
 
+/** The characters the field rains — the wordmark's own letters. */
+const CHARS = ["u", "p", "+"];
+
 /** Shared with the caller so the DOM wordmark lands exactly where the digits resolved. */
 export function wordmarkSize(viewportWidth: number) {
-  return Math.max(64, Math.min(viewportWidth * 0.2, 240));
+  return Math.max(76, Math.min(viewportWidth * 0.26, 320));
 }
+
+/** Weight the mask is drawn at, and the weight the DOM wordmark resolves at. */
+export const MASK_WEIGHT = 600;
+
+/**
+ * Extra thickness added to the letterforms, as a fraction of font size.
+ * Sized to pull in roughly one more ring of cells — enough to read as solid,
+ * but not so much that the counters inside the p's close up.
+ */
+const MASK_FATTEN = 0.03;
+
+/** Alpha a cell centre must clear to count as inside a letterform. */
+const MASK_THRESHOLD = 48;
 
 function cellSizeFor(viewportWidth: number) {
   return viewportWidth < MOBILE_MAX ? CELL_MOBILE : CELL_DESKTOP;
@@ -54,9 +70,9 @@ function layoutWordmark(
 ): { parts: Part[]; width: number } {
   const caret = size * 0.7;
   const parts: Part[] = [
-    { text: "up", font: `300 ${size}px ${sans}`, dx: 0, dy: 0, w: 0 },
-    { text: "+up", font: `300 ${size * 1.15}px ${serif}`, dx: 0, dy: 0, w: 0 },
-    { text: "^", font: `300 ${caret}px ${sans}`, dx: -0.15 * caret, dy: -0.35 * caret, w: 0 },
+    { text: "up", font: `${MASK_WEIGHT} ${size}px ${sans}`, dx: 0, dy: 0, w: 0 },
+    { text: "+up", font: `${MASK_WEIGHT} ${size * 1.15}px ${serif}`, dx: 0, dy: 0, w: 0 },
+    { text: "^", font: `${MASK_WEIGHT} ${caret}px ${sans}`, dx: -0.15 * caret, dy: -0.35 * caret, w: 0 },
   ];
 
   let width = 0;
@@ -81,21 +97,29 @@ function drawWordmark(
   const baseline = cy + size * 0.35;
 
   ctx.textBaseline = "alphabetic";
+  // Stroke as well as fill: the stroke straddles the outline, so half of its
+  // width pushes the letterform outwards and pulls extra cells into the mask.
+  ctx.strokeStyle = ctx.fillStyle;
+  ctx.lineWidth = size * MASK_FATTEN * 2;
+  ctx.lineJoin = "round";
+  ctx.lineCap = "round";
+
   for (const p of parts) {
     x += p.dx;
     ctx.font = p.font;
+    ctx.strokeText(p.text, x, baseline + p.dy);
     ctx.fillText(p.text, x, baseline + p.dy);
     x += p.w;
   }
 }
 
-/** Pre-renders '0' and '1' at each alpha step so the hot loop is drawImage, not fillText. */
+/** Pre-renders each character at each alpha step so the hot loop is drawImage, not fillText. */
 function buildGlyphs(cell: number, dpr: number) {
   const px = Math.round(cell * dpr);
   const fontSize = Math.round(cell * 0.78 * dpr);
   const glyphs: HTMLCanvasElement[][] = [];
 
-  for (const ch of ["0", "1"]) {
+  for (const ch of CHARS) {
     const row: HTMLCanvasElement[] = [];
     for (let a = 0; a < ALPHA_STEPS; a++) {
       const c = document.createElement("canvas");
@@ -115,7 +139,8 @@ function buildGlyphs(cell: number, dpr: number) {
 }
 
 interface Cell {
-  ch: 0 | 1;
+  /** Index into CHARS */
+  ch: number;
   mask: boolean;
   /** ms after fill start at which this cell first appears */
   appearAt: number;
@@ -204,10 +229,10 @@ export function BinaryIntro({ onResolved, handedOff }: BinaryIntroProps) {
         for (let c = 0; c < cols; c++) {
           const px = Math.min(w - 1, Math.floor((c + 0.5) * cell));
           const py = Math.min(h - 1, Math.floor((r + 0.5) * cell));
-          const inMask = mask[(py * w + px) * 4 + 3] > 128;
+          const inMask = mask[(py * w + px) * 4 + 3] > MASK_THRESHOLD;
 
           cells[r * cols + c] = {
-            ch: Math.random() < 0.5 ? 0 : 1,
+            ch: (Math.random() * CHARS.length) | 0,
             mask: inMask,
             appearAt: colStart[c] + (r / Math.max(rows - 1, 1)) * (T_FILL - 320),
             // Staggered across the whole fizzle window so digits go out a few
@@ -261,7 +286,7 @@ export function BinaryIntro({ onResolved, handedOff }: BinaryIntroProps) {
       const churn = Math.round(cells.length * 0.02);
       for (let i = 0; i < churn; i++) {
         const cl = cells[(Math.random() * cells.length) | 0];
-        cl.ch = cl.ch === 0 ? 1 : 0;
+        cl.ch = (Math.random() * CHARS.length) | 0;
       }
 
       if (!resolvedRef.current && t >= T_RESOLVE) {
