@@ -589,3 +589,45 @@ background dot field come back without restructuring.
 The remaining greys (`#6B7078`, `#DCE0E5`, `rgba(230,234,239)`) carry the same
 faint cool cast as the `#F4F6F8` ground. That is the off-white family, not
 hue.
+
+---
+
+## Addendum 9 — the climb, 2026-09-10
+
+After the merge stage the formation should ascend like a rising graph, lifting
+slightly while staying mid-page.
+
+### The tail exponent was backwards
+
+Addendum 6 added the upward bias as `f^1.2 * rise * h * 0.6`. With f = 0 at
+the head and 1 at the tail, an exponent **above 1** makes the slope zero at
+the head and steepest at the tail — flat at the front, plunging at the back.
+That reads as a droop, not a climb.
+
+Now `f^0.7`. Below 1, the slope is steepest at the head and flattens toward
+the tail, so the trail lies shallow far-left and rakes up sharply into the
+head — the hockey-stick shape of an ascending graph.
+
+```
+exponent > 1   head ──────╮          flat at head, steep at tail  (droop)
+                           ╰────
+exponent < 1        ╭───── head      shallow at tail, steep at head (climb)
+               ─────╯
+```
+
+### The convergence point now lifts
+
+`convergeAt(rise)` returns `{ x: 0.52, y: 0.5 - rise * 0.085 }`, exported from
+`flock.tsx` and used by **both** the flock and the orb. 0.085 is deliberately
+small: Russ asked for it to stay mid-page and move up only slightly.
+
+The orb had been pinned to the static `CONVERGE`. Without this it would have
+stayed put while the trails climbed away from it, and the formation would have
+come apart.
+
+### Rise is now eased in the flock too
+
+The flock previously computed `rise` straight from the stage number while the
+orb eased its `progress` at 0.05/frame. During a section change the trails
+would jump to the new angle while the orb was still travelling. The flock now
+eases `riseEased` at the same 0.05, so the two stay locked together.

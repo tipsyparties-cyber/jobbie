@@ -51,9 +51,23 @@ export const CREATURES: Creature[] = [
   { label: "REDUCE COSTS",  rgb: [255, 255, 255], headX: 0.42, headY: 0.41, sweep:  0.10, phase: 5.5 },
 ];
 
-/** Where every trail meets on the final stage. Shared with the neural orb,
- *  which grows out of exactly this point. */
+/** Where every trail meets on the merge stage. */
 export const CONVERGE = { x: 0.52, y: 0.5 };
+
+/** How far the formation lifts across the orb stages, in viewport fractions. */
+const CLIMB = 0.085;
+
+/**
+ * The convergence point drifts upward as the orb charges, so the whole
+ * formation climbs rather than sitting still. Deliberately small — it stays in
+ * the middle of the page, this is a lift and not a journey to the top.
+ *
+ * Shared with the neural orb so the orb rises with the flock instead of the
+ * trails detaching from it.
+ */
+export function convergeAt(rise: number) {
+  return { x: CONVERGE.x, y: CONVERGE.y - rise * CLIMB };
+}
 
 /** First stage at which all trails have arrived and merge. */
 export const MERGE_STAGE = 7;
@@ -112,6 +126,8 @@ export function Flock({ stage }: FlockProps) {
     let h = 0;
     let dpr = 1;
     let start = 0;
+    /** Eased climb progress, matched to the orb's easing rate. */
+    let riseEased = 0;
 
     const states: State[] = CREATURES.map(() => ({ arrival: 0, merge: 0 }));
     /** Per creature, grains grouped by fixed alpha bucket. */
@@ -155,16 +171,17 @@ export function Flock({ stage }: FlockProps) {
       });
     }
 
-    /** Head position, accounting for arrival and merge. */
-    function headPos(c: Creature, s: State): [number, number] {
+    /** Head position, accounting for arrival, merge, and the climb. */
+    function headPos(c: Creature, s: State, rise: number): [number, number] {
       const restX = c.headX * w;
       const restY = c.headY * h;
       const enterX = -0.25 * w;
       let hx = enterX + (restX - enterX) * s.arrival;
       let hy = restY;
       if (s.merge > 0) {
-        hx += (CONVERGE.x * w - hx) * s.merge;
-        hy += (CONVERGE.y * h - hy) * s.merge;
+        const cp = convergeAt(rise);
+        hx += (cp.x * w - hx) * s.merge;
+        hy += (cp.y * h - hy) * s.merge;
       }
       return [hx, hy];
     }
@@ -172,11 +189,17 @@ export function Flock({ stage }: FlockProps) {
     /** Vertical offset of the centreline at position f along the tail. */
     function offsetAt(c: Creature, s: State, time: number, rise: number, f: number) {
       // The trail sweeps vertically as it recedes, which gives the long lazy
-      // arcs. Once the orb charges, an upward bias is added so the tail is
-      // pushed down relative to the head and they read as climbing.
-      const arc =
-        Math.pow(f, 1.5) * c.sweep * h * (1 - s.merge * 0.55) +
-        Math.pow(f, 1.2) * rise * h * 0.6;
+      // arcs while the flock is assembling.
+      const sweep = Math.pow(f, 1.5) * c.sweep * h * (1 - s.merge * 0.55);
+
+      // The climb, once the orb starts charging. The exponent has to be BELOW
+      // 1: that puts the steepness near the head and flattens it toward the
+      // tail, so the trail rakes up sharply into the head and lies shallow far
+      // left — an ascending graph. Above 1 gives the opposite shape, flat at
+      // the head and steep at the tail, which reads as a droop.
+      const climb = Math.pow(f, 0.7) * rise * h * 0.62;
+
+      const arc = sweep + climb;
 
       // Two waves travelling down the body at different rates. Amplitude is a
       // fraction of viewport height, not a pixel constant, so it undulates as
@@ -319,8 +342,16 @@ export function Flock({ stage }: FlockProps) {
       ctx!.scale(dpr, dpr);
 
       const merged = stageNow >= MERGE_STAGE;
+
       // 0 while the flock is still assembling, 1 once the orb is at full size.
-      const rise = Math.max(0, Math.min(1, (stageNow - MERGE_STAGE) / ORB_STAGES));
+      // Eased at the same rate the orb eases its own progress, so the trails
+      // and the orb climb together instead of separating during a transition.
+      const riseTarget = Math.max(
+        0,
+        Math.min(1, (stageNow - MERGE_STAGE) / ORB_STAGES)
+      );
+      riseEased += (riseTarget - riseEased) * (reduced ? 1 : 0.05);
+      const rise = riseEased;
 
       for (let i = 0; i < CREATURES.length; i++) {
         const c = CREATURES[i];
@@ -339,7 +370,7 @@ export function Flock({ stage }: FlockProps) {
         const a = s.arrival * absorbed;
         if (a < 0.01) continue;
 
-        const [hx, hy] = headPos(c, s);
+        const [hx, hy] = headPos(c, s, rise);
 
         drawBloom(c, s, time, rise, hx, hy, Math.min(1, a * (1 + rise * 0.6)));
         drawStipple(i, c, s, time, rise, hx, hy, a);

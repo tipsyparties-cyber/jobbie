@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { CONVERGE, MERGE_STAGE, ORB_STAGES } from "./flock";
+import { convergeAt, MERGE_STAGE, ORB_STAGES } from "./flock";
 
 /**
  * The neural orb.
@@ -105,8 +105,11 @@ export function NeuralOrb({ stage }: OrbProps) {
         return;
       }
 
-      const cx = CONVERGE.x * w;
-      const cy = CONVERGE.y * h;
+      // Follows the same climb the trails do, so the orb rises with the flock
+      // rather than the trails sliding up off a stationary orb.
+      const cp = convergeAt(progress);
+      const cx = cp.x * w;
+      const cy = cp.y * h;
       const diag = Math.sqrt(w * w + h * h);
 
       // Accelerating growth — it should feel like it runs away with itself at
