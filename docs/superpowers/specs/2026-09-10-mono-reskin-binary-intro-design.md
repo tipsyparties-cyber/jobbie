@@ -777,3 +777,50 @@ ending deliberately — the two briefs conflict, and this one is later.
 The reference is white lattice on black. Here it is ink lattice on off-white,
 so the motes *darken* as they twinkle rather than sparkling with light. On a
 light ground that is the only direction available.
+
+---
+
+## Addendum 13 — trails now scale with the orb, 2026-09-10
+
+Screenshot showed the orb filling the screen while the trails entering from
+the left were still thin threads. They were growing on the wrong curve.
+
+### The mismatch
+
+| | curve | merge -> full |
+|---|---|---|
+| orb radius | `progress^2 * diag * 0.62` | 14px -> ~1380px |
+| trails (before) | `1 + rise * 2.4` **linear** | x1 -> x2.4 |
+
+Linear against quadratic: the orb accelerates away while the trails creep.
+
+### Split into girth and length
+
+One scale could not do the job, because the two axes fail in opposite ways.
+
+- **`girthScale = 1 + rise² * 9`** — spread, grain size, bloom widths. Squared,
+  so it tracks the orb's own acceleration.
+- **`lengthScale = 1 + rise * 2.2`** — tail length only, and deliberately
+  gentle. Grain `f` is biased toward the head, so stretching the tail as hard
+  as the girth pushes most grains off-screen left and the stipple **thins out
+  exactly when it should look densest**.
+
+Grain size takes `1 + (girth-1) * 0.32` rather than full girth, so the stipple
+coarsens without turning into blocks.
+
+```
+        rise   girth   length   orb radius   head
+merge   0.00    x1.0     x1.0        14px    100%
+orb-1   0.25    x1.6     x1.6        99px    100%
+orb-2   0.50    x3.3     x2.1       355px     56%
+orb-3   0.75    x6.1     x2.7       782px      0%
+orb-4   1.00   x10.0     x3.2      1380px      0%
+```
+
+### Heads fade instead of growing
+
+Scaling the head glow with the girth would stack six white blooms an order of
+magnitude larger over the centre of the orb, wiping out the lattice that the
+approach exists to reveal. The heads have merged into the orb by then anyway,
+so they fade out from `rise` 0.3 and are gone by 0.75, while the tails carry on
+growing.

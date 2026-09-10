@@ -228,13 +228,29 @@ export function Flock({ stage }: FlockProps) {
      * would grow while the trails stayed put, which reads as the orb inflating
      * rather than the viewer moving closer to it.
      */
-    function spreadAt(f: number, merge: number, approach: number) {
-      return (h * 0.006 + Math.pow(f, 0.85) * h * 0.05) * (1 - merge * 0.75) * approach;
+    function spreadAt(f: number, merge: number, girth: number) {
+      return (h * 0.006 + Math.pow(f, 0.85) * h * 0.05) * (1 - merge * 0.75) * girth;
     }
 
-    /** Everything about a trail scales by this as the orb approaches. */
-    function approachScale(rise: number) {
-      return 1 + rise * 2.4;
+    /**
+     * How much thicker and wider a trail gets as the orb closes.
+     *
+     * Squared, to match the orb's own `progress^2` radius growth — a linear
+     * scale left the trails creeping while the orb raced away, which is what
+     * made them look like they belonged to a different scene.
+     */
+    function girthScale(rise: number) {
+      return 1 + rise * rise * 9;
+    }
+
+    /**
+     * How much longer the tail gets. Deliberately much gentler than girth:
+     * grain positions are biased toward the head, so stretching the tail as
+     * hard as the girth pushes most grains off-screen left and the stipple
+     * visibly thins out just when it should look densest.
+     */
+    function lengthScale(rise: number) {
+      return 1 + rise * 2.2;
     }
 
     /** Soft coloured bloom under the stipple — this is the iridescence. */
@@ -245,10 +261,11 @@ export function Flock({ stage }: FlockProps) {
       hx: number,
       hy: number,
       alpha: number,
-      approach: number
+      lenScale: number,
+      girth: number
     ) {
       const [r, g, b] = c.rgb;
-      const len = TAIL_LEN * w * approach;
+      const len = TAIL_LEN * w * lenScale;
 
       ctx!.beginPath();
       for (let i = 0; i < PATH_POINTS; i++) {
@@ -265,11 +282,11 @@ export function Flock({ stage }: FlockProps) {
       // less to work with than a coloured one, so it needs more opacity to
       // lift the ground at all.
       ctx!.strokeStyle = `rgba(${r}, ${g}, ${b}, ${0.45 * alpha})`;
-      ctx!.lineWidth = 30 * approach;
+      ctx!.lineWidth = 30 * girth;
       ctx!.stroke();
 
       ctx!.strokeStyle = `rgba(${r}, ${g}, ${b}, ${0.55 * alpha})`;
-      ctx!.lineWidth = 13 * approach;
+      ctx!.lineWidth = 13 * girth;
       ctx!.stroke();
     }
 
@@ -282,12 +299,13 @@ export function Flock({ stage }: FlockProps) {
       hx: number,
       hy: number,
       alpha: number,
-      approach: number
+      lenScale: number,
+      girth: number
     ) {
-      const len = TAIL_LEN * w * approach;
+      const len = TAIL_LEN * w * lenScale;
       // Grains grow too, so the stipple reads as coarser detail seen closer up
       // rather than the same fine dust stretched further.
-      const grainScale = 1 + (approach - 1) * 0.65;
+      const grainScale = 1 + (girth - 1) * 0.32;
       ctx!.globalAlpha = alpha;
 
       for (let b = 1; b < BUCKETS; b++) {
@@ -302,7 +320,7 @@ export function Flock({ stage }: FlockProps) {
           const y =
             hy +
             offsetAt(c, s, wavePhase, gr.f) +
-            gr.off * spreadAt(gr.f, s.merge, approach);
+            gr.off * spreadAt(gr.f, s.merge, girth);
           const sz = gr.size * grainScale;
           ctx!.fillRect(x, y, sz, sz);
         }
@@ -318,7 +336,7 @@ export function Flock({ stage }: FlockProps) {
       label: string,
       alpha: number,
       showLabel: boolean,
-      approach: number
+      headScale: number
     ) {
       const [r, g, b] = rgb;
 
@@ -332,23 +350,23 @@ export function Flock({ stage }: FlockProps) {
       // the trail. The head is drawn after the stipple for exactly this.
 
       // Wide soft halo.
-      const halo = ctx!.createRadialGradient(x, y, 0, x, y, 42 * approach);
+      const halo = ctx!.createRadialGradient(x, y, 0, x, y, 42 * headScale);
       halo.addColorStop(0, `rgba(${r}, ${g}, ${b}, ${0.62 * alpha})`);
       halo.addColorStop(0.45, `rgba(${r}, ${g}, ${b}, ${0.3 * alpha})`);
       halo.addColorStop(1, `rgba(${r}, ${g}, ${b}, 0)`);
       ctx!.fillStyle = halo;
       ctx!.beginPath();
-      ctx!.arc(x, y, 42 * approach, 0, Math.PI * 2);
+      ctx!.arc(x, y, 42 * headScale, 0, Math.PI * 2);
       ctx!.fill();
 
       // Inner glow, gradient so it has no boundary of its own.
-      const core = ctx!.createRadialGradient(x, y, 0, x, y, 12 * approach);
+      const core = ctx!.createRadialGradient(x, y, 0, x, y, 12 * headScale);
       core.addColorStop(0, `rgba(255, 255, 255, ${alpha})`);
       core.addColorStop(0.45, `rgba(255, 255, 255, ${0.85 * alpha})`);
       core.addColorStop(1, `rgba(255, 255, 255, 0)`);
       ctx!.fillStyle = core;
       ctx!.beginPath();
-      ctx!.arc(x, y, 12 * approach, 0, Math.PI * 2);
+      ctx!.arc(x, y, 12 * headScale, 0, Math.PI * 2);
       ctx!.fill();
 
       // Small solid disc for a crisp bright centre, like the bright bead at the
@@ -356,7 +374,7 @@ export function Flock({ stage }: FlockProps) {
       // turned this into a ring before.
       ctx!.fillStyle = `rgba(255, 255, 255, ${alpha})`;
       ctx!.beginPath();
-      ctx!.arc(x, y, 4.5 * approach, 0, Math.PI * 2);
+      ctx!.arc(x, y, 4.5 * headScale, 0, Math.PI * 2);
       ctx!.fill();
 
       if (showLabel) {
@@ -415,20 +433,29 @@ export function Flock({ stage }: FlockProps) {
         const a = s.arrival * absorbed;
         if (a < 0.01) continue;
 
-        const approach = approachScale(rise);
+        const girth = girthScale(rise);
+        const len = lengthScale(rise);
         const [hx, hy] = headPos(c, s, rise);
 
-        drawBloom(c, s, wavePhase, hx, hy, Math.min(1, a * (1 + rise * 0.6)), approach);
-        drawStipple(i, c, s, wavePhase, hx, hy, a, approach);
-        drawHead(
-          hx,
-          hy + offsetAt(c, s, wavePhase, 0),
-          c.rgb,
-          c.label,
-          a,
-          s.merge < 0.35,
-          approach
-        );
+        drawBloom(c, s, wavePhase, hx, hy, Math.min(1, a * (1 + rise * 0.6)), len, girth);
+        drawStipple(i, c, s, wavePhase, hx, hy, a, len, girth);
+
+        // The heads have all merged into the orb by this point, so they fade
+        // out rather than scaling up. Growing them with the girth would put a
+        // six-fold white blob over the middle of the orb and wipe out the
+        // lattice detail that is the whole point of the approach.
+        const headFade = 1 - Math.max(0, Math.min(1, (rise - 0.3) / 0.45));
+        if (headFade > 0.01) {
+          drawHead(
+            hx,
+            hy + offsetAt(c, s, wavePhase, 0),
+            c.rgb,
+            c.label,
+            a * headFade,
+            s.merge < 0.35,
+            1 + rise * 1.2
+          );
+        }
       }
 
       if (!reduced) raf = requestAnimationFrame(frame);
