@@ -631,3 +631,54 @@ The flock previously computed `rise` straight from the stage number while the
 orb eased its `progress` at 0.05/frame. During a section change the trails
 would jump to the new angle while the orb was still travelling. The flock now
 eases `riseEased` at the same 0.05, so the two stay locked together.
+
+---
+
+## Addendum 10 — climb scrapped, undulation carries the stages, 2026-09-10
+
+Reverses the angle change from Addendum 9. The progression device for the orb
+stages is now **undulation speed**, not tail angle.
+
+### Removed
+
+The `f^0.7 * rise * h * 0.62` climb term is gone. The tail shape no longer
+changes across the orb stages at all.
+
+**Kept:** the small upward lift of the convergence point, `convergeAt(rise)`
+with `CLIMB = 0.085`. Russ said "scrap the angle change" and separately asked
+in the same message to "move it up slightly" — the lift is a position, not an
+angle, so it stays. Trivial to remove if that reading is wrong.
+
+### Speed is integrated, not multiplied
+
+```
+dt         = clamped frame delta
+wavePhase += dt * (1 + rise * 2.2)      // 1x at merge -> 3.2x at full orb
+```
+
+`offsetAt` now takes `wavePhase` instead of raw elapsed time. This matters:
+multiplying elapsed time by a changing speed makes `sin(k·t)` jump every time
+`k` moves, so every section change would have snapped the wave to a new phase.
+Integrating speed over time is continuous by construction.
+
+`dt` is clamped to 50ms so a backgrounded tab returning does not fast-forward
+the wave through a huge jump.
+
+### The head undulates now
+
+The wave envelopes were `f^0.55` and `f^0.85`, both **zero at f = 0** — so the
+head never moved and only the tail whipped. They are now `0.22 + 0.78·f^0.55`
+and `0.15 + 0.85·f^0.85`, giving the head about a fifth of the amplitude. The
+head now swims rather than being towed.
+
+### Merge damping relaxed
+
+Post-merge damping went from `1 - merge*0.85` (15% left) to `1 - merge*0.5`
+(50% left), and the bob from `1 - merge` to `1 - merge*0.6`. With the
+undulation now carrying the later stages, damping it almost to nothing at the
+exact moment it becomes the main event made no sense.
+
+### Cleanup
+
+`time` and its `start` clock are gone from the flock's frame loop — `wavePhase`
+is the only clock it needs. Lint back to the 7 pre-existing warnings.

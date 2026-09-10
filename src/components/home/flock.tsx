@@ -125,9 +125,11 @@ export function Flock({ stage }: FlockProps) {
     let w = 0;
     let h = 0;
     let dpr = 1;
-    let start = 0;
     /** Eased climb progress, matched to the orb's easing rate. */
     let riseEased = 0;
+    /** Accumulated undulation clock, so speed can change without phase jumps. */
+    let wavePhase = 0;
+    let lastNow = 0;
 
     const states: State[] = CREATURES.map(() => ({ arrival: 0, merge: 0 }));
     /** Per creature, grains grouped by fixed alpha bucket. */
@@ -186,31 +188,36 @@ export function Flock({ stage }: FlockProps) {
       return [hx, hy];
     }
 
-    /** Vertical offset of the centreline at position f along the tail. */
-    function offsetAt(c: Creature, s: State, time: number, rise: number, f: number) {
+    /**
+     * Vertical offset of the centreline at position f along the tail.
+     *
+     * `wavePhase` is an accumulated clock, not raw elapsed time. The undulation
+     * speeds up across the orb stages, and multiplying time by a changing speed
+     * would jump the wave's phase every time that speed changed — sin(kt)
+     * discontinuities whenever k moves. Integrating speed over time instead
+     * keeps it smooth.
+     */
+    function offsetAt(c: Creature, s: State, wavePhase: number, f: number) {
       // The trail sweeps vertically as it recedes, which gives the long lazy
       // arcs while the flock is assembling.
-      const sweep = Math.pow(f, 1.5) * c.sweep * h * (1 - s.merge * 0.55);
-
-      // The climb, once the orb starts charging. The exponent has to be BELOW
-      // 1: that puts the steepness near the head and flattens it toward the
-      // tail, so the trail rakes up sharply into the head and lies shallow far
-      // left — an ascending graph. Above 1 gives the opposite shape, flat at
-      // the head and steep at the tail, which reads as a droop.
-      const climb = Math.pow(f, 0.7) * rise * h * 0.62;
-
-      const arc = sweep + climb;
+      const arc = Math.pow(f, 1.5) * c.sweep * h * (1 - s.merge * 0.55);
 
       // Two waves travelling down the body at different rates. Amplitude is a
       // fraction of viewport height, not a pixel constant, so it undulates as
       // broadly as the page is tall.
+      // The envelopes start at 0.22 and 0.15 rather than 0, so the wave still
+      // has amplitude at f=0 — the head itself undulates instead of sitting
+      // dead still while the tail whips, which is what sells it as swimming.
       const amp = h * 0.085;
       const wave =
-        (Math.sin(f * 4.2 - time * 1.15 + c.phase) * amp * Math.pow(f, 0.55) +
-          Math.sin(f * 9.0 - time * 1.9 + c.phase * 1.7) * amp * 0.3 * Math.pow(f, 0.85)) *
-        (1 - s.merge * 0.85);
+        (Math.sin(f * 4.2 - wavePhase * 2.0 + c.phase) * amp * (0.22 + 0.78 * Math.pow(f, 0.55)) +
+          Math.sin(f * 9.0 - wavePhase * 3.3 + c.phase * 1.7) * amp * 0.3 * (0.15 + 0.85 * Math.pow(f, 0.85))) *
+        // Damped once merged, but only halfway — the trails have to keep
+        // visibly moving after they converge, since the undulation speeding up
+        // is now what carries the later stages.
+        (1 - s.merge * 0.5);
 
-      const bob = Math.sin(time * 0.45 + c.phase) * h * 0.02 * (1 - s.merge);
+      const bob = Math.sin(wavePhase * 0.5 + c.phase) * h * 0.02 * (1 - s.merge * 0.6);
 
       return arc + wave + bob;
     }
@@ -224,8 +231,7 @@ export function Flock({ stage }: FlockProps) {
     function drawBloom(
       c: Creature,
       s: State,
-      time: number,
-      rise: number,
+      wavePhase: number,
       hx: number,
       hy: number,
       alpha: number
@@ -237,7 +243,7 @@ export function Flock({ stage }: FlockProps) {
       for (let i = 0; i < PATH_POINTS; i++) {
         const f = i / (PATH_POINTS - 1);
         const x = hx - f * len;
-        const y = hy + offsetAt(c, s, time, rise, f);
+        const y = hy + offsetAt(c, s, wavePhase, f);
         if (i === 0) ctx!.moveTo(x, y);
         else ctx!.lineTo(x, y);
       }
@@ -261,8 +267,7 @@ export function Flock({ stage }: FlockProps) {
       ci: number,
       c: Creature,
       s: State,
-      time: number,
-      rise: number,
+      wavePhase: number,
       hx: number,
       hy: number,
       alpha: number
@@ -280,7 +285,7 @@ export function Flock({ stage }: FlockProps) {
           const gr = group[i];
           const x = hx - gr.f * len;
           const y =
-            hy + offsetAt(c, s, time, rise, gr.f) + gr.off * spreadAt(gr.f, s.merge);
+            hy + offsetAt(c, s, wavePhase, gr.f) + gr.off * spreadAt(gr.f, s.merge);
           ctx!.fillRect(x, y, gr.size, gr.size);
         }
       }
@@ -333,8 +338,6 @@ export function Flock({ stage }: FlockProps) {
 
     function frame(now: number) {
       if (disposed) return;
-      if (!start) start = now;
-      const time = (now - start) / 1000;
       const stageNow = stageRef.current;
 
       ctx!.setTransform(1, 0, 0, 1, 0, 0);
@@ -352,6 +355,13 @@ export function Flock({ stage }: FlockProps) {
       );
       riseEased += (riseTarget - riseEased) * (reduced ? 1 : 0.05);
       const rise = riseEased;
+
+      // Undulation speed climbs across the orb stages — this is what carries
+      // the later stages now, in place of the angle change. Integrated rather
+      // than multiplied so a change in speed never jumps the wave's phase.
+      const dt = lastNow ? Math.min(0.05, (now - lastNow) / 1000) : 0;
+      lastNow = now;
+      wavePhase += dt * (1 + rise * 2.2);
 
       for (let i = 0; i < CREATURES.length; i++) {
         const c = CREATURES[i];
@@ -372,9 +382,9 @@ export function Flock({ stage }: FlockProps) {
 
         const [hx, hy] = headPos(c, s, rise);
 
-        drawBloom(c, s, time, rise, hx, hy, Math.min(1, a * (1 + rise * 0.6)));
-        drawStipple(i, c, s, time, rise, hx, hy, a);
-        drawHead(hx, hy + offsetAt(c, s, time, rise, 0), c.rgb, c.label, a, s.merge < 0.35);
+        drawBloom(c, s, wavePhase, hx, hy, Math.min(1, a * (1 + rise * 0.6)));
+        drawStipple(i, c, s, wavePhase, hx, hy, a);
+        drawHead(hx, hy + offsetAt(c, s, wavePhase, 0), c.rgb, c.label, a, s.merge < 0.35);
       }
 
       if (!reduced) raf = requestAnimationFrame(frame);
