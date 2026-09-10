@@ -273,16 +273,34 @@ export function BinaryIntro({ onResolved, handedOff }: BinaryIntroProps) {
     }
 
     function onResize() {
-      build();
+      if (started) build();
     }
 
-    build();
-    raf = requestAnimationFrame(frame);
+    // The mask is measured from canvas text, so it must not be built until
+    // next/font has actually loaded — otherwise the letterforms come out in
+    // fallback metrics. The timeout guards against fonts.ready never settling.
+    let started = false;
+    function startAll() {
+      if (started || disposed) return;
+      started = true;
+      build();
+      raf = requestAnimationFrame(frame);
+    }
+
+    let fontGuard = 0;
+    if (document.fonts) {
+      document.fonts.ready.then(startAll);
+      fontGuard = window.setTimeout(startAll, 600);
+    } else {
+      startAll();
+    }
+
     window.addEventListener("resize", onResize);
 
     return () => {
       disposed = true;
       cancelAnimationFrame(raf);
+      window.clearTimeout(fontGuard);
       window.removeEventListener("resize", onResize);
     };
   }, []);
