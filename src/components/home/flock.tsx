@@ -303,29 +303,42 @@ export function Flock({ stage }: FlockProps) {
     ) {
       const [r, g, b] = rgb;
 
-      const bloom = ctx!.createRadialGradient(x, y, 0, x, y, 34);
-      bloom.addColorStop(0, `rgba(${r}, ${g}, ${b}, ${0.55 * alpha})`);
-      bloom.addColorStop(0.55, `rgba(${r}, ${g}, ${b}, ${0.22 * alpha})`);
-      bloom.addColorStop(1, `rgba(${r}, ${g}, ${b}, 0)`);
-      ctx!.fillStyle = bloom;
+      // The head is pure falloff — no stroked rim and no hard-edged filled
+      // disc. Both of those read as a drawn outline rather than a light
+      // source, which is what made it look like a ring instead of a glow.
+      //
+      // What makes it read on a light page is not an edge but *contrast*: the
+      // stipple grains are densest right around the head (their f is biased
+      // toward it), so a pure white centre punches through the darkest part of
+      // the trail. The head is drawn after the stipple for exactly this.
+
+      // Wide soft halo.
+      const halo = ctx!.createRadialGradient(x, y, 0, x, y, 42);
+      halo.addColorStop(0, `rgba(${r}, ${g}, ${b}, ${0.62 * alpha})`);
+      halo.addColorStop(0.45, `rgba(${r}, ${g}, ${b}, ${0.3 * alpha})`);
+      halo.addColorStop(1, `rgba(${r}, ${g}, ${b}, 0)`);
+      ctx!.fillStyle = halo;
       ctx!.beginPath();
-      ctx!.arc(x, y, 34, 0, Math.PI * 2);
+      ctx!.arc(x, y, 42, 0, Math.PI * 2);
       ctx!.fill();
 
-      // White head — the colour stays in the air around it, never in the dot.
-      ctx!.fillStyle = `rgba(255, 255, 255, ${0.98 * alpha})`;
+      // Inner glow, gradient so it has no boundary of its own.
+      const core = ctx!.createRadialGradient(x, y, 0, x, y, 12);
+      core.addColorStop(0, `rgba(255, 255, 255, ${alpha})`);
+      core.addColorStop(0.45, `rgba(255, 255, 255, ${0.85 * alpha})`);
+      core.addColorStop(1, `rgba(255, 255, 255, 0)`);
+      ctx!.fillStyle = core;
       ctx!.beginPath();
-      ctx!.arc(x, y, 5, 0, Math.PI * 2);
+      ctx!.arc(x, y, 12, 0, Math.PI * 2);
       ctx!.fill();
 
-      // Ink rim. With the tints gone the rim can no longer be coloured, and a
-      // white dot inside a white bloom on an off-white page would have no
-      // edge at all without it.
-      ctx!.strokeStyle = `rgba(${INK}, ${0.55 * alpha})`;
-      ctx!.lineWidth = 1.6;
+      // Small solid disc for a crisp bright centre, like the bright bead at the
+      // end of a neon line. Filled only — never stroked, since a stroke is what
+      // turned this into a ring before.
+      ctx!.fillStyle = `rgba(255, 255, 255, ${alpha})`;
       ctx!.beginPath();
-      ctx!.arc(x, y, 5, 0, Math.PI * 2);
-      ctx!.stroke();
+      ctx!.arc(x, y, 4.5, 0, Math.PI * 2);
+      ctx!.fill();
 
       if (showLabel) {
         ctx!.font = `500 11px ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace`;

@@ -682,3 +682,40 @@ exact moment it becomes the main event made no sense.
 
 `time` and its `start` clock are gone from the flock's frame loop — `wavePhase`
 is the only clock it needs. Lint back to the 7 pre-existing warnings.
+
+---
+
+## Addendum 11 — the head glows instead of being outlined, 2026-09-10
+
+Addendum 8 gave the head an ink rim, because with the tints removed a white
+dot inside a white bloom had no edge. It worked, but it read as a **drawn ring**
+— exactly the opposite of a light source. Screenshot confirmed a visible dark
+circle outline.
+
+### Now
+
+No stroke anywhere on the head. Three filled layers, all gradient except the
+smallest:
+
+```
+halo   radial, r 42, 0.62 -> 0.30 -> 0     wide soft falloff
+glow   radial, r 12, 1.00 -> 0.85 -> 0     inner brightness
+bead   solid white disc, r 4.5             crisp centre
+```
+
+The bead is filled and never stroked. Stroking is what created the ring.
+
+### What actually makes it read on a light page
+
+Not an edge — **contrast against the stipple**. The grains' `f` is biased
+toward the head, so the densest, darkest part of the trail is exactly where the
+head sits, and a pure white centre punches through it. This is why the draw
+order matters: bloom, then stipple, then head. The head must go last.
+
+### Standing limitation, restated
+
+The reference Russ gave (a neon line on dark navy) glows because glow is
+additive and the ground is dark. On `#F4F6F8` nothing can out-brighten white,
+so this will always be a softer effect than the reference. It reads as a bright
+bead in a haze, not as emitted light. Unchanged from Addenda 3 and 6 — the only
+way to get the reference's actual punch is a dark section.
