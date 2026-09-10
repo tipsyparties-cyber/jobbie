@@ -856,3 +856,57 @@ The hand-off effect (`logoDone && currentSection === -1` -> advance to 0 after
 500ms) had no cleanup. A pending timer from a previous run could fire after
 the user had scrolled back to the intro and yank them forward. It now clears
 on unmount.
+
+---
+
+## Addendum 15 — the wordmark climbs as code, 2026-09-11
+
+Russ disliked seeing the wordmark turn from code into black text mid-page and
+*then* move. It should stay code the whole way, climb the page by characters
+fading in above it and out below it — the same mechanism that revealed it —
+and only become black once it is in the header.
+
+### Mask is sampled through a transform, not rebuilt
+
+The mask is built **once** at a reference size and centre position, and stored
+as a `Uint8Array` of alpha (a quarter of the ImageData's memory). Each frame
+`inMask(px, py)` maps the screen point back into that reference space:
+
+```
+scale = 1 + (0.42 - 1) * lift
+cy    = h/2 + (HEADER_Y - h/2) * lift
+mx    = w/2 + (px - w/2) / scale
+my    = h/2 + (py - cy)  / scale
+```
+
+Re-rendering the wordmark offscreen and re-reading its pixels every frame
+would be far too slow, and is unnecessary — moving the sample point gives the
+same answer. Cell membership then changes as the wordmark moves, and because
+every cell already eases toward its target, characters fade in above it and
+out below it for free. No new animation code.
+
+### It cannot shrink to header size
+
+The header logo is 1.5rem ≈ 24px. Cells are 18px. A 24px wordmark is barely
+one cell tall, so a code form of it cannot exist. It shrinks to `TRAVEL_SCALE`
+0.42 — still several cells tall and legible as characters — and the caller
+swaps in the real logo on arrival.
+
+### Scroll drives the climb
+
+Consistent with Russ's earlier "things shouldn't progress until you scroll".
+The intro auto-plays fill -> emerge -> fizzle, then **holds**. Scrolling down
+sets `travel`, which starts the climb; `onArrived` fires at `lift > 0.97`.
+
+Scrolling *up* does nothing during the intro — as in Addendum 14, acting on
+any direction meant the momentum of the scroll that returned you to the intro
+immediately restarted the climb.
+
+### The black logo no longer moves
+
+It now sits at its final header position permanently and just fades in on
+arrival. The old centre-to-header rise is gone: the code does the travelling,
+so a second animated black wordmark would only duplicate it.
+
+Dropped with it: `viewportWidth` state, the `wordmarkSize`/`MASK_WEIGHT`
+imports in the page, and `skipIntro`.

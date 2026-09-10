@@ -9,7 +9,7 @@ import { HarmonyGlyph } from "@/components/home/harmony-glyph";
 import { ParticleCanvas, type ParticleShape } from "@/components/home/particle-canvas";
 import { ContactForm } from "@/components/contact/contact-form";
 import { ServiceCarousel } from "@/components/home/service-carousel";
-import { BinaryIntro, wordmarkSize, MASK_WEIGHT } from "@/components/home/binary-intro";
+import { BinaryIntro } from "@/components/home/binary-intro";
 import { Flock } from "@/components/home/flock";
 import { NeuralOrb } from "@/components/home/neural-orb";
 import { Button } from "@/components/ui/button";
@@ -622,25 +622,14 @@ export default function Home() {
   const [logoDone, setLogoDone] = useState(false);
   const [transitioning, setTransitioning] = useState(false);
   const [introResolved, setIntroResolved] = useState(false);
-  const [viewportWidth, setViewportWidth] = useState(1280);
-
-  useEffect(() => {
-    const measure = () => setViewportWidth(window.innerWidth);
-    measure();
-    window.addEventListener("resize", measure);
-    return () => window.removeEventListener("resize", measure);
-  }, []);
-
-  // Skips the intro straight to the resolved wordmark.
-  const skipIntro = useCallback(() => {
-    setIntroResolved(true);
-    setLogoDone(true);
-  }, []);
+  /** Set when the viewer scrolls down: starts the code wordmark climbing. */
+  const [travel, setTravel] = useState(false);
 
   // Returns to the intro and replays it from the start. Resetting logoDone
   // remounts BinaryIntro, so the rain runs again rather than showing the
   // already-resolved wordmark.
   const goToIntro = useCallback(() => {
+    setTravel(false);
     setIntroResolved(false);
     setLogoDone(false);
     setCurrentSection(-1);
@@ -649,10 +638,11 @@ export default function Home() {
   const navigate = useCallback(
     (dir: 1 | -1) => {
       if (!logoDone) {
-        // Scrolling down skips the intro; scrolling up does nothing. Skipping
-        // on *any* direction meant the trailing momentum of the scroll that
-        // brought you back here instantly killed the replay.
-        if (dir === 1) skipIntro();
+        // Scrolling down sends the code wordmark climbing into the header;
+        // scrolling up does nothing. Acting on *any* direction meant the
+        // trailing momentum of the scroll that brought you back here
+        // immediately started the climb again.
+        if (dir === 1) setTravel(true);
         return;
       }
       if (transitioning) return;
@@ -670,7 +660,7 @@ export default function Home() {
         setTransitioning(false);
       }, 600);
     },
-    [transitioning, currentSection, logoDone, skipIntro, goToIntro]
+    [transitioning, currentSection, logoDone, goToIntro]
   );
 
   useEffect(() => {
@@ -722,10 +712,12 @@ export default function Home() {
     };
   }, [navigate]);
 
-  // Hold on the resolved wordmark for a beat, then send it up to the header.
+  // The code wordmark has arrived at the header and the black text has faded
+  // in over it. Short beat, then the intro is done. No rise to wait for any
+  // more — the climb already happened, in code.
   useEffect(() => {
     if (introResolved && !logoDone) {
-      const t = setTimeout(() => setLogoDone(true), 800);
+      const t = setTimeout(() => setLogoDone(true), 450);
       return () => clearTimeout(t);
     }
   }, [introResolved, logoDone]);
@@ -754,41 +746,31 @@ export default function Home() {
         transition={{ duration: 0.9, delay: logoDone ? 0.4 : 0, ease: "easeInOut" }}
       />
 
-      {/* Binary rain — resolves into the up+up wordmark */}
+      {/* Binary rain. The wordmark climbs to the header still made of code —
+          the canvas only fades once it has arrived, so the code-to-black swap
+          happens at the header and is never visible mid-page. */}
       {!logoDone && (
-        <BinaryIntro onResolved={() => setIntroResolved(true)} handedOff={introResolved} />
+        <motion.div
+          className="pointer-events-none fixed inset-0 z-[95]"
+          initial={{ opacity: 1 }}
+          animate={{ opacity: introResolved ? 0 : 1 }}
+          transition={{ duration: 0.4, ease: "easeOut" }}
+        >
+          <BinaryIntro onArrived={() => setIntroResolved(true)} travel={travel} />
+        </motion.div>
       )}
 
-      {/* Logo. Hidden while the digits form it, then crossfades in at the exact
-          size and position the mask resolved at, and rises into the header. */}
+      {/* Logo. Sits at its final header position from the start and simply
+          fades in once the code wordmark has climbed into place. It no longer
+          animates up the page — the code does the travelling now, so a moving
+          black wordmark would just duplicate it. */}
       <motion.div
-        className="fixed z-[100] tracking-tight pointer-events-none"
-        initial={{ top: "50%", left: "50%", x: "-50%", y: "-50%", fontSize: `${wordmarkSize(viewportWidth)}px`, opacity: 0, color: "#0A0A0A", fontWeight: MASK_WEIGHT }}
-        animate={
-          logoDone
-            ? { top: "1.1rem", left: "50%", x: "-50%", y: "0%", fontSize: "1.5rem", opacity: 1, color: "#0A0A0A", fontWeight: 300 }
-            : {
-                top: "50%",
-                left: "50%",
-                x: "-50%",
-                y: "-50%",
-                fontSize: `${wordmarkSize(viewportWidth)}px`,
-                opacity: introResolved ? 1 : 0,
-                color: "#0A0A0A",
-                // Matches the weight the mask was drawn at, so the handover
-                // from digits to real text does not visibly thin out.
-                fontWeight: MASK_WEIGHT,
-              }
-        }
-        transition={
-          logoDone
-            ? { duration: 1.2, delay: 0.3, ease: [0.25, 0.1, 0.25, 1] }
-            : { duration: 0.45, ease: "easeOut" }
-        }
+        className="pointer-events-none fixed left-1/2 top-[1.1rem] z-[100] -translate-x-1/2 text-2xl tracking-tight text-ink"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: introResolved ? 1 : 0 }}
+        transition={{ duration: 0.35, ease: "easeOut" }}
       >
-        {/* No weight class here — the container's animated fontWeight carries
-            it from the bold mask weight down to 300 as it rises. */}
-        <span className="font-body">up</span>
+        <span className="font-body font-light">up</span>
         <span className="font-display text-[1.15em]">+up</span>
         <span className="text-[0.7em] leading-none font-body -ml-[0.15em] relative -top-[0.35em]">^</span>
       </motion.div>
