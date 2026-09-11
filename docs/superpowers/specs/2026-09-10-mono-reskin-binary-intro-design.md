@@ -1180,3 +1180,52 @@ a frame at 1920x1080 — negligible, and they are plain `Uint8Array` indexes.
 This is a subtler effect and legibility is not guaranteed. If `up+up` does not
 read, the dials in order of effect are `SETTLE_GAIN`, `PILE_GAIN`,
 `SHADOW_LOSS` — all at the top of the file.
+
+---
+
+## Addendum 22 — the code is displaced by the form, 2026-09-11
+
+Addendum 21 was not legible. Stillness, pile-up and shadow are too weak a
+signal on their own, and they vanish entirely in a still screenshot.
+
+### Negative space instead
+
+The form is solid, so the code **cannot be where it is**:
+
+| | |
+|---|---|
+| **Void** | cells inside hold no character at all — `target = 0` |
+| **Rim** | the ring touching the surface crowds to `0.777` alpha against the field's `0.42` |
+| **Push** | rim characters are shoved outward along the surface normal, `0.5` of a cell |
+| **Settle** | those jammed characters stop churning |
+
+```
+inside the form   empty
+rim (touching)    grey  65
+open field        grey 152
+```
+
+The wordmark is the shape of the absence. A clean hole in a dense field reads
+instantly, and it is the honest consequence of the thing being solid — nothing
+is faded to achieve it.
+
+### The normal comes free
+
+The four neighbour probes already needed for "is this cell touching the form"
+also give the direction away from it:
+
+```
+pushX = (left - right) * cell * PUSH
+pushY = (up   - down ) * cell * PUSH
+```
+
+Form on the left pushes right. No distance field, no gradient pass — four
+`Uint8Array` reads that were being taken anyway.
+
+### Three approaches tried, for the record
+
+1. **Stencil** — mark dark, field faded. Legible but crude; Russ: "too basic".
+2. **Behavioural** — one weight, revealed by stillness/pile/shadow. Sophisticated
+   but not legible.
+3. **Displacement** — void plus crowded, pushed rim. Legible *and* the most
+   literal reading of "the code is hitting something invisible but solid".

@@ -10,17 +10,20 @@ import { useEffect, useRef } from "react";
  * Phase 3  on scroll it travels up the page, still entirely made of code, and
  *          only once it reaches the header does the caller swap in black text.
  *
- * **The wordmark is never drawn.** It is an invisible solid that the code runs
- * into, and it shows itself only through what the code does on contact:
+ * **The wordmark is never drawn.** It is an invisible solid, and the code
+ * simply cannot be where it is:
  *
- *   - characters resting against it **stop churning** while the rest of the
- *     field keeps flickering — stillness is the main cue
- *   - characters **pile up** on its upper surfaces, denser than the field
- *   - the cells it shelters, directly beneath it, **thin out**
+ *   - cells inside it hold **no character at all** — the wordmark is the shape
+ *     of that absence, read as negative space
+ *   - the ring pressed against its surface **crowds denser**, and is
+ *     **physically shoved outward** along the surface normal
+ *   - those jammed characters also **stop churning**
  *
- * Weighting the letterforms darker and fading everything else was the earlier
- * approach and read as a stencil cut out of the field. Everything now sits at
- * roughly one weight; the form is inferred, not painted.
+ * Two earlier approaches failed and are worth not repeating. Weighting the
+ * letterforms dark and fading the rest read as a stencil. Keeping one weight
+ * and relying on stillness, pile-up and shadow was subtle but simply not
+ * legible. A clean void in a dense field reads instantly, and it is the honest
+ * consequence of the thing being solid.
  *
  * The field never fizzles out — it stays a living matrix for the whole intro,
  * which is what lets the form travel *through* the code rather than across a
@@ -53,17 +56,20 @@ const FIELD_ALPHA = 0.42;
 const FILL_ALPHA = 0.4;
 
 /**
- * How the invisible form shows itself. The wordmark is never drawn; these are
- * the three things the code does on contact with it:
+ * How the invisible form shows itself. It is solid, so the code simply cannot
+ * be where it is:
  *
- *   SETTLE  characters resting against it stop churning — they go still while
- *           the rest of the field keeps flickering
- *   PILE    characters stack up on its upper surfaces, denser than the field
- *   SHADOW  the cells it shelters, directly beneath it, thin out
+ *   VOID   cells inside it hold no character at all — the wordmark is the
+ *          shape of the absence, read as negative space
+ *   RIM    the ring of characters pressed against its surface crowds denser
+ *   PUSH   and is physically shoved outward, away from the surface
+ *
+ * Legibility comes from the void. A clean hole in a dense field reads
+ * instantly, where the earlier weight-and-stillness cues did not.
  */
-const SETTLE_GAIN = 0.3;
-const PILE_GAIN = 0.5;
-const SHADOW_LOSS = 0.55;
+const RIM_GAIN = 0.85;
+/** How far rim characters are shoved out, as a fraction of a cell. */
+const PUSH = 0.5;
 
 const ALPHA_STEPS = 12;
 
@@ -355,19 +361,23 @@ export function BinaryIntro({ onArrived, travel }: BinaryIntroProps) {
           // climbs — the pile and shadow move with it, no extra code.
           const m = maskAt(cxp, cyp);
 
-          // Only cells outside the form can be resting on it or sheltered by
-          // it, so the probes are skipped entirely for cells inside.
-          let pile = 0;
-          let shadow = 0;
-          if (m === 0) {
-            pile = Math.max(
-              maskPoint(cxp, cyp + cell),
-              maskPoint(cxp, cyp + cell * 2) * 0.55
-            );
-            shadow = Math.max(
-              maskPoint(cxp, cyp - cell),
-              maskPoint(cxp, cyp - cell * 2) * 0.6
-            );
+          // Probe the four neighbours. These give both whether this cell is
+          // touching the form and, from their difference, which way is "away
+          // from it" — a crude surface normal, for free.
+          let near = 0;
+          let pushX = 0;
+          let pushY = 0;
+          if (m < 0.5) {
+            const nl = maskPoint(cxp - cell, cyp);
+            const nr = maskPoint(cxp + cell, cyp);
+            const nu = maskPoint(cxp, cyp - cell);
+            const nd = maskPoint(cxp, cyp + cell);
+            near = Math.max(nl, nr, nu, nd);
+            if (near > 0) {
+              // Form on the left pushes right, and so on.
+              pushX = (nl - nr) * cell * PUSH;
+              pushY = (nu - nd) * cell * PUSH;
+            }
           }
 
           let target: number;
@@ -375,26 +385,33 @@ export function BinaryIntro({ onArrived, travel }: BinaryIntroProps) {
             target = 0;
           } else if (t < T_EMERGE) {
             target = Math.min((t - cl.appearAt) / 260, 1) * FILL_ALPHA;
+          } else if (m >= 0.5) {
+            // Inside the solid. Nothing can be here — this absence is the
+            // wordmark, and it is what makes it legible.
+            target = 0;
           } else {
-            // The form is never drawn. It shows itself only through what the
-            // code does on contact: settling against it, stacking on top of it,
-            // and thinning out in the lee of it. The weights are small on
-            // purpose — this should read as the field meeting something solid,
-            // not as a stencil cut out of it.
-            target =
-              FIELD_ALPHA *
-              (1 + SETTLE_GAIN * m + PILE_GAIN * pile - SHADOW_LOSS * shadow);
+            // Outside. Full field weight, crowding denser where it presses up
+            // against the surface. The `1 - m * 1.6` term feathers the last
+            // partial cell into the void so the edge is not a hard staircase.
+            target = FIELD_ALPHA * (1 - m * 1.6) * (1 + RIM_GAIN * near);
           }
 
-          // Characters resting against the form stop churning. This is the main
-          // cue: the shape is given away by stillness, not by weight.
-          cl.frozen = m > 0.5;
+          // Characters jammed against the surface stop churning too.
+          cl.frozen = near > 0;
 
           cl.alpha += (target - cl.alpha) * 0.18;
           if (cl.alpha < 0.01) continue;
 
           const step = Math.min(ALPHA_STEPS - 1, Math.max(0, Math.round(cl.alpha * ALPHA_STEPS) - 1));
-          ctx.drawImage(glyphs[cl.ch][step], Math.round(c * cell * dpr), Math.round(r * cell * dpr), px, px);
+          // pushX/pushY shove rim characters clear of the surface, so they read
+          // as displaced by something solid rather than merely stopping at it.
+          ctx.drawImage(
+            glyphs[cl.ch][step],
+            Math.round((c * cell + pushX) * dpr),
+            Math.round((r * cell + pushY) * dpr),
+            px,
+            px
+          );
         }
       }
 
