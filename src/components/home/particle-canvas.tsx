@@ -24,36 +24,55 @@ function clusterPts(cx: number, cy: number, s: number) {
 function questionPts(cx: number, cy: number, s: number) {
   const p: {x:number;y:number}[] = [];
   const scale = s * 0.35;
-  
-  // Top curve of ? — thick arc, many passes for density
+
+  // Angles are screen-space: +sin is DOWN. 140 degrees is lower-left, 270 is
+  // the top, 40 is lower-right.
+  const r = scale * 0.42;
+  const topY = cy - scale * 0.28;
+  const A0 = Math.PI * 0.78;   // start, lower-left
+  const SWEEP = Math.PI * 1.44; // 259 degrees, leaving a 100 degree mouth
+
+  // The hook. It used to sweep 306 degrees, leaving only a 54 degree gap —
+  // which is why it closed up and read as an O rather than a question mark.
   for (let pass = 0; pass < 15; pass++) {
     const w = pass * 0.8;
-    for (let t = 0; t <= 1; t += 0.001) {
-      const angle = Math.PI * 0.7 - t * Math.PI * 1.7;
-      const r = scale * 0.45 + (Math.random() - 0.5) * w;
-      const x = cx + Math.cos(angle) * r;
-      const y = cy - scale * 0.25 + Math.sin(angle) * r * 0.85;
-      p.push({ x, y });
+    for (let t = 0; t <= 1; t += 0.0015) {
+      const a = A0 + t * SWEEP;
+      const rr = r + (Math.random() - 0.5) * w;
+      p.push({ x: cx + Math.cos(a) * rr, y: topY + Math.sin(a) * rr });
     }
   }
-  
-  // Stem — thick vertical, many passes
+
+  // The stem, as a curve starting exactly where the hook ends and sweeping
+  // down and inward to the centre line. Previously this was a straight
+  // vertical bar sitting at cx, which did not touch the hook at all — hence
+  // the detached blob under the circle.
+  const endA = A0 + SWEEP;
+  const sx = cx + Math.cos(endA) * r;
+  const sy = topY + Math.sin(endA) * r;
+  const ex = cx;
+  const ey = cy + scale * 0.3;
+  // Control point holds the curve out to the right before it tucks in.
+  const qx = cx + scale * 0.3;
+  const qy = cy + scale * 0.16;
+
   for (let pass = 0; pass < 12; pass++) {
     const w = pass * 0.7;
     for (let t = 0; t <= 1; t += 0.002) {
-      const x = cx + (Math.random() - 0.5) * w;
-      const y = cy + scale * 0.08 + t * scale * 0.22;
-      p.push({ x, y });
+      const u = 1 - t;
+      const x = u * u * sx + 2 * u * t * qx + t * t * ex;
+      const y = u * u * sy + 2 * u * t * qy + t * t * ey;
+      p.push({ x: x + (Math.random() - 0.5) * w, y: y + (Math.random() - 0.5) * w });
     }
   }
-  
-  // Dot — dense filled circle
-  for (let i = 0; i < 200; i++) {
+
+  // The dot, clear of the stem's end so the gap reads.
+  for (let i = 0; i < 260; i++) {
     const a = Math.random() * Math.PI * 2;
-    const r = Math.sqrt(Math.random()) * scale * 0.06;
-    p.push({ x: cx + Math.cos(a) * r, y: cy + scale * 0.45 + Math.sin(a) * r });
+    const rr = Math.sqrt(Math.random()) * scale * 0.075;
+    p.push({ x: cx + Math.cos(a) * rr, y: cy + scale * 0.52 + Math.sin(a) * rr });
   }
-  
+
   return p;
 }
 
