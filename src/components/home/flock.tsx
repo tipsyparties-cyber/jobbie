@@ -69,6 +69,16 @@ export function convergeAt(rise: number) {
   return { x: CONVERGE.x, y: CONVERGE.y - rise * CLIMB };
 }
 
+/**
+ * Radius of the neural orb at a given progress. Lives here rather than in
+ * neural-orb.tsx because the tail needs it too: the tail flares to the width
+ * of the nucleus at its head so the two read as one comet. Two copies of this
+ * formula would drift apart and the join would come undone.
+ */
+export function orbRadius(progress: number, w: number, h: number) {
+  return 14 + progress * progress * Math.sqrt(w * w + h * h) * 0.62;
+}
+
 /** First stage at which all trails have arrived and merge. */
 export const MERGE_STAGE = 7;
 /** Stages after the merge, during which the orb grows and the trails rise. */
@@ -198,28 +208,39 @@ export function Flock({ stage }: FlockProps) {
      * keeps it smooth.
      */
     function offsetAt(c: Creature, s: State, wavePhase: number, f: number) {
-      // The trail sweeps vertically as it recedes, which gives the long lazy
-      // arcs while the flock is assembling.
-      const arc = Math.pow(f, 1.5) * c.sweep * h * (1 - s.merge * 0.55);
+      // How much of this trail's own identity is left. Goes to zero on merge.
+      const solo = 1 - s.merge;
 
-      // Two waves travelling down the body at different rates. Amplitude is a
-      // fraction of viewport height, not a pixel constant, so it undulates as
-      // broadly as the page is tall.
-      // The envelopes start at 0.22 and 0.15 rather than 0, so the wave still
-      // has amplitude at f=0 — the head itself undulates instead of sitting
-      // dead still while the tail whips, which is what sells it as swimming.
+      // Amplitude is a fraction of viewport height, not a pixel constant, so it
+      // undulates as broadly as the page is tall. The envelopes start at 0.22
+      // and 0.15 rather than 0, so the wave still has amplitude at f=0 — the
+      // head undulates instead of sitting dead still while the tail whips.
       const amp = h * 0.085;
-      const wave =
-        (Math.sin(f * 4.2 - wavePhase * 2.0 + c.phase) * amp * (0.22 + 0.78 * Math.pow(f, 0.55)) +
-          Math.sin(f * 9.0 - wavePhase * 3.3 + c.phase * 1.7) * amp * 0.3 * (0.15 + 0.85 * Math.pow(f, 0.85))) *
-        // Damped once merged, but only halfway — the trails have to keep
-        // visibly moving after they converge, since the undulation speeding up
-        // is now what carries the later stages.
-        (1 - s.merge * 0.5);
+      const envA = amp * (0.22 + 0.78 * Math.pow(f, 0.55));
+      const envB = amp * 0.3 * (0.15 + 0.85 * Math.pow(f, 0.85));
 
-      const bob = Math.sin(wavePhase * 0.5 + c.phase) * h * 0.02 * (1 - s.merge * 0.6);
+      // --- Individual identity, while the flock is still assembling ---
+      // Each trail's own sweep, own wave phase, own bob. All fade out
+      // COMPLETELY on merge. They previously kept 45% of the sweep and 50% of
+      // the phase, which is exactly why the six stayed visibly parallel behind
+      // a shared head instead of becoming one tail.
+      const arc = Math.pow(f, 1.5) * c.sweep * h * solo;
+      const waveSolo =
+        (Math.sin(f * 4.2 - wavePhase * 2.0 + c.phase) * envA +
+          Math.sin(f * 9.0 - wavePhase * 3.3 + c.phase * 1.7) * envB) *
+        solo;
+      const bob = Math.sin(wavePhase * 0.5 + c.phase) * h * 0.02 * solo;
 
-      return arc + wave + bob;
+      // --- The united tail ---
+      // One shared centreline, no per-creature phase, faded in as they merge.
+      // Every trail lands on exactly this curve, so their grains overlay into
+      // a single denser tail rather than six strands running alongside.
+      const waveUnited =
+        (Math.sin(f * 4.2 - wavePhase * 2.0) * envA +
+          Math.sin(f * 9.0 - wavePhase * 3.3) * envB) *
+        s.merge;
+
+      return arc + waveSolo + bob + waveUnited;
     }
 
     /**
@@ -228,8 +249,18 @@ export function Flock({ stage }: FlockProps) {
      * would grow while the trails stayed put, which reads as the orb inflating
      * rather than the viewer moving closer to it.
      */
-    function spreadAt(f: number, merge: number, girth: number) {
-      return (h * 0.006 + Math.pow(f, 0.85) * h * 0.05) * (1 - merge * 0.75) * girth;
+    function spreadAt(f: number, merge: number, girth: number, rise: number) {
+      // Was `1 - merge * 0.75`, which squeezed the tail down to a quarter width
+      // on merge. That is what made it meet the orb as a thread. Now the six
+      // have become one tail, so it should stay substantial.
+      const body = (h * 0.006 + Math.pow(f, 0.85) * h * 0.05) * (1 - merge * 0.25) * girth;
+
+      // Flare at the head, matching the nucleus and decaying fast along the
+      // tail. This is what makes the orb read as the comet's head with the
+      // tail streaming out of it, rather than a ball with a thread attached.
+      const nucleus = orbRadius(rise, w, h) * 0.8 * Math.exp(-f * 5) * merge;
+
+      return body + nucleus;
     }
 
     /**
@@ -300,7 +331,8 @@ export function Flock({ stage }: FlockProps) {
       hy: number,
       alpha: number,
       lenScale: number,
-      girth: number
+      girth: number,
+      rise: number
     ) {
       const len = TAIL_LEN * w * lenScale;
       // Grains grow too, so the stipple reads as coarser detail seen closer up
@@ -320,7 +352,7 @@ export function Flock({ stage }: FlockProps) {
           const y =
             hy +
             offsetAt(c, s, wavePhase, gr.f) +
-            gr.off * spreadAt(gr.f, s.merge, girth);
+            gr.off * spreadAt(gr.f, s.merge, girth, rise);
           const sz = gr.size * grainScale;
           ctx!.fillRect(x, y, sz, sz);
         }
@@ -438,7 +470,7 @@ export function Flock({ stage }: FlockProps) {
         const [hx, hy] = headPos(c, s, rise);
 
         drawBloom(c, s, wavePhase, hx, hy, Math.min(1, a * (1 + rise * 0.6)), len, girth);
-        drawStipple(i, c, s, wavePhase, hx, hy, a, len, girth);
+        drawStipple(i, c, s, wavePhase, hx, hy, a, len, girth, rise);
 
         // The heads have all merged into the orb by this point, so they fade
         // out rather than scaling up. Growing them with the girth would put a

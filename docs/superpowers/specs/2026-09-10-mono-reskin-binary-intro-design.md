@@ -948,3 +948,47 @@ Losing the fizzle removes ~1.1s of waiting:
 2100ms           settled  waits here for a scroll
 on scroll        climb    lift eases to 1, arrival at 0.97
 ```
+
+---
+
+## Addendum 17 — one comet, not six threads and a ball, 2026-09-11
+
+Screenshot showed six visibly parallel strands ending at a separate sphere.
+Two independent causes.
+
+### 1. The trails never actually united
+
+`offsetAt` kept **45% of each trail's sweep** (`1 - merge*0.55`) and **50% of
+its own wave phase** (`1 - merge*0.5`) at full merge. Six different centrelines
+cannot overlay, so they stayed parallel behind a shared head no matter how
+close the heads got.
+
+Split into two parts that cross-fade:
+
+```
+solo  = 1 - merge     own sweep, own phase, own bob   -> 0 on merge
+united= merge         one shared wave, no per-creature phase
+```
+
+At merge every trail lands on exactly the same curve, so six sets of grains
+overlay into one tail at six times the density.
+
+Also dropped the tail-narrowing on merge from `1 - merge*0.75` to
+`1 - merge*0.25`. Squeezing to a quarter width was right when it converged to
+a point; now it is one united tail and should stay substantial.
+
+### 2. The orb read as a separate object
+
+Three cues, all removed:
+
+- **The rim.** An ink hairline circle — the single strongest "this is a
+  separate object" signal. Gone; the lattice already describes the sphere.
+- **The body's hard edge.** Its outer gradient stop sat at 0.1-0.4 alpha, so
+  the disc ended abruptly exactly where the tail met it. Now 0.
+- **The thread join.** The tail's width at the head was unrelated to the orb's
+  size, so a thin thread met a large ball. `spreadAt` now adds
+  `orbRadius * 0.8 * e^(-5f) * merge`, flaring the tail to the nucleus width at
+  its head and decaying fast along its length.
+
+`orbRadius` moved into `flock.tsx` and is imported by `neural-orb.tsx`. Both
+need it and two copies would drift apart, undoing the join silently.

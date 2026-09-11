@@ -1,15 +1,20 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { convergeAt, MERGE_STAGE, ORB_STAGES } from "./flock";
+import { convergeAt, orbRadius, MERGE_STAGE, ORB_STAGES } from "./flock";
 
 /**
  * The neural orb.
  *
  * Grows out of the point where the flock converges. A sphere of connected
  * nodes — the classic neural-network globe — inside a brightening white body
- * with an iridescent rim. As the stages advance it swells until it fills the
- * viewport and the screen blows out to brilliant white.
+ * that falls to nothing at its edge. As the stages advance it swells until it
+ * fills the viewport.
+ *
+ * It is deliberately NOT a self-contained object: no rim, no hard edge, and it
+ * shares `orbRadius` with the flock so the tail flares to the same width where
+ * they meet. The two are meant to read as one comet — nucleus and tail — not
+ * as a ball with a trail attached.
  *
  * Stage 7 is the merge (orb not yet present). Stages 8..11 drive progress
  * 0.25 -> 1.0.
@@ -136,12 +141,9 @@ export function NeuralOrb({ stage }: OrbProps) {
       const cp = convergeAt(progress);
       const cx = cp.x * w;
       const cy = cp.y * h;
-      const diag = Math.sqrt(w * w + h * h);
-
-      // Accelerating growth — it should feel like it runs away with itself at
-      // the end rather than growing evenly.
-      const eased = progress * progress;
-      const r = 14 + eased * diag * 0.62;
+      // Shared with the flock, which flares its tail to this same radius so the
+      // two read as one comet rather than a ball with a thread attached.
+      const r = orbRadius(progress, w, h);
 
       // Outer bloom. Widens and brightens with progress — this is the "glowing
       // more and more".
@@ -153,25 +155,21 @@ export function NeuralOrb({ stage }: OrbProps) {
       ctx!.arc(cx, cy, r * 1.5, 0, Math.PI * 2);
       ctx!.fill();
 
-      // Body — a bright white disc that gains opacity as it grows.
+      // Body — bright in the middle, falling to nothing at the rim. The outer
+      // stop must be fully transparent: it used to end at 0.1-0.4 alpha, which
+      // put a visible disc edge exactly where the tail meets the orb and made
+      // it read as a separate object sitting on top of the trail.
       const body = ctx!.createRadialGradient(cx, cy, 0, cx, cy, r);
       body.addColorStop(0, `rgba(255, 255, 255, ${0.55 + 0.45 * progress})`);
-      body.addColorStop(0.75, `rgba(255, 255, 255, ${0.4 + 0.5 * progress})`);
-      body.addColorStop(1, `rgba(255, 255, 255, ${0.1 + 0.3 * progress})`);
+      body.addColorStop(0.6, `rgba(255, 255, 255, ${0.34 + 0.44 * progress})`);
+      body.addColorStop(1, "rgba(255, 255, 255, 0)");
       ctx!.fillStyle = body;
       ctx!.beginPath();
       ctx!.arc(cx, cy, r, 0, Math.PI * 2);
       ctx!.fill();
 
-      // Ink hairline rim. This was an iridescent conic gradient through the six
-      // trail colours; with the palette reduced to black and white there is no
-      // iridescence to put here, and a white rim on a white orb would be
-      // invisible. It fades out as the orb approaches the whiteout.
-      ctx!.strokeStyle = `rgba(10, 10, 10, ${(0.2 * (1 - progress * 0.75)).toFixed(3)})`;
-      ctx!.lineWidth = Math.max(1, r * 0.003);
-      ctx!.beginPath();
-      ctx!.arc(cx, cy, r, 0, Math.PI * 2);
-      ctx!.stroke();
+      // No rim. An outline is the single strongest cue that something is a
+      // separate object, and the lattice already describes the sphere.
 
       // The network inside. Drawn in ink, because a white network on a white
       // orb would be invisible — the same reason the rest of the site is ink
