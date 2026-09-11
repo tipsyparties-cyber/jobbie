@@ -1261,3 +1261,59 @@ The lesson is that Russ's "too basic" was about the *look*, not a request to
 weaken the signal. Two of the three replacements were more conceptually
 interesting and both read worse on the page. Legibility first; a mechanism that
 has to be explained is not working.
+
+---
+
+## Addendum 24 — the rain actually falls, 2026-09-11
+
+Russ clarified: "too basic" was about **the animation**, not the reveal
+mechanism. Addenda 20-22 were all chasing the wrong thing and were reverted.
+
+### The flaw
+
+Nothing moved. It was called rain, but:
+
+- the fill was a **staggered alpha ramp** — a wipe, not falling
+- the "churn" was random character swaps **scattered across a static grid**
+
+Every cell held a fixed position and only changed opacity. There was no motion
+in the piece at all.
+
+### Real drops
+
+Each column now carries a drop with its own speed, a bright leading character,
+and a tail fading out behind it:
+
+```
+columns             107 on a 1920 viewport
+speed               7-24 rows/sec, re-rolled on every restart
+tail                15 rows
+crossing time       8.6s slowest, 2.5s fastest
+```
+
+Restarting above the top at a fresh speed keeps the columns drifting out of
+sync instead of settling into a visible pattern.
+
+### Two details that matter
+
+**The drop is added raw, not eased.** The standing field still eases at
+0.18/frame so it settles smoothly, but the rain is added on top of `cl.alpha`
+undamped. Easing it would smear the streak into a travelling glow and lose the
+movement entirely.
+
+**Flicker moved to the drop head.** Characters now churn where the drop is
+passing — `0.45` chance per frame within 1.2 rows of the head — which is where
+flicker belongs. Background churn dropped from 2% of cells per frame to 0.6%,
+just enough that the standing field is not frozen.
+
+### Weights
+
+```
+standing field   grey 221      (was 206 — lowered, the drops carry the weight now)
+drop mid-tail    grey 186
+drop head        grey  30
+wordmark         grey  10
+```
+
+The wordmark still sits at full black and stays the darkest thing on screen, so
+the reveal is unaffected by the rain running over it.

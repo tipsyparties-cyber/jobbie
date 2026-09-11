@@ -33,9 +33,29 @@ const CELL_MOBILE = 22;
 const MOBILE_MAX = 640;
 
 const INK = "10, 10, 10";
-/** Resting alpha of every character outside the wordmark. This is the matrix
- *  the logo moves through, so it has to stay clearly present — not a trace. */
-const GHOST_ALPHA = 0.2;
+
+/**
+ * Resting alpha of the standing field. Lower than it was, because the field is
+ * no longer the whole picture — falling drops now ride on top of it.
+ */
+const GHOST_ALPHA = 0.14;
+
+/**
+ * The rain itself.
+ *
+ * Every column carries a drop falling at its own speed, with a bright leading
+ * character and a tail fading out behind it. Previously nothing actually moved:
+ * the fill was a staggered alpha ramp (a wipe, not rain) and the "churn" was
+ * random character swaps in a static grid. The drops are the animation.
+ */
+const RAIN_TAIL = 15;
+/** Brightness a drop adds over the standing field. */
+const RAIN_GAIN = 0.5;
+/** Extra on the leading character, which also flickers as it falls. */
+const RAIN_HEAD = 0.28;
+const RAIN_SPEED_MIN = 7;
+const RAIN_SPEED_VAR = 17;
+
 const ALPHA_STEPS = 12;
 
 /** The characters the field rains — the wordmark's own letters. */
@@ -209,6 +229,11 @@ export function BinaryIntro({ onArrived, travel }: BinaryIntroProps) {
     let mask: Uint8Array | null = null;
     let w = 0;
     let h = 0;
+    /** Per-column drop head position, in rows. Fractional so it moves smoothly. */
+    let dropY: Float32Array = new Float32Array(0);
+    let dropSpeed: Float32Array = new Float32Array(0);
+    let lastNow = 0;
+
     /** Eased 0..1 climb into the header. */
     let lift = 0;
 
@@ -241,6 +266,14 @@ export function BinaryIntro({ onArrived, travel }: BinaryIntroProps) {
       const a = new Uint8Array(w * h);
       for (let i = 0, j = 3; i < a.length; i++, j += 4) a[i] = data[j];
       mask = a;
+
+      dropY = new Float32Array(cols);
+      dropSpeed = new Float32Array(cols);
+      for (let c = 0; c < cols; c++) {
+        // Staggered well above the top so the screen does not start full.
+        dropY[c] = -Math.random() * rows * 1.5;
+        dropSpeed[c] = RAIN_SPEED_MIN + Math.random() * RAIN_SPEED_VAR;
+      }
 
       cells = new Array(cols * rows);
       const colStart: number[] = [];
@@ -282,6 +315,22 @@ export function BinaryIntro({ onArrived, travel }: BinaryIntroProps) {
       const wantLift = travelRef.current && t >= T_SETTLED ? 1 : 0;
       lift += (wantLift - lift) * (reduced ? 1 : 0.055);
 
+      // Advance every drop. Clamped delta so a backgrounded tab returning does
+      // not teleport the rain down the screen.
+      const dt = lastNow ? Math.min(0.05, (now - lastNow) / 1000) : 0;
+      lastNow = now;
+      if (!reduced) {
+        for (let c = 0; c < cols; c++) {
+          dropY[c] += dropSpeed[c] * dt;
+          if (dropY[c] - RAIN_TAIL > rows) {
+            // Restart above the top, at a fresh speed, so columns keep
+            // drifting out of sync instead of settling into a pattern.
+            dropY[c] = -Math.random() * rows * 0.8;
+            dropSpeed[c] = RAIN_SPEED_MIN + Math.random() * RAIN_SPEED_VAR;
+          }
+        }
+      }
+
       ctx.clearRect(0, 0, canvas!.width, canvas!.height);
       const px = Math.round(cell * dpr);
 
@@ -294,31 +343,46 @@ export function BinaryIntro({ onArrived, travel }: BinaryIntroProps) {
           // and out below it as it climbs — the same fade that revealed it.
           const isMask = inMask((c + 0.5) * cell, (r + 0.5) * cell);
 
+          // The standing field. Eased, so it settles smoothly.
           let target: number;
           if (t < cl.appearAt) {
             target = 0;
           } else if (t < T_EMERGE) {
-            const ramp = Math.min((t - cl.appearAt) / 260, 1);
-            target = ramp * (isMask ? 1 : 0.72);
+            target = Math.min((t - cl.appearAt) / 260, 1) * GHOST_ALPHA;
           } else {
-            // No fizzle. The matrix persists at its resting alpha for the whole
-            // intro; the wordmark is only ever the characters held dark inside
-            // it. As the mask climbs, cells ahead darken and cells behind
-            // settle back to the field — which is the logo travelling through
-            // the code, done entirely by these two targets.
+            // No fizzle. The matrix persists for the whole intro; the wordmark
+            // is only ever the characters held dark within it. As the mask
+            // climbs, cells ahead darken and cells behind settle back.
             target = isMask ? 1 : GHOST_ALPHA;
           }
-
           cl.alpha += (target - cl.alpha) * 0.18;
-          if (cl.alpha < 0.01) continue;
 
-          const step = Math.min(ALPHA_STEPS - 1, Math.max(0, Math.round(cl.alpha * ALPHA_STEPS) - 1));
+          // The falling drop, added on top and NOT eased — easing it would
+          // smear the streak into a glow and lose the sense of movement.
+          let rain = 0;
+          const d = dropY[c] - r;
+          if (d >= 0 && d < RAIN_TAIL) {
+            rain = Math.pow(1 - d / RAIN_TAIL, 1.8) * RAIN_GAIN;
+            if (d < 1.2) {
+              rain += RAIN_HEAD;
+              // The leading character churns as it falls. This is where the
+              // flicker belongs — on the drop head, not scattered at random
+              // across a static grid.
+              if (Math.random() < 0.45) cl.ch = (Math.random() * CHARS.length) | 0;
+            }
+          }
+
+          const shown = Math.min(1, cl.alpha + rain);
+          if (shown < 0.01) continue;
+
+          const step = Math.min(ALPHA_STEPS - 1, Math.max(0, Math.round(shown * ALPHA_STEPS) - 1));
           ctx.drawImage(glyphs[cl.ch][step], Math.round(c * cell * dpr), Math.round(r * cell * dpr), px, px);
         }
       }
 
-      // Churn a slice of the field each frame so the characters flicker.
-      const churn = Math.round(cells.length * 0.02);
+      // A little background churn so the standing field is not frozen. Much
+      // lighter than before — the drop heads now carry most of the movement.
+      const churn = Math.round(cells.length * 0.006);
       for (let i = 0; i < churn; i++) {
         const cl = cells[(Math.random() * cells.length) | 0];
         cl.ch = (Math.random() * CHARS.length) | 0;
