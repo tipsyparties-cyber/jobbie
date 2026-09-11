@@ -33,9 +33,19 @@ const CELL_MOBILE = 22;
 const MOBILE_MAX = 640;
 
 const INK = "10, 10, 10";
-/** Resting alpha of every character outside the wordmark. This is the matrix
- *  the logo moves through, so it has to stay clearly present — not a trace. */
-const GHOST_ALPHA = 0.2;
+
+/**
+ * The three alphas the field moves between. The gap between FIELD and MARK is
+ * what makes the wordmark readable, and it is deliberately narrow: at 0.2
+ * against a solid 1.0 the field looked washed out and the logo looked stamped
+ * on. 0.26 against 0.68 is about 2.6:1, which still reads clearly on a light
+ * ground but lets the wordmark sit *in* the matrix rather than on top of it.
+ */
+const FIELD_ALPHA = 0.26;
+const MARK_ALPHA = 0.68;
+/** While the rain is still falling, before the wordmark separates out. */
+const FILL_ALPHA = 0.44;
+
 const ALPHA_STEPS = 12;
 
 /** The characters the field rains — the wordmark's own letters. */
@@ -258,18 +268,29 @@ export function BinaryIntro({ onArrived, travel }: BinaryIntroProps) {
     }
 
     /**
-     * Is this screen point inside the wordmark, given where the wordmark
-     * currently is? Maps the point back into the reference mask's space.
+     * How much of this cell falls inside the wordmark, 0..1. Maps the point
+     * back into the reference mask's space.
+     *
+     * Sampled at four corners rather than one so the letterform edges feather
+     * across a cell instead of stepping straight from field alpha to mark
+     * alpha. Single-point sampling gave the wordmark a hard, stamped-on edge.
      */
-    function inMask(px: number, py: number) {
-      if (!mask) return false;
+    function maskAt(px: number, py: number) {
+      if (!mask) return 0;
       const scale = 1 + (TRAVEL_SCALE - 1) * lift;
-      const cy = h / 2 + (HEADER_Y - h / 2) * lift;
+      const cyNow = h / 2 + (HEADER_Y - h / 2) * lift;
+      const q = cell * 0.25;
 
-      const mx = Math.round(w / 2 + (px - w / 2) / scale);
-      const my = Math.round(h / 2 + (py - cy) / scale);
-      if (mx < 0 || my < 0 || mx >= w || my >= h) return false;
-      return mask[my * w + mx] > MASK_THRESHOLD;
+      let hits = 0;
+      for (let i = 0; i < 4; i++) {
+        const ox = i & 1 ? q : -q;
+        const oy = i & 2 ? q : -q;
+        const mx = Math.round(w / 2 + (px + ox - w / 2) / scale);
+        const my = Math.round(h / 2 + (py + oy - cyNow) / scale);
+        if (mx < 0 || my < 0 || mx >= w || my >= h) continue;
+        if (mask[my * w + mx] > MASK_THRESHOLD) hits++;
+      }
+      return hits / 4;
     }
 
     function frame(now: number) {
@@ -289,24 +310,25 @@ export function BinaryIntro({ onArrived, travel }: BinaryIntroProps) {
         for (let c = 0; c < cols; c++) {
           const cl = cells[r * cols + c];
 
-          // Mask membership is recomputed every frame against the wordmark's
-          // *current* position. That is what makes characters fade in above it
-          // and out below it as it climbs — the same fade that revealed it.
-          const isMask = inMask((c + 0.5) * cell, (r + 0.5) * cell);
+          // Mask coverage is recomputed every frame against the wordmark's
+          // *current* position. That is what makes characters darken ahead of
+          // it and settle back behind it as it climbs — the same mechanism
+          // that revealed it.
+          const m = maskAt((c + 0.5) * cell, (r + 0.5) * cell);
 
           let target: number;
           if (t < cl.appearAt) {
             target = 0;
           } else if (t < T_EMERGE) {
-            const ramp = Math.min((t - cl.appearAt) / 260, 1);
-            target = ramp * (isMask ? 1 : 0.72);
+            // Uniform while the rain falls — the wordmark should emerge out of
+            // an even field, not already be sitting in it.
+            target = Math.min((t - cl.appearAt) / 260, 1) * FILL_ALPHA;
           } else {
-            // No fizzle. The matrix persists at its resting alpha for the whole
-            // intro; the wordmark is only ever the characters held dark inside
-            // it. As the mask climbs, cells ahead darken and cells behind
-            // settle back to the field — which is the logo travelling through
-            // the code, done entirely by these two targets.
-            target = isMask ? 1 : GHOST_ALPHA;
+            // No fizzle. The matrix persists for the whole intro; the wordmark
+            // is only ever the characters held darker within it. Interpolating
+            // on coverage rather than switching on a boolean is what softens
+            // the letterform edges.
+            target = FIELD_ALPHA + (MARK_ALPHA - FIELD_ALPHA) * m;
           }
 
           cl.alpha += (target - cl.alpha) * 0.18;

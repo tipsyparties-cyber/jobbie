@@ -1085,3 +1085,43 @@ orb-4   1.00               346px           0.059
 
 The neck fraction stays small because the tail is also lengthening — 346px of
 neck against a 3.0x viewport-width tail.
+
+---
+
+## Addendum 20 — softer wordmark against the field, 2026-09-11
+
+The field sat at 0.2 alpha against a solid 1.0 wordmark — a 5:1 gap. The field
+read as washed out and the logo as stamped on top of it.
+
+### Narrower gap
+
+```
+             field   mark   grey values (on white)   ratio
+before        0.20   1.00          206  vs   10      5.0:1
+after         0.26   0.68          191  vs   88      2.6:1
+```
+
+Still clearly readable on a light ground, but the wordmark now sits *in* the
+matrix rather than on top of it.
+
+### Feathered edges
+
+`inMask` returned a boolean, so every cell snapped between the two alphas and
+the letterforms had a hard, stepped edge. Replaced with `maskAt`, which samples
+**four corners of the cell** and returns coverage 0..1. The target is then
+interpolated:
+
+```
+target = FIELD_ALPHA + (MARK_ALPHA - FIELD_ALPHA) * coverage
+```
+
+Cells straddling an edge land at 0.25 / 0.5 / 0.75 coverage, so the wordmark
+feathers into the field instead of stepping. Four array reads per cell —
+about 25k per frame, negligible.
+
+### Fill phase is uniform now
+
+It used to draw mask cells at 1.0 and the rest at 0.72 *during the rain*, so
+the wordmark was faintly present before it was supposed to emerge. The fill is
+now a flat `FILL_ALPHA` (0.44) everywhere, and the wordmark separates out only
+at the emerge phase.
