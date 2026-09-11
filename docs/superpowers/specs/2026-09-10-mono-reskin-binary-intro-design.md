@@ -1125,3 +1125,58 @@ It used to draw mask cells at 1.0 and the rest at 0.72 *during the rain*, so
 the wordmark was faintly present before it was supposed to emerge. The fill is
 now a flat `FILL_ALPHA` (0.44) everywhere, and the wordmark separates out only
 at the emerge phase.
+
+---
+
+## Addendum 21 — the wordmark becomes an invisible solid, 2026-09-11
+
+Russ on the previous version: "I don't want all the code apart from the up and
+up logo faded, that's too basic." Correct — weighting the letterforms dark and
+fading everything else is a stencil, however well tuned the contrast is.
+
+### The wordmark is no longer drawn at all
+
+It is now an **invisible solid the code runs into**, and it shows itself only
+through what the code does on contact:
+
+| Behaviour | Mechanism |
+|---|---|
+| **Settle** — characters resting against it stop churning while the rest of the field keeps flickering | `cl.frozen` set from mask coverage; the churn loop skips frozen cells |
+| **Pile** — characters stack on its upper surfaces | probe one and two cells *below*; those cells get `+PILE_GAIN` |
+| **Shadow** — cells it shelters thin out | probe one and two cells *above*; those get `-SHADOW_LOSS` |
+
+Stillness is the primary cue. The shape is inferred from behaviour rather than
+painted in.
+
+### One weight, not two
+
+```
+                        alpha   grey on white
+open field              0.420   152
+settled on the form     0.546   121
+piled on top of it      0.630   101
+in its shadow           0.189   209
+
+previously: field 0.26 (grey 191) vs wordmark 0.68 (grey 88)
+```
+
+Everything now sits around one weight and deviates from it, rather than the
+field being suppressed so the mark can stand out.
+
+### Travels for free
+
+All four probes run against the form's *current* transformed position, so the
+pile and the shadow move with the wordmark as it climbs to the header. No
+additional code for the travel.
+
+### Cost
+
+Per cell: one 4-sample coverage read plus up to four single-point probes. The
+probes are skipped entirely for cells inside the form. Roughly 50k array reads
+a frame at 1920x1080 — negligible, and they are plain `Uint8Array` indexes.
+
+### Risk worth watching
+
+This is a subtler effect and legibility is not guaranteed. If `up+up` does not
+read, the dials in order of effect are `SETTLE_GAIN`, `PILE_GAIN`,
+`SHADOW_LOSS` — all at the top of the file.

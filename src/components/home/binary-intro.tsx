@@ -6,16 +6,25 @@ import { useEffect, useRef } from "react";
  * Binary rain intro.
  *
  * Phase 1  rain fills the screen, top to bottom
- * Phase 2  characters inside the up+up letterforms hold hard black; every
- *          character outside settles to a ghost, so the wordmark emerges out of
- *          the noise as a density difference rather than being drawn
- * Phase 3  on scroll, the wordmark *travels up the page still made of code* —
- *          characters darken ahead of it and lighten behind it as it climbs.
- *          Only once it reaches the header does the caller swap in black text.
+ * Phase 2  an invisible up+up form makes itself felt in the field
+ * Phase 3  on scroll it travels up the page, still entirely made of code, and
+ *          only once it reaches the header does the caller swap in black text.
  *
- * The field never fizzles out. It stays a living matrix for the whole intro,
- * and the wordmark is only ever the part of that matrix held dark — which is
- * what lets the logo travel *through* the code rather than across a blank page.
+ * **The wordmark is never drawn.** It is an invisible solid that the code runs
+ * into, and it shows itself only through what the code does on contact:
+ *
+ *   - characters resting against it **stop churning** while the rest of the
+ *     field keeps flickering — stillness is the main cue
+ *   - characters **pile up** on its upper surfaces, denser than the field
+ *   - the cells it shelters, directly beneath it, **thin out**
+ *
+ * Weighting the letterforms darker and fading everything else was the earlier
+ * approach and read as a stencil cut out of the field. Everything now sits at
+ * roughly one weight; the form is inferred, not painted.
+ *
+ * The field never fizzles out — it stays a living matrix for the whole intro,
+ * which is what lets the form travel *through* the code rather than across a
+ * blank page.
  *
  * The mask is built ONCE at a reference size and position, then sampled
  * through an inverse transform. Re-rendering the wordmark offscreen and
@@ -35,16 +44,26 @@ const MOBILE_MAX = 640;
 const INK = "10, 10, 10";
 
 /**
- * The three alphas the field moves between. The gap between FIELD and MARK is
- * what makes the wordmark readable, and it is deliberately narrow: at 0.2
- * against a solid 1.0 the field looked washed out and the logo looked stamped
- * on. 0.26 against 0.68 is about 2.6:1, which still reads clearly on a light
- * ground but lets the wordmark sit *in* the matrix rather than on top of it.
+ * Base alpha of the whole field. Every character sits at roughly this weight —
+ * the wordmark is NOT revealed by fading everything else out. It is revealed by
+ * how the code behaves when it meets it.
  */
-const FIELD_ALPHA = 0.26;
-const MARK_ALPHA = 0.68;
-/** While the rain is still falling, before the wordmark separates out. */
-const FILL_ALPHA = 0.44;
+const FIELD_ALPHA = 0.42;
+/** While the rain is still falling, before the form makes itself felt. */
+const FILL_ALPHA = 0.4;
+
+/**
+ * How the invisible form shows itself. The wordmark is never drawn; these are
+ * the three things the code does on contact with it:
+ *
+ *   SETTLE  characters resting against it stop churning — they go still while
+ *           the rest of the field keeps flickering
+ *   PILE    characters stack up on its upper surfaces, denser than the field
+ *   SHADOW  the cells it shelters, directly beneath it, thin out
+ */
+const SETTLE_GAIN = 0.3;
+const PILE_GAIN = 0.5;
+const SHADOW_LOSS = 0.55;
 
 const ALPHA_STEPS = 12;
 
@@ -170,6 +189,8 @@ function buildGlyphs(cell: number, dpr: number) {
 interface Cell {
   /** Index into CHARS */
   ch: number;
+  /** Settled against the invisible form — stops churning while it is */
+  frozen: boolean;
   /** ms after fill start at which this cell first appears */
   appearAt: number;
   alpha: number;
@@ -260,6 +281,7 @@ export function BinaryIntro({ onArrived, travel }: BinaryIntroProps) {
         for (let c = 0; c < cols; c++) {
           cells[r * cols + c] = {
             ch: (Math.random() * CHARS.length) | 0,
+            frozen: false,
             appearAt: colStart[c] + (r / Math.max(rows - 1, 1)) * (T_FILL - 320),
             alpha: 0,
           };
@@ -293,6 +315,21 @@ export function BinaryIntro({ onArrived, travel }: BinaryIntroProps) {
       return hits / 4;
     }
 
+    /**
+     * Single-sample version, for probing whether the form occupies some
+     * neighbouring point. The pile and shadow probes do not need the feathering
+     * that the cell's own coverage does, and this runs four times per cell.
+     */
+    function maskPoint(px: number, py: number) {
+      if (!mask) return 0;
+      const scale = 1 + (TRAVEL_SCALE - 1) * lift;
+      const cyNow = h / 2 + (HEADER_Y - h / 2) * lift;
+      const mx = Math.round(w / 2 + (px - w / 2) / scale);
+      const my = Math.round(h / 2 + (py - cyNow) / scale);
+      if (mx < 0 || my < 0 || mx >= w || my >= h) return 0;
+      return mask[my * w + mx] > MASK_THRESHOLD ? 1 : 0;
+    }
+
     function frame(now: number) {
       if (disposed) return;
       if (!start) start = now;
@@ -310,26 +347,48 @@ export function BinaryIntro({ onArrived, travel }: BinaryIntroProps) {
         for (let c = 0; c < cols; c++) {
           const cl = cells[r * cols + c];
 
-          // Mask coverage is recomputed every frame against the wordmark's
-          // *current* position. That is what makes characters darken ahead of
-          // it and settle back behind it as it climbs — the same mechanism
-          // that revealed it.
-          const m = maskAt((c + 0.5) * cell, (r + 0.5) * cell);
+          const cxp = (c + 0.5) * cell;
+          const cyp = (r + 0.5) * cell;
+
+          // Everything below is recomputed each frame against the form's
+          // *current* position, so it all travels with the wordmark as it
+          // climbs — the pile and shadow move with it, no extra code.
+          const m = maskAt(cxp, cyp);
+
+          // Only cells outside the form can be resting on it or sheltered by
+          // it, so the probes are skipped entirely for cells inside.
+          let pile = 0;
+          let shadow = 0;
+          if (m === 0) {
+            pile = Math.max(
+              maskPoint(cxp, cyp + cell),
+              maskPoint(cxp, cyp + cell * 2) * 0.55
+            );
+            shadow = Math.max(
+              maskPoint(cxp, cyp - cell),
+              maskPoint(cxp, cyp - cell * 2) * 0.6
+            );
+          }
 
           let target: number;
           if (t < cl.appearAt) {
             target = 0;
           } else if (t < T_EMERGE) {
-            // Uniform while the rain falls — the wordmark should emerge out of
-            // an even field, not already be sitting in it.
             target = Math.min((t - cl.appearAt) / 260, 1) * FILL_ALPHA;
           } else {
-            // No fizzle. The matrix persists for the whole intro; the wordmark
-            // is only ever the characters held darker within it. Interpolating
-            // on coverage rather than switching on a boolean is what softens
-            // the letterform edges.
-            target = FIELD_ALPHA + (MARK_ALPHA - FIELD_ALPHA) * m;
+            // The form is never drawn. It shows itself only through what the
+            // code does on contact: settling against it, stacking on top of it,
+            // and thinning out in the lee of it. The weights are small on
+            // purpose — this should read as the field meeting something solid,
+            // not as a stencil cut out of it.
+            target =
+              FIELD_ALPHA *
+              (1 + SETTLE_GAIN * m + PILE_GAIN * pile - SHADOW_LOSS * shadow);
           }
+
+          // Characters resting against the form stop churning. This is the main
+          // cue: the shape is given away by stillness, not by weight.
+          cl.frozen = m > 0.5;
 
           cl.alpha += (target - cl.alpha) * 0.18;
           if (cl.alpha < 0.01) continue;
@@ -339,10 +398,13 @@ export function BinaryIntro({ onArrived, travel }: BinaryIntroProps) {
         }
       }
 
-      // Churn a slice of the field each frame so the characters flicker.
-      const churn = Math.round(cells.length * 0.02);
+      // Churn a slice of the field each frame so the characters flicker —
+      // except the ones settled against the form, which hold still. That
+      // stillness is what gives the shape away.
+      const churn = Math.round(cells.length * 0.025);
       for (let i = 0; i < churn; i++) {
         const cl = cells[(Math.random() * cells.length) | 0];
+        if (cl.frozen) continue;
         cl.ch = (Math.random() * CHARS.length) | 0;
       }
 
