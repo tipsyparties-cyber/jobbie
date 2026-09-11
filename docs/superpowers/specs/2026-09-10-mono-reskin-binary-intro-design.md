@@ -992,3 +992,49 @@ Three cues, all removed:
 
 `orbRadius` moved into `flock.tsx` and is imported by `neural-orb.tsx`. Both
 need it and two copies would drift apart, undoing the join silently.
+
+---
+
+## Addendum 18 — filaments, not stipple, 2026-09-11
+
+New reference: crisp fibre-optic lines fanning out and converging to a sharp
+point, with a bright bead at the head. This **reverses Addendum 7's stipple**,
+deliberately — Russ has now seen both and chose lines.
+
+### Rendering
+
+`drawStipple` and the whole grain system (720 grains per trail, alpha buckets,
+`spreadAt`, `Grain`) are gone, replaced by `drawLine`: a 130-point path,
+stroked twice.
+
+| Layer | Purpose |
+|---|---|
+| white, 5px x girth, 0.55 alpha | seats the filament against the page's blob texture so a bare hairline does not get lost in it |
+| ink, 1.3px x girth, 0.62 alpha | the filament itself |
+
+Far lighter than the stipple: 6 paths of 130 points, against 4,320 grains.
+
+### Convergence is a point again
+
+The wave envelope started at **0.22 at f = 0**, which kept the heads apart and
+blunted the meeting into a bundle of parallel threads. It is now 0.05, and the
+arc is `f^1.4`, so every term pinches to ~nothing at the head. All six lines
+genuinely meet at one point and fan out behind it.
+
+The whole-flock bob is now **phase-free** — shared by every trail — so it
+breathes as one body instead of jittering the lines apart at the very point
+they are supposed to meet.
+
+### Uniting reverted
+
+Addendum 17 collapsed all six onto one shared centreline at merge. That was
+too strong for this reference, which shows the lines staying individual and
+crossing behind the meeting point. The `solo`/`united` cross-fade is gone;
+each trail keeps its own sweep and phase throughout, and the pinch does the
+converging.
+
+### Sweeps widened
+
+`0.06..0.24` -> `0.05, 0.30, -0.26, 0.44, -0.40, 0.16`. Larger and of mixed
+sign, so the tails fan widely and cross one another rather than running
+parallel.
