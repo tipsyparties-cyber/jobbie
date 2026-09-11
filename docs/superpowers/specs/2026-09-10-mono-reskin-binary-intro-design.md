@@ -1229,3 +1229,35 @@ Form on the left pushes right. No distance field, no gradient pass — four
    but not legible.
 3. **Displacement** — void plus crowded, pushed rim. Legible *and* the most
    literal reading of "the code is hitting something invisible but solid".
+
+---
+
+## Addendum 23 — reverted to the stencil, 2026-09-11
+
+Russ: "it's not as good as the original." `binary-intro.tsx` restored to
+`0a4e7a2` — the version in the screenshot he was working from:
+
+```
+mask cells   alpha 1.0   (hard black)
+field        alpha 0.2   (grey)
+```
+
+Everything else in the intro is unchanged: u/p/+ characters, the persistent
+matrix, the scroll-driven climb to the header, and the mask sampled through an
+inverse transform.
+
+### Three alternatives were tried and rejected. Do not re-propose them blind.
+
+| Commit | Approach | Verdict |
+|---|---|---|
+| `65052e3` | softer stencil, 0.68 vs 0.26, feathered edges | not asked for again |
+| `5688263` | one weight; stillness, pile-up, shadow | **not legible** |
+| `5930bba` | void plus crowded, outward-pushed rim | **worse than the stencil** |
+
+Each is a single `git checkout <sha> -- src/components/home/binary-intro.tsx`
+away if any of it is wanted later.
+
+The lesson is that Russ's "too basic" was about the *look*, not a request to
+weaken the signal. Two of the three replacements were more conceptually
+interesting and both read worse on the page. Legibility first; a mechanism that
+has to be explained is not working.
