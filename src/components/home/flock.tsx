@@ -68,6 +68,38 @@ export function convergeAt(rise: number) {
   return { x: CONVERGE.x, y: CONVERGE.y - rise * CLIMB };
 }
 
+/** Length of the tail as a fraction of viewport width. Declared here because
+ *  leadNeck below depends on it. */
+const TAIL_LEN = 0.95;
+
+/** Index of the filament that runs ahead of the pack carrying the orb. */
+export const LEAD = 0;
+/** How far ahead of the knot it reaches, as a fraction of viewport width. */
+const LEAD_EXTEND = 0.18;
+
+/**
+ * Head of the lead filament. After the merge it elongates away from the others
+ * — still joined to them, but running out in front on a straight neck with the
+ * orb on its nose.
+ *
+ * The orb reads this too, so the nucleus sits on the lead's head rather than
+ * back at the knot with the rest of the pack.
+ */
+export function leadHeadAt(rise: number) {
+  const cp = convergeAt(rise);
+  return { x: cp.x + rise * LEAD_EXTEND, y: cp.y };
+}
+
+/**
+ * Fraction of the lead's length that is the straight neck. Everything before
+ * this point is dead straight; the curve only starts beyond it, which is what
+ * makes the neck read as a taut line out of the knot rather than the whole
+ * filament simply being translated to the right.
+ */
+export function leadNeck(rise: number, lenScale: number) {
+  return (rise * LEAD_EXTEND) / (TAIL_LEN * lenScale);
+}
+
 /**
  * Radius of the neural orb at a given progress. Lives here rather than in
  * neural-orb.tsx because the flock needs it too. Two copies of this formula
@@ -84,8 +116,6 @@ export const ORB_STAGES = 4;
 
 /** Samples per line. High enough that the curve reads as smooth, not faceted. */
 const PATH_POINTS = 130;
-/** Length of the tail as a fraction of viewport width */
-const TAIL_LEN = 0.95;
 const INK = "10, 10, 10";
 
 interface State {
@@ -137,15 +167,26 @@ export function Flock({ stage }: FlockProps) {
       canvas!.style.height = `${h}px`;
     }
 
-    /** Head position, accounting for arrival, merge, and the climb. */
-    function headPos(c: Creature, s: State, rise: number): [number, number] {
+    /**
+     * Head position, accounting for arrival, merge, and the climb.
+     *
+     * The lead filament targets a point out in front of the knot rather than
+     * the knot itself, so after the merge it elongates away from the pack while
+     * staying joined to it.
+     */
+    function headPos(
+      c: Creature,
+      s: State,
+      rise: number,
+      isLead: boolean
+    ): [number, number] {
       const restX = c.headX * w;
       const restY = c.headY * h;
       const enterX = -0.25 * w;
       let hx = enterX + (restX - enterX) * s.arrival;
       let hy = restY;
       if (s.merge > 0) {
-        const cp = convergeAt(rise);
+        const cp = isLead ? leadHeadAt(rise) : convergeAt(rise);
         hx += (cp.x * w - hx) * s.merge;
         hy += (cp.y * h - hy) * s.merge;
       }
@@ -165,7 +206,19 @@ export function Flock({ stage }: FlockProps) {
      * speeds up across the orb stages, and multiplying time by a changing speed
      * would jump the wave's phase whenever that speed changed.
      */
-    function offsetAt(c: Creature, s: State, wavePhase: number, f: number) {
+    function offsetAt(
+      c: Creature,
+      s: State,
+      wavePhase: number,
+      rawF: number,
+      neck: number
+    ) {
+      // Everything before the neck is dead straight — the curve is remapped to
+      // start beyond it. Without this the lead's whole filament would simply
+      // shift right with its head, instead of paying out a taut line from the
+      // knot the way the reference does.
+      const f = neck > 0 ? Math.max(0, (rawF - neck) / (1 - neck)) : rawF;
+
       const amp = h * 0.085;
       // 0.05 rather than 0.22 at f=0 — the earlier value kept the heads apart
       // and blunted the convergence into a bundle.
@@ -204,7 +257,8 @@ export function Flock({ stage }: FlockProps) {
       hy: number,
       alpha: number,
       lenScale: number,
-      girth: number
+      girth: number,
+      neck: number
     ) {
       const len = TAIL_LEN * w * lenScale;
 
@@ -212,7 +266,7 @@ export function Flock({ stage }: FlockProps) {
       for (let i = 0; i < PATH_POINTS; i++) {
         const f = i / (PATH_POINTS - 1);
         const x = hx - f * len;
-        const y = hy + offsetAt(c, s, wavePhase, f);
+        const y = hy + offsetAt(c, s, wavePhase, f, neck);
         if (i === 0) ctx!.moveTo(x, y);
         else ctx!.lineTo(x, y);
       }
@@ -317,9 +371,12 @@ export function Flock({ stage }: FlockProps) {
         const a = s.arrival * absorbed;
         if (a < 0.01) continue;
 
-        const [hx, hy] = headPos(c, s, rise);
+        const isLead = i === LEAD;
+        // Only the lead pays out a straight neck; the rest curve from the knot.
+        const neck = isLead ? leadNeck(rise, len) * s.merge : 0;
+        const [hx, hy] = headPos(c, s, rise, isLead);
 
-        drawLine(c, s, wavePhase, hx, hy, Math.min(1, a * (1 + rise * 0.4)), len, girth);
+        drawLine(c, s, wavePhase, hx, hy, Math.min(1, a * (1 + rise * 0.4)), len, girth, neck);
 
         // The heads have merged into the orb by now, so they fade out rather
         // than scaling up into a white blob over the middle of it.
@@ -327,7 +384,7 @@ export function Flock({ stage }: FlockProps) {
         if (headFade > 0.01) {
           drawHead(
             hx,
-            hy + offsetAt(c, s, wavePhase, 0),
+            hy + offsetAt(c, s, wavePhase, 0, neck),
             c.rgb,
             c.label,
             a * headFade,

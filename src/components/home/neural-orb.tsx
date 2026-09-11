@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { convergeAt, orbRadius, MERGE_STAGE, ORB_STAGES } from "./flock";
+import { leadHeadAt, orbRadius, MERGE_STAGE, ORB_STAGES } from "./flock";
 
 /**
  * The neural orb.
@@ -138,7 +138,7 @@ export function NeuralOrb({ stage }: OrbProps) {
 
       // Follows the same climb the trails do, so the orb rises with the flock
       // rather than the trails sliding up off a stationary orb.
-      const cp = convergeAt(progress);
+      const cp = leadHeadAt(progress);
       const cx = cp.x * w;
       const cy = cp.y * h;
       // Shared with the flock, which flares its tail to this same radius so the

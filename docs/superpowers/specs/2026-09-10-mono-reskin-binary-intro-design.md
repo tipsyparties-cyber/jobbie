@@ -1038,3 +1038,50 @@ converging.
 `0.06..0.24` -> `0.05, 0.30, -0.26, 0.44, -0.40, 0.16`. Larger and of mixed
 sign, so the tails fan widely and cross one another rather than running
 parallel.
+
+---
+
+## Addendum 19 — the lead filament runs ahead, 2026-09-11
+
+After the merge, one filament elongates away from the pack on a straight neck
+with the orb on its nose, still joined to the others at the knot. Reference is
+the same fibre-optic image: a tight convergence with one line paying out to a
+bright bead.
+
+### Three pieces
+
+- **`leadHeadAt(rise)`** — the lead's head target, `convergeAt(rise).x + rise *
+  0.18`. The rest still target the knot, so the lead pulls away while staying
+  attached.
+- **`leadNeck(rise, lenScale)`** — the fraction of the lead's length that is
+  dead straight.
+- **`offsetAt` takes a `neck`** and remaps `f` to start beyond it:
+  `f' = max(0, (f - neck) / (1 - neck))`.
+
+That remap is the part that matters. Without it the lead's whole filament would
+just translate right along with its head, arriving at the knot already curving.
+With it, the first stretch is perfectly straight and the curve only begins past
+the neck — the line pays out taut from the knot.
+
+`neck` is multiplied by `s.merge`, so it opens up as the flock converges rather
+than existing while the trails are still flying in separately.
+
+### The orb moved to the lead's head
+
+`neural-orb.tsx` now reads `leadHeadAt` instead of `convergeAt`. The nucleus
+belongs on the nose of the filament that ran ahead, not back at the knot with
+the rest of the pack.
+
+### Geometry as built (1920 wide)
+
+```
+        rise   lead ahead of knot   neck fraction
+merge   0.00                 0px           0.000
+orb-1   0.25                86px           0.031
+orb-2   0.50               173px           0.045
+orb-3   0.75               259px           0.054
+orb-4   1.00               346px           0.059
+```
+
+The neck fraction stays small because the tail is also lengthening — 346px of
+neck against a 3.0x viewport-width tail.
