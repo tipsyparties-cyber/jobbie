@@ -1317,3 +1317,46 @@ wordmark         grey  10
 
 The wordmark still sits at full black and stays the darkest thing on screen, so
 the reveal is unaffected by the rain running over it.
+
+---
+
+## Addendum 25 — the head is a paper aeroplane, 2026-09-11
+
+The glowing bead at each filament's head is now a paper plane.
+
+### Drawn, not an asset
+
+Two filled triangles in unit coordinates, nose at `(1, 0)`, scaled and rotated
+into place:
+
+```
+near wing   (1,0) -> (-0.85,-0.62) -> (-0.34,0)     ink 0.88
+far wing    (1,0) -> (-0.34,0)     -> (-0.85,0.62)  ink 0.50
+```
+
+The two weights are what make it read as **folded paper** rather than a flat
+triangle — the far wing is in shade. Filled only, never stroked: at 11px a
+stroke closes the shape into a blob.
+
+### It banks with the line
+
+The heading comes from the slope of the filament just behind the nose:
+
+```
+y0 = offsetAt(f = 0)
+y1 = offsetAt(f = 0.02)
+angle = atan2(y0 - y1, 0.02 * tailLength)
+```
+
+Sampled a short distance back rather than differentiated analytically, which
+stays stable when the wave is moving quickly. The plane therefore noses up and
+down with the undulation instead of always flying flat.
+
+### Sizing
+
+11px base, scaling to ~21px as the orb approaches, though the heads fade out
+from `rise` 0.3 and are gone by 0.75 — so in practice it is only ever seen
+between 11 and about 15px.
+
+The soft halo stays behind it (30px, down from 34) for luminosity; the plane
+itself is ink, consistent with the rule that structure is ink and glow is white.

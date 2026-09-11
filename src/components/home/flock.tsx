@@ -287,6 +287,41 @@ export function Flock({ stage }: FlockProps) {
       ctx!.stroke();
     }
 
+    /**
+     * A paper aeroplane, drawn as two filled wings so the centre fold reads.
+     * Unit coordinates, nose at (1, 0), scaled and rotated into place.
+     *
+     * Filled only, never stroked — at these sizes a stroke closes up the shape
+     * into a blob.
+     */
+    function drawPlane(x: number, y: number, size: number, angle: number, alpha: number) {
+      ctx!.save();
+      ctx!.translate(x, y);
+      ctx!.rotate(angle);
+      ctx!.scale(size, size);
+
+      // Far wing, lighter — this is what makes it read as folded paper rather
+      // than a flat triangle.
+      ctx!.beginPath();
+      ctx!.moveTo(1, 0);
+      ctx!.lineTo(-0.34, 0);
+      ctx!.lineTo(-0.85, 0.62);
+      ctx!.closePath();
+      ctx!.fillStyle = `rgba(${INK}, ${0.5 * alpha})`;
+      ctx!.fill();
+
+      // Near wing.
+      ctx!.beginPath();
+      ctx!.moveTo(1, 0);
+      ctx!.lineTo(-0.85, -0.62);
+      ctx!.lineTo(-0.34, 0);
+      ctx!.closePath();
+      ctx!.fillStyle = `rgba(${INK}, ${0.88 * alpha})`;
+      ctx!.fill();
+
+      ctx!.restore();
+    }
+
     function drawHead(
       x: number,
       y: number,
@@ -294,27 +329,23 @@ export function Flock({ stage }: FlockProps) {
       label: string,
       alpha: number,
       showLabel: boolean,
-      headScale: number
+      headScale: number,
+      angle: number
     ) {
       const [r, g, b] = rgb;
 
-      // Pure falloff, no stroked rim and no hard-edged disc — both read as a
-      // drawn outline rather than a light source.
-      const halo = ctx!.createRadialGradient(x, y, 0, x, y, 34 * headScale);
+      // Soft halo behind the plane. Pure falloff, no rim — an outline reads as
+      // a drawn edge rather than light.
+      const halo = ctx!.createRadialGradient(x, y, 0, x, y, 30 * headScale);
       halo.addColorStop(0, `rgba(${r}, ${g}, ${b}, ${0.62 * alpha})`);
       halo.addColorStop(0.45, `rgba(${r}, ${g}, ${b}, ${0.3 * alpha})`);
       halo.addColorStop(1, `rgba(${r}, ${g}, ${b}, 0)`);
       ctx!.fillStyle = halo;
       ctx!.beginPath();
-      ctx!.arc(x, y, 34 * headScale, 0, Math.PI * 2);
+      ctx!.arc(x, y, 30 * headScale, 0, Math.PI * 2);
       ctx!.fill();
 
-      // Small solid bead for a crisp bright centre. Filled only — never
-      // stroked, since a stroke is what turned this into a ring before.
-      ctx!.fillStyle = `rgba(255, 255, 255, ${alpha})`;
-      ctx!.beginPath();
-      ctx!.arc(x, y, 4 * headScale, 0, Math.PI * 2);
-      ctx!.fill();
+      drawPlane(x, y, 11 * headScale, angle, alpha);
 
       if (showLabel) {
         ctx!.font = `500 11px ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace`;
@@ -382,14 +413,23 @@ export function Flock({ stage }: FlockProps) {
         // than scaling up into a white blob over the middle of it.
         const headFade = 1 - Math.max(0, Math.min(1, (rise - 0.3) / 0.45));
         if (headFade > 0.01) {
+          // Heading, taken from the slope of its own line just behind the nose,
+          // so the plane banks with the undulation instead of always flying
+          // flat. Sampled a short way back rather than differentiated, which
+          // keeps it stable when the wave is moving fast.
+          const y0 = offsetAt(c, s, wavePhase, 0, neck);
+          const y1 = offsetAt(c, s, wavePhase, 0.02, neck);
+          const angle = Math.atan2(y0 - y1, 0.02 * TAIL_LEN * w * len);
+
           drawHead(
             hx,
-            hy + offsetAt(c, s, wavePhase, 0, neck),
+            hy + y0,
             c.rgb,
             c.label,
             a * headFade,
             s.merge < 0.35,
-            1 + rise * 1.2
+            1 + rise * 1.2,
+            angle
           );
         }
       }
