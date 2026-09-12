@@ -66,6 +66,14 @@ const MIST = "#C3D0DE";
 const PAPER = "#F4F6F8";
 
 const GROUNDS: Record<string, string> = {
+  // New sections, in the gsap structure.
+  "new-positioning": CREAM,
+  "new-what": MIST,
+  "new-outcomes": PAPER,
+  "new-why": SAGE,
+  "new-proof": PERIWINKLE,
+  "new-start": CREAM,
+
   // The flight sequence gets the mid-tone, where white can glow.
   "flock-1": SAGE,
   "flock-2": SAGE,
@@ -114,7 +122,172 @@ function Braced({ children }: { children: React.ReactNode }) {
   );
 }
 
+/** Shared frame for the new sections: full height, left-aligned, wide gutter. */
+function Frame({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="mx-auto flex h-full w-full max-w-[1400px] flex-col justify-center px-6">
+      {children}
+    </div>
+  );
+}
+
+/** The one statement a section is allowed to make. Sized in vw so it fills the
+ *  screen at any width rather than stepping between rem breakpoints. */
+function Statement({ children }: { children: React.ReactNode }) {
+  return (
+    <h2 className="font-display text-[clamp(1.9rem,5.6vw,4.6rem)] font-light leading-[0.98] tracking-[-0.02em]">
+      {children}
+    </h2>
+  );
+}
+
+const AGENTS = [
+  "Customer Service", "Sales", "Receptionist", "Operations", "HR",
+  "Finance", "Marketing", "Compliance", "Reporting",
+];
+
+const TOOLS = ["Quotes & Bookings", "CRM", "Unified Inbox"];
+
+const OUTCOMES = [
+  "Time saving", "Speed", "Lower costs", "Accuracy", "Scalability",
+  "Data insights", "24/7 service", "Competitive edge", "Happier staff",
+  "Happier owners",
+];
+
+/**
+ * NEW sections, in the gsap.com structure — one statement per screen, large
+ * type, generous space, braced labels. Placed ahead of the originals so both
+ * can be seen in one pass. Copy is taken from the existing sections.
+ */
 const sections = [
+  {
+    id: "new-positioning",
+    content: () => (
+      <Frame>
+        <Braced>Why now</Braced>
+        <div className="mt-10">
+          <Statement>
+            The best businesses aren&apos;t run by super humans working 24/7.
+            They&apos;re run by smart people with smarter systems.
+          </Statement>
+        </div>
+        <p className="mt-10 max-w-xl font-body text-base font-light leading-relaxed text-ink/60">
+          We design and build those systems.
+        </p>
+      </Frame>
+    ),
+  },
+  {
+    id: "new-what",
+    content: () => (
+      <Frame>
+        <Braced>What we do</Braced>
+        <div className="mt-10">
+          <Statement>Nine agents and three tools, built around your operation.</Statement>
+        </div>
+        <div className="mt-12 grid max-w-4xl grid-cols-2 gap-x-10 gap-y-2 md:grid-cols-3">
+          {AGENTS.map((a) => (
+            <span key={a} className="font-body text-sm font-light text-ink/70">
+              {a}
+            </span>
+          ))}
+          {TOOLS.map((t) => (
+            <span key={t} className="font-body text-sm font-light text-ink/40">
+              {t}
+            </span>
+          ))}
+        </div>
+      </Frame>
+    ),
+  },
+  {
+    id: "new-outcomes",
+    content: () => (
+      <Frame>
+        <Braced>Outcomes</Braced>
+        <div className="mt-10">
+          <Statement>What changes when the systems run themselves.</Statement>
+        </div>
+        {/* Text only — no cards. The original used ten glass panels, which at
+            this type scale would fight the statement rather than support it. */}
+        <div className="mt-12 grid max-w-4xl grid-cols-2 gap-x-10 gap-y-3 md:grid-cols-3">
+          {OUTCOMES.map((o) => (
+            <span key={o} className="font-body text-sm font-light text-ink/70">
+              {o}
+            </span>
+          ))}
+        </div>
+      </Frame>
+    ),
+  },
+  {
+    id: "new-why",
+    content: () => (
+      <Frame>
+        <Braced>Why up+up</Braced>
+        <div className="mt-10">
+          <Statement>
+            We don&apos;t hand over software and disappear.
+          </Statement>
+        </div>
+        <div className="mt-12 grid max-w-3xl gap-6 md:grid-cols-2">
+          {[
+            ["Knowledge", "Your business logic, captured — not guessed at."],
+            ["Continuity", "The system keeps running when people move on."],
+            ["Bespoke", "Built for how you work, not how software thinks you should."],
+            ["Evolution", "It gets sharper the longer it runs."],
+          ].map(([t, d]) => (
+            <div key={t}>
+              <p className="font-body text-sm font-medium text-ink">{t}</p>
+              <p className="mt-1 font-body text-sm font-light leading-relaxed text-ink/55">
+                {d}
+              </p>
+            </div>
+          ))}
+        </div>
+      </Frame>
+    ),
+  },
+  {
+    id: "new-proof",
+    content: () => (
+      <Frame>
+        <Braced>Proof</Braced>
+        <div className="mt-10">
+          <Statement>
+            Tipsy Parties: instant quoting, live booking, one connected system.
+          </Statement>
+        </div>
+        <p className="mt-10 max-w-xl font-body text-base font-light leading-relaxed text-ink/60">
+          Quoting that used to take a day now takes seconds, and every booking
+          flows straight through to the people who deliver it.
+        </p>
+        <div className="mt-10">
+          <Button href="/projects/tipsy-parties">Read the case study</Button>
+        </div>
+      </Frame>
+    ),
+  },
+  {
+    id: "new-start",
+    content: () => (
+      <Frame>
+        <Braced>Start</Braced>
+        <div className="mt-10">
+          <Statement>Ready to see what&apos;s possible?</Statement>
+        </div>
+        <p className="mt-10 max-w-xl font-body text-base font-light leading-relaxed text-ink/60">
+          Tell us what you&apos;ve built and what you&apos;re trying to fix.
+        </p>
+        <div className="mt-10">
+          <Button href="/contact">Start a conversation</Button>
+        </div>
+      </Frame>
+    ),
+  },
+
+  // ---- ORIGINAL SECTIONS BELOW, unchanged ----
+
   // The flock. Each stage brings one more trail in from the left; the last
   // stage converges them. The canvas itself is a persistent layer below,
   // driven by flockStage — these sections only carry the copy.
