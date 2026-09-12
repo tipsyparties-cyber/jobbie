@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useState, useEffect, useRef } from "react";
+import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 import { RotatingWord } from "@/components/home/rotating-word";
 import { glyphs } from "@/components/glyphs";
 import { ChaosGlyph } from "@/components/home/chaos-glyph";
@@ -883,192 +883,298 @@ function HomeMenu() {
   );
 }
 
-export default function Home() {
-  const [currentSection, setCurrentSection] = useState(0);
-    const [transitioning, setTransitioning] = useState(false);
-  
-  const navigate = useCallback(
-    (dir: 1 | -1) => {
-      if (transitioning) return;
-      const next = currentSection + dir;
-      setTransitioning(true);
-      setTimeout(() => {
-        setCurrentSection(next);
-        setTransitioning(false);
-      }, 600);
-    },
-    [transitioning, currentSection]
-  );
+/* ------------------------------------------------------------------ *
+ *  The scrolling document.
+ *
+ *  This page used to be a stepper: `fixed inset-0`, the wheel event
+ *  cancelled, one section swapped for the next by AnimatePresence. It
+ *  looked like a deck, and — more to the point — it had no scroll offset,
+ *  so none of the things the design actually depends on were possible:
+ *  parallax, sideways travel, scroll-linked reveals, a showcase rail, the
+ *  flock growing continuously rather than in eleven jumps.
+ *
+ *  It is now an ordinary tall document. Every section is a `min-h-screen`
+ *  block in normal flow; the animated layers (ground, flock, orb,
+ *  particles) are pinned behind it and read scroll position. The section
+ *  list, the copy and the geometry components are untouched — only the
+ *  *source* of their progress number changed, from an integer stage to a
+ *  continuous value derived from where you are on the page.
+ * ------------------------------------------------------------------ */
 
-  useEffect(() => {
-    let lastNav = 0;
-    const handleWheel = (e: WheelEvent) => {
-      e.preventDefault();
-      const now = Date.now();
-      if (now - lastNav < 1500) return;
-      if (Math.abs(e.deltaY) < 30) return;
-      lastNav = now;
-      navigate(e.deltaY > 0 ? 1 : -1);
-    };
+/** Sections carry `flockStage` as metadata; pull it out once. */
+const STAGES: number[] = sections.map((s) =>
+  "flockStage" in s ? ((s as { flockStage: number }).flockStage as number) : 0
+);
 
-    let touchY = 0;
-    const handleTouchStart = (e: TouchEvent) => { touchY = e.touches[0].clientY; };
-    const handleTouchEnd = (e: TouchEvent) => {
-      const diff = touchY - e.changedTouches[0].clientY;
-      const now = Date.now();
-      if (now - lastNav < 1500) return;
-      if (Math.abs(diff) < 50) return;
-      lastNav = now;
-      navigate(diff > 0 ? 1 : -1);
-    };
+const SHAPES: ParticleShape[] = sections.map((s) =>
+  "particleShape" in s
+    ? ((s as { particleShape: ParticleShape }).particleShape as ParticleShape)
+    : "none"
+);
 
-    // Keyboard
-    const handleKey = (e: KeyboardEvent) => {
-      const now = Date.now();
-      if (now - lastNav < 1500) return;
-      if (e.key === "ArrowDown" || e.key === " ") { lastNav = now; navigate(1); }
-      if (e.key === "ArrowUp") { lastNav = now; navigate(-1); }
-    };
+/**
+ * The rail. One dot per section meant thirty-two dots, which reads as a
+ * progress bar with a stutter rather than as navigation. Grouped into
+ * chapters instead: each is the first section of a run, and the rail
+ * highlights the chapter containing the section you are in.
+ */
+const CHAPTERS: { label: string; index: number }[] = [
+  { label: "Synergy", index: 0 },
+  { label: "Why now", index: sections.findIndex((s) => s.id === "new-positioning") },
+  { label: "What we do", index: sections.findIndex((s) => s.id === "new-what") },
+  { label: "Outcomes", index: sections.findIndex((s) => s.id === "new-outcomes") },
+  { label: "Why up+up", index: sections.findIndex((s) => s.id === "new-why") },
+  { label: "Proof", index: sections.findIndex((s) => s.id === "new-proof") },
+  { label: "Flight", index: sections.findIndex((s) => s.id === "flock-1") },
+  { label: "Origin", index: sections.findIndex((s) => s.id === "hero") },
+  { label: "Detail", index: sections.findIndex((s) => s.id === "benefits") },
+  { label: "Method", index: sections.findIndex((s) => s.id === "how-it-works") },
+].filter((c) => c.index >= 0);
 
-    window.addEventListener("wheel", handleWheel, { passive: false });
-    window.addEventListener("touchstart", handleTouchStart, { passive: true });
-    window.addEventListener("touchend", handleTouchEnd, { passive: true });
-    // Deliberately no mousemove handler. There used to be one that advanced a
-    // section whenever the cursor came within 40px of the bottom of the
-    // window, which meant the page walked forward on its own without any
-    // scroll — and the scroll-hint chevron sits inside that zone, so reaching
-    // for it made the page run away. Progression is now scroll, touch, key or
-    // an explicit click only.
+/* --- colour blending, so the ground moves with the scroll rather than
+       crossfading on a timer after the fact --- */
 
-    window.addEventListener("keydown", handleKey);
-    return () => {
-      window.removeEventListener("wheel", handleWheel);
-      window.removeEventListener("touchstart", handleTouchStart);
-      window.removeEventListener("touchend", handleTouchEnd);
-      window.removeEventListener("keydown", handleKey);
-    };
-  }, [navigate]);
+function hexToRgb(hex: string): [number, number, number] {
+  const h = hex.replace("#", "");
+  return [
+    parseInt(h.slice(0, 2), 16),
+    parseInt(h.slice(2, 4), 16),
+    parseInt(h.slice(4, 6), 16),
+  ];
+}
 
-  const ground =
-    currentSection >= 0 ? GROUNDS[sections[currentSection].id] ?? PAPER : PAPER;
+function mixHex(a: string, b: string, t: number): string {
+  if (t <= 0) return a;
+  if (t >= 1) return b;
+  const [r1, g1, b1] = hexToRgb(a);
+  const [r2, g2, b2] = hexToRgb(b);
+  const m = (x: number, y: number) => Math.round(x + (y - x) * t);
+  return `rgb(${m(r1, r2)}, ${m(g1, g2)}, ${m(b1, b2)})`;
+}
+
+/**
+ * One section of the document.
+ *
+ * The parallax and the reveal both come from this section's own position in
+ * the viewport, not from a global clock — content rises as it arrives and
+ * keeps rising as it leaves, so the page reads as continuous travel rather
+ * than as a series of arrivals. `offset` runs from "this section's top hits
+ * the bottom of the screen" to "its bottom hits the top", which is the whole
+ * time any part of it is visible.
+ */
+function ScrollSection({
+  id,
+  children,
+  register,
+}: {
+  id: string;
+  children: React.ReactNode;
+  register: (el: HTMLElement | null) => void;
+}) {
+  const ref = useRef<HTMLElement | null>(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start end", "end start"],
+  });
+  // Travels 70px against the scroll. Small enough to read as depth rather
+  // than as the text sliding independently of the page.
+  const y = useTransform(scrollYProgress, [0, 1], [70, -70]);
+  const opacity = useTransform(scrollYProgress, [0, 0.28, 0.72, 1], [0, 1, 1, 0]);
 
   return (
-    <div className="fixed inset-0 overflow-hidden text-ink">
-      {/* Ground. Crossfades between section colours — slower than the section
-          swap itself (1.1s against 0.5s) so the colour reads as the page
-          turning rather than as part of the content change. First in the DOM,
-          so everything else paints over it. */}
-      <motion.div
-        aria-hidden="true"
-        className="absolute inset-0"
-        initial={false}
-        animate={{ backgroundColor: ground }}
-        transition={{ duration: 1.1, ease: "easeInOut" }}
-      />
+    <section
+      id={id}
+      ref={(el) => {
+        ref.current = el;
+        register(el);
+      }}
+      className="relative flex min-h-screen w-full items-center py-24"
+    >
+      <motion.div style={{ y, opacity }} className="w-full">
+        {children}
+      </motion.div>
+    </section>
+  );
+}
 
+export default function Home() {
+  const els = useRef<(HTMLElement | null)[]>([]);
+  const [active, setActive] = useState(0);
+  const [ground, setGround] = useState<string>(GROUNDS[sections[0].id] ?? PAPER);
+  const [flockStage, setFlockStage] = useState(0);
+  const [flockAlpha, setFlockAlpha] = useState(0);
+
+  useEffect(() => {
+    let frame = 0;
+
+    const measure = () => {
+      frame = 0;
+      const mid = window.scrollY + window.innerHeight / 2;
+
+      // Which section owns the middle of the screen, and how far through it
+      // we are. Measured from live offsets rather than assuming every section
+      // is exactly one viewport — several carry enough copy to be taller.
+      let i = 0;
+      for (let k = 0; k < els.current.length; k++) {
+        const el = els.current[k];
+        if (!el) continue;
+        if (mid >= el.offsetTop) i = k;
+        else break;
+      }
+      const el = els.current[i];
+      if (!el) return;
+      const f = Math.min(1, Math.max(0, (mid - el.offsetTop) / el.offsetHeight));
+
+      setActive(i);
+
+      // Ground. Held for the first two thirds of a section, then blended into
+      // the next — the colour change lands as you leave, not as you arrive,
+      // so you never read a statement against a colour that is still moving.
+      const cur = GROUNDS[sections[i].id] ?? PAPER;
+      const nxt = GROUNDS[sections[Math.min(i + 1, sections.length - 1)].id] ?? PAPER;
+      setGround(mixHex(cur, nxt, f < 0.66 ? 0 : (f - 0.66) / 0.34));
+
+      // Flock stage, now continuous. The eleven flight sections used to step
+      // it by whole numbers; between them the geometry eased on its own clock,
+      // which is why it never felt tied to the scroll. Both Flock and
+      // NeuralOrb already clamp and normalise whatever number they are given,
+      // so a fraction needs no change inside them.
+      const a = STAGES[i] ?? 0;
+      const b = STAGES[i + 1] ?? 0;
+      if (a > 0 && b > 0) {
+        setFlockStage(a + (b - a) * f);
+        setFlockAlpha(1);
+      } else if (a === 0 && b > 0) {
+        // Approaching the flight: ramp in across the section before it.
+        setFlockStage(Math.max(0, b - 1) + f);
+        setFlockAlpha(f);
+      } else if (a > 0 && b === 0) {
+        // Leaving it: hold the final stage and fade, so the orb does not
+        // deflate backwards through its own growth.
+        setFlockStage(a);
+        setFlockAlpha(1 - f);
+      } else {
+        setFlockAlpha(0);
+      }
+    };
+
+    const onScroll = () => {
+      if (!frame) frame = requestAnimationFrame(measure);
+    };
+
+    measure();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+      if (frame) cancelAnimationFrame(frame);
+    };
+  }, []);
+
+  const shape = SHAPES[active] ?? "none";
+  const activeChapter = CHAPTERS.reduce(
+    (best, c, n) => (active >= c.index ? n : best),
+    0
+  );
+
+  return (
+    <div className="relative text-ink">
+      {/* Pinned backdrop. Everything here stays still while the document
+          moves over it; all of it is driven by scroll position. */}
+      <div aria-hidden className="pointer-events-none fixed inset-0 z-0">
+        <div className="absolute inset-0" style={{ backgroundColor: ground }} />
+
+        {/* Flock and orb. One layer, so the trails accumulate across the
+            flight rather than restarting whenever the copy changes. */}
+        <div className="absolute inset-0" style={{ opacity: flockAlpha }}>
+          {flockAlpha > 0.001 && (
+            <>
+              <Flock stage={flockStage} />
+              <NeuralOrb stage={flockStage} />
+            </>
+          )}
+        </div>
+
+        {shape !== "none" && (
+          <div className="absolute inset-0 flex items-center justify-center">
+            <ParticleCanvas shape={shape} />
+          </div>
+        )}
+      </div>
 
       {/* Logo, fixed in the header. */}
-      <motion.div
-        className="pointer-events-none fixed left-1/2 top-[1.1rem] z-[100] -translate-x-1/2 text-2xl tracking-tight text-ink"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.35, ease: "easeOut" }}
-      >
+      <div className="pointer-events-none fixed left-1/2 top-[1.1rem] z-[100] -translate-x-1/2 text-2xl tracking-tight text-ink">
         <span className="font-body font-light">up</span>
         <span className="font-display text-[1.15em]">+up</span>
-        <span className="text-[0.7em] leading-none font-body -ml-[0.15em] relative -top-[0.35em]">^</span>
-      </motion.div>
+        <span className="relative -top-[0.35em] -ml-[0.15em] font-body text-[0.7em] leading-none">
+          ^
+        </span>
+      </div>
 
-      {/* Contact — takes the top-left slot the logo used to occupy */}
-      <motion.div
-        className="fixed top-4 left-6 z-[100]"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.5, delay: 0.2 }}
-      >
+      <div className="fixed left-6 top-4 z-[100]">
         <Link
           href="/contact"
           className="font-body text-sm font-light tracking-wide text-ink/70 transition-colors hover:text-ink"
         >
           Contact
         </Link>
-      </motion.div>
+      </div>
 
-      {/* Hamburger menu — top right. Held back during the intro, where its
-          white bars would sit invisible on the off-white ground. */}
-      {<HomeMenu />}
+      <HomeMenu />
 
-      {/* Flock — persistent layer so trails survive the section swap and
-          accumulate as you step, rather than restarting each time. */}
-      {(() => {
-        const sec = currentSection >= 0 ? sections[currentSection] : null;
-        const flockStage = (sec && "flockStage" in sec ? sec.flockStage : 0) as number;
-        return (
-          <div
-            className="absolute inset-0 z-0 pointer-events-none transition-opacity duration-700"
-            style={{ opacity: flockStage > 0 ? 1 : 0 }}
+      {/* The document. */}
+      <div className="relative z-10">
+        {sections.map((s, i) => (
+          <ScrollSection
+            key={s.id}
+            id={s.id}
+            register={(el) => {
+              els.current[i] = el;
+            }}
           >
-            <Flock stage={flockStage} />
-            <NeuralOrb stage={flockStage} />
-          </div>
-        );
-      })()}
+            {s.content(() => {})}
+          </ScrollSection>
+        ))}
+      </div>
 
-      {/* Particle Canvas — persistent layer, shape changes with section */}
-      {(() => {
-        const sec = currentSection >= 0 ? sections[currentSection] : null;
-        const shape = (sec && 'particleShape' in sec ? sec.particleShape : "none") as ParticleShape;
-        return shape !== "none" ? (
-          <div className="absolute inset-0 flex items-center justify-center z-0 pointer-events-none">
-            <ParticleCanvas shape={shape} />
-          </div>
-        ) : null;
-      })()}
-
-      {/* Sections */}
-      <AnimatePresence mode="wait">
-        {currentSection >= 0 && (
-          <motion.div
-            key={sections[currentSection].id}
-            className="absolute inset-0 flex items-center justify-center px-8"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.5 }}
+      {/* Chapter rail. Labels appear on hover — a bare dot column tells you
+          how far through you are but not what is there. */}
+      <nav className="fixed right-6 top-1/2 z-50 hidden -translate-y-1/2 flex-col items-end gap-3 md:flex">
+        {CHAPTERS.map((c, n) => (
+          <button
+            key={c.label}
+            onClick={() =>
+              els.current[c.index]?.scrollIntoView({ behavior: "smooth" })
+            }
+            className="group flex items-center gap-2"
+            aria-label={c.label}
           >
-            {sections[currentSection].content(() => {})}
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* Dots */}
-      {(
-        <div className="fixed right-6 top-1/2 -translate-y-1/2 z-50 flex flex-col gap-2">
-          {sections.map((s, i) => (
-            <button
-              key={s.id}
-              onClick={() => { if (!transitioning) { setTransitioning(true); setTimeout(() => { setCurrentSection(i); setTransitioning(false); }, 400); } }}
-              className={`w-2 h-2 rounded-full transition-all duration-300 ${i === currentSection ? "bg-ink scale-125" : "bg-ink/25 hover:bg-ink/50"}`}
-              aria-label={`Section `}
+            <span className="font-body text-[11px] font-light uppercase tracking-[0.14em] text-ink/0 transition-colors group-hover:text-ink/60">
+              {c.label}
+            </span>
+            <span
+              className={`h-1.5 w-1.5 rounded-full transition-all duration-300 ${
+                n === activeChapter
+                  ? "scale-150 bg-ink"
+                  : "bg-ink/25 group-hover:bg-ink/50"
+              }`}
             />
-          ))}
-        </div>
-      )}
+          </button>
+        ))}
+      </nav>
 
-      {/* Scroll hint */}
-      {currentSection >= 0 && currentSection < sections.length - 1 && (
-        <motion.button
-          key={`arrow-${currentSection}`}
-          className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 text-ink/40 hover:text-ink/80 transition-colors cursor-none"
-          onClick={() => navigate(1)}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1, y: [0, 8, 0] }}
-          transition={{ opacity: { duration: 0.4 }, y: { duration: 2, repeat: Infinity, ease: "easeInOut" } }}
-          aria-label="Scroll down"
-        >
-          <span className="text-5xl font-light">^</span>
-        </motion.button>
-      )}
+      {/* Scroll hint, first screen only. */}
+      <motion.div
+        className="pointer-events-none fixed bottom-8 left-1/2 z-50 -translate-x-1/2 text-ink/40"
+        animate={{ opacity: active === 0 ? 1 : 0, y: [0, 8, 0] }}
+        transition={{
+          opacity: { duration: 0.4 },
+          y: { duration: 2, repeat: Infinity, ease: "easeInOut" },
+        }}
+      >
+        <span className="text-5xl font-light">^</span>
+      </motion.div>
     </div>
   );
 }
