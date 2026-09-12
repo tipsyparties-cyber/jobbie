@@ -49,6 +49,53 @@ function FloatingWords({ text, startDelay = 0 }: { text: string; startDelay?: nu
   );
 }
 
+/**
+ * Ground colour per section. The page crossfades between these as you move,
+ * so colour signals where you are rather than decorating.
+ *
+ * Keyed by section id rather than set on each section object, so the mapping
+ * can be read and retuned in one place.
+ *
+ * Note what a mid-tone ground buys: on off-white nothing can out-brighten
+ * white, which is why the comet could not glow, the plane could not catch
+ * light and the orb's lattice had to be ink. On sage, white finally reads.
+ */
+const CREAM = "#EDE7DA";
+const SAGE = "#A7B4A1";
+const PERIWINKLE = "#C6CDE8";
+const MIST = "#C3D0DE";
+const PAPER = "#F4F6F8";
+
+const GROUNDS: Record<string, string> = {
+  // The flight sequence gets the mid-tone, where white can glow.
+  "flock-1": SAGE,
+  "flock-2": SAGE,
+  "flock-3": SAGE,
+  "flock-4": SAGE,
+  "flock-5": SAGE,
+  "flock-6": SAGE,
+  "flock-converge": SAGE,
+  "orb-1": SAGE,
+  "orb-2": SAGE,
+  "orb-3": SAGE,
+  "orb-4": SAGE,
+
+  hero: CREAM,
+  positioning: PAPER,
+  benefits: MIST,
+  stats: CREAM,
+  comparison: PERIWINKLE,
+  "ai-team": PAPER,
+  "automation-tools": PAPER,
+  "why-us-intro": SAGE,
+  "why-us-knowledge": SAGE,
+  "why-us-continuity": SAGE,
+  "why-us-bespoke": SAGE,
+  "why-us-evolution": SAGE,
+  "how-it-works": MIST,
+  cta: CREAM,
+};
+
 const sections = [
   // The flock. Each stage brings one more trail in from the left; the last
   // stage converges them. The canvas itself is a persistent layer below,
@@ -732,8 +779,23 @@ export default function Home() {
     }
   }, [logoDone, currentSection]);
 
+  const ground =
+    currentSection >= 0 ? GROUNDS[sections[currentSection].id] ?? PAPER : PAPER;
+
   return (
     <div className="fixed inset-0 overflow-hidden text-ink">
+      {/* Ground. Crossfades between section colours — slower than the section
+          swap itself (1.1s against 0.5s) so the colour reads as the page
+          turning rather than as part of the content change. First in the DOM,
+          so everything else paints over it. */}
+      <motion.div
+        aria-hidden="true"
+        className="absolute inset-0"
+        initial={false}
+        animate={{ backgroundColor: ground }}
+        transition={{ duration: 1.1, ease: "easeInOut" }}
+      />
+
       {/* Clean off-white ground for the intro — same colour as the site, so its
           fade-out simply reveals the murmuration and iridescent blobs behind
           rather than changing the page colour. */}
