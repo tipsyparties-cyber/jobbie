@@ -2039,3 +2039,35 @@ wordmark, stray "Contact" link and hamburger are gone; `HomeMenu` and
 `tsc` clean · `next build` clean · `eslint src` at the 7 pre-existing
 warnings · header, hero, both animations and all six sections present in the
 served HTML. **Appearance still unverified** — Russ has to look.
+
+---
+
+## Addendum 34 — the feature rows stay OURS, not gsap's
+
+Russ, on seeing the gsap-faithful feature rows from Addendum 33:
+*"youve chened this section and i like how it was before you changed it"*.
+
+Restored to the pre-`7fd3429` treatment in `d2ec355`:
+
+| | restored (wanted) | gsap-faithful (rejected) |
+|---|---|---|
+| Accent | phrase highlighted **inside** the headline | small coloured label **above** it |
+| Shape | one large soft gradient form | ~130px shape |
+| Layout | alternates sides down the page | pinned left every row |
+| Divider | none | hairline between rows |
+
+**This is now a deliberate divergence from gsap.com.** Do not "correct" it
+back toward the reference — it has been looked at and chosen. The faithful
+version is preserved in commit `7fd3429`, and a pointer to it sits in a
+comment above the block.
+
+Everything else from Addendum 33 stands: the header, the hero letter reveal,
+the statement word reveal and the raised base font weight were all kept.
+
+### Lesson for the next reference-matching pass
+
+"Match the reference" has a limit, and Russ sets it per section. Matching
+gsap fixed the hero, the statement, the header and the type weight — all
+things that were wrong. Applied to the feature rows it replaced something
+that was already working. Show a change like that before sweeping it across
+a section that has not been complained about.
