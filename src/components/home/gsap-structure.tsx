@@ -279,105 +279,108 @@ export function GsapSideways() {
  *  4. Feature rows
  * -------------------------------------------------------------- */
 
+/* NOTE — restored to the pre-7fd3429 treatment at Russ's request.
+   The gsap-faithful version (keyword above the heading as a small coloured
+   label, small shape pinned left in every row, hairline between rows) is in
+   commit 7fd3429 if it is ever wanted back. What is here instead: the accent
+   phrase highlighted inside the headline, a large soft gradient form, and the
+   pairing alternating sides down the page.
+
+   This is a deliberate divergence from gsap.com, not an oversight. */
+
 const ROWS = [
   {
-    kicker: "Agents",
-    tint: BLUE,
-    head: "Nine agents that share one view of your business.",
-    copy: "The one that answers the phone knows what the one that sent the quote said yesterday.",
+    lead: "Nine agents,",
+    accent: "one system",
+    accentColour: BLUE,
+    copy: "Every agent shares the same view of your business. The one that answers the phone knows what the one that sent the quote said yesterday.",
     href: "/services",
-    cta: "Explore agents",
+    cta: "How it fits together",
   },
   {
-    kicker: "Fit",
-    tint: YELLOW,
-    head: "Built for how you already work.",
-    copy: "We map your process before we build anything, so the system learns your pricing, your exceptions, and the things only you knew.",
+    lead: "Built for how",
+    accent: "you already work",
+    accentColour: YELLOW,
+    copy: "We map your process before we build anything. The system learns your rules — your pricing, your exceptions, the things only you knew.",
     href: "/about",
-    cta: "Explore our approach",
+    cta: "Our approach",
   },
   {
-    kicker: "Longevity",
-    tint: SAGE,
-    head: "It gets sharper the longer it runs.",
-    copy: "We do not hand over software and disappear. It keeps improving as the business changes, and it keeps running when people move on.",
+    lead: "It gets sharper",
+    accent: "the longer it runs",
+    accentColour: SAGE,
+    copy: "We do not hand over software and disappear. The system keeps improving as your business changes, and it keeps running when people move on.",
     href: "/contact",
-    cta: "Explore working with us",
+    cta: "Talk to us",
   },
 ];
 
-function FeatureRow({ row, last }: { row: (typeof ROWS)[number]; last: boolean }) {
+/** One feature row. Reveals and parallaxes from its own position. */
+function FeatureRow({ row, flip }: { row: (typeof ROWS)[number]; flip: boolean }) {
   const ref = useRef<HTMLDivElement | null>(null);
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start end", "end start"],
   });
-  // The shape drifts further than the text, which is what makes the pair
-  // read as two planes rather than one block.
-  const blobY = useTransform(scrollYProgress, [0, 1], [60, -60]);
+  // The blob drifts further than the text, which is what makes the pairing
+  // read as two planes rather than one card.
+  const blobY = useTransform(scrollYProgress, [0, 1], [90, -90]);
+  const textY = useTransform(scrollYProgress, [0, 1], [30, -30]);
 
   return (
-    <div ref={ref}>
-      <div className="grid items-center gap-8 py-20 md:grid-cols-[1fr_2fr]">
-        {/* The shape. Small — 130px on the live site, not a half-screen
-            gradient — and on the left in every row. Alternating sides was an
-            invention and it broke the rhythm. */}
-        <motion.div style={{ y: blobY }} className="flex md:justify-start">
-          <div
-            aria-hidden
-            className="h-32 w-32 md:h-40 md:w-40"
-            style={{
-              background: `linear-gradient(150deg, ${row.tint} 0%, ${row.tint}88 100%)`,
-              borderRadius: "56% 44% 49% 51% / 47% 52% 48% 53%",
-            }}
-          />
-        </motion.div>
-
-        <div>
-          <p
-            className="font-body text-lg font-semibold"
-            style={{ color: row.tint }}
+    <div
+      ref={ref}
+      className={`grid items-center gap-12 py-24 lg:grid-cols-2 ${
+        flip ? "lg:[&>*:first-child]:order-2" : ""
+      }`}
+    >
+      <motion.div style={{ y: textY }}>
+        <h3 className="max-w-[14ch] font-body text-[clamp(2rem,5vw,4.25rem)] font-light leading-[0.98] tracking-[-0.035em]">
+          {row.lead}{" "}
+          <span
+            className="rounded-lg px-2 decoration-clone"
+            style={{ backgroundColor: row.accentColour }}
           >
-            {/* The keyword sits above the heading as its own label. A colour
-                this pale needs a dark edge to stay legible on a pale ground,
-                so it carries a subtle outline rather than relying on fill. */}
-            <span
-              style={{
-                WebkitTextStroke: "0.4px rgba(10,10,10,0.55)",
-              }}
-            >
-              {row.kicker}
-            </span>
-          </p>
-          <h3 className="mt-5 max-w-[22ch] font-body text-[clamp(1.5rem,2.9vw,2.5rem)] font-normal leading-[1.15] tracking-[-0.02em]">
-            {row.head}
-          </h3>
-          <p className="mt-5 max-w-lg font-body text-base leading-relaxed text-ink/65">
-            {row.copy}
-          </p>
-          <div className="mt-8">
-            <Pill href={row.href}>{row.cta}</Pill>
-          </div>
+            {row.accent}
+          </span>
+        </h3>
+        <p className="mt-8 max-w-md font-body text-base font-light leading-relaxed text-ink/70">
+          {row.copy}
+        </p>
+        <div className="mt-8">
+          <Link
+            href={row.href}
+            className="inline-flex items-center gap-2 rounded-full border border-ink/20 px-6 py-3 font-body text-sm font-light transition-colors hover:border-ink/50"
+          >
+            {row.cta}
+            <span className="text-xs">→</span>
+          </Link>
         </div>
-      </div>
-      {!last && <div className="h-px w-full bg-ink/12" />}
+      </motion.div>
+
+      {/* The gradient form. gsap pairs each feature with a soft shape rather
+          than a screenshot; it carries the colour without having to be
+          truthful about a UI that is still being built. */}
+      <motion.div style={{ y: blobY }} className="flex justify-center">
+        <div
+          aria-hidden
+          className="aspect-square w-full max-w-[26rem] rounded-full blur-[2px]"
+          style={{
+            background: `radial-gradient(circle at 35% 30%, ${row.accentColour} 0%, ${row.accentColour}cc 42%, transparent 72%)`,
+          }}
+        />
+      </motion.div>
     </div>
   );
 }
 
 export function GsapFeatures() {
   return (
-    <div className="w-full">
-      <Rule />
-      <div className={`${SHELL} py-20`}>
-        <Braced>Why up+up</Braced>
-        <div className="mt-8">
-          {ROWS.map((r, i) => (
-            <FeatureRow key={r.kicker} row={r} last={i === ROWS.length - 1} />
-          ))}
-        </div>
-      </div>
-      <Rule />
+    <div className="mx-auto w-full max-w-[1400px] px-6">
+      <Braced>Why up+up</Braced>
+      {ROWS.map((r, i) => (
+        <FeatureRow key={r.accent} row={r} flip={i % 2 === 1} />
+      ))}
     </div>
   );
 }
