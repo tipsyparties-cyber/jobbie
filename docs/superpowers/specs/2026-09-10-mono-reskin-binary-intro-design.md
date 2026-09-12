@@ -1515,3 +1515,71 @@ gsap.com was not fetched — a scroll-animation site yields nothing useful as
 markdown. Its structure here is from prior knowledge: animated hero that
 demonstrates the product, sections each showing one capability with a live
 example, heavy scroll-triggered reveals. Worth confirming with Russ.
+
+---
+
+## Addendum 28 — gsap.com seen properly: type-led on near-black, 2026-09-12
+
+Screenshots of gsap.com (Addendum 27 guessed at its structure; this replaces
+that guess).
+
+### What it actually is
+
+- **Near-black ground**, cream type. Not a light site.
+- **Type is the hero.** "Animate anything" fills most of the viewport. No
+  illustration competes with it.
+- **Tiny animated accents tucked into the letterforms** — a gradient pinwheel
+  above the A, a purple squiggle inside the h. Small, saturated, glowing.
+- **One huge sentence per section**, enormous whitespace, no decoration.
+  Information arrives in a few very large statements, not much small text.
+- **`{ Why GSAP® }` curly-brace labels** — a cheap, memorable motif.
+- Thin nav, outlined CTA with an icon.
+
+### Why the dark ground changes everything
+
+The whole session lost to one constraint: **nothing out-brightens white**. On
+off-white the comet could not glow, the paper plane could not catch light,
+sparkle motes had to darken rather than sparkle, the orb lattice had to be ink,
+and the neon reference could not be reproduced at all.
+
+**On near-black every one of those works as originally asked for.**
+
+### And the colours return, correctly
+
+Russ's first palette instinct — white-yellow, white-purple, white-blue
+iridescent trails — was abandoned because pale tints vanish on off-white. On
+near-black they **glow**. They do not work as section grounds on a dark site,
+but as small luminous accents they are precisely the gsap pinwheel/squiggle
+move.
+
+The sage/cream/periwinkle grounds built in Addendum 26 (`9f371a2`) are
+therefore probably superseded. The colours survive; their role changes from
+ground to accent.
+
+### Russ's own addition
+
+> "the rest of the site apart from the showcase section will need some form of
+> animation, either in the foreground that changes to the background, but flows
+> all the way through"
+
+So the flight does not merely run underneath the page — it **changes depth**.
+Foreground where copy is sparse (hero, transitions), receding behind the type
+where a section is carrying words. Depth becomes the mechanism for letting the
+animation be the star at some moments and the setting at others, without ever
+stopping.
+
+### Revised direction
+
+1. Near-black ground, cream type
+2. Type-led sections — few words, very large
+3. Flight animation continuous, shifting fore/background by depth
+4. Iridescent colour as small glowing accents, not grounds
+5. Curly-brace label motif
+6. Particle morphs (question/brain/orb/head/infinity) become luminous on dark
+7. Structure from Addendum 27 still stands — 9 sections, nothing lost
+
+### Note
+
+Every visual decision from Addenda 1-26 was made against a **light** ground and
+should be re-examined, not carried across. The ink-on-light rule that shaped
+the filaments, the orb, the stipple and the code matrix inverts entirely.
