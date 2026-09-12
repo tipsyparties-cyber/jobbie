@@ -278,7 +278,7 @@ export function ParticleCanvas({ shape }: { shape: ParticleShape }) {
           const dx = particles[i].x - particles[j].x, dy = particles[i].y - particles[j].y;
           const d = Math.sqrt(dx * dx + dy * dy);
           if (d < cd) {
-            ctx.strokeStyle = `rgba(242, 238, 227,${(1 - d / cd) * lineAlpha})`;
+            ctx.strokeStyle = `rgba(10, 10, 10,${(1 - d / cd) * lineAlpha})`;
             ctx.lineWidth = shapeRef.current === "brain" ? 0.5 : 0.3;
             ctx.beginPath(); ctx.moveTo(particles[i].x, particles[i].y); ctx.lineTo(particles[j].x, particles[j].y); ctx.stroke();
             c++;
@@ -288,7 +288,7 @@ export function ParticleCanvas({ shape }: { shape: ParticleShape }) {
 
       for (const p of particles) {
         const pulse = 0.7 + 0.3 * Math.sin(time * 2.5 + p.phase);
-        ctx.fillStyle = `rgba(242, 238, 227,${p.opacity * pulse})`;
+        ctx.fillStyle = `rgba(10, 10, 10,${p.opacity * pulse})`;
         ctx.beginPath(); ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2); ctx.fill();
       }
 

@@ -23,7 +23,7 @@ export function ContactForm() {
     <form action={formAction}>
       <input type="text" name="website" className="absolute -left-[9999px] opacity-0" tabIndex={-1} autoComplete="off" aria-hidden="true" />
 
-      <div className="rounded-2xl border border-ink/10 bg-white/6 backdrop-blur-2xl p-8 md:p-10 shadow-[0_8px_32px_rgba(0,0,0,0.45),inset_0_1px_0_rgba(255,255,255,0.08)]">
+      <div className="rounded-2xl border border-ink/10 bg-white/55 backdrop-blur-2xl p-8 md:p-10 shadow-[0_8px_32px_rgba(10,10,10,0.06),inset_0_1px_0_rgba(255,255,255,0.9)]">
         <div className="space-y-2">
           <input name="name" type="text" required className={inputStyles} placeholder="NAME" />
           <input name="email" type="email" required className={inputStyles} placeholder="EMAIL" />
@@ -37,7 +37,7 @@ export function ContactForm() {
         <button
           type="submit"
           disabled={pending}
-          className={`mt-8 w-full rounded-full py-4 font-body text-sm tracking-wide uppercase border border-ink/12 text-ink hover:bg-white/6 transition-all duration-300 ${pending ? "opacity-50" : ""}`}
+          className={`mt-8 w-full rounded-full py-4 font-body text-sm tracking-wide uppercase border border-ink/12 text-ink hover:bg-white/60 transition-all duration-300 ${pending ? "opacity-50" : ""}`}
         >
           {pending ? "Sending..." : "Send ^"}
         </button>

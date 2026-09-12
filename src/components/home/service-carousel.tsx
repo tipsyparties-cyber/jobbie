@@ -260,7 +260,7 @@ export function ServiceCarousel({ filter }: { filter?: "AGENT" | "TOOL" }) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1 + i * 0.06, duration: 0.5 }}
           >
-            <div className="rounded-2xl border border-ink/10 bg-white/6 backdrop-blur-2xl p-4 md:p-5 flex flex-col justify-between h-full min-h-[200px] shadow-[0_8px_32px_rgba(0,0,0,0.45),inset_0_1px_0_rgba(255,255,255,0.08)] hover:bg-white/7 transition-colors duration-300">
+            <div className="rounded-2xl border border-ink/10 bg-white/55 backdrop-blur-2xl p-4 md:p-5 flex flex-col justify-between h-full min-h-[200px] shadow-[0_8px_32px_rgba(10,10,10,0.06),inset_0_1px_0_rgba(255,255,255,0.9)] hover:bg-white/65 transition-colors duration-300">
               <div>
                 <div className="w-6 h-6 mb-3 flex items-center justify-center">
                   {cardGlyphs[card.name] || null}

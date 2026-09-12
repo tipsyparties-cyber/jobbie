@@ -126,7 +126,7 @@ export default function ServicesPage() {
           <div className="mt-12 space-y-6">
             {aiTeam.map((agent, i) => (
               <SectionReveal key={agent.name} delay={i * 0.05}>
-                <div className="rounded-2xl border border-ink/10 bg-white/6 backdrop-blur-2xl p-8 md:p-10 shadow-[0_8px_32px_rgba(0,0,0,0.45),inset_0_1px_0_rgba(255,255,255,0.08)]">
+                <div className="rounded-2xl border border-ink/10 bg-white/55 backdrop-blur-2xl p-8 md:p-10 shadow-[0_8px_32px_rgba(10,10,10,0.06),inset_0_1px_0_rgba(255,255,255,0.9)]">
                   <h3 className="font-display text-2xl font-light md:text-3xl">{agent.name}</h3>
                   <p className="mt-4 text-ink/50 leading-relaxed">{agent.intro}</p>
                   <ul className="mt-6 grid gap-2 sm:grid-cols-2">
@@ -157,7 +157,7 @@ export default function ServicesPage() {
           <div className="mt-12 space-y-6">
             {tools.map((tool, i) => (
               <SectionReveal key={tool.name} delay={i * 0.05}>
-                <div className="rounded-2xl border border-ink/10 bg-white/6 backdrop-blur-2xl p-8 md:p-10 shadow-[0_8px_32px_rgba(0,0,0,0.45),inset_0_1px_0_rgba(255,255,255,0.08)]">
+                <div className="rounded-2xl border border-ink/10 bg-white/55 backdrop-blur-2xl p-8 md:p-10 shadow-[0_8px_32px_rgba(10,10,10,0.06),inset_0_1px_0_rgba(255,255,255,0.9)]">
                   <h3 className="font-display text-2xl font-light md:text-3xl">{tool.name}</h3>
                   <p className="mt-4 text-ink/50 leading-relaxed">{tool.intro}</p>
                   <p className="mt-2 text-sm text-ink/50/80 leading-relaxed">{tool.desc}</p>

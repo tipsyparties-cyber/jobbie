@@ -32,7 +32,7 @@ const CELL_DESKTOP = 18;
 const CELL_MOBILE = 22;
 const MOBILE_MAX = 640;
 
-const INK = "242, 238, 227";
+const INK = "10, 10, 10";
 
 /**
  * Resting alpha of the standing field. Lower than it was, because the field is

@@ -59,11 +59,11 @@ function FloatingWords({ text, startDelay = 0 }: { text: string; startDelay?: nu
  * white, which is why the comet could not glow, the plane could not catch
  * light and the orb's lattice had to be ink. On sage, white finally reads.
  */
-const CREAM = "#14120E";
-const SAGE = "#131714";
-const PERIWINKLE = "#111420";
-const MIST = "#101519";
-const PAPER = "#0D0D0D";
+const CREAM = "#EDE7DA";
+const SAGE = "#A7B4A1";
+const PERIWINKLE = "#C6CDE8";
+const MIST = "#C3D0DE";
+const PAPER = "#F4F6F8";
 
 const GROUNDS: Record<string, string> = {
   // The flight sequence gets the mid-tone, where white can glow.
@@ -320,7 +320,7 @@ const sections = [
           {glyphs.map(({ Glyph, title, description }, i) => (
             <motion.div
               key={title}
-              className="text-center rounded-2xl border border-ink/10 bg-white/6 backdrop-blur-2xl p-5 shadow-[0_8px_32px_rgba(0,0,0,0.45),0_2px_8px_rgba(0,0,0,0.35),inset_0_1px_0_rgba(255,255,255,0.08)]"
+              className="text-center rounded-2xl border border-ink/10 bg-white/55 backdrop-blur-2xl p-5 shadow-[0_8px_32px_rgba(10,10,10,0.06),0_2px_8px_rgba(10,10,10,0.05),inset_0_1px_0_rgba(255,255,255,0.9)]"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1 + i * 0.1, duration: 0.5 }}
@@ -360,7 +360,7 @@ const sections = [
           ].map(({ stat, label, source }, i) => (
             <motion.div
               key={stat + label}
-              className="text-left rounded-2xl border border-ink/10 bg-white/6 backdrop-blur-2xl p-5 shadow-[0_8px_32px_rgba(0,0,0,0.45),0_2px_8px_rgba(0,0,0,0.35),inset_0_1px_0_rgba(255,255,255,0.08)]"
+              className="text-left rounded-2xl border border-ink/10 bg-white/55 backdrop-blur-2xl p-5 shadow-[0_8px_32px_rgba(10,10,10,0.06),0_2px_8px_rgba(10,10,10,0.05),inset_0_1px_0_rgba(255,255,255,0.9)]"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1 + i * 0.12, duration: 0.6 }}
@@ -393,7 +393,7 @@ const sections = [
             <h3 className="font-body text-sm uppercase tracking-widest text-ink/40 mt-6 mb-4">Without us</h3>
             <div className="w-full grid gap-2">
               {["Slow response times", "Missed enquiries", "Manual everything", "Inconsistent service", "Limited by working hours", "Growth = more chaos"].map((item, i) => (
-                <motion.div key={item} className="rounded-xl border border-ink/8 bg-white/4 backdrop-blur-xl px-4 py-2.5 flex items-center gap-3 shadow-[0_4px_16px_rgba(0,0,0,0.35),inset_0_1px_0_rgba(255,255,255,0.1)]"
+                <motion.div key={item} className="rounded-xl border border-ink/8 bg-white/45 backdrop-blur-xl px-4 py-2.5 flex items-center gap-3 shadow-[0_4px_16px_rgba(10,10,10,0.05),inset_0_1px_0_rgba(255,255,255,0.1)]"
                   initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.5 + i * 0.1, duration: 0.4 }}>
                   <svg className="w-3 h-3 shrink-0 text-ink/40" viewBox="0 0 12 12" fill="none">
                     <line x1="2" y1="2" x2="10" y2="10" stroke="currentColor" strokeWidth="1" strokeLinecap="round" />
@@ -415,7 +415,7 @@ const sections = [
             <h3 className="font-body text-sm uppercase tracking-widest text-ink/70 mt-6 mb-4">With us</h3>
             <div className="w-full grid gap-2">
               {["Instant responses, 24/7", "Every lead captured", "Fully automated", "Consistent every time", "Always on, 365 days", "Growth = more freedom"].map((item, i) => (
-                <motion.div key={item} className="rounded-xl border border-ink/10 bg-white/6 backdrop-blur-xl px-4 py-2.5 flex items-center gap-3 shadow-[0_4px_16px_rgba(0,0,0,0.1),inset_0_1px_0_rgba(255,255,255,0.08)]"
+                <motion.div key={item} className="rounded-xl border border-ink/10 bg-white/55 backdrop-blur-xl px-4 py-2.5 flex items-center gap-3 shadow-[0_4px_16px_rgba(0,0,0,0.1),inset_0_1px_0_rgba(255,255,255,0.9)]"
                   initial={{ opacity: 0 }} animate={{ opacity: 1 }}
                   transition={{ delay: 1.7 + i * 0.1, duration: 0.4 }}
                   {...(i === 5 ? { onAnimationComplete: onReady } : {})}>
@@ -581,7 +581,7 @@ const sections = [
           ].map(({ glyph, title, desc }, i) => (
             <motion.div
               key={title}
-              className="rounded-2xl border border-ink/10 bg-white/6 backdrop-blur-2xl p-5 shadow-[0_8px_32px_rgba(0,0,0,0.45),0_2px_8px_rgba(0,0,0,0.35),inset_0_1px_0_rgba(255,255,255,0.08)]"
+              className="rounded-2xl border border-ink/10 bg-white/55 backdrop-blur-2xl p-5 shadow-[0_8px_32px_rgba(10,10,10,0.06),0_2px_8px_rgba(10,10,10,0.05),inset_0_1px_0_rgba(255,255,255,0.9)]"
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1 + i * 0.2, duration: 0.7, ease: [0.15, 0.8, 0.3, 1] }}

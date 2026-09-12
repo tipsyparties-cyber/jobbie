@@ -22,7 +22,7 @@ export default function AboutPage() {
           </SectionReveal>
 
           <SectionReveal delay={0.1}>
-            <div className="mt-12 rounded-2xl border border-ink/10 bg-white/6 backdrop-blur-2xl p-8 md:p-10 shadow-[0_8px_32px_rgba(0,0,0,0.45),inset_0_1px_0_rgba(255,255,255,0.08)] space-y-8 text-ink/50 leading-relaxed font-light">
+            <div className="mt-12 rounded-2xl border border-ink/10 bg-white/55 backdrop-blur-2xl p-8 md:p-10 shadow-[0_8px_32px_rgba(10,10,10,0.06),inset_0_1px_0_rgba(255,255,255,0.9)] space-y-8 text-ink/50 leading-relaxed font-light">
               <p>
                 Up&amp;Up didn&apos;t start as an agency. It started as a necessity. That turned into a passion. That turned into expertise.
               </p>
@@ -48,7 +48,7 @@ export default function AboutPage() {
           <SectionReveal delay={0.1}>
             <div className="mt-24">
               <h2 className="font-display text-3xl font-light md:text-4xl lg:text-5xl">Who we are</h2>
-              <div className="mt-8 rounded-2xl border border-ink/10 bg-white/6 backdrop-blur-2xl p-8 md:p-10 shadow-[0_8px_32px_rgba(0,0,0,0.45),inset_0_1px_0_rgba(255,255,255,0.08)] space-y-6 text-ink/50 leading-relaxed font-light">
+              <div className="mt-8 rounded-2xl border border-ink/10 bg-white/55 backdrop-blur-2xl p-8 md:p-10 shadow-[0_8px_32px_rgba(10,10,10,0.06),inset_0_1px_0_rgba(255,255,255,0.9)] space-y-6 text-ink/50 leading-relaxed font-light">
                 <p>
                   Up&amp;Up is led by Jemima and Russell &mdash; two founders, owner-operators and entrepreneurs who between them bring together psychology, design, mathematics and technical architecture. A rare combination that shapes everything we build.
                 </p>
@@ -68,13 +68,13 @@ export default function AboutPage() {
           {/* Jemima & Russell side by side */}
           <SectionReveal delay={0.1}>
             <div className="mt-16 grid gap-6 md:grid-cols-2">
-              <div className="rounded-2xl border border-ink/10 bg-white/6 backdrop-blur-2xl p-8 shadow-[0_8px_32px_rgba(0,0,0,0.45),inset_0_1px_0_rgba(255,255,255,0.08)]">
+              <div className="rounded-2xl border border-ink/10 bg-white/55 backdrop-blur-2xl p-8 shadow-[0_8px_32px_rgba(10,10,10,0.06),inset_0_1px_0_rgba(255,255,255,0.9)]">
                 <h3 className="font-display text-2xl font-light md:text-3xl">Jemima</h3>
                 <p className="mt-6 text-ink/50 leading-relaxed font-light text-sm">
                   Jemima approaches every problem from the human side first. With a background in psychology and design, she understands how people think, how teams behave and how businesses feel to the people inside them and the customers they serve. She brings that understanding into every system we design &mdash; because automation that doesn&apos;t account for human behaviour doesn&apos;t last.
                 </p>
               </div>
-              <div className="rounded-2xl border border-ink/10 bg-white/6 backdrop-blur-2xl p-8 shadow-[0_8px_32px_rgba(0,0,0,0.45),inset_0_1px_0_rgba(255,255,255,0.08)]">
+              <div className="rounded-2xl border border-ink/10 bg-white/55 backdrop-blur-2xl p-8 shadow-[0_8px_32px_rgba(10,10,10,0.06),inset_0_1px_0_rgba(255,255,255,0.9)]">
                 <h3 className="font-display text-2xl font-light md:text-3xl">Russell</h3>
                 <p className="mt-6 text-ink/50 leading-relaxed font-light text-sm">
                   Russell thinks in systems, logic and architecture. With a mathematical and technical foundation, he sees the structure underneath every business problem and builds solutions that are precise, scalable and built to last. Where others see complexity, he sees a pattern waiting to be solved.
@@ -84,7 +84,7 @@ export default function AboutPage() {
           </SectionReveal>
 
           <SectionReveal delay={0.1}>
-            <div className="mt-8 rounded-2xl border border-ink/10 bg-white/6 backdrop-blur-2xl p-8 md:p-10 shadow-[0_8px_32px_rgba(0,0,0,0.45),inset_0_1px_0_rgba(255,255,255,0.08)]">
+            <div className="mt-8 rounded-2xl border border-ink/10 bg-white/55 backdrop-blur-2xl p-8 md:p-10 shadow-[0_8px_32px_rgba(10,10,10,0.06),inset_0_1px_0_rgba(255,255,255,0.9)]">
             <p className="text-ink/50 leading-relaxed font-light">
               We are both founders, entrepreneurs and agency owners who have built, led and scaled businesses across hospitality, events, services and agencies &mdash; growing them from nothing to millions in revenue, running operations internationally across multiple time zones without losing control or quality. The operational reality of these industries is not something we read about. It is something we lived.
             </p>
@@ -95,7 +95,7 @@ export default function AboutPage() {
           <SectionReveal delay={0.1}>
             <div className="mt-24">
               <h2 className="font-display text-3xl font-light md:text-4xl lg:text-5xl">Decades of experience</h2>
-              <div className="mt-8 rounded-2xl border border-ink/10 bg-white/6 backdrop-blur-2xl p-8 md:p-10 shadow-[0_8px_32px_rgba(0,0,0,0.45),inset_0_1px_0_rgba(255,255,255,0.08)] space-y-6 text-ink/50 leading-relaxed font-light">
+              <div className="mt-8 rounded-2xl border border-ink/10 bg-white/55 backdrop-blur-2xl p-8 md:p-10 shadow-[0_8px_32px_rgba(10,10,10,0.06),inset_0_1px_0_rgba(255,255,255,0.9)] space-y-6 text-ink/50 leading-relaxed font-light">
                 <p>
                   A decade of building gives you a sixth sense. For where businesses leak. For your weaknesses now and the ones growth will reveal. The quiet inefficiencies, the invisible bottlenecks. We see them before they surface. We design around them before they cost anything. And we see something else too &mdash; the potential. Where your business could go, what it could become, and exactly what needs to be built to get you there.
                 </p>
@@ -113,7 +113,7 @@ export default function AboutPage() {
           <SectionReveal delay={0.1}>
             <div className="mt-24">
               <h2 className="font-display text-3xl font-light md:text-4xl lg:text-5xl">Our ethos</h2>
-              <div className="mt-8 rounded-2xl border border-ink/10 bg-white/6 backdrop-blur-2xl p-8 md:p-10 shadow-[0_8px_32px_rgba(0,0,0,0.45),inset_0_1px_0_rgba(255,255,255,0.08)] space-y-6 text-ink/50 leading-relaxed font-light">
+              <div className="mt-8 rounded-2xl border border-ink/10 bg-white/55 backdrop-blur-2xl p-8 md:p-10 shadow-[0_8px_32px_rgba(10,10,10,0.06),inset_0_1px_0_rgba(255,255,255,0.9)] space-y-6 text-ink/50 leading-relaxed font-light">
                 <p>Remove the friction.</p>
                 <p>Remove the noise.</p>
                 <p>Remove the ceiling.</p>

@@ -26,7 +26,7 @@ export function MobileMenu({ isOpen, onClose, links }: MobileMenuProps) {
 
           {/* Menu blob — drops down from top-right */}
           <motion.div
-            className="fixed right-6 top-4 z-[60] rounded-3xl border border-ink/10 bg-white/6 backdrop-blur-2xl shadow-[0_12px_40px_rgba(0,0,0,0.15),inset_0_1px_0_rgba(255,255,255,0.08)] overflow-hidden"
+            className="fixed right-6 top-4 z-[60] rounded-3xl border border-ink/10 bg-white/60 backdrop-blur-2xl shadow-[0_12px_40px_rgba(0,0,0,0.15),inset_0_1px_0_rgba(255,255,255,0.9)] overflow-hidden"
             initial={{
               width: 44,
               height: 44,

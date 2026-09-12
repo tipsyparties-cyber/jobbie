@@ -116,7 +116,7 @@ export const ORB_STAGES = 4;
 
 /** Samples per line. High enough that the curve reads as smooth, not faceted. */
 const PATH_POINTS = 130;
-const INK = "242, 238, 227";
+const INK = "10, 10, 10";
 
 interface State {
   /** 0 = off-screen left, 1 = at rest */
