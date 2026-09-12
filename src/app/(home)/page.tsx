@@ -65,15 +65,18 @@ const SAGE = "#A7B4A1";
 const PERIWINKLE = "#C6CDE8";
 const MIST = "#C3D0DE";
 const PAPER = "#F4F6F8";
+/** The most saturated of the set — used sparingly, as a moment of emphasis
+ *  rather than a resting ground. Black text still clears contrast on it. */
+const LILAC = "#C3AEF7";
 
 const GROUNDS: Record<string, string> = {
-  "new-synergy": PAPER,
+  "new-synergy": LILAC,
   // New sections, in the gsap structure.
   "new-positioning": CREAM,
   "new-what": MIST,
   "new-outcomes": PAPER,
   "new-why": SAGE,
-  "new-proof": PERIWINKLE,
+  "new-proof": LILAC,
   "new-start": CREAM,
 
   // The flight sequence gets the mid-tone, where white can glow.
