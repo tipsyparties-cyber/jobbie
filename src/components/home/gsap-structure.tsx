@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { SynergyBrain } from "@/components/home/synergy-brain";
+import { Wordmark } from "@/components/ui/wordmark";
 import { LetterReveal, WordReveal } from "@/components/home/reveal-text";
 import { CREAM, SAGE, BLUE, YELLOW, LAVENDER } from "@/lib/palette";
 
@@ -524,13 +525,7 @@ export function GsapFooter() {
           shouting. */}
       <div className="mt-24 grid gap-10 border-t border-ink/15 pt-12 sm:grid-cols-2 lg:grid-cols-4">
         <div>
-          <span className="text-2xl leading-none tracking-tight">
-            <span className="font-body font-medium">up</span>
-            <span className="font-display text-[1.15em] font-medium">+up</span>
-            <span className="relative -top-[0.35em] -ml-[0.15em] font-body text-[0.7em] font-medium leading-none">
-              ^
-            </span>
-          </span>
+          <Wordmark asLink={false} />
           <p className="mt-4 max-w-xs font-body text-sm leading-relaxed text-ink/55">
             AI agents and automation for businesses that would rather grow than
             hire.

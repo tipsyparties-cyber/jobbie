@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
+import { Wordmark } from "@/components/ui/wordmark";
 
 /**
  * The header.
@@ -26,25 +27,13 @@ const LINKS = [
   { href: "/blog", label: "Blog" },
 ];
 
-function Wordmark() {
-  return (
-    <Link href="/" className="text-2xl leading-none tracking-tight text-ink">
-      <span className="font-body font-medium">up</span>
-      <span className="font-display text-[1.15em] font-medium">+up</span>
-      <span className="relative -top-[0.35em] -ml-[0.15em] font-body text-[0.7em] font-medium leading-none">
-        ^
-      </span>
-    </Link>
-  );
-}
-
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
 
   return (
     <header className="fixed inset-x-0 top-0 z-[100]">
       <div className="mx-auto flex max-w-[1400px] items-center gap-10 px-6 py-4">
-        <Wordmark />
+        <Wordmark className="text-ink" />
 
         <nav className="hidden items-center gap-7 md:flex">
           {LINKS.map((l) => (

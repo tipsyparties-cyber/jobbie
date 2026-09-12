@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Wordmark } from "@/components/ui/wordmark";
 
 const legalLinks = [
   { href: "/privacy-policy", label: "Privacy Policy" },
@@ -11,11 +12,7 @@ export function Footer() {
       <div className="mx-auto max-w-[1280px] px-6 py-12">
         <div className="flex flex-col items-center justify-between gap-6 sm:flex-row">
           <div className="flex items-center gap-6">
-            <Link href="/" className="text-2xl tracking-tight">
-              <span className="font-body font-light">up</span>
-              <span className="font-display text-[1.15em]">+up</span>
-              <span className="text-[0.7em] leading-none font-body -ml-[0.15em] relative -top-[0.35em]">^</span>
-            </Link>
+            <Wordmark />
             <div className="flex gap-3">
               <a href="#" aria-label="LinkedIn" className="text-ink/40 hover:text-ink transition-colors">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">

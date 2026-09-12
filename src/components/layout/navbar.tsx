@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { Wordmark } from "@/components/ui/wordmark";
 import { motion, AnimatePresence } from "framer-motion";
 
 const navLinks = [
@@ -28,11 +29,9 @@ export function Navbar() {
           Contact
         </Link>
 
-        <Link href="/" className="justify-self-center text-2xl tracking-tight text-ink">
-          <span className="font-body font-light">up</span>
-          <span className="font-display text-[1.15em]">+up</span>
-          <span className="text-[0.7em] leading-none font-body -ml-[0.15em] relative -top-[0.35em]">^</span>
-        </Link>
+        <div className="justify-self-center">
+          <Wordmark className="text-ink" />
+        </div>
 
         <div
           className="relative justify-self-end"
