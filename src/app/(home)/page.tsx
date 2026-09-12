@@ -12,6 +12,7 @@ import { ServiceCarousel } from "@/components/home/service-carousel";
 import { Flock } from "@/components/home/flock";
 import { NeuralOrb } from "@/components/home/neural-orb";
 import { Button } from "@/components/ui/button";
+import { SynergyBrain } from "@/components/home/synergy-brain";
 
 function seededRandom(seed: number) {
   const x = Math.sin(seed * 9301 + 49297) * 49297;
@@ -66,6 +67,7 @@ const MIST = "#C3D0DE";
 const PAPER = "#F4F6F8";
 
 const GROUNDS: Record<string, string> = {
+  "new-synergy": PAPER,
   // New sections, in the gsap structure.
   "new-positioning": CREAM,
   "new-what": MIST,
@@ -160,6 +162,14 @@ const OUTCOMES = [
  * can be seen in one pass. Copy is taken from the existing sections.
  */
 const sections = [
+  {
+    id: "new-synergy",
+    content: () => (
+      <div className="mx-auto flex h-full w-full max-w-[1400px] flex-col items-center justify-center px-6">
+        <SynergyBrain />
+      </div>
+    ),
+  },
   {
     id: "new-positioning",
     content: () => (
