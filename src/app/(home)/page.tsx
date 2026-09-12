@@ -60,23 +60,23 @@ function FloatingWords({ text, startDelay = 0 }: { text: string; startDelay?: nu
  * white, which is why the comet could not glow, the plane could not catch
  * light and the orb's lattice had to be ink. On sage, white finally reads.
  */
-const CREAM = "#EDE7DA";
-const SAGE = "#A7B4A1";
-const PERIWINKLE = "#C6CDE8";
-const MIST = "#C3D0DE";
-const PAPER = "#F4F6F8";
+const CREAM = "#F2E9E1";
+const SAGE = "#9AAD92";
+const BLUE = "#93B7E8";
+const YELLOW = "#FCFC72";
+const PAPER = "#FBF9F6";
 /** The most saturated of the set — used sparingly, as a moment of emphasis
  *  rather than a resting ground. Black text still clears contrast on it. */
-const LILAC = "#C3AEF7";
+const LAVENDER = "#D6D0F5";
 
 const GROUNDS: Record<string, string> = {
-  "new-synergy": LILAC,
+  "new-synergy": LAVENDER,
   // New sections, in the gsap structure.
   "new-positioning": CREAM,
-  "new-what": MIST,
+  "new-what": YELLOW,
   "new-outcomes": PAPER,
   "new-why": SAGE,
-  "new-proof": LILAC,
+  "new-proof": LAVENDER,
   "new-start": CREAM,
 
   // The flight sequence gets the mid-tone, where white can glow.
@@ -94,9 +94,9 @@ const GROUNDS: Record<string, string> = {
 
   hero: CREAM,
   positioning: PAPER,
-  benefits: MIST,
+  benefits: BLUE,
   stats: CREAM,
-  comparison: PERIWINKLE,
+  comparison: BLUE,
   "ai-team": PAPER,
   "automation-tools": PAPER,
   "why-us-intro": SAGE,
@@ -104,7 +104,7 @@ const GROUNDS: Record<string, string> = {
   "why-us-continuity": SAGE,
   "why-us-bespoke": SAGE,
   "why-us-evolution": SAGE,
-  "how-it-works": MIST,
+  "how-it-works": CREAM,
   cta: CREAM,
 };
 

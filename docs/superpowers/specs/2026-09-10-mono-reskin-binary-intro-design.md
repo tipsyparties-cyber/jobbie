@@ -1780,3 +1780,75 @@ Unmounted but kept on disk: `binary-intro.tsx` (rain, removed at request),
   geometry numerically — do not claim anything about appearance.
 - Lint baseline is **7 warnings**, all pre-existing in files not touched this
   session. Anything above 7 is new.
+
+---
+
+## Addendum 31 — the full brief, 2026-09-12
+
+**This is the job. Everything before it is preamble.**
+
+### What Russ asked for
+
+> "all the pages of https://www.getjobber.com/features/ but with the style of
+> https://gsap.com/ ... use this site as the wireframe and inspo, use the same
+> layout scroll effects animations, and we will swap out the copy for ours and
+> the images for ours later, but swap out the colours now"
+
+So: **getjobber.com/features supplies the page inventory and content shape;
+gsap.com supplies the layout, scroll effects and animation; honeybook.co
+supplies the palette.**
+
+### The gsap section sequence to reproduce, in order
+
+1. **Hero** — huge type filling the viewport, tiny animated accents tucked into
+   the letterforms
+2. **Statement** — a `{ braced label }`, then one very large sentence over three
+   lines, enormous whitespace, nothing else (screenshot 36)
+3. **Sideways-scrolling section** — highlighted/marker-pen headings, a short
+   paragraph left, and gradient shapes travelling horizontally as you scroll
+   (screenshot 37)
+4. **Feature rows** — a large gradient blob left, a coloured keyword, one
+   sentence, and an outlined pill button; repeated, divided by hairlines
+   (screenshot 38)
+5. **Showcase** — a horizontal rail of site cards scrolling sideways past a big
+   "Showcase" heading (screenshot 39)
+6. **Bottom section / footer**
+
+### Palette — DONE (this commit)
+
+From the honeybook.co swatches. All six clear WCAG AA for ink body text:
+
+```
+cream     #F2E9E1   16.5:1
+sage      #9AAD92    8.3:1
+blue      #93B7E8    9.6:1
+yellow    #FCFC72   18.2:1     loudest — kept to one screen
+paper     #FBF9F6   18.8:1
+lavender  #D6D0F5   13.4:1
+```
+
+Replaces the previous cream/sage/periwinkle/mist/paper/lilac. `PERIWINKLE` ->
+`BLUE`, `MIST` -> `YELLOW`, `LILAC` -> `LAVENDER`, and every usage remapped.
+
+### NOT DONE — the whole structural build
+
+**Blocked on the same thing as everything else: the page does not scroll.**
+
+Sections 3 and 5 above are *sideways scrolling*. Section 4 wants scroll-triggered
+reveals. None of it is possible in a `fixed inset-0` stepper. See the HANDOVER
+above.
+
+Order for a fresh session:
+
+1. **Scroll conversion.** Nothing else first.
+2. Rebuild the page on the gsap section sequence above.
+3. Fill with getjobber's page inventory — `/features` is a hub with child pages;
+   that is the multi-page part and is a large job on its own.
+4. Swap in real copy and images (Russ will supply).
+
+### Note on getjobber
+
+Not fetched — context was nearly exhausted when this was raised, and a
+marketing site's layout does not survive conversion to markdown anyway. Its page
+inventory and content shape need to be reviewed properly at the start of the
+next session.
