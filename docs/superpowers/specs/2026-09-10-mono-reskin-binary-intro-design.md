@@ -1583,3 +1583,66 @@ stopping.
 Every visual decision from Addenda 1-26 was made against a **light** ground and
 should be re-examined, not carried across. The ink-on-light rule that shaped
 the filaments, the orb, the stipple and the code matrix inverts entirely.
+
+---
+
+## Addendum 29 — the synergy brain, 2026-09-12
+
+Russ's idea, and the strongest one of the session. Also his framing correction:
+**"I don't want to rebuild, I want to transform."** Correct — the components
+exist; what is missing is connective logic, not new machinery.
+
+### The sequence
+
+Inverts nominal.so's hero, where agents shrink *into* the header:
+
+1. A central form — the neural orb — reads as unity / synergy / a brain
+2. On scroll the agents **burst out of it**, brainstorm-style, and hold around
+   it, so you can read what is inside the synergy
+3. Scrolling on, they **draw back into it**
+4. It pulses and glows, then **morphs into the next shape** — the existing
+   particle morphs: question, brain, orb, head, infinity
+
+### Why this is better than Addendum 27's "braid"
+
+The braid ran the flight animation *alongside* the copy. This makes the
+animation **carry the information**: the things flying out are Customer
+Service Agent, Sales Agent, Finance Agent, Compliance Agent, Reporting Agent
+and the rest. The visitor learns the product by watching it.
+
+That is the gsap.com lesson applied properly — animation as demonstration, not
+ornament. It also answers the standing objection that eleven screens of
+abstract flight never say what up+up sells.
+
+Inverting the direction matters too. Shrinking *in* says "we consolidate".
+Expanding *out and back* says "one system, many capabilities" — and the
+**return** is what sells the synergy, because you see the agents belong to
+something.
+
+### Inventory — this is recombination
+
+| Exists | Role |
+|---|---|
+| `neural-orb.tsx` | the synergy brain |
+| `service-carousel.tsx` (9 agents, 3 tools) | what bursts out |
+| `particle-canvas.tsx` (5 morph shapes) | what it becomes |
+| `flock.tsx` | the many-to-one argument, already made |
+| `GROUNDS` / palette (`9f371a2`) | accents on dark |
+
+New code: the emanate-and-return path, scroll-linked. Roughly eighty lines
+against components that already work.
+
+### Dependencies
+
+- **Scroll-linked progress.** A burst that expands on scroll and returns on
+  further scroll cannot run on discrete wheel steps. Same prerequisite as
+  everywhere else.
+- **Dark ground** (Addendum 28) so the pulse and glow actually read.
+
+### Open
+
+- Do the agents appear as text labels, cards, or glyphs? The carousel has
+  names and descriptions; the glyph set has icons.
+- Does the orb morph in place, or does the morph target replace it?
+- Where does this sit — it is a strong candidate for the hero itself rather
+  than a mid-page section.
