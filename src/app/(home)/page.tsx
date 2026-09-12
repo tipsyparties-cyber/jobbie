@@ -12,7 +12,15 @@ import { ServiceCarousel } from "@/components/home/service-carousel";
 import { Flock } from "@/components/home/flock";
 import { NeuralOrb } from "@/components/home/neural-orb";
 import { Button } from "@/components/ui/button";
-import { SynergyBrain } from "@/components/home/synergy-brain";
+import {
+  GsapHero,
+  GsapStatement,
+  GsapSideways,
+  GsapFeatures,
+  GsapShowcase,
+  GsapFooter,
+} from "@/components/home/gsap-structure";
+import { CREAM, SAGE, BLUE, PAPER, LAVENDER } from "@/lib/palette";
 
 function seededRandom(seed: number) {
   const x = Math.sin(seed * 9301 + 49297) * 49297;
@@ -60,24 +68,17 @@ function FloatingWords({ text, startDelay = 0 }: { text: string; startDelay?: nu
  * white, which is why the comet could not glow, the plane could not catch
  * light and the orb's lattice had to be ink. On sage, white finally reads.
  */
-const CREAM = "#F2E9E1";
-const SAGE = "#9AAD92";
-const BLUE = "#93B7E8";
-const YELLOW = "#FCFC72";
-const PAPER = "#FBF9F6";
-/** The most saturated of the set — used sparingly, as a moment of emphasis
- *  rather than a resting ground. Black text still clears contrast on it. */
-const LAVENDER = "#D6D0F5";
+
 
 const GROUNDS: Record<string, string> = {
-  "new-synergy": LAVENDER,
-  // New sections, in the gsap structure.
-  "new-positioning": CREAM,
-  "new-what": YELLOW,
-  "new-outcomes": PAPER,
-  "new-why": SAGE,
-  "new-proof": LAVENDER,
-  "new-start": CREAM,
+  // The six sections of gsap.com, in order. Yellow is deliberately absent
+  // as a ground — it appears once, as a keyword highlight in a feature row.
+  "g-hero": CREAM,
+  "g-statement": PAPER,
+  "g-sideways": PAPER,
+  "g-features": PAPER,
+  "g-showcase": LAVENDER,
+  "g-footer": CREAM,
 
   // The flight sequence gets the mid-tone, where white can glow.
   "flock-1": SAGE,
@@ -127,167 +128,27 @@ function Braced({ children }: { children: React.ReactNode }) {
   );
 }
 
-/** Shared frame for the new sections: full height, left-aligned, wide gutter. */
-function Frame({ children }: { children: React.ReactNode }) {
-  return (
-    <div className="mx-auto flex h-full w-full max-w-[1400px] flex-col justify-center px-6">
-      {children}
-    </div>
-  );
-}
-
-/** The one statement a section is allowed to make. Sized in vw so it fills the
- *  screen at any width rather than stepping between rem breakpoints. */
-function Statement({ children }: { children: React.ReactNode }) {
-  return (
-    <h2 className="max-w-[18ch] font-body text-[clamp(2.25rem,7vw,6.25rem)] font-light leading-[0.95] tracking-[-0.035em]">
-      {children}
-    </h2>
-  );
-}
-
-const AGENTS = [
-  "Customer Service", "Sales", "Receptionist", "Operations", "HR",
-  "Finance", "Marketing", "Compliance", "Reporting",
-];
-
-const TOOLS = ["Quotes & Bookings", "CRM", "Unified Inbox"];
-
-const OUTCOMES = [
-  "Time saving", "Speed", "Lower costs", "Accuracy", "Scalability",
-  "Data insights", "24/7 service", "Competitive edge", "Happier staff",
-  "Happier owners",
-];
-
 /**
- * NEW sections, in the gsap.com structure — one statement per screen, large
- * type, generous space, braced labels. Placed ahead of the originals so both
- * can be seen in one pass. Copy is taken from the existing sections.
+ * The running order of the page, top to bottom.
+ *
+ * The six gsap sections come first, then everything from the original site
+ * below them, so the new build and the copy it is replacing can be read in
+ * one pass. The originals come out once their content has been moved up.
  */
 const sections = [
-  {
-    id: "new-synergy",
-    content: () => (
-      <div className="mx-auto flex h-full w-full max-w-[1400px] flex-col items-center justify-center px-6">
-        <SynergyBrain />
-      </div>
-    ),
-  },
-  {
-    id: "new-positioning",
-    content: () => (
-      <Frame>
-        <Braced>Why now</Braced>
-        <div className="mt-14">
-          <Statement>
-            The best businesses aren&apos;t run by super humans working 24/7.
-            They&apos;re run by smart people with smarter systems.
-          </Statement>
-        </div>
-      </Frame>
-    ),
-  },
-  {
-    id: "new-what",
-    content: () => (
-      <Frame>
-        <Braced>What we do</Braced>
-        <div className="mt-14">
-          <Statement>Nine agents and three tools, built around your operation.</Statement>
-        </div>
-        <div className="mt-12 grid max-w-4xl grid-cols-2 gap-x-10 gap-y-2 md:grid-cols-3">
-          {AGENTS.map((a) => (
-            <span key={a} className="font-body text-sm font-light text-ink/70">
-              {a}
-            </span>
-          ))}
-          {TOOLS.map((t) => (
-            <span key={t} className="font-body text-sm font-light text-ink/40">
-              {t}
-            </span>
-          ))}
-        </div>
-      </Frame>
-    ),
-  },
-  {
-    id: "new-outcomes",
-    content: () => (
-      <Frame>
-        <Braced>Outcomes</Braced>
-        <div className="mt-14">
-          <Statement>What changes when the systems run themselves.</Statement>
-        </div>
-        {/* Text only — no cards. The original used ten glass panels, which at
-            this type scale would fight the statement rather than support it. */}
-        <div className="mt-12 grid max-w-4xl grid-cols-2 gap-x-10 gap-y-3 md:grid-cols-3">
-          {OUTCOMES.map((o) => (
-            <span key={o} className="font-body text-sm font-light text-ink/70">
-              {o}
-            </span>
-          ))}
-        </div>
-      </Frame>
-    ),
-  },
-  {
-    id: "new-why",
-    content: () => (
-      <Frame>
-        <Braced>Why up+up</Braced>
-        <div className="mt-14">
-          <Statement>
-            We don&apos;t hand over software and disappear.
-          </Statement>
-        </div>
-        <div className="mt-12 grid max-w-3xl gap-6 md:grid-cols-2">
-          {[
-            ["Knowledge", "Your business logic, captured — not guessed at."],
-            ["Continuity", "The system keeps running when people move on."],
-            ["Bespoke", "Built for how you work, not how software thinks you should."],
-            ["Evolution", "It gets sharper the longer it runs."],
-          ].map(([t, d]) => (
-            <div key={t}>
-              <p className="font-body text-sm font-medium text-ink">{t}</p>
-              <p className="mt-1 font-body text-sm font-light leading-relaxed text-ink/55">
-                {d}
-              </p>
-            </div>
-          ))}
-        </div>
-      </Frame>
-    ),
-  },
-  {
-    id: "new-proof",
-    content: () => (
-      <Frame>
-        <Braced>Proof</Braced>
-        <div className="mt-14">
-          <Statement>
-            Tipsy Parties: instant quoting, live booking, one connected system.
-          </Statement>
-        </div>
-        <div className="mt-10">
-          <Button href="/projects/tipsy-parties">Read the case study</Button>
-        </div>
-      </Frame>
-    ),
-  },
-  {
-    id: "new-start",
-    content: () => (
-      <Frame>
-        <Braced>Start</Braced>
-        <div className="mt-14">
-          <Statement>Ready to see what&apos;s possible?</Statement>
-        </div>
-        <div className="mt-10">
-          <Button href="/contact">Start a conversation</Button>
-        </div>
-      </Frame>
-    ),
-  },
+  /* The six sections of gsap.com, rebuilt for up+up. Each one is a thin
+     wrapper here; the markup lives in components/home/gsap-structure.tsx so
+     this file stays a running order rather than a second implementation.
+
+     "raw" means the section manages its own height and scroll and must not
+     be wrapped in the standard one-screen parallax frame — the sideways band
+     is four viewports tall, and the footer is shorter than one. */
+  { id: "g-hero", content: () => <GsapHero /> },
+  { id: "g-statement", content: () => <GsapStatement /> },
+  { id: "g-sideways", raw: true, content: () => <GsapSideways /> },
+  { id: "g-features", raw: true, content: () => <GsapFeatures /> },
+  { id: "g-showcase", content: () => <GsapShowcase /> },
+  { id: "g-footer", raw: true, content: () => <GsapFooter /> },
 
   // ---- ORIGINAL SECTIONS BELOW, unchanged ----
 
@@ -919,12 +780,12 @@ const SHAPES: ParticleShape[] = sections.map((s) =>
  * highlights the chapter containing the section you are in.
  */
 const CHAPTERS: { label: string; index: number }[] = [
-  { label: "Synergy", index: 0 },
-  { label: "Why now", index: sections.findIndex((s) => s.id === "new-positioning") },
-  { label: "What we do", index: sections.findIndex((s) => s.id === "new-what") },
-  { label: "Outcomes", index: sections.findIndex((s) => s.id === "new-outcomes") },
-  { label: "Why up+up", index: sections.findIndex((s) => s.id === "new-why") },
-  { label: "Proof", index: sections.findIndex((s) => s.id === "new-proof") },
+  { label: "Top", index: 0 },
+  { label: "Why now", index: sections.findIndex((s) => s.id === "g-statement") },
+  { label: "What we do", index: sections.findIndex((s) => s.id === "g-sideways") },
+  { label: "Why up+up", index: sections.findIndex((s) => s.id === "g-features") },
+  { label: "Built", index: sections.findIndex((s) => s.id === "g-showcase") },
+  { label: "Start", index: sections.findIndex((s) => s.id === "g-footer") },
   { label: "Flight", index: sections.findIndex((s) => s.id === "flock-1") },
   { label: "Origin", index: sections.findIndex((s) => s.id === "hero") },
   { label: "Detail", index: sections.findIndex((s) => s.id === "benefits") },
@@ -966,10 +827,12 @@ function ScrollSection({
   id,
   children,
   register,
+  raw = false,
 }: {
   id: string;
   children: React.ReactNode;
   register: (el: HTMLElement | null) => void;
+  raw?: boolean;
 }) {
   const ref = useRef<HTMLElement | null>(null);
   const { scrollYProgress } = useScroll({
@@ -980,6 +843,26 @@ function ScrollSection({
   // than as the text sliding independently of the page.
   const y = useTransform(scrollYProgress, [0, 1], [70, -70]);
   const opacity = useTransform(scrollYProgress, [0, 0.28, 0.72, 1], [0, 1, 1, 0]);
+
+  // A raw section is still registered — the ground map and the chapter rail
+  // both index by section — but it is handed the page as-is. Applying the
+  // one-screen frame to a sticky, four-viewport band would pin the parallax
+  // wrapper instead of the band, and fade the whole thing out halfway
+  // through its own horizontal travel.
+  if (raw) {
+    return (
+      <section
+        id={id}
+        ref={(el) => {
+          ref.current = el;
+          register(el);
+        }}
+        className="relative w-full"
+      >
+        {children}
+      </section>
+    );
+  }
 
   return (
     <section
@@ -1129,6 +1012,7 @@ export default function Home() {
           <ScrollSection
             key={s.id}
             id={s.id}
+            raw={"raw" in s && Boolean((s as { raw?: boolean }).raw)}
             register={(el) => {
               els.current[i] = el;
             }}
