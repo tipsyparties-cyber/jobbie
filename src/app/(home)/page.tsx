@@ -135,7 +135,7 @@ function Frame({ children }: { children: React.ReactNode }) {
  *  screen at any width rather than stepping between rem breakpoints. */
 function Statement({ children }: { children: React.ReactNode }) {
   return (
-    <h2 className="font-display text-[clamp(1.9rem,5.6vw,4.6rem)] font-light leading-[0.98] tracking-[-0.02em]">
+    <h2 className="max-w-[18ch] font-body text-[clamp(2.25rem,7vw,6.25rem)] font-light leading-[0.95] tracking-[-0.035em]">
       {children}
     </h2>
   );
@@ -165,15 +165,12 @@ const sections = [
     content: () => (
       <Frame>
         <Braced>Why now</Braced>
-        <div className="mt-10">
+        <div className="mt-14">
           <Statement>
             The best businesses aren&apos;t run by super humans working 24/7.
             They&apos;re run by smart people with smarter systems.
           </Statement>
         </div>
-        <p className="mt-10 max-w-xl font-body text-base font-light leading-relaxed text-ink/60">
-          We design and build those systems.
-        </p>
       </Frame>
     ),
   },
@@ -182,7 +179,7 @@ const sections = [
     content: () => (
       <Frame>
         <Braced>What we do</Braced>
-        <div className="mt-10">
+        <div className="mt-14">
           <Statement>Nine agents and three tools, built around your operation.</Statement>
         </div>
         <div className="mt-12 grid max-w-4xl grid-cols-2 gap-x-10 gap-y-2 md:grid-cols-3">
@@ -205,7 +202,7 @@ const sections = [
     content: () => (
       <Frame>
         <Braced>Outcomes</Braced>
-        <div className="mt-10">
+        <div className="mt-14">
           <Statement>What changes when the systems run themselves.</Statement>
         </div>
         {/* Text only — no cards. The original used ten glass panels, which at
@@ -225,7 +222,7 @@ const sections = [
     content: () => (
       <Frame>
         <Braced>Why up+up</Braced>
-        <div className="mt-10">
+        <div className="mt-14">
           <Statement>
             We don&apos;t hand over software and disappear.
           </Statement>
@@ -253,15 +250,11 @@ const sections = [
     content: () => (
       <Frame>
         <Braced>Proof</Braced>
-        <div className="mt-10">
+        <div className="mt-14">
           <Statement>
             Tipsy Parties: instant quoting, live booking, one connected system.
           </Statement>
         </div>
-        <p className="mt-10 max-w-xl font-body text-base font-light leading-relaxed text-ink/60">
-          Quoting that used to take a day now takes seconds, and every booking
-          flows straight through to the people who deliver it.
-        </p>
         <div className="mt-10">
           <Button href="/projects/tipsy-parties">Read the case study</Button>
         </div>
@@ -273,12 +266,9 @@ const sections = [
     content: () => (
       <Frame>
         <Braced>Start</Braced>
-        <div className="mt-10">
+        <div className="mt-14">
           <Statement>Ready to see what&apos;s possible?</Statement>
         </div>
-        <p className="mt-10 max-w-xl font-body text-base font-light leading-relaxed text-ink/60">
-          Tell us what you&apos;ve built and what you&apos;re trying to fix.
-        </p>
         <div className="mt-10">
           <Button href="/contact">Start a conversation</Button>
         </div>
