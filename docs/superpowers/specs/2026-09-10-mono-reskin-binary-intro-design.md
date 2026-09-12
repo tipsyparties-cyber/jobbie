@@ -1360,3 +1360,85 @@ between 11 and about 15px.
 
 The soft halo stays behind it (30px, down from 34) for luminosity; the plane
 itself is ink, consistent with the rule that structure is ink and glow is white.
+
+---
+
+## Addendum 26 — design plan and handover, 2026-09-12
+
+Russ asked for a recommended plan. This supersedes nothing; it sets the order
+for the next phase.
+
+### The core problem
+
+**The animation occupies 11 of 26 screens.** Binary intro, six flock stages,
+the convergence and four orb stages all come before the visitor reaches the
+"We use ai & automation" headline. Eleven screens of abstraction before the
+site says what it sells — the opposite of the "simplicity of info" Russ likes
+in nominal.so, and the thing most at odds with reading as an established firm.
+
+The fix is not to cut the animation. **Scroll-linked animation self-regulates;
+a stepper cannot.** On a scroll page someone in a hurry passes the whole
+sequence in seconds while someone curious gets all of it. The stepper forces
+everyone through at one pace, 26 gestures deep. That is a stronger argument for
+converting than the feel is.
+
+### Plan, in dependency order
+
+1. **Convert the home page to real scroll.** Everything else depends on it.
+   Currently `fixed inset-0` with a wheel-hijacked stepper.
+2. **Scroll-link the animation and compress it.** The flock's 11 sections
+   become ~3 viewport-heights. All geometry already takes a 0-1 progress value
+   — only the *source* of that number changes, from an integer stage to
+   accumulated scroll.
+3. **Restructure to ~9 sections**, nominal.so-shaped: hero → what we do →
+   proof → case study → how it works → CTA → footer. `why-us` alone currently
+   spans five screens and is one section.
+4. **Palette.** Cream default ground, one or two colour grounds marking
+   structure. **After** the restructure — retuning white-on-colour canvases is
+   the expensive part and should happen once.
+5. **Fly-over grid into the takeoff**, leading into the orb. Where the flight
+   metaphor pays off and the paper planes become the point rather than a
+   detail.
+
+### Content, not code — for Russ
+
+Cut the eight borrowed McKinsey / Deloitte / Gartner / Forrester stats. A
+company quoting the market rather than its own results reads as having nothing
+of its own. Replace with client logos, own numbers, named testimonials. This
+will do more for "legit and robust" than every visual decision listed above.
+Cannot be invented here.
+
+### References gathered this session
+
+| Source | What Russ wants from it |
+|---|---|
+| nominal.so | long scroll, sparse information, professional restraint. Trust comes from 15+ client logos, own metrics, attributed testimonials, a compliance badge |
+| davidecattaneo.it/en#case-histories | lines bound to scroll *offset*, not a timer — move as much as you scroll, reverse when you scroll back |
+| revertai.com.br | perspective grid flown over, then a take-off. Pairs with the paper-plane heads: the site's language becomes flight |
+| Polyera (screenshot) | numbered arc navigator — replaces the 26-dot rail. Needs the section count down first; works at 5-6, breaks at 26 |
+| hers / sage diagram / Apple card / cream swatch | chalky desaturated palette. **All put white marks on a mid-tone ground** |
+
+### Why a mid-tone ground matters
+
+The whole session fought one constraint: **nothing out-brightens white**. On
+off-white the comet could not glow, the head could not emit light, sparkle
+motes had to darken instead of sparkle, and the orb lattice had to be ink. A
+sage or periwinkle ground gives *both* directions — white and ink. It is an
+unlock, not a reskin.
+
+Russ pushed back on using a single hero colour and is right: nominal.so is
+neutrals *plus* accents. The discipline is that colour must carry a **role** —
+one ground per full screen, signalling where you are, never decoration.
+
+### Open decisions
+
+- stepper vs real scroll (plan assumes scroll)
+- how far to cut 26 sections
+- which colours take which roles
+- whether the arc navigator replaces the dot rail
+
+### Dot rail
+
+Still 26 dots down the right edge, up from 14 at the start of the session.
+Flagged five times, never addressed. Resolved by item 3, or by the arc
+navigator.
