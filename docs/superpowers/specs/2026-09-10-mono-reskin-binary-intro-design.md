@@ -1442,3 +1442,76 @@ one ground per full screen, signalling where you are, never decoration.
 Still 26 dots down the right edge, up from 14 at the start of the session.
 Flagged five times, never addressed. Resolved by item 3, or by the arc
 navigator.
+
+---
+
+## Addendum 27 — the synthesis, 2026-09-12
+
+Brief: SaaS-professional, tells the story, memorable, aesthetically considered,
+structured like gsap.com and nominal.so, keeping the filament/orb flight AND
+the morphing particle shapes, losing none of the existing copy.
+
+### The structural mistake
+
+Animation and information are **separated**. Eleven screens of abstract flight,
+then all the copy. Professional sites do not open with an overture.
+
+### The move: braid them
+
+The flight sequence becomes a **continuous scroll-linked layer underneath the
+whole page**, advancing between content sections. Scrolling to read about the
+services also draws the threads together.
+
+This is the gsap.com lesson: there, the animation *is* the product demo, never
+ornament. Here the flight already argues the same thing the copy does —
+separate processes, converged, one system that learns. "Every process starts as
+a single thread" -> "We bring them together" is the sales pitch. It is simply
+in the wrong place, running before the content instead of through it.
+
+### Structure — nominal.so's shape, existing content, nothing dropped
+
+| # | Section | Flight state | Ground |
+|---|---|---|---|
+| 1 | Hero — code rain resolves to up+up, one line on what we do, CTA | — | cream |
+| 2 | Positioning — "smart people with smarter systems" | thread 1 enters | paper |
+| 3 | Benefits — all 10 glyph cards as one grid | threads 2-6 enter | mist |
+| 4 | Services — 9 agents + 3 tools carousel | convergence | sage |
+| 5 | Why us — 5 particle shapes morph on scroll | orb grows | sage |
+| 6 | Proof — Tipsy case study + own numbers | takeoff / grid | periwinkle |
+| 7 | How it works | orb settles | paper |
+| 8 | Contact | — | cream |
+| 9 | Footer | — | — |
+
+25 sections -> 9. Nothing lost:
+
+- 11 flight screens become a background layer, not screens of their own
+- 10 benefit glyph cards become one grid rather than one screen
+- 5 `why-us` screens become **one** section where the particle field morphs
+  question -> brain -> orb -> head -> infinity as you scroll through it. Spread
+  across five screens nobody notices it; concentrated, it is the most
+  impressive thing on the site
+- the comparison, ai-team and automation-tools content folds into Services
+- the 8 borrowed stats are **cut** — replaced by own proof in section 6
+
+### Why this is memorable rather than merely tidy
+
+nominal.so is professional but visually unremarkable — its credibility comes
+from logos, metrics and testimonials, not design. gsap.com is memorable because
+its animation demonstrates the product.
+
+up+up can have both: nominal.so's information structure carrying gsap.com's
+demonstrative animation. The flight is not decoration once it runs under the
+argument — it *is* the argument, in motion.
+
+### Dependencies, unchanged
+
+Real scroll is still the prerequisite: a background layer advancing between
+sections needs scroll offset, not discrete wheel steps. Colour grounds are
+already built (Addendum 26 / commit `9f371a2`) and carry straight over.
+
+### Caveat
+
+gsap.com was not fetched — a scroll-animation site yields nothing useful as
+markdown. Its structure here is from prior knowledge: animated hero that
+demonstrates the product, sections each showing one capability with a live
+example, heavy scroll-triggered reveals. Worth confirming with Russ.
