@@ -9,7 +9,6 @@ import { HarmonyGlyph } from "@/components/home/harmony-glyph";
 import { ParticleCanvas, type ParticleShape } from "@/components/home/particle-canvas";
 import { ContactForm } from "@/components/contact/contact-form";
 import { ServiceCarousel } from "@/components/home/service-carousel";
-import { BinaryIntro } from "@/components/home/binary-intro";
 import { Flock } from "@/components/home/flock";
 import { NeuralOrb } from "@/components/home/neural-orb";
 import { Button } from "@/components/ui/button";
@@ -60,11 +59,11 @@ function FloatingWords({ text, startDelay = 0 }: { text: string; startDelay?: nu
  * white, which is why the comet could not glow, the plane could not catch
  * light and the orb's lattice had to be ink. On sage, white finally reads.
  */
-const CREAM = "#EDE7DA";
-const SAGE = "#A7B4A1";
-const PERIWINKLE = "#C6CDE8";
-const MIST = "#C3D0DE";
-const PAPER = "#F4F6F8";
+const CREAM = "#14120E";
+const SAGE = "#131714";
+const PERIWINKLE = "#111420";
+const MIST = "#101519";
+const PAPER = "#0D0D0D";
 
 const GROUNDS: Record<string, string> = {
   // The flight sequence gets the mid-tone, where white can glow.
@@ -321,7 +320,7 @@ const sections = [
           {glyphs.map(({ Glyph, title, description }, i) => (
             <motion.div
               key={title}
-              className="text-center rounded-2xl border border-ink/10 bg-white/55 backdrop-blur-2xl p-5 shadow-[0_8px_32px_rgba(10,10,10,0.06),0_2px_8px_rgba(10,10,10,0.05),inset_0_1px_0_rgba(255,255,255,0.9)]"
+              className="text-center rounded-2xl border border-ink/10 bg-white/6 backdrop-blur-2xl p-5 shadow-[0_8px_32px_rgba(0,0,0,0.45),0_2px_8px_rgba(0,0,0,0.35),inset_0_1px_0_rgba(255,255,255,0.08)]"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1 + i * 0.1, duration: 0.5 }}
@@ -361,7 +360,7 @@ const sections = [
           ].map(({ stat, label, source }, i) => (
             <motion.div
               key={stat + label}
-              className="text-left rounded-2xl border border-ink/10 bg-white/55 backdrop-blur-2xl p-5 shadow-[0_8px_32px_rgba(10,10,10,0.06),0_2px_8px_rgba(10,10,10,0.05),inset_0_1px_0_rgba(255,255,255,0.9)]"
+              className="text-left rounded-2xl border border-ink/10 bg-white/6 backdrop-blur-2xl p-5 shadow-[0_8px_32px_rgba(0,0,0,0.45),0_2px_8px_rgba(0,0,0,0.35),inset_0_1px_0_rgba(255,255,255,0.08)]"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1 + i * 0.12, duration: 0.6 }}
@@ -394,7 +393,7 @@ const sections = [
             <h3 className="font-body text-sm uppercase tracking-widest text-ink/40 mt-6 mb-4">Without us</h3>
             <div className="w-full grid gap-2">
               {["Slow response times", "Missed enquiries", "Manual everything", "Inconsistent service", "Limited by working hours", "Growth = more chaos"].map((item, i) => (
-                <motion.div key={item} className="rounded-xl border border-ink/8 bg-white/45 backdrop-blur-xl px-4 py-2.5 flex items-center gap-3 shadow-[0_4px_16px_rgba(10,10,10,0.05),inset_0_1px_0_rgba(255,255,255,0.1)]"
+                <motion.div key={item} className="rounded-xl border border-ink/8 bg-white/4 backdrop-blur-xl px-4 py-2.5 flex items-center gap-3 shadow-[0_4px_16px_rgba(0,0,0,0.35),inset_0_1px_0_rgba(255,255,255,0.1)]"
                   initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.5 + i * 0.1, duration: 0.4 }}>
                   <svg className="w-3 h-3 shrink-0 text-ink/40" viewBox="0 0 12 12" fill="none">
                     <line x1="2" y1="2" x2="10" y2="10" stroke="currentColor" strokeWidth="1" strokeLinecap="round" />
@@ -416,7 +415,7 @@ const sections = [
             <h3 className="font-body text-sm uppercase tracking-widest text-ink/70 mt-6 mb-4">With us</h3>
             <div className="w-full grid gap-2">
               {["Instant responses, 24/7", "Every lead captured", "Fully automated", "Consistent every time", "Always on, 365 days", "Growth = more freedom"].map((item, i) => (
-                <motion.div key={item} className="rounded-xl border border-ink/10 bg-white/55 backdrop-blur-xl px-4 py-2.5 flex items-center gap-3 shadow-[0_4px_16px_rgba(0,0,0,0.1),inset_0_1px_0_rgba(255,255,255,0.9)]"
+                <motion.div key={item} className="rounded-xl border border-ink/10 bg-white/6 backdrop-blur-xl px-4 py-2.5 flex items-center gap-3 shadow-[0_4px_16px_rgba(0,0,0,0.1),inset_0_1px_0_rgba(255,255,255,0.08)]"
                   initial={{ opacity: 0 }} animate={{ opacity: 1 }}
                   transition={{ delay: 1.7 + i * 0.1, duration: 0.4 }}
                   {...(i === 5 ? { onAnimationComplete: onReady } : {})}>
@@ -582,7 +581,7 @@ const sections = [
           ].map(({ glyph, title, desc }, i) => (
             <motion.div
               key={title}
-              className="rounded-2xl border border-ink/10 bg-white/55 backdrop-blur-2xl p-5 shadow-[0_8px_32px_rgba(10,10,10,0.06),0_2px_8px_rgba(10,10,10,0.05),inset_0_1px_0_rgba(255,255,255,0.9)]"
+              className="rounded-2xl border border-ink/10 bg-white/6 backdrop-blur-2xl p-5 shadow-[0_8px_32px_rgba(0,0,0,0.45),0_2px_8px_rgba(0,0,0,0.35),inset_0_1px_0_rgba(255,255,255,0.08)]"
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1 + i * 0.2, duration: 0.7, ease: [0.15, 0.8, 0.3, 1] }}
@@ -665,49 +664,20 @@ function HomeMenu() {
 }
 
 export default function Home() {
-  const [currentSection, setCurrentSection] = useState(-1);
-  const [logoDone, setLogoDone] = useState(false);
-  const [transitioning, setTransitioning] = useState(false);
-  const [introResolved, setIntroResolved] = useState(false);
-  /** Set when the viewer scrolls down: starts the code wordmark climbing. */
-  const [travel, setTravel] = useState(false);
-
-  // Returns to the intro and replays it from the start. Resetting logoDone
-  // remounts BinaryIntro, so the rain runs again rather than showing the
-  // already-resolved wordmark.
-  const goToIntro = useCallback(() => {
-    setTravel(false);
-    setIntroResolved(false);
-    setLogoDone(false);
-    setCurrentSection(-1);
-  }, []);
-
+  const [currentSection, setCurrentSection] = useState(0);
+    const [transitioning, setTransitioning] = useState(false);
+  
   const navigate = useCallback(
     (dir: 1 | -1) => {
-      if (!logoDone) {
-        // Scrolling down sends the code wordmark climbing into the header;
-        // scrolling up does nothing. Acting on *any* direction meant the
-        // trailing momentum of the scroll that brought you back here
-        // immediately started the climb again.
-        if (dir === 1) setTravel(true);
-        return;
-      }
       if (transitioning) return;
       const next = currentSection + dir;
-      // -1 is the intro. It is a real position you can return to, not a
-      // one-shot that disappears once passed.
-      if (next < -1 || next >= sections.length) return;
-      if (next === -1) {
-        goToIntro();
-        return;
-      }
       setTransitioning(true);
       setTimeout(() => {
         setCurrentSection(next);
         setTransitioning(false);
       }, 600);
     },
-    [transitioning, currentSection, logoDone, goToIntro]
+    [transitioning, currentSection]
   );
 
   useEffect(() => {
@@ -759,26 +729,6 @@ export default function Home() {
     };
   }, [navigate]);
 
-  // The code wordmark has arrived at the header and the black text has faded
-  // in over it. Short beat, then the intro is done. No rise to wait for any
-  // more — the climb already happened, in code.
-  useEffect(() => {
-    if (introResolved && !logoDone) {
-      const t = setTimeout(() => setLogoDone(true), 450);
-      return () => clearTimeout(t);
-    }
-  }, [introResolved, logoDone]);
-
-  // Once the intro finishes, hand off to the first section. Cleared on unmount
-  // — without that, a pending timer from a previous run could fire after you
-  // had scrolled back to the intro and yank you forward again.
-  useEffect(() => {
-    if (logoDone && currentSection === -1) {
-      const t = setTimeout(() => setCurrentSection(0), 500);
-      return () => clearTimeout(t);
-    }
-  }, [logoDone, currentSection]);
-
   const ground =
     currentSection >= 0 ? GROUNDS[sections[currentSection].id] ?? PAPER : PAPER;
 
@@ -796,40 +746,12 @@ export default function Home() {
         transition={{ duration: 1.1, ease: "easeInOut" }}
       />
 
-      {/* Clean off-white ground for the intro — same colour as the site, so its
-          fade-out simply reveals the murmuration and iridescent blobs behind
-          rather than changing the page colour. */}
-      <motion.div
-        aria-hidden="true"
-        className="pointer-events-none fixed inset-0 z-[90]"
-        style={{ backgroundColor: "#F4F6F8" }}
-        initial={{ opacity: 1 }}
-        animate={{ opacity: logoDone ? 0 : 1 }}
-        transition={{ duration: 0.9, delay: logoDone ? 0.4 : 0, ease: "easeInOut" }}
-      />
 
-      {/* Binary rain. The wordmark climbs to the header still made of code —
-          the canvas only fades once it has arrived, so the code-to-black swap
-          happens at the header and is never visible mid-page. */}
-      {!logoDone && (
-        <motion.div
-          className="pointer-events-none fixed inset-0 z-[95]"
-          initial={{ opacity: 1 }}
-          animate={{ opacity: introResolved ? 0 : 1 }}
-          transition={{ duration: 0.4, ease: "easeOut" }}
-        >
-          <BinaryIntro onArrived={() => setIntroResolved(true)} travel={travel} />
-        </motion.div>
-      )}
-
-      {/* Logo. Sits at its final header position from the start and simply
-          fades in once the code wordmark has climbed into place. It no longer
-          animates up the page — the code does the travelling now, so a moving
-          black wordmark would just duplicate it. */}
+      {/* Logo, fixed in the header. */}
       <motion.div
         className="pointer-events-none fixed left-1/2 top-[1.1rem] z-[100] -translate-x-1/2 text-2xl tracking-tight text-ink"
         initial={{ opacity: 0 }}
-        animate={{ opacity: introResolved ? 1 : 0 }}
+        animate={{ opacity: 1 }}
         transition={{ duration: 0.35, ease: "easeOut" }}
       >
         <span className="font-body font-light">up</span>
@@ -841,8 +763,8 @@ export default function Home() {
       <motion.div
         className="fixed top-4 left-6 z-[100]"
         initial={{ opacity: 0 }}
-        animate={{ opacity: logoDone ? 1 : 0 }}
-        transition={{ duration: 0.5, delay: logoDone ? 1.1 : 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.5, delay: 0.2 }}
       >
         <Link
           href="/contact"
@@ -854,7 +776,7 @@ export default function Home() {
 
       {/* Hamburger menu — top right. Held back during the intro, where its
           white bars would sit invisible on the off-white ground. */}
-      {logoDone && <HomeMenu />}
+      {<HomeMenu />}
 
       {/* Flock — persistent layer so trails survive the section swap and
           accumulate as you step, rather than restarting each time. */}
@@ -900,20 +822,14 @@ export default function Home() {
       </AnimatePresence>
 
       {/* Dots */}
-      {logoDone && (
+      {(
         <div className="fixed right-6 top-1/2 -translate-y-1/2 z-50 flex flex-col gap-2">
-          {/* The intro is page 1, so it takes the first dot and replays on click. */}
-          <button
-            onClick={goToIntro}
-            className="w-2 h-2 rounded-full bg-ink/25 transition-all duration-300 hover:bg-ink/50"
-            aria-label="Intro"
-          />
           {sections.map((s, i) => (
             <button
               key={s.id}
               onClick={() => { if (!transitioning) { setTransitioning(true); setTimeout(() => { setCurrentSection(i); setTransitioning(false); }, 400); } }}
               className={`w-2 h-2 rounded-full transition-all duration-300 ${i === currentSection ? "bg-ink scale-125" : "bg-ink/25 hover:bg-ink/50"}`}
-              aria-label={`Section ${i + 2}`}
+              aria-label={`Section `}
             />
           ))}
         </div>

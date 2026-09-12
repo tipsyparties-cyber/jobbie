@@ -133,7 +133,7 @@ export function NeuralNetwork() {
           if (dist < connectionDist) {
             const alpha = (1 - dist / connectionDist) * 0.15;
             const pulse = 0.5 + 0.5 * Math.sin(time * 2 + i * 0.1 + j * 0.05);
-            ctx.strokeStyle = `rgba(10, 10, 10, ${alpha * pulse})`;
+            ctx.strokeStyle = `rgba(242, 238, 227, ${alpha * pulse})`;
             ctx.lineWidth = 0.3;
             ctx.beginPath();
             ctx.moveTo(particles[i].x, particles[j].y);
@@ -146,7 +146,7 @@ export function NeuralNetwork() {
       // Draw particles
       for (const p of particles) {
         const pulse = 0.7 + 0.3 * Math.sin(time * 3 + p.phase);
-        ctx.fillStyle = `rgba(10, 10, 10, ${p.opacity * pulse})`;
+        ctx.fillStyle = `rgba(242, 238, 227, ${p.opacity * pulse})`;
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
         ctx.fill();
@@ -159,7 +159,7 @@ export function NeuralNetwork() {
         const idx = Math.floor(t) % qmPoints.length;
         const pt = qmPoints[idx];
 
-        ctx.fillStyle = `rgba(10, 10, 10, ${0.4 + 0.2 * Math.sin(time * 4 + p)})`;
+        ctx.fillStyle = `rgba(242, 238, 227, ${0.4 + 0.2 * Math.sin(time * 4 + p)})`;
         ctx.beginPath();
         ctx.arc(pt.x, pt.y, 2, 0, Math.PI * 2);
         ctx.fill();

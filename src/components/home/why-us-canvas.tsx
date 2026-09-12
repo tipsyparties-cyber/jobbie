@@ -251,7 +251,7 @@ export function WhyUsCanvas({ phase }: { phase: "cluster" | "question" | "brain"
           const dist = Math.sqrt(ddx * ddx + ddy * ddy);
           if (dist < connectionDist) {
             const alpha = (1 - dist / connectionDist) * 0.2;
-            ctx.strokeStyle = `rgba(10, 10, 10, ${alpha})`;
+            ctx.strokeStyle = `rgba(242, 238, 227, ${alpha})`;
             ctx.lineWidth = 0.3 + Math.random() * 0.2;
             ctx.beginPath();
             ctx.moveTo(particles[i].x, particles[i].y);
@@ -273,14 +273,14 @@ export function WhyUsCanvas({ phase }: { phase: "cluster" | "question" | "brain"
             const endX = p.x + Math.cos(angle) * len;
             const endY = p.y + Math.sin(angle) * len;
             const pulse = 0.3 + 0.2 * Math.sin(time * 2 + i);
-            ctx.strokeStyle = `rgba(10, 10, 10, ${pulse * 0.15})`;
+            ctx.strokeStyle = `rgba(242, 238, 227, ${pulse * 0.15})`;
             ctx.lineWidth = 0.3;
             ctx.beginPath();
             ctx.moveTo(p.x, p.y);
             ctx.lineTo(endX, endY);
             ctx.stroke();
             // Small dot at end of extending line
-            ctx.fillStyle = `rgba(10, 10, 10, ${pulse * 0.3})`;
+            ctx.fillStyle = `rgba(242, 238, 227, ${pulse * 0.3})`;
             ctx.beginPath();
             ctx.arc(endX, endY, 0.8, 0, Math.PI * 2);
             ctx.fill();
@@ -291,7 +291,7 @@ export function WhyUsCanvas({ phase }: { phase: "cluster" | "question" | "brain"
       // Draw particles — varying sizes
       for (const p of particles) {
         const pulse = 0.7 + 0.3 * Math.sin(time * 2.5 + p.phase);
-        ctx.fillStyle = `rgba(10, 10, 10, ${p.opacity * pulse})`;
+        ctx.fillStyle = `rgba(242, 238, 227, ${p.opacity * pulse})`;
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
         ctx.fill();
@@ -302,7 +302,7 @@ export function WhyUsCanvas({ phase }: { phase: "cluster" | "question" | "brain"
         const idx = Math.floor((time * 20 + p * 50) % particles.length);
         const pt = particles[idx];
         if (pt) {
-          ctx.fillStyle = `rgba(10, 10, 10, 0.7)`;
+          ctx.fillStyle = `rgba(242, 238, 227, 0.7)`;
           ctx.beginPath();
           ctx.arc(pt.x, pt.y, 2.5, 0, Math.PI * 2);
           ctx.fill();

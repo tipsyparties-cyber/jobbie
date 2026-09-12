@@ -211,7 +211,7 @@ export function NeuralOrb({ stage }: OrbProps) {
           const depth = (pz[i] + pz[j]) / 2;
           const a = (0.16 + 0.24 * ((depth + 1) / 2)) * netStrength;
           if (a < 0.012) continue;
-          ctx!.strokeStyle = `rgba(10, 10, 10, ${a.toFixed(3)})`;
+          ctx!.strokeStyle = `rgba(242, 238, 227, ${a.toFixed(3)})`;
           ctx!.beginPath();
           ctx!.moveTo(px[i], py[i]);
           ctx!.lineTo(px[j], py[j]);
@@ -224,7 +224,7 @@ export function NeuralOrb({ stage }: OrbProps) {
         for (let i = 0; i < NODES; i++) {
           const a = (0.32 + 0.55 * ((pz[i] + 1) / 2)) * netStrength;
           const size = (1.0 + 1.4 * ((pz[i] + 1) / 2)) * vertexScale;
-          ctx!.fillStyle = `rgba(10, 10, 10, ${a.toFixed(3)})`;
+          ctx!.fillStyle = `rgba(242, 238, 227, ${a.toFixed(3)})`;
           ctx!.beginPath();
           ctx!.arc(px[i], py[i], size, 0, Math.PI * 2);
           ctx!.fill();
@@ -245,7 +245,7 @@ export function NeuralOrb({ stage }: OrbProps) {
           const a = (0.1 + 0.55 * twinkle) * ((z2 + 1) / 2) * netStrength;
           if (a < 0.02) continue;
 
-          ctx!.fillStyle = `rgba(10, 10, 10, ${a.toFixed(3)})`;
+          ctx!.fillStyle = `rgba(242, 238, 227, ${a.toFixed(3)})`;
           ctx!.beginPath();
           ctx!.arc(
             cx + x1 * nodeR,

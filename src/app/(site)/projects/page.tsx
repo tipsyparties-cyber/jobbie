@@ -76,8 +76,8 @@ export default function ProjectsPage() {
             {projects.map((project, i) => (
               <SectionReveal key={project.slug} delay={i * 0.08}>
                 <Link href={project.slug === "hospitality" ? "/projects/tipsy-parties" : "#"} className="block">
-                  <div className="overflow-hidden rounded-2xl border border-ink/10 bg-white/55 backdrop-blur-2xl shadow-[0_8px_32px_rgba(10,10,10,0.06),inset_0_1px_0_rgba(255,255,255,0.9)] hover:bg-white/65 transition-all duration-300 md:flex">
-                    <div className="flex aspect-[4/3] items-center justify-center bg-white/45 md:aspect-auto md:w-2/5 min-h-[200px]">
+                  <div className="overflow-hidden rounded-2xl border border-ink/10 bg-white/6 backdrop-blur-2xl shadow-[0_8px_32px_rgba(0,0,0,0.45),inset_0_1px_0_rgba(255,255,255,0.08)] hover:bg-white/7 transition-all duration-300 md:flex">
+                    <div className="flex aspect-[4/3] items-center justify-center bg-white/4 md:aspect-auto md:w-2/5 min-h-[200px]">
                       <p className="font-display text-7xl font-light text-ink/10">{project.initials}</p>
                     </div>
                     <div className="p-8 md:w-3/5 md:p-10">

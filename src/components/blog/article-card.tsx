@@ -11,7 +11,7 @@ interface ArticleCardProps {
 export function ArticleCard({ slug, title, description, date, readTime }: ArticleCardProps) {
   return (
     <Link href={`/blog/${slug}`}>
-      <div className="h-full rounded-2xl border border-ink/10 bg-white/55 backdrop-blur-2xl p-6 shadow-[0_8px_32px_rgba(10,10,10,0.06),0_2px_8px_rgba(10,10,10,0.05),inset_0_1px_0_rgba(255,255,255,0.9)] hover:bg-white/65 transition-all duration-300 hover:-translate-y-1">
+      <div className="h-full rounded-2xl border border-ink/10 bg-white/6 backdrop-blur-2xl p-6 shadow-[0_8px_32px_rgba(0,0,0,0.45),0_2px_8px_rgba(0,0,0,0.35),inset_0_1px_0_rgba(255,255,255,0.08)] hover:bg-white/7 transition-all duration-300 hover:-translate-y-1">
         <p className="font-sans text-xs text-ink/40">{date} &middot; {readTime}</p>
         <h3 className="mt-3 font-display text-xl font-light leading-snug text-ink">{title}</h3>
         <p className="mt-3 text-sm text-ink/50 leading-relaxed">{description}</p>
