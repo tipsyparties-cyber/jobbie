@@ -1646,3 +1646,137 @@ against components that already work.
 - Does the orb morph in place, or does the morph target replace it?
 - Where does this sit — it is a strong candidate for the hero itself rather
   than a mid-page section.
+
+---
+
+# HANDOVER — read this first, 2026-09-12
+
+Everything below is current as of commit `bea231e` on branch
+`redesign/mono-binary-intro`. `master` is untouched at `2f82f4a`.
+
+## The one thing that matters
+
+**Everything Russ has asked for in the last several rounds is scroll-dependent,
+and the home page does not scroll.**
+
+`src/app/(home)/page.tsx` is a full-screen stepper: `fixed inset-0`, wheel
+events hijacked, sections hard-swapped with a crossfade. There is no scroll
+offset anywhere in it.
+
+He has asked for, and been told "nothing like it" three times about:
+
+- parallax
+- sideways movement on scroll
+- "the flow of the site"
+- lines that move as you scroll (davidecattaneo)
+- agents that expand out and return as you scroll (nominal.so)
+
+**All five need scroll offset. None are possible in a stepper.** Tuning
+typography, colour or section count inside the stepper does not move toward any
+of them — that mistake was made repeatedly in this session and is what the
+"nothing like it" replies were about.
+
+**Start with the scroll conversion. Nothing else first.**
+
+## What the conversion involves
+
+Replace `fixed inset-0` + the wheel handler with a real scrolling document,
+give each section a scroll-driven progress value, then bind:
+
+- background layers and foreground at different rates (parallax)
+- horizontal travel where wanted
+- `Flock` / `NeuralOrb`: read scroll position instead of an integer `stage`.
+  All their geometry already takes a 0-1 progress value — **only the source of
+  that number changes**. This is much cheaper than it looks.
+- `SynergyBrain`: swap its `animate` targets for scroll progress. Written to
+  convert; see the note in the component.
+
+Touches 32 sections, the navigation, and three persistent canvas layers.
+
+## State of the page
+
+Section order (32 total). New gsap-structure sections first, originals below a
+divider comment, all untouched:
+
+```
+new-synergy      the ring of agents around a pulsing core
+new-positioning  "The best businesses aren't run by super humans…"
+new-what         "Nine agents and three tools…"
+new-outcomes     "What changes when the systems run themselves."
+new-why          "We don't hand over software and disappear."
+new-proof        "Tipsy Parties: instant quoting, live booking…"
+new-start        "Ready to see what's possible?"
+--- ORIGINALS ---
+flock-1..6, flock-converge, orb-1..4   the flight sequence
+hero            type-led, rebuilt: "Make your / business / [rotating]"
+positioning, benefits, stats, comparison, ai-team, automation-tools,
+why-us-intro/knowledge/continuity/bespoke/evolution, how-it-works, cta
+```
+
+## Built this session
+
+| Thing | Where |
+|---|---|
+| Filament flock, crisp stroked lines, converge to a point | `flock.tsx` |
+| Paper aeroplane heads, banking with the line | `flock.tsx` `drawPlane` |
+| Lead filament running ahead on a straight neck | `flock.tsx` `leadHeadAt`, `leadNeck` |
+| Neural orb, 170-node sphere + 260 motes, grows and absorbs | `neural-orb.tsx` |
+| Synergy brain | `synergy-brain.tsx` |
+| Type-led hero, `Frame` / `Statement` / `Braced` primitives | `(home)/page.tsx` |
+| Section ground colours, crossfading | `(home)/page.tsx` `GROUNDS` |
+| Question-mark particle shape fixed | `particle-canvas.tsx` |
+
+Unmounted but kept on disk: `binary-intro.tsx` (rain, removed at request),
+`murmuration.tsx` (background dots, replaced).
+
+## Do not re-propose these — already tried and rejected
+
+| Approach | Outcome |
+|---|---|
+| Binary rain intro | Removed. Russ: "I don't need the code rainfall effect" |
+| Dark/near-black site | **Reverted.** gsap.com is a *structural* reference, not a colour one |
+| Wordmark as dark stencil on faded field | "too basic" |
+| Wordmark revealed by stillness/pile/shadow | not legible |
+| Wordmark as negative space with pushed rim | worse than the stencil |
+| Stipple trails | replaced by crisp lines |
+| Single hero colour | Russ wants several; nominal.so is neutrals **plus** accents |
+
+## References and what is wanted from each
+
+| Source | Wanted |
+|---|---|
+| gsap.com | **structure and motion, NOT colour.** Type-led hero, one statement per screen at large size, generous space, `{ braced }` labels. The feel comes from flow, parallax, sideways-on-scroll |
+| nominal.so | long scroll, sparse info, professional restraint. Trust from client logos, own metrics, attributed testimonials |
+| davidecattaneo.it/en#case-histories | lines bound to scroll offset, reversing when you scroll back |
+| revertai.com.br | perspective grid flown over, then take-off. Pairs with the paper planes — the site's language becomes flight |
+| Polyera (screenshot) | numbered arc navigator, to replace the dot rail. Works at 5-6 items, breaks at 32 |
+| hers / sage / cream swatches | palette: cream, sage, periwinkle, mist. Currently section grounds |
+
+## Still open
+
+- **Section count.** 32 is far too many; nominal.so does its job in 9. The plan
+  in Addendum 27 compresses to 9 losing no copy.
+- **Dot rail** is now 32 dots. Flagged six times, never addressed.
+- **Borrowed stats.** The `stats` section quotes McKinsey / Deloitte / Gartner /
+  Forrester — industry figures, not up+up's results. This is the real gap in
+  "feels like a legit robust company" and no design work closes it. Needs client
+  logos, own numbers, named testimonials from Russ.
+- Second "approachable" reference URL was never supplied (he pasted nominal.so
+  twice).
+
+## Environment gotchas
+
+- **Turbopack serves stale CSS.** Editing `globals.css` keeps serving the old
+  stylesheet *under an unchanged chunk hash*. Fix: stop the server,
+  `rm -rf .next`, restart — then **hard reload**, since the URL did not change.
+  Detect by fetching the CSS chunk and grepping case-insensitively (hex is
+  lowercased).
+- **The dev server gets killed for low memory** (machine sits near 0.5GB free).
+  The node process usually survives the `npm` wrapper being killed — check
+  `netstat` before restarting.
+- **Claude's browser is on a different machine** (macOS, `isLocal: false`), so
+  it cannot reach `localhost:3000`. All visual verification must come from
+  Russ's screenshots. Verify with typecheck, lint, HTTP status and by computing
+  geometry numerically — do not claim anything about appearance.
+- Lint baseline is **7 warnings**, all pre-existing in files not touched this
+  session. Anything above 7 is new.
