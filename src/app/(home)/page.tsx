@@ -95,6 +95,25 @@ const GROUNDS: Record<string, string> = {
   cta: CREAM,
 };
 
+/**
+ * The bracketed label from gsap.com — a small supporting line held inside a
+ * pair of oversized curly braces. Cheap, distinctive, and it gives secondary
+ * copy somewhere to live without competing with the headline.
+ */
+function Braced({ children }: { children: React.ReactNode }) {
+  return (
+    <span className="flex max-w-md items-stretch gap-3 font-body text-sm font-light leading-snug text-ink/70">
+      <span aria-hidden className="font-display text-4xl leading-none text-ink/35">
+        {"{"}
+      </span>
+      <span className="self-center">{children}</span>
+      <span aria-hidden className="font-display text-4xl leading-none text-ink/35">
+        {"}"}
+      </span>
+    </span>
+  );
+}
+
 const sections = [
   // The flock. Each stage brings one more trail in from the left; the last
   // stage converges them. The canvas itself is a persistent layer below,
@@ -252,28 +271,53 @@ const sections = [
   {
     id: "hero",
     content: (onReady: () => void) => (
-      <div className="text-center">
-        <h1 className="font-light leading-tight tracking-tight">
-          <span className="block font-body text-3xl md:text-5xl lg:text-[4.5rem]">
-            <FloatingWords text="We use ai & automation" startDelay={0} />
-          </span>
-          <span className="relative block font-display mt-2 text-4xl md:text-6xl lg:text-[5.5rem]" style={{ marginLeft: "-0.5em" }}>
-            <span className="whitespace-nowrap">
-              <FloatingWords text="to make your business" startDelay={0.4} />
-              <span className="inline-block" style={{ width: "5em" }}></span>
-            </span>
-            <motion.span
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.8, delay: 1.5 }}
-              onAnimationComplete={onReady}
-              className="absolute top-0"
-              style={{ left: "calc(100% - 5em)" }}
-            >
-              <RotatingWord />
-            </motion.span>
-          </span>
+      // Type-led, gsap.com's structure: the headline IS the hero, filling the
+      // viewport, left-aligned. Supporting copy sits in braces bottom-left and
+      // the CTA bottom-right, so nothing competes with the statement.
+      //
+      // Sized in vw rather than rem breakpoints so it fills the screen at every
+      // width instead of stepping between three fixed sizes.
+      <div className="mx-auto flex h-full w-full max-w-[1400px] flex-col justify-center px-6">
+        <h1 className="font-light leading-[0.86] tracking-[-0.035em]">
+          <motion.span
+            className="block font-body text-[clamp(2.5rem,10.5vw,9rem)]"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+          >
+            Make your
+          </motion.span>
+          <motion.span
+            className="block font-body text-[clamp(2.5rem,10.5vw,9rem)]"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.9, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
+          >
+            business
+          </motion.span>
+          <motion.span
+            className="block font-display text-[clamp(2.5rem,10.5vw,9rem)]"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.9, delay: 0.16, ease: [0.16, 1, 0.3, 1] }}
+            onAnimationComplete={onReady}
+          >
+            <RotatingWord />
+          </motion.span>
         </h1>
+
+        <motion.div
+          className="mt-14 flex flex-wrap items-end justify-between gap-8"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.7, delay: 0.5 }}
+        >
+          <Braced>
+            up+up — we design and build bespoke AI &amp; automation systems for
+            how your business actually runs
+          </Braced>
+          <Button href="/contact">Start a conversation</Button>
+        </motion.div>
       </div>
     ),
   },
