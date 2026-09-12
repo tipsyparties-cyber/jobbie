@@ -1852,3 +1852,105 @@ Not fetched — context was nearly exhausted when this was raised, and a
 marketing site's layout does not survive conversion to markdown anyway. Its page
 inventory and content shape need to be reviewed properly at the start of the
 next session.
+
+---
+
+## Addendum 32 — the scroll conversion, and the six gsap sections
+
+The blocker is cleared. Both of the things every previous round was
+waiting on are now in.
+
+### The page scrolls
+
+`src/app/(home)/page.tsx` was `fixed inset-0 overflow-hidden` with the
+wheel event cancelled and sections swapped by `AnimatePresence mode="wait"`.
+It is now an ordinary tall document: every section is a `min-h-screen` block
+in normal flow, and the animated layers — ground, flock, orb, particles —
+are pinned behind it and read scroll position.
+
+What the conversion actually needed, which was less than it looked:
+
+- `Flock` and `NeuralOrb` were already written to clamp and normalise
+  whatever number they were handed, so neither changed. Only the *source*
+  of the number did, from an integer stage to a continuous value.
+- `flockStage` interpolates between adjacent sections. Where the run starts
+  it ramps in across the section before; where it ends it holds the final
+  stage and fades, so the orb never deflates backwards through its own
+  growth.
+- Ground colour blends between sections instead of crossfading on a timer,
+  and holds for the first two thirds of each so a statement is never read
+  against a moving colour.
+- Each section parallaxes and reveals from its own viewport position, not
+  from a global clock.
+- The 32-dot rail became 10 labelled chapters. Flagged six times before
+  this; now done.
+
+### The six sections
+
+Built in `src/components/home/gsap-structure.tsx`, in gsap.com's order:
+
+1. `g-hero` — one enormous line, sub, two CTAs, `SynergyBrain` beside it
+2. `g-statement` — braced label and a single sentence
+3. `g-sideways` — **four viewports tall, contents sticky, track travels left**
+4. `g-features` — three rows, blob and text parallaxing at different rates
+5. `g-showcase` — a free snap rail of six real systems
+6. `g-footer` — closing statement, four columns, legal
+
+Sections can now carry `raw: true`, which opts them out of the one-screen
+parallax frame. The sideways band needs it (wrapping a sticky four-viewport
+band in a fading one-screen frame would pin the wrapper and fade the band
+out halfway through its own travel); so does the footer, which is shorter
+than a screen.
+
+### getjobber, finally read
+
+Fetched properly for the first time. Its features page sorts everything it
+sells by **outcome**, not into a feature list: Get Noticed / Win Jobs / Work
+Smarter / Boost Profits. That sort is the useful thing, not the feature
+names.
+
+Applied to up+up as the four bands in section 3, with all nine agents and
+all three tools placed under the outcome each produces:
+
+| Band | Contains |
+|---|---|
+| 01 Get found | Marketing, Reporting & insights |
+| 02 Win the work | Sales, Receptionist, Quotes & Bookings |
+| 03 Run it without you | Customer Service, Operations, HR, Unified Inbox, CRM |
+| 04 Keep more of it | Finance, Compliance |
+
+Full inventory of getjobber's own feature pages is in the session record;
+the relevant structural finding is the four-bucket sort, which is what a
+business owner looks for, and which an A–Z of capabilities never gives them.
+
+### Palette moved
+
+`src/lib/palette.ts` is now the only place the six honeybook hexes exist.
+The ground map, the bands, the feature accents and the showcase tiles all
+import from it. Same reasoning as `orbRadius` living in `flock.tsx`: two
+copies drift, and a drifted ground is the one bug that does not show in a
+diff.
+
+Yellow is no longer a ground. It appears exactly once, as the keyword
+highlight in the second feature row.
+
+### Verified
+
+`tsc --noEmit` clean · `next build` clean · `eslint src` back to the 7
+pre-existing warnings, all in files not touched · all six section ids,
+the four band headings, the showcase tiles and the 400vh band present in the
+served HTML.
+
+**Not verified: how any of it looks.** Claude's browser is on a different
+machine and cannot reach `localhost:3000`. Russ has to look.
+
+### Still open
+
+- Copy and images are placeholders written to the structure. Every showcase
+  tile and every feature blob is a colour field sized and placed where the
+  image goes.
+- The original 26 sections still sit below the new six. They come out once
+  their content has been moved up.
+- The `stats` section still quotes McKinsey / Deloitte / Gartner. Only Russ
+  can replace those with up+up's own numbers, client logos and named
+  testimonials.
