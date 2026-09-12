@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { RotatingWord } from "@/components/home/rotating-word";
 import { glyphs } from "@/components/glyphs";
 import { ChaosGlyph } from "@/components/home/chaos-glyph";
@@ -21,6 +21,7 @@ import {
   GsapFooter,
 } from "@/components/home/gsap-structure";
 import { CREAM, SAGE, BLUE, PAPER, LAVENDER } from "@/lib/palette";
+import { SiteHeader } from "@/components/home/site-header";
 
 function seededRandom(seed: number) {
   const x = Math.sin(seed * 9301 + 49297) * 49297;
@@ -700,49 +701,6 @@ const sections = [
   },
 ];
 
-import Link from "next/link";
-
-const menuLinks = [
-  { href: "/", label: "Home" },
-  { href: "/services", label: "Services" },
-  { href: "/about", label: "About" },
-  { href: "/projects", label: "Projects" },
-  { href: "/blog", label: "Blog" },
-  { href: "/contact", label: "Contact" },
-];
-
-function HomeMenu() {
-  const [menuOpen, setMenuOpen] = useState(false);
-  return (
-    <div className="fixed top-4 right-6 z-[100]"
-      onMouseEnter={() => setMenuOpen(true)}
-      onMouseLeave={() => setMenuOpen(false)}
-    >
-      <button onClick={() => setMenuOpen(!menuOpen)} className="flex flex-col gap-1.5 p-2" aria-label="Menu">
-        <span className="block h-px w-6 bg-ink" />
-        <span className="block h-px w-6 bg-ink" />
-      </button>
-      <AnimatePresence>
-        {menuOpen && (
-          <motion.div className="absolute right-0 top-full mt-2"
-            initial={{ opacity: 0, y: -5 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -5 }}
-            transition={{ duration: 0.2 }}>
-            <nav className="flex flex-col items-end gap-1 py-2">
-              {menuLinks.map((link, i) => (
-                <motion.div key={link.href} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: i * 0.04 }}>
-                  <Link href={link.href} onClick={() => setMenuOpen(false)}
-                    className="block py-1 font-body text-sm font-light text-ink/60 hover:text-ink transition-colors">
-                    {link.label}
-                  </Link>
-                </motion.div>
-              ))}
-            </nav>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </div>
-  );
-}
 
 /* ------------------------------------------------------------------ *
  *  The scrolling document.
@@ -986,28 +944,13 @@ export default function Home() {
         )}
       </div>
 
-      {/* Logo, fixed in the header. */}
-      <div className="pointer-events-none fixed left-1/2 top-[1.1rem] z-[100] -translate-x-1/2 text-2xl tracking-tight text-ink">
-        <span className="font-body font-light">up</span>
-        <span className="font-display text-[1.15em]">+up</span>
-        <span className="relative -top-[0.35em] -ml-[0.15em] font-body text-[0.7em] leading-none">
-          ^
-        </span>
-      </div>
-
-      <div className="fixed left-6 top-4 z-[100]">
-        <Link
-          href="/contact"
-          className="font-body text-sm font-light tracking-wide text-ink/70 transition-colors hover:text-ink"
-        >
-          Contact
-        </Link>
-      </div>
-
-      <HomeMenu />
+      {/* The header. A fixed bar with real navigation and one call to
+          action, replacing the floating wordmark, the stray "Contact" link
+          and the hamburger that used to stand in for it. */}
+      <SiteHeader />
 
       {/* The document. */}
-      <div className="relative z-10">
+      <div className="relative z-10 pt-[4.5rem]">
         {sections.map((s, i) => (
           <ScrollSection
             key={s.id}
