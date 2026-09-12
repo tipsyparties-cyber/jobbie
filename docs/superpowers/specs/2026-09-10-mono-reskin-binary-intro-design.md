@@ -1954,3 +1954,88 @@ machine and cannot reach `localhost:3000`. Russ has to look.
 - The `stats` section still quotes McKinsey / Deloitte / Gartner. Only Russ
   can replace those with up+up's own numbers, client logos and named
   testimonials.
+
+---
+
+## Addendum 33 — gsap.com, measured rather than described
+
+Russ: *"wheres the annimation elements, i cant read the font, wheres the
+headers etc it isnt looking the same it should basically look identical
+apart from the colours?"* He liked the ground-colour transitions and the
+sideways band; sections 1 and 2 needed work.
+
+He was right, and the cause is worth recording: **Addendum 32 was built from
+a text description of gsap.com, not from the page.** A description gives you
+the running order and nothing else — no weights, no sizes, no idea which
+parts move.
+
+So I opened gsap.com in the browser and read the computed styles off it.
+(Claude's browser cannot reach `localhost`, but it reaches the public web
+perfectly well. That distinction was never tested before; it should have
+been, five reference sites ago.)
+
+### What the measurements said
+
+| | gsap.com | what we had |
+|---|---|---|
+| Hero | **221px, weight 600**, per-letter elements | 144px, weight 300, one block |
+| Statement | **65px, weight 400**, word-by-word scroll reveal | ~100px, weight 300, static |
+| Body base | 400 | **300** (in `globals.css`) |
+| Header | fixed bar, wordmark + 6 links + pill CTA + hairline | none |
+| Feature rows | keyword ABOVE heading; shape ~130px; always left; hairline between | keyword inside heading; half-screen gradient; alternating sides |
+| Section bounds | hairline rules top and bottom | none |
+| Doc height | ~8 viewports | ~35 |
+
+Viewport was 1148px, so 221px ≈ 19vw and 65px ≈ 5.7vw. Everything on that
+page is sized in viewport units; none of it steps at breakpoints.
+
+### The font problem was weight, not size
+
+"I can't read the font" was not about scale. **Light weights thin out as
+they scale up**, and on a pale ground a 300-weight headline at 144px has
+almost nothing left to catch the eye. gsap runs 600 for headlines and 400
+for everything else. `globals.css` had the base at 300, so the whole site
+inherited it.
+
+Raised the base to 400 and set headlines to 600. *(Editing `globals.css`
+means the Turbopack stale-CSS trap applies — `rm -rf .next`, restart, hard
+reload. See `upandup-turbopack-stale-css`.)*
+
+### The two animations that were missing
+
+Both now in `src/components/home/reveal-text.tsx`:
+
+- **`LetterReveal`** — splits a line into letters, each in an
+  `overflow-hidden` box, rising and flipping up on a stagger. Masked rather
+  than faded: the letter comes out of nothing, which is what gives it
+  weight. Used on the hero.
+- **`WordReveal`** — each word starts at 15% opacity and lights as the block
+  crosses the screen, so the sentence writes itself while you scroll. This
+  is the single most recognisable effect on gsap.com. Windows overlap
+  (each word lights over twice its own step) because a hard word-to-word
+  hand-off reads as a typing cursor rather than as light arriving.
+
+### The header
+
+`src/components/home/site-header.tsx`. Fixed, not sticky — the ground colour
+changes underneath it as you scroll, and a bar that re-enters on scroll-up
+would keep crossing colour boundaries mid-animation. The old floating
+wordmark, stray "Contact" link and hamburger are gone; `HomeMenu` and
+`menuLinks` deleted with them.
+
+### Still not matched, deliberately
+
+- gsap's **sideways section is a single enormous sentence travelling
+  horizontally**, not cards in a rail. Ours is four outcome cards. Russ
+  said he likes ours ("i like the sideways scrolling things"), so it stays —
+  but the difference is real and this is the record of it.
+- gsap's **footer inverts to a cream ground** with dark text. Ours stays on
+  the page ground. Worth trying.
+- Its showcase has a **showreel video and circular ← → carousel buttons**.
+  Ours is a snap rail. Revisit when there is footage.
+
+### Verified
+
+`tsc` clean · `next build` clean · `eslint src` at the 7 pre-existing
+warnings · header, hero, both animations and all six sections present in the
+served HTML. **Appearance still unverified** — Russ has to look.
