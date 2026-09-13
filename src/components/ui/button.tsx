@@ -1,61 +1,95 @@
 "use client";
 
 import Link from "next/link";
-import { motion } from "framer-motion";
 
-interface ButtonProps {
+/* ==================================================================== *
+ *  Buttons — design brief A4.
+ *
+ *  Measured from allinnhomeofstudents.com, and the whole idea is that ONLY
+ *  the corner radius changes: 8px to a full pill in 0.2s. Nothing lifts,
+ *  glows or changes colour. A button that does four things on hover reads
+ *  as a demo; one that does a single unexpected thing reads as considered.
+ *
+ *  Gone from the old version: the glass fill, the uppercase text, the
+ *  `whileHover y: -2` lift and the caret.
+ *
+ *  The radius change is also the focus state, because a keyboard user
+ *  should get the same affordance a mouse user does — plus a real outline,
+ *  since a radius change alone is not a visible focus indicator.
+ * ==================================================================== */
+
+export type ButtonVariant = "primary" | "dark" | "ghost";
+
+const BASE = [
+  "inline-flex items-center justify-center gap-2",
+  "h-12 px-[22px] md:h-[54px]",
+  "font-display text-base font-semibold",
+  "border border-ink",
+  // The one thing that moves.
+  "rounded-lg hover:rounded-[28px] focus-visible:rounded-[28px]",
+  "transition-[border-radius] duration-200 ease-in-out",
+  "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[3px] focus-visible:outline-ink",
+  "cursor-pointer",
+].join(" ");
+
+/**
+ * `primary` is orange with INK text, never white: ink on orange passes AA at
+ * about 6:1, white on orange does not.
+ *
+ * `dark` exists for yellow grounds, where an orange button would sit next to
+ * yellow — which A2 forbids.
+ */
+const VARIANTS: Record<ButtonVariant, string> = {
+  primary: "bg-orange text-ink",
+  dark: "bg-ink text-cream",
+  ghost: "bg-transparent text-ink",
+};
+
+type Props = {
   children: React.ReactNode;
   href?: string;
-  type?: "button" | "submit";
   onClick?: () => void;
+  type?: "button" | "submit";
+  variant?: ButtonVariant;
+  /** A static arrow. The main call to action only — A4. */
+  arrow?: boolean;
   className?: string;
-  variant?: "primary" | "outline";
-}
-
-const ArrowIcon = () => (
-  <span className="text-xs leading-none">^</span>
-);
+  "aria-expanded"?: boolean;
+  "aria-controls"?: string;
+};
 
 export function Button({
   children,
   href,
-  type = "button",
   onClick,
-  className = "",
+  type = "button",
   variant = "primary",
-}: ButtonProps) {
-  const baseStyles =
-    "inline-flex items-center gap-2 rounded-full px-8 py-4 font-sans text-sm font-medium tracking-wide uppercase transition-all duration-300";
-  const variants = {
-    primary:
-      "glass text-ink hover:bg-white/70",
-    outline:
-      "glass text-ink hover:bg-white/70",
-  };
-
-  const styles = `${baseStyles} ${variants[variant]} ${className}`;
+  arrow = false,
+  className = "",
+  ...aria
+}: Props) {
+  const cls = `${BASE} ${VARIANTS[variant]} ${className}`;
+  const inner = (
+    <>
+      {children}
+      {arrow && (
+        <span aria-hidden className="text-[0.95em] leading-none">
+          →
+        </span>
+      )}
+    </>
+  );
 
   if (href) {
     return (
-      <motion.div whileHover={{ y: -2 }} whileTap={{ y: 0 }} className="inline-block">
-        <Link href={href} className={styles}>
-          {children}
-          <ArrowIcon />
-        </Link>
-      </motion.div>
+      <Link href={href} className={cls} {...aria}>
+        {inner}
+      </Link>
     );
   }
-
   return (
-    <motion.button
-      type={type}
-      onClick={onClick}
-      className={styles}
-      whileHover={{ y: -2 }}
-      whileTap={{ y: 0 }}
-    >
-      {children}
-      <ArrowIcon />
-    </motion.button>
+    <button type={type} onClick={onClick} className={cls} {...aria}>
+      {inner}
+    </button>
   );
 }

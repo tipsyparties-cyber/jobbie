@@ -1,54 +1,59 @@
 @import "tailwindcss";
 
 @theme inline {
-  /* Ink — everything that used to be white text is now this */
+  /* ---- Colour (design brief A2, B2) ----
+     These mirror src/lib/palette.ts exactly. The palette file is the source
+     of truth for anything set in JS — ground maps, section marks, group
+     colours — and these tokens are the same values for anything set in a
+     class. If the two ever disagree the page will look right in one place
+     and wrong in another, which is the hardest kind of bug to see. */
   --color-ink: #0A0A0A;
-
-  /* Heyday orange (A2). The one colour that separates this from HoneyBook,
-     whose pastels ours already shares.
-
-     It is a FILL and never a text colour: orange text on cream fails
-     contrast. Buttons are orange with INK text — ink on orange is about
-     6:1 and passes AA, white on orange does not.
-
-     Orange and yellow never touch. Where they would meet, the button goes
-     ink instead. */
-  --color-orange: #F26B2A;
   --color-ink-soft: #3A3D42;
 
-  /* Ground and greys */
-  --color-cream: #F4F6F8;
-  --color-warm-grey: #1A1C1F;
+  /* The action colour, and the thing that most separates Heyday from
+     HoneyBook. A FILL, never text: orange text on cream fails contrast, and
+     buttons are orange with INK text. Never touching yellow. */
+  --color-orange: #F26B2A;
+
+  --color-cream: #F2E9E1;
+  --color-paper: #FBF9F6;
+  --color-sage: #9AAD92;
+  --color-blue: #93B7E8;
+  --color-sky: #AEC9EE;
+  --color-lavender: #D6D0F5;
+  /* Highlights only — a marker behind one phrase per screen. Never a
+     ground, never beside orange. */
+  --color-yellow: #FCFC72;
+
+  /* Kept so the pages not yet rewritten still compile. They resolve to ink
+     rather than to the retired orange accent. */
+  --color-accent: #0A0A0A;
+  --color-accent-hover: #3A3D42;
   --color-mid-grey: #6B7078;
   --color-light-grey: #E2E6EA;
   --color-silver: #DCE0E5;
-
-  /* The orange accent is retired. These remain so existing usages keep
-     compiling, but they now resolve to ink rather than a colour. */
-  --color-accent: #0A0A0A;
-  --color-accent-hover: #3A3D42;
-
-  /* Former warm pastels, now neutral surfaces */
+  --color-warm-grey: #1A1C1F;
   --color-peach: #EDEFF2;
   --color-coral: #E4E8EC;
-  --color-lavender: #E8EAEF;
 
-  --font-display: var(--font-serif), "Georgia", serif;
-  --font-body: var(--font-sans), system-ui, sans-serif;
-  /* The hero face. Stands in for gsap.com's PP Mori, which is a paid
-     licence — see lib/fonts.ts. */
+  /* ---- Type (A3) ----
+     Four faces, one job each. No serif: Cormorant Garamond reads
+     wedding-soft, which is exactly HoneyBook's territory. */
+
+  /* Hero headline. Plus Jakarta Sans stands in for PP Mori. */
   --font-hero: var(--font-hero-face), var(--font-sans), system-ui, sans-serif;
-  /* Headings, buttons and card titles (A3). Cabinet Grotesk is the brief’s
-     first choice but is a Fontshare licence; Schibsted Grotesk is its own
-     named Google fallback and is what ships until that is cleared. */
-  --font-display-sans: var(--font-display-face), var(--font-sans), system-ui, sans-serif;
-  /* Small labels, step numbers, stat sources and { braced } labels (A3). */
+  /* Headings, buttons and card titles. Cabinet Grotesk is the brief's first
+     choice but is a Fontshare licence needing self-hosting; Schibsted
+     Grotesk is its own named Google fallback and ships until that clears. */
+  --font-display: var(--font-display-face), var(--font-sans), system-ui, sans-serif;
+  /* Body. */
+  --font-body: var(--font-sans), system-ui, sans-serif;
+  /* Small labels, step numbers, stat sources and { braced } labels. The
+     techy note, and it only works while it stays rare. */
   --font-mono: var(--font-mono-face), ui-monospace, monospace;
-
-  /* Neumorphic shadows recomputed for the off-white ground */
-  --shadow-neo: 6px 6px 14px #dfe3e8, -6px -6px 14px #ffffff;
-  --shadow-neo-inset: inset 4px 4px 8px #dfe3e8, inset -4px -4px 8px #ffffff;
-  --shadow-neo-hover: 2px 2px 6px #dfe3e8, -2px -2px 6px #ffffff;
+  /* Retired from the Heyday pages. Only .prose-upup still reaches for it,
+     and those pages are rewritten in Phase 7. */
+  --font-serif-legacy: var(--font-serif), "Georgia", serif;
 }
 
 html {
@@ -239,7 +244,7 @@ body {
 
 /* Blog/legal page typography */
 .prose-upup h2 {
-  font-family: var(--font-display);
+  font-family: var(--font-serif-legacy);
   font-size: 1.5rem;
   font-weight: 300;
   margin-top: 4rem;
@@ -254,7 +259,7 @@ body {
 }
 
 .prose-upup h3 {
-  font-family: var(--font-display);
+  font-family: var(--font-serif-legacy);
   font-size: 1.25rem;
   font-weight: 300;
   margin-top: 3rem;
