@@ -96,8 +96,8 @@ export function GsapHero() {
                 rather than describing the product, so it reads as the
                 second half of the headline rather than as a caption. */}
             <p className="mt-10 max-w-2xl font-body text-xl leading-relaxed text-ink/75 md:text-2xl">
-              You didn&apos;t start a business to work for it. We make it work
-              for you.
+              You didn&apos;t start a business to work for it. We make your
+              business work for you.
             </p>
             <div className="mt-9 flex flex-wrap gap-3">
               <Pill href="/contact" solid>
