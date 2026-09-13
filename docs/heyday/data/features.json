@@ -1,0 +1,3580 @@
+{
+  "generated": "2026-09-13",
+  "note": "Holding copy for Jem to edit. Every feature is coming soon until Jem and Russell decide.",
+  "groups": [
+    {
+      "id": "get-ahead",
+      "name": "Get ahead",
+      "promise": "Ready before the first enquiry",
+      "shape": "sunrise",
+      "colour": "#F26B2A"
+    },
+    {
+      "id": "get-found",
+      "name": "Get found",
+      "promise": "People find you, and you know which efforts pay",
+      "shape": "signal",
+      "colour": "#D6D0F5"
+    },
+    {
+      "id": "win-the-client",
+      "name": "Win the client",
+      "promise": "Every enquiry caught, priced, followed up and booked",
+      "shape": "connect",
+      "colour": "#93B7E8"
+    },
+    {
+      "id": "run-the-day",
+      "name": "Run the day",
+      "promise": "The planning, the team and the day itself, handled",
+      "shape": "dial",
+      "colour": "#0A0A0A"
+    },
+    {
+      "id": "get-paid",
+      "name": "Get paid",
+      "promise": "Every payment in, every payout out",
+      "shape": "paid",
+      "colour": "#9AAD92"
+    },
+    {
+      "id": "get-rebooked",
+      "name": "Get rebooked",
+      "promise": "Happy customers come back and bring friends",
+      "shape": "loop",
+      "colour": "#AEC9EE"
+    }
+  ],
+  "features": [
+    {
+      "slug": "ai-setup-assistant",
+      "name": "AI setup assistant",
+      "group": "get-ahead",
+      "status": "coming-soon",
+      "onlyOnHeyday": true,
+      "existingJobbieSlug": null,
+      "modelledOn": "(Heyday only)",
+      "icon": "hd-ai-setup-assistant",
+      "pain": "Stop spending weeks setting up software.",
+      "searchLine": "AI setup assistant that builds your quote form, automations and rules for you",
+      "outcomes": {
+        "saves": "Saves setup time.",
+        "reduces": "Reduces mistakes in your prices and rules."
+      },
+      "intro": "Point Heyday at your website, price list, old emails and policies. The AI setup assistant fills in your quote form, automations and rules, and you check every one before it goes live.",
+      "stats": [
+        {
+          "statsBankRow": 20
+        }
+      ],
+      "example": null,
+      "howItWorks": [
+        {
+          "label": "Step 1",
+          "heading": "Share what you already have",
+          "line": "Add your website address, upload your price list and connect your email.",
+          "screen": "An upload panel: a website address field, a price-list file dropped in, an email account marked connected, and a progress bar reading 'Reading your business'."
+        },
+        {
+          "label": "Step 2",
+          "heading": "The assistant fills in the rest",
+          "line": "It drafts your quote questions and prices, your follow-ups and your booking rules.",
+          "screen": "A setup checklist with three sections (Quote form, Automations, Booking rules), each marked 'Drafted by AI', and one AI suggestion card."
+        },
+        {
+          "label": "Step 3",
+          "heading": "You check it before anything goes live",
+          "line": "Every draft waits for you to approve, change or delete it.",
+          "screen": "A drafted price rule ('Per guest, minimum spend') with Approve and Edit buttons, labelled 'Illustration · example data'."
+        }
+      ],
+      "situations": [
+        {
+          "business": "A caterer",
+          "situation": "Uploads last year’s menus and price sheet, and gets a draft quote form with per-guest pricing to check."
+        },
+        {
+          "business": "A class host",
+          "situation": "Pastes in their class page, and the assistant drafts the sessions, the capacity and a waiting list."
+        },
+        {
+          "business": "A cleaning business",
+          "situation": "Shares its price list, and the assistant drafts room-by-room prices and a recurring-visit option."
+        }
+      ],
+      "faq": [
+        {
+          "q": "Does the AI change anything without asking?",
+          "a": "No. Everything it fills in is a draft until you approve it."
+        },
+        {
+          "q": "What can it read?",
+          "a": "Your website, your price list, your old emails and your policies."
+        }
+      ],
+      "related": [
+        "policies-and-procedures",
+        "quotes",
+        "follow-ups",
+        "integrations"
+      ],
+      "atTipsyToday": "To build"
+    },
+    {
+      "slug": "policies-and-procedures",
+      "name": "Policies and procedures",
+      "group": "get-ahead",
+      "status": "coming-soon",
+      "onlyOnHeyday": true,
+      "existingJobbieSlug": null,
+      "modelledOn": "(Heyday only)",
+      "icon": "hd-policies-and-procedures",
+      "pain": "Stop answering the same staff questions every week.",
+      "searchLine": "Policies and procedures library for your team and your AI",
+      "outcomes": {
+        "saves": "Saves training time.",
+        "reduces": "Reduces mistakes and mixed messages."
+      },
+      "intro": "Upload your terms, FAQs and “how we do things” once. The AI and your team both work from the same library, and staff confirm they’ve read it.",
+      "stats": [],
+      "example": null,
+      "howItWorks": [
+        {
+          "label": "One library",
+          "heading": "Everything about how you do things",
+          "line": "Terms, FAQs, cancellation rules, dress code and set-up steps, in one place.",
+          "screen": "A library list of documents (Terms, FAQs, Cancellation policy, Set-up guide), each with a 'last updated' date."
+        },
+        {
+          "label": "Read and confirm",
+          "heading": "Your team confirms they’ve read it",
+          "line": "Each person ticks off new or changed policies.",
+          "screen": "A team list showing who has confirmed each policy: ticks, and one 'Waiting' chip."
+        },
+        {
+          "label": "The AI answers your way",
+          "heading": "Replies follow your policies",
+          "line": "When a customer asks about parking or cancellations, the AI’s draft follows your policy.",
+          "screen": "An AI draft reply with a note underneath: 'Based on your Cancellation policy, section 2'."
+        }
+      ],
+      "situations": [
+        {
+          "business": "A mobile bar",
+          "situation": "Keeps its ID and alcohol rules in one place, so every bartender and every AI reply says the same thing."
+        },
+        {
+          "business": "An escape room",
+          "situation": "Keeps its late-arrival rule in the library, and the AI uses it when a group writes in running late."
+        },
+        {
+          "business": "A photographer",
+          "situation": "Has a new second shooter read the wedding-day procedure before their first booking."
+        }
+      ],
+      "faq": [
+        {
+          "q": "Who works from the library?",
+          "a": "Your team, and the AI when it drafts replies."
+        },
+        {
+          "q": "Do staff have to confirm they’ve read it?",
+          "a": "Yes. Staff confirm they’ve read each policy, and you can see who has."
+        }
+      ],
+      "related": [
+        "ai-setup-assistant",
+        "team",
+        "replies-that-write-themselves",
+        "hiring-and-onboarding"
+      ],
+      "atTipsyToday": "To build (Tipsy has training sign-off for its team)"
+    },
+    {
+      "slug": "team",
+      "name": "Team management",
+      "group": "get-ahead",
+      "status": "coming-soon",
+      "onlyOnHeyday": false,
+      "existingJobbieSlug": "team",
+      "modelledOn": "Team management",
+      "icon": "hd-team",
+      "pain": "Stop chasing your team for paperwork.",
+      "searchLine": "Team management software for employees and subcontractors",
+      "outcomes": {
+        "saves": "Saves admin.",
+        "reduces": "Reduces expired certificates on live jobs."
+      },
+      "intro": "Roles and permissions, employees and subcontractors, and tiers, in one place. Everyone sees what they need to, and nothing they shouldn’t.",
+      "stats": [],
+      "example": null,
+      "howItWorks": [
+        {
+          "label": "Roles",
+          "heading": "Everyone sees what they need to",
+          "line": "Owner, manager, office and team roles, each with its own permissions.",
+          "screen": "A permissions table: roles as columns, ticks for Quotes, Payments, Diary and Team pay."
+        },
+        {
+          "label": "Employees and subcontractors",
+          "heading": "Each handled the right way",
+          "line": "Employees and subcontractors are set up, checked and paid differently.",
+          "screen": "A team list with 'Employee' and 'Subcontractor' chips, and a Form I-9 or Form W-9 status on each person."
+        },
+        {
+          "label": "Tiers",
+          "heading": "Reward your best people",
+          "line": "Tiers decide who is offered which jobs.",
+          "screen": "Three tier columns (Tier 1, Tier 2, Tier 3) with one person moving up a tier."
+        },
+        {
+          "label": "Paperwork",
+          "heading": "Paperwork that chases itself",
+          "line": "Certificates and checks carry expiry dates, and people are reminded before they lapse.",
+          "screen": "A document list with one warning chip: 'Expires in 14 days'."
+        }
+      ],
+      "situations": [
+        {
+          "business": "An event staffing agency",
+          "situation": "Keeps every worker’s checks and certificates in one list, with reminders before anything expires."
+        },
+        {
+          "business": "A photo booth company",
+          "situation": "Gives its attendants the team app, but keeps prices and payments visible to the owner only."
+        },
+        {
+          "business": "A caterer",
+          "situation": "Adds seasonal servers as subcontractors and its chefs as employees, each handled correctly."
+        }
+      ],
+      "faq": [
+        {
+          "q": "Can I have employees and subcontractors?",
+          "a": "Yes. They’re handled differently, including their checks and how they’re paid."
+        },
+        {
+          "q": "Can I limit what each person sees?",
+          "a": "Yes. Roles and permissions decide what each person can see and do."
+        }
+      ],
+      "related": [
+        "shift-offers",
+        "hiring-and-onboarding",
+        "team-pay-and-expenses",
+        "time-tracking"
+      ],
+      "atTipsyToday": "Built"
+    },
+    {
+      "slug": "integrations",
+      "name": "Integrations",
+      "group": "get-ahead",
+      "status": "coming-soon",
+      "onlyOnHeyday": false,
+      "existingJobbieSlug": null,
+      "modelledOn": "App Marketplace; QuickBooks sync",
+      "icon": "hd-integrations",
+      "pain": "Stop typing the same thing into three apps.",
+      "searchLine": "Integrations with QuickBooks, Xero, Google Calendar, Zapier and Stripe",
+      "outcomes": {
+        "saves": "Saves double entry.",
+        "reduces": "Reduces errors."
+      },
+      "intro": "Connect the tools you already use, and bring your clients and bookings with you from old ones. Stripe and Zapier are connected at Tipsy today; the rest are coming soon.",
+      "stats": [
+        {
+          "statsBankRow": 20
+        }
+      ],
+      "example": null,
+      "howItWorks": [
+        {
+          "label": "Payments",
+          "heading": "Take payments through Stripe",
+          "line": "Card and wallet payments, connected.",
+          "screen": "An integrations grid, names only and no logos: Stripe marked 'Connected at Tipsy', the others 'Coming soon'."
+        },
+        {
+          "label": "Accounts",
+          "heading": "Your books, kept in step",
+          "line": "QuickBooks and Xero sync.",
+          "screen": "A sync card: 'Invoices, payments and payouts → your accounting app', status 'Coming soon'."
+        },
+        {
+          "label": "Calendars",
+          "heading": "One diary wherever you look",
+          "line": "Google Calendar sync.",
+          "screen": "A calendar showing Heyday bookings next to personal events."
+        },
+        {
+          "label": "Everything else",
+          "heading": "Zapier for the rest",
+          "line": "Connect Heyday to other apps through Zapier.",
+          "screen": "A flow card: 'New booking in Heyday → Add a row to a spreadsheet'."
+        }
+      ],
+      "situations": [
+        {
+          "business": "A DJ",
+          "situation": "Keeps the accounting app they already use, and bookings and payments flow into it."
+        },
+        {
+          "business": "A class host",
+          "situation": "Brings last year’s customer list across from a spreadsheet."
+        },
+        {
+          "business": "A cleaning business",
+          "situation": "Sees Heyday bookings in the Google Calendar the team already uses."
+        }
+      ],
+      "faq": [
+        {
+          "q": "Can I bring my clients and bookings from my old tools?",
+          "a": "Yes. Importing clients and bookings from old tools is part of getting set up."
+        },
+        {
+          "q": "Which integrations work today?",
+          "a": "Stripe and Zapier are connected at Tipsy today. QuickBooks, Xero and Google Calendar are coming soon."
+        }
+      ],
+      "related": [
+        "ai-setup-assistant",
+        "payments",
+        "reporting",
+        "sell-everywhere"
+      ],
+      "atTipsyToday": "Stripe and Zapier connected; accounts sync to build"
+    },
+    {
+      "slug": "booking-page",
+      "name": "Booking page and mini-site",
+      "group": "get-found",
+      "status": "coming-soon",
+      "onlyOnHeyday": false,
+      "existingJobbieSlug": "booking-page",
+      "modelledOn": "Websites",
+      "icon": "hd-booking-page",
+      "pain": "Stop losing customers who only wanted a price.",
+      "searchLine": "Booking page and website with instant quotes and live availability",
+      "outcomes": {
+        "increases": "Increases bookings from your website."
+      },
+      "intro": "Your own page, on your own domain, with the instant quote and live availability built in. Visitors see a real price and a free date without waiting for a reply.",
+      "stats": [
+        {
+          "statsBankRow": 11
+        },
+        {
+          "statsBankRow": 16
+        }
+      ],
+      "example": null,
+      "howItWorks": [
+        {
+          "label": "Your page",
+          "heading": "A page that sells for you",
+          "line": "Your photos, reviews and packages, on your own domain.",
+          "screen": "A mini-site: business name, a hero photo slot, three package cards and a reviews strip."
+        },
+        {
+          "label": "Instant quote",
+          "heading": "A price on the page",
+          "line": "Visitors answer a few questions and see a price.",
+          "screen": "The quote form on the page: guests, date and hours, with a price showing."
+        },
+        {
+          "label": "Live availability",
+          "heading": "Only the dates you can do",
+          "line": "The calendar shows only dates you can take.",
+          "screen": "A date picker with unavailable dates grayed out and one date selected."
+        },
+        {
+          "label": "Book",
+          "heading": "Book there and then",
+          "line": "The deposit and terms in the same step.",
+          "screen": "A checkout card: deposit amount and a 'Book and pay deposit' button."
+        }
+      ],
+      "situations": [
+        {
+          "business": "A mobile bar",
+          "situation": "Prices a wedding bar for 80 guests before the couple has even sent an email."
+        },
+        {
+          "business": "A photographer",
+          "situation": "Shows which Saturdays are still free this summer."
+        },
+        {
+          "business": "An escape room",
+          "situation": "Sells time slots for each room straight from its page."
+        }
+      ],
+      "faq": [
+        {
+          "q": "Can I use my own domain?",
+          "a": "Yes. The page is built to sit on your own domain."
+        },
+        {
+          "q": "Do I need a separate website?",
+          "a": "No. The booking page can be your website, or sit next to the one you have."
+        }
+      ],
+      "related": [
+        "quotes",
+        "online-booking",
+        "reviews",
+        "marketplace-listing"
+      ],
+      "atTipsyToday": "Built for Tipsy (its US site is built around the instant quote)"
+    },
+    {
+      "slug": "marketplace-listing",
+      "name": "Get listed on the Heyday marketplace",
+      "group": "get-found",
+      "status": "coming-soon",
+      "onlyOnHeyday": true,
+      "existingJobbieSlug": null,
+      "modelledOn": "(Heyday only)",
+      "icon": "hd-marketplace-listing",
+      "pain": "Get found by people looking for something to do.",
+      "searchLine": "List your experiences and services on the Heyday marketplace",
+      "outcomes": {
+        "increases": "Increases new customers."
+      },
+      "intro": "Switch on a listing on heyday.co, the Heyday marketplace, with your real prices and live availability. Customers find you and book you, and the booking lands in your diary.",
+      "stats": [],
+      "example": null,
+      "howItWorks": [
+        {
+          "label": "Switch it on",
+          "heading": "One switch per experience",
+          "line": "Choose which experiences and services show on the marketplace.",
+          "screen": "An experience settings card with a 'Show on the Heyday marketplace' switch turned on."
+        },
+        {
+          "label": "Real prices",
+          "heading": "Real prices, live dates",
+          "line": "The listing uses the same prices, rules and diary as your own page.",
+          "screen": "A heyday.co listing card: photo slot, title, an 'At yours' tag and 'from $…'."
+        },
+        {
+          "label": "It lands with you",
+          "heading": "Bookings in your diary",
+          "line": "Marketplace bookings arrive tagged, in the same diary and inbox.",
+          "screen": "A booking in the diary with a 'Marketplace' tag."
+        }
+      ],
+      "situations": [
+        {
+          "business": "A cocktail class host",
+          "situation": "Lists a private class “At yours”, priced by group size."
+        },
+        {
+          "business": "A tour guide",
+          "situation": "Lists weekend walks with live places left."
+        },
+        {
+          "business": "A florist",
+          "situation": "Lists a holiday wreath-making workshop."
+        }
+      ],
+      "faq": [
+        {
+          "q": "Where do I make my listing?",
+          "a": "In Heyday. Each experience has a “Show on the Heyday marketplace” switch."
+        },
+        {
+          "q": "What does the marketplace cost?",
+          "a": "That’s still being decided. [to confirm]"
+        }
+      ],
+      "related": [
+        "sell-everywhere",
+        "booking-page",
+        "reviews",
+        "partners"
+      ],
+      "atTipsyToday": "To build"
+    },
+    {
+      "slug": "sell-everywhere",
+      "name": "Sell everywhere, one diary",
+      "group": "get-found",
+      "status": "coming-soon",
+      "onlyOnHeyday": true,
+      "existingJobbieSlug": null,
+      "modelledOn": "(Heyday only)",
+      "icon": "hd-sell-everywhere",
+      "pain": "Stop juggling five calendars.",
+      "searchLine": "One diary for Airbnb Experiences, ClassBento, Togather and your own bookings",
+      "outcomes": {
+        "reduces": "Reduces double bookings.",
+        "saves": "Saves admin."
+      },
+      "intro": "Bookings from Airbnb Experiences, ClassBento, Togather, LetsBatch and Yuup land in the same diary as your own, following each platform’s rules. Keep selling where you sell now, and win customers back to book direct.",
+      "stats": [],
+      "example": null,
+      "howItWorks": [
+        {
+          "label": "Connect",
+          "heading": "Bring every platform in",
+          "line": "Connect the marketplaces you already sell on.",
+          "screen": "A list of platforms, names only, each with a 'Coming soon' chip."
+        },
+        {
+          "label": "One diary",
+          "heading": "Every booking in one place",
+          "line": "Each booking shows where it came from.",
+          "screen": "A week view with bookings tagged by source: Own page, Heyday marketplace, another platform."
+        },
+        {
+          "label": "At a glance",
+          "heading": "See every seat that’s gone",
+          "line": "Your diary shows every seat and date that’s taken, wherever it sold.",
+          "screen": "A class card: '12 seats · 11 sold across 3 places · 1 left'."
+        }
+      ],
+      "situations": [
+        {
+          "business": "A pottery studio",
+          "situation": "Sells the same Saturday class on two platforms and its own page, and sees every seat in one diary."
+        },
+        {
+          "business": "A food tour",
+          "situation": "Brings its platform bookings and direct bookings into one list for the guide."
+        },
+        {
+          "business": "A cocktail class host",
+          "situation": "Keeps selling on the platforms it uses, and invites happy guests to book direct next time."
+        }
+      ],
+      "faq": [
+        {
+          "q": "Which platforms?",
+          "a": "Airbnb Experiences, ClassBento, Togather, LetsBatch and Yuup to start. All are coming soon."
+        },
+        {
+          "q": "Do I have to leave the platforms I use?",
+          "a": "No. Keep them. Heyday brings their bookings into one diary."
+        }
+      ],
+      "related": [
+        "marketplace-listing",
+        "scheduling",
+        "classes-and-tickets",
+        "booking-page"
+      ],
+      "atTipsyToday": "To build"
+    },
+    {
+      "slug": "campaigns",
+      "name": "Campaigns and off-peak offers",
+      "group": "get-found",
+      "status": "coming-soon",
+      "onlyOnHeyday": false,
+      "existingJobbieSlug": "campaigns",
+      "modelledOn": "Campaigns",
+      "icon": "hd-campaigns",
+      "pain": "Stop letting quiet weeks happen to you.",
+      "searchLine": "Email campaigns and off-peak offers that bring customers back",
+      "outcomes": {
+        "increases": "Increases repeat bookings."
+      },
+      "intro": "Win-back, anniversary and seasonal emails, and offers that fill quiet dates. Send them to the customers most likely to book.",
+      "stats": [
+        {
+          "statsBankRow": 8
+        }
+      ],
+      "example": null,
+      "howItWorks": [
+        {
+          "label": "Who",
+          "heading": "Choose who hears from you",
+          "line": "Past customers, lapsed customers, or everyone who booked this time last year.",
+          "screen": "An audience picker with segments and a count, labelled example data."
+        },
+        {
+          "label": "What",
+          "heading": "Design it once",
+          "line": "The email editor, in your brand.",
+          "screen": "An email editor: a header image slot, a headline and a button."
+        },
+        {
+          "label": "When",
+          "heading": "Send it at the right time",
+          "line": "Anniversaries and seasons, set once.",
+          "screen": "A schedule card: 'Send 11 months after their event'."
+        },
+        {
+          "label": "Results",
+          "heading": "See what it booked",
+          "line": "Bookings from each campaign.",
+          "screen": "A campaign report: sent, opened, booked, labelled example data."
+        }
+      ],
+      "situations": [
+        {
+          "business": "A photographer",
+          "situation": "Emails last year’s couples about an anniversary shoot."
+        },
+        {
+          "business": "A mobile bar",
+          "situation": "Emails past holiday-party clients in September."
+        },
+        {
+          "business": "A class host",
+          "situation": "Offers midweek places to people who came to a weekend class."
+        }
+      ],
+      "faq": [
+        {
+          "q": "What kinds of campaigns?",
+          "a": "Win-back, anniversary and seasonal emails, and off-peak offers."
+        },
+        {
+          "q": "Can I send to just some customers?",
+          "a": "Segments are coming soon. Broadcasts and the email editor exist at Tipsy today."
+        }
+      ],
+      "related": [
+        "fill-quiet-dates",
+        "client-records",
+        "loyalty",
+        "reviews"
+      ],
+      "atTipsyToday": "Broadcasts and the email editor exist; segments to build"
+    },
+    {
+      "slug": "ads-that-know-which-bookings-pay",
+      "name": "Ads that know which bookings pay",
+      "group": "get-found",
+      "status": "coming-soon",
+      "onlyOnHeyday": true,
+      "existingJobbieSlug": null,
+      "modelledOn": "(Heyday only)",
+      "icon": "hd-ads-that-know-which-bookings-pay",
+      "pain": "Stop paying for clicks that never book.",
+      "searchLine": "Google Ads and Microsoft Ads conversion tracking with real booking value",
+      "outcomes": {
+        "reduces": "Reduces wasted ad spend.",
+        "increases": "Increases bookings per dollar."
+      },
+      "intro": "Heyday sends the real value of each booking back to Google Ads and Microsoft Ads. Your ads learn which searches turn into paying customers, not just clicks.",
+      "stats": [],
+      "example": null,
+      "howItWorks": [
+        {
+          "label": "Trace",
+          "heading": "Every booking traced to its ad",
+          "line": "Heyday records which ad and search each enquiry came from.",
+          "screen": "An enquiry card with source chips: 'Google Ads · cocktail class near me'."
+        },
+        {
+          "label": "Send back",
+          "heading": "The real value, not a guess",
+          "line": "When a booking is paid, its value goes back to the ad account.",
+          "screen": "A conversion log: booking value, ad platform, sent."
+        },
+        {
+          "label": "See",
+          "heading": "Profit per ad",
+          "line": "See which campaigns bring bookings that pay.",
+          "screen": "A report table: campaign, spend, bookings, booking value, labelled example data."
+        }
+      ],
+      "situations": [
+        {
+          "business": "A mobile bar",
+          "situation": "Sees that one search brings weddings and another brings small birthday parties."
+        },
+        {
+          "business": "An escape room",
+          "situation": "Stops paying for the searches that never turn into bookings."
+        },
+        {
+          "business": "A caterer",
+          "situation": "Learns which ads bring the big corporate orders."
+        }
+      ],
+      "faq": [
+        {
+          "q": "Which ad platforms?",
+          "a": "Google Ads and Microsoft Ads."
+        },
+        {
+          "q": "What does it send?",
+          "a": "The real value of each booking, so your ads learn which searches pay."
+        }
+      ],
+      "related": [
+        "reporting",
+        "booking-page",
+        "campaigns",
+        "enquiries"
+      ],
+      "atTipsyToday": "Built"
+    },
+    {
+      "slug": "guest-capture",
+      "name": "Guest capture at events",
+      "group": "get-found",
+      "status": "coming-soon",
+      "onlyOnHeyday": true,
+      "existingJobbieSlug": null,
+      "modelledOn": "(Heyday only)",
+      "icon": "hd-guest-capture",
+      "pain": "Every guest at your event is your next customer.",
+      "searchLine": "Guest capture at events with QR codes",
+      "outcomes": {
+        "increases": "Increases new bookings."
+      },
+      "intro": "A QR code on the menu, the tip jar or the photo gallery lets guests follow you or book their own event, with their consent.",
+      "stats": [],
+      "example": null,
+      "howItWorks": [
+        {
+          "label": "At the event",
+          "heading": "A QR code where guests already look",
+          "line": "On menus, tip jars and photo galleries.",
+          "screen": "A printed menu card with a QR code and the line 'Loved this? Book your own'."
+        },
+        {
+          "label": "They scan",
+          "heading": "Follow or book",
+          "line": "Guests choose to follow you or start a booking.",
+          "screen": "A phone screen with 'Follow' and 'Book your own' buttons, and a consent tick box."
+        },
+        {
+          "label": "You follow up",
+          "heading": "New leads, with consent",
+          "line": "Guests who opt in join your list.",
+          "screen": "A contact list of new guests, each tagged 'Came from: event'."
+        }
+      ],
+      "situations": [
+        {
+          "business": "A photo booth company",
+          "situation": "Adds a QR code to every print."
+        },
+        {
+          "business": "A mobile bar",
+          "situation": "Puts one on the cocktail menu."
+        },
+        {
+          "business": "A DJ",
+          "situation": "Adds one to the song-request card."
+        }
+      ],
+      "faq": [
+        {
+          "q": "Do guests have to agree?",
+          "a": "Yes. Guests are only added with their consent."
+        },
+        {
+          "q": "Where does the QR code go?",
+          "a": "On the menu, the tip jar or the photo gallery."
+        }
+      ],
+      "related": [
+        "tips",
+        "reviews",
+        "referrals",
+        "campaigns"
+      ],
+      "atTipsyToday": "To build"
+    },
+    {
+      "slug": "partners",
+      "name": "Partners and cross-promotion",
+      "group": "get-found",
+      "status": "coming-soon",
+      "onlyOnHeyday": true,
+      "existingJobbieSlug": null,
+      "modelledOn": "(Heyday only)",
+      "icon": "hd-partners",
+      "pain": "Get recommended by businesses your customers already love.",
+      "searchLine": "Partner referrals and cross-promotion between businesses",
+      "outcomes": {
+        "increases": "Increases new customers."
+      },
+      "intro": "Complementary businesses on Heyday recommend each other, with a referral share. How the share works is still being decided.",
+      "stats": [
+        {
+          "statsBankRow": 9
+        }
+      ],
+      "example": null,
+      "howItWorks": [
+        {
+          "label": "Find partners",
+          "heading": "Businesses that fit with yours",
+          "line": "A florist and a photographer; a caterer and a bar.",
+          "screen": "Partner cards (Florist, Photographer, DJ), each with an Invite button."
+        },
+        {
+          "label": "Recommend",
+          "heading": "Recommend each other at the right moment",
+          "line": "After a booking, the customer sees your partners.",
+          "screen": "A booking confirmation with a 'You might also need' row of partner cards."
+        },
+        {
+          "label": "Share",
+          "heading": "Everyone gets a share",
+          "line": "Referral shares are tracked for you.",
+          "screen": "A referral table: partner, bookings referred, share, labelled example data."
+        }
+      ],
+      "situations": [
+        {
+          "business": "A florist",
+          "situation": "Is recommended to every couple who books a wedding photographer."
+        },
+        {
+          "business": "A caterer",
+          "situation": "Recommends a mobile bar, and the bar recommends them back."
+        },
+        {
+          "business": "A DJ",
+          "situation": "Is suggested alongside a photo booth for birthday parties."
+        }
+      ],
+      "faq": [
+        {
+          "q": "How does the referral share work?",
+          "a": "That’s still being decided. [to confirm]"
+        },
+        {
+          "q": "Who can be a partner?",
+          "a": "Complementary businesses on Heyday."
+        }
+      ],
+      "related": [
+        "referrals",
+        "marketplace-listing",
+        "guest-capture",
+        "campaigns"
+      ],
+      "atTipsyToday": "To build; the policy is undecided"
+    },
+    {
+      "slug": "enquiries",
+      "name": "Enquiries and lead types",
+      "group": "win-the-client",
+      "status": "coming-soon",
+      "onlyOnHeyday": false,
+      "existingJobbieSlug": "enquiries",
+      "modelledOn": "Sales pipeline",
+      "icon": "hd-enquiries",
+      "pain": "Stop letting your best leads wait in a pile.",
+      "searchLine": "Enquiry management with lead types and a ranked list",
+      "outcomes": {
+        "reduces": "Reduces response time.",
+        "increases": "Increases your win rate."
+      },
+      "intro": "Every enquiry from every channel in one list, sorted as hot, urgent, high value, easy or off-peak. The best leads rise to the top, with replies and follow-ups that change to suit.",
+      "stats": [
+        {
+          "statsBankRow": 2
+        },
+        {
+          "statsBankRow": 3
+        },
+        {
+          "statsBankRow": 18
+        }
+      ],
+      "example": null,
+      "howItWorks": [
+        {
+          "label": "Every channel",
+          "heading": "One list",
+          "line": "Forms, email, WhatsApp, texts, social messages and calls.",
+          "screen": "An enquiry list with a channel icon and a time on each row."
+        },
+        {
+          "label": "Lead types",
+          "heading": "Hot, urgent, high value, easy, off-peak",
+          "line": "Each enquiry gets a label from your rules.",
+          "screen": "Enquiry rows with colored labels (Hot, Urgent, High value) and a small rule editor."
+        },
+        {
+          "label": "Ranked",
+          "heading": "Best first",
+          "line": "A ranked list of who to answer first.",
+          "screen": "A 'Do these first' list: three enquiries, each with its reason."
+        },
+        {
+          "label": "Replies to match",
+          "heading": "The right reply for each",
+          "line": "The best leads get the fastest, most personal answer.",
+          "screen": "A follow-up setting: 'If Urgent → reply first'."
+        }
+      ],
+      "situations": [
+        {
+          "business": "A wedding planner",
+          "situation": "Sees the high-value enquiry for next June above three quick questions."
+        },
+        {
+          "business": "A mobile bar",
+          "situation": "Spots an urgent enquiry for this Saturday before the rest."
+        },
+        {
+          "business": "A cleaning business",
+          "situation": "Tags easy repeat jobs so they’re answered in seconds."
+        }
+      ],
+      "faq": [
+        {
+          "q": "Can I set my own lead types?",
+          "a": "Yes, the lead types and their rules are yours. Priority ranking is built at Tipsy; lead types you set are coming soon."
+        },
+        {
+          "q": "Which channels?",
+          "a": "Forms, email, WhatsApp, texts, social messages and calls."
+        }
+      ],
+      "related": [
+        "inbox",
+        "follow-ups",
+        "quotes",
+        "missed-call-capture"
+      ],
+      "atTipsyToday": "Priority ranking built; owner-set lead types to build"
+    },
+    {
+      "slug": "missed-call-capture",
+      "name": "Missed-call capture",
+      "group": "win-the-client",
+      "status": "coming-soon",
+      "onlyOnHeyday": true,
+      "existingJobbieSlug": null,
+      "modelledOn": "AI Receptionist (partly)",
+      "icon": "hd-missed-calls",
+      "pain": "Stop losing customers to voicemail.",
+      "searchLine": "Missed-call text back, written for whoever called",
+      "outcomes": {
+        "increases": "Increases calls returned.",
+        "reduces": "Reduces lost enquiries."
+      },
+      "intro": "Heyday works out who called and puts a call-back reminder on the list. It texts and emails them a “Sorry we missed your call” written for who they are.",
+      "stats": [
+        {
+          "statsBankRow": 4
+        },
+        {
+          "statsBankRow": 5
+        }
+      ],
+      "example": {
+        "inputs": "Example numbers: 20 missed calls a month; 1 in 4 is a new enquiry; you win 1 in 3 of the enquiries you answer; an average booking is $600.",
+        "maths": "20 × 1/4 = 5 new enquiries a month. 5 × 1/3 = about 1.7 bookings. 1.7 × $600 = about $1,000.",
+        "result": "About $1,000 a month, or $12,000 a year, riding on calls you didn’t pick up."
+      },
+      "howItWorks": [
+        {
+          "label": "Missed",
+          "heading": "A call goes unanswered",
+          "line": "Whether it went to voicemail or an answering service.",
+          "screen": "A phone notification reading 'Missed call', and the same call in the inbox."
+        },
+        {
+          "label": "Who",
+          "heading": "Heyday works out who called",
+          "line": "A new enquiry, a current customer, a past customer, a team member or someone else.",
+          "screen": "A caller card with a chip: 'Current customer · booking Saturday'."
+        },
+        {
+          "label": "Call back",
+          "heading": "One call-back reminder",
+          "line": "One person is one call back, and it clears itself if someone rings them.",
+          "screen": "A call-back list with one row per person."
+        },
+        {
+          "label": "Message",
+          "heading": "The right “sorry we missed you”",
+          "line": "A new caller gets your quote link; a customer gets a note about their booking.",
+          "screen": "A text preview: 'We saw you called about Saturday. Here’s everything for your booking, and we’ll ring you back shortly.'"
+        }
+      ],
+      "situations": [
+        {
+          "business": "A cleaner",
+          "situation": "Misses three calls while up a ladder, and each caller hears back within minutes."
+        },
+        {
+          "business": "A DJ",
+          "situation": "Is on stage when a new enquiry rings, and the caller gets the instant quote link."
+        },
+        {
+          "business": "A caterer",
+          "situation": "Misses a current client’s call, and the client gets a note about their booking."
+        }
+      ],
+      "faq": [
+        {
+          "q": "Does it send messages by itself?",
+          "a": "You choose, for each type of caller, whether the message sends itself or waits as a draft."
+        },
+        {
+          "q": "What if they left a voicemail?",
+          "a": "Voicemails arrive as text, and the reply answers them where it can."
+        }
+      ],
+      "related": [
+        "ai-receptionist",
+        "call-notes",
+        "inbox",
+        "enquiries"
+      ],
+      "atTipsyToday": "Call-back list for known callers built; the message to the caller and unknown callers to build"
+    },
+    {
+      "slug": "ai-receptionist",
+      "name": "AI receptionist",
+      "group": "win-the-client",
+      "status": "coming-soon",
+      "onlyOnHeyday": false,
+      "existingJobbieSlug": null,
+      "modelledOn": "AI Receptionist",
+      "icon": "hd-ai-receptionist",
+      "pain": "Stop missing calls while you’re working.",
+      "searchLine": "AI receptionist that answers calls and texts",
+      "outcomes": {
+        "increases": "Increases enquiries caught.",
+        "saves": "Saves interruptions."
+      },
+      "intro": "An AI receptionist answers calls and texts, takes messages and books. Everything it hears lands in your one inbox.",
+      "stats": [
+        {
+          "statsBankRow": 4
+        },
+        {
+          "statsBankRow": 5
+        }
+      ],
+      "example": null,
+      "howItWorks": [
+        {
+          "label": "Answers",
+          "heading": "Every call answered",
+          "line": "Calls and texts, even when you’re busy.",
+          "screen": "A call screen reading 'Receptionist answering', with a live transcript."
+        },
+        {
+          "label": "Messages",
+          "heading": "Messages you can act on",
+          "line": "Who called, what they need and when.",
+          "screen": "A message card in the inbox: caller, summary and a 'Call back' button."
+        },
+        {
+          "label": "Books",
+          "heading": "Books into your diary",
+          "line": "Within your rules.",
+          "screen": "A booking made from a call, marked 'Booked by receptionist'."
+        }
+      ],
+      "situations": [
+        {
+          "business": "A photographer",
+          "situation": "Is mid-shoot when a couple calls, and the receptionist takes the details."
+        },
+        {
+          "business": "A tour guide",
+          "situation": "Is leading a group, and the receptionist books the next caller onto Sunday’s walk."
+        },
+        {
+          "business": "A home services business",
+          "situation": "Has every after-hours call answered and summarized for the morning."
+        }
+      ],
+      "faq": [
+        {
+          "q": "What can it do?",
+          "a": "Answer calls and texts, take messages and book."
+        },
+        {
+          "q": "Where do the messages go?",
+          "a": "Into your one inbox."
+        }
+      ],
+      "related": [
+        "missed-call-capture",
+        "inbox",
+        "call-notes",
+        "replies-that-write-themselves"
+      ],
+      "atTipsyToday": "Not at Tipsy"
+    },
+    {
+      "slug": "replies-that-write-themselves",
+      "name": "Replies that write themselves",
+      "group": "win-the-client",
+      "status": "coming-soon",
+      "onlyOnHeyday": false,
+      "existingJobbieSlug": null,
+      "modelledOn": "Jobber AI (Rewrite)",
+      "icon": "hd-ai-replies",
+      "pain": "Stop writing the same email fifty times a week.",
+      "searchLine": "AI email writer that drafts replies from the booking",
+      "outcomes": {
+        "saves": "Saves hours a week.",
+        "increases": "Increases reply speed."
+      },
+      "intro": "The AI drafts every reply from the conversation, the client’s record, the booking’s live situation, your policies and your availability. You choose how much it does: draft, draft and train, or autopilot.",
+      "stats": [
+        {
+          "statsBankRow": 18
+        },
+        {
+          "statsBankRow": 2
+        }
+      ],
+      "example": null,
+      "howItWorks": [
+        {
+          "label": "Level 1: Draft",
+          "heading": "It writes, you send",
+          "line": "An AI assistant: it drafts the reply and you press send.",
+          "screen": "An email with an AI draft, notes showing what it found and where, and a Send button."
+        },
+        {
+          "label": "Level 2: Draft and train",
+          "heading": "It learns from your corrections",
+          "line": "Each correction becomes a rule it follows from then on.",
+          "screen": "The same draft with one sentence corrected, and a card: 'New rule: always mention parking'."
+        },
+        {
+          "label": "Level 3: Autopilot",
+          "heading": "It sends the simple ones itself",
+          "line": "An AI agent: payment reminders and “where do I park?”, within your rules. It hands over when it isn’t sure.",
+          "screen": "A daily list of messages it sent, with one switch to stop it. Marked 'Coming soon'."
+        }
+      ],
+      "situations": [
+        {
+          "business": "A caterer",
+          "situation": "Gets a draft that already knows the menu choices and the balance due."
+        },
+        {
+          "business": "A class host",
+          "situation": "Corrects one draft about parking, and every later draft gets it right."
+        },
+        {
+          "business": "A mobile bar",
+          "situation": "Lets the AI send payment reminders by itself, and checks the daily list."
+        }
+      ],
+      "faq": [
+        {
+          "q": "Does anything send without me?",
+          "a": "Only at level 3, and only for the types of message you switch on. Anything it isn’t sure about goes back to being a draft."
+        },
+        {
+          "q": "What’s the difference between an assistant and an agent?",
+          "a": "An assistant suggests and you decide (levels 1 and 2). An agent acts on its own inside your rules (level 3). That’s what “agentic” means."
+        },
+        {
+          "q": "What does it read before it writes?",
+          "a": "The conversation so far, the client’s record, the booking’s live situation, your policies and your availability."
+        }
+      ],
+      "related": [
+        "inbox",
+        "policies-and-procedures",
+        "follow-ups",
+        "missed-call-capture"
+      ],
+      "atTipsyToday": "Draft, and draft and train, built; autopilot to build"
+    },
+    {
+      "slug": "quotes",
+      "name": "Instant quotes",
+      "group": "win-the-client",
+      "status": "coming-soon",
+      "onlyOnHeyday": false,
+      "existingJobbieSlug": "quotes",
+      "modelledOn": "Quotes",
+      "icon": "hd-instant-quotes",
+      "pain": "Stop losing bookings while you work out the price.",
+      "searchLine": "Instant quote software that prices every job the way you would, in seconds.",
+      "outcomes": {
+        "saves": "Saves the evenings you spend writing quotes.",
+        "increases": "Increases how many quotes turn into bookings.",
+        "reduces": "Reduces pricing mistakes."
+      },
+      "intro": "Customers answer a few questions and see a price straight away: per guest, per hour, per person or per room, by distance and date. You set the rules. Heyday does the maths and the chasing.",
+      "stats": [
+        {
+          "statsBankRow": 1
+        }
+      ],
+      "example": {
+        "inputs": "Example numbers: a business sends 40 quotes a month and usually replies the next day; an average booking is $1,200. Booking rates from Flashquotes’ data: 22% for quotes sent within 4 hours, 18% later the same day, 16% the next day or later.",
+        "maths": "Next day: 40 × 16% = 6.4 bookings. Within 4 hours: 40 × 22% = 8.8 bookings. 8.8 − 6.4 = 2.4 extra bookings a month. 2.4 × $1,200 = $2,880.",
+        "result": "$2,880 a month, or $34,560 a year, lost to slow quotes. Then a small calculator: the visitor enters their own quotes a month, win rate and average booking, and sees their number, with no email needed."
+      },
+      "howItWorks": [
+        {
+          "label": "Instant quotes",
+          "heading": "Instant quotes, day or night",
+          "line": "The quote form on your site gives a priced quote with three options, on screen, as a PDF and by email.",
+          "screen": "A good, better and best quote: three package cards with prices, on a phone, with a PDF thumbnail beside it."
+        },
+        {
+          "label": "Live changes",
+          "heading": "Let customers shape their own quote, live",
+          "line": "They change guests, hours or the package and tick add-ons, and the price updates instantly.",
+          "screen": "An interactive quote: a guests slider, an hours stepper, add-on tick boxes and a total that updates."
+        },
+        {
+          "label": "Pricing rules",
+          "heading": "Prices that move with your demand",
+          "line": "Busy dates can cost more and quiet dates less, by rules you set. Your margin shows on every quote.",
+          "screen": "A pricing rules panel: per guest, per hour, travel, a busy-date uplift and a minimum spend, with a margin chip."
+        },
+        {
+          "label": "Book",
+          "heading": "Book and pay in one step",
+          "line": "They accept the quote, sign your terms and pay the deposit together.",
+          "screen": "An accept screen: a terms tick box, the deposit amount and an 'Accept and pay deposit' button."
+        }
+      ],
+      "situations": [
+        {
+          "business": "A mobile bar",
+          "situation": "A couple wants a cocktail bar for 80 guests on a Saturday in June, two hours from you."
+        },
+        {
+          "business": "A class host",
+          "situation": "A bachelorette party asks for a private pottery session for 10."
+        },
+        {
+          "business": "A cleaning business",
+          "situation": "A homeowner wants a price for a deep clean of a three-bedroom house."
+        }
+      ],
+      "faq": [
+        {
+          "q": "Can I price per person and per hour?",
+          "a": "Yes: per guest, per hour, per person or per room, by distance and date, with minimum spends."
+        },
+        {
+          "q": "Can customers see prices on my own website?",
+          "a": "Yes. The quote form sits on your own site or booking page and shows a price straight away."
+        },
+        {
+          "q": "What about bespoke events?",
+          "a": "Price phone and email enquiries with the same rules in the office quote tool, and changes are repriced automatically."
+        }
+      ],
+      "related": [
+        "online-booking",
+        "follow-ups",
+        "client-portal",
+        "inbox",
+        "classes-and-tickets",
+        "reviews"
+      ],
+      "atTipsyToday": "Built, needs generalising (demand from diary fullness and comparing dates to build)"
+    },
+    {
+      "slug": "follow-ups",
+      "name": "Follow-ups and autoresponders",
+      "group": "win-the-client",
+      "status": "coming-soon",
+      "onlyOnHeyday": false,
+      "existingJobbieSlug": "follow-ups",
+      "modelledOn": "Automations; Customer messaging",
+      "icon": "hd-automations",
+      "pain": "Stop chasing quotes that went quiet.",
+      "searchLine": "Automated follow-ups and autoresponders by email, WhatsApp and text",
+      "outcomes": {
+        "increases": "Increases bookings.",
+        "saves": "Saves chasing time."
+      },
+      "intro": "Design or import a message, then choose when it goes, how, to whom and what triggers it. Follow-ups change with the lead type and stop the moment they reply.",
+      "stats": [
+        {
+          "statsBankRow": 1
+        },
+        {
+          "statsBankRow": 3
+        },
+        {
+          "statsBankRow": 19
+        }
+      ],
+      "example": null,
+      "howItWorks": [
+        {
+          "label": "Build it your way",
+          "heading": "Drag in a step, click it to make it yours",
+          "line": "The workflow builder: triggers, actions, waits and if/else.",
+          "screen": "The workflow-builder still (assets/heyday-workflow-builder-still.svg)."
+        },
+        {
+          "label": "Say it like a sentence",
+          "heading": "When, wait, send, by, to, unless",
+          "line": "Every step reads in plain words.",
+          "screen": "The Customise step panel: When 'No reply to the quote', Wait '2 days', By 'WhatsApp', Unless 'They’ve booked', Only between '9am and 8pm'."
+        },
+        {
+          "label": "Stops by itself",
+          "heading": "Stops the moment they reply",
+          "line": "No awkward chaser after someone has booked.",
+          "screen": "A follow-up timeline with the later steps crossed out after 'Customer replied'."
+        },
+        {
+          "label": "By lead type",
+          "heading": "Faster for hot leads",
+          "line": "Hot and urgent leads come first.",
+          "screen": "Two sequences side by side, labelled 'Hot' and 'Off-peak'."
+        }
+      ],
+      "situations": [
+        {
+          "business": "A photo booth company",
+          "situation": "Nudges a quiet quote on WhatsApp two days later, then stops when the customer books."
+        },
+        {
+          "business": "A tutor",
+          "situation": "Sends a friendly reminder to parents who started booking and didn’t finish."
+        },
+        {
+          "business": "A mobile bar",
+          "situation": "Sends urgent leads a faster sequence than off-peak ones."
+        }
+      ],
+      "faq": [
+        {
+          "q": "Which channels?",
+          "a": "Email, WhatsApp and text."
+        },
+        {
+          "q": "What happens when they reply?",
+          "a": "The follow-ups stop."
+        },
+        {
+          "q": "Can I change the timings?",
+          "a": "Yes, in the settings studio. At Tipsy today the timings are fixed; the studio you edit yourself is coming soon."
+        }
+      ],
+      "related": [
+        "quotes",
+        "enquiries",
+        "replies-that-write-themselves",
+        "online-booking"
+      ],
+      "atTipsyToday": "Seven follow-ups with WhatsApp built, on fixed timings; the owner-editable studio to build"
+    },
+    {
+      "slug": "online-booking",
+      "name": "Online booking and instant book",
+      "group": "win-the-client",
+      "status": "coming-soon",
+      "onlyOnHeyday": false,
+      "existingJobbieSlug": "online-booking",
+      "modelledOn": "Online booking",
+      "icon": "hd-online-booking",
+      "pain": "Let customers book while you sleep.",
+      "searchLine": "Online booking system with instant booking by your rules",
+      "outcomes": {
+        "increases": "Increases bookings.",
+        "reduces": "Reduces phone tag."
+      },
+      "intro": "Let anyone book, check the diary first, or set rules by location, date or booking value. The deposit and signed terms come in the same step.",
+      "stats": [
+        {
+          "statsBankRow": 16
+        },
+        {
+          "statsBankRow": 17
+        },
+        {
+          "statsBankRow": 19
+        }
+      ],
+      "example": null,
+      "howItWorks": [
+        {
+          "label": "Your rules",
+          "heading": "Decide who can book instantly",
+          "line": "Anyone, after a diary check, or by location, date, size or value.",
+          "screen": "A rules panel: 'Instant book if: under 50 guests, within 30 miles, 14+ days away', labelled example data."
+        },
+        {
+          "label": "Check first",
+          "heading": "Check the diary and the team first",
+          "line": "For far-off or last-minute dates, Heyday asks your team before it confirms.",
+          "screen": "A 'Checking your team' state that turns into 'Confirmed'."
+        },
+        {
+          "label": "Pay",
+          "heading": "The deposit and terms together",
+          "line": "Card, Apple Pay and Google Pay.",
+          "screen": "A checkout: deposit, a terms tick box and wallet buttons."
+        },
+        {
+          "label": "Half-finished",
+          "heading": "Reminders for half-finished bookings",
+          "line": "Customers who stop at checkout get a reminder.",
+          "screen": "A reminder email: 'Your date’s still free'."
+        }
+      ],
+      "situations": [
+        {
+          "business": "A window cleaner",
+          "situation": "Lets regular customers book a slot any time."
+        },
+        {
+          "business": "A class host",
+          "situation": "Sells seats in Thursday’s class without answering a single email."
+        },
+        {
+          "business": "A caterer",
+          "situation": "Only confirms big dates after checking the team is free."
+        }
+      ],
+      "faq": [
+        {
+          "q": "Can I check before a booking is confirmed?",
+          "a": "Yes. You choose: anyone can book, or Heyday checks the diary or the team first."
+        },
+        {
+          "q": "Can people book classes too?",
+          "a": "Yes, seats in classes as well as services."
+        }
+      ],
+      "related": [
+        "quotes",
+        "payments",
+        "classes-and-tickets",
+        "scheduling"
+      ],
+      "atTipsyToday": "Checkout with deposits built; the owner’s rules to build"
+    },
+    {
+      "slug": "classes-and-tickets",
+      "name": "Classes, tickets and private groups",
+      "group": "win-the-client",
+      "status": "coming-soon",
+      "onlyOnHeyday": true,
+      "existingJobbieSlug": null,
+      "modelledOn": "(Heyday only)",
+      "icon": "hd-classes-and-tickets",
+      "pain": "Stop running your classes from a spreadsheet.",
+      "searchLine": "Class booking software with tickets, capacity and private groups",
+      "outcomes": {
+        "increases": "Increases seats sold.",
+        "saves": "Saves admin."
+      },
+      "intro": "Sessions, capacity, places left, waiting lists and private group bookings, in the same diary as everything else you sell.",
+      "stats": [
+        {
+          "statsBankRow": 14
+        },
+        {
+          "statsBankRow": 15
+        }
+      ],
+      "example": {
+        "inputs": "Example numbers: 4 classes a week, 12 seats each, usually 9 sold, at $65 a seat.",
+        "maths": "3 empty seats × 4 classes × $65 = $780 a week. $780 × 52 ÷ 12 = $3,380.",
+        "result": "About $3,380 a month sitting in empty seats."
+      },
+      "howItWorks": [
+        {
+          "label": "Sessions",
+          "heading": "Set up sessions once",
+          "line": "Dates, times, capacity and price.",
+          "screen": "A class schedule with sessions and a 'places left' count on each."
+        },
+        {
+          "label": "Tickets",
+          "heading": "Sell seats online",
+          "line": "Customers book and pay for a seat.",
+          "screen": "A ticket checkout: 2 seats and a total."
+        },
+        {
+          "label": "Private groups",
+          "heading": "Private groups in the same diary",
+          "line": "A bachelorette party books its own session.",
+          "screen": "A diary with a public class and a private group booking side by side."
+        },
+        {
+          "label": "Waiting lists",
+          "heading": "Full? Join the list",
+          "line": "A canceled seat goes to the next person.",
+          "screen": "A waiting list with three entries and an 'Offered' chip on the first."
+        }
+      ],
+      "situations": [
+        {
+          "business": "A pottery studio",
+          "situation": "Has twelve seats in Saturday’s class, and a bachelorette party asking for a private session."
+        },
+        {
+          "business": "A cocktail class host",
+          "situation": "Sells public classes and private team-building sessions from one price list."
+        },
+        {
+          "business": "A dance teacher",
+          "situation": "Fills canceled places from the waiting list without lifting a finger."
+        }
+      ],
+      "faq": [
+        {
+          "q": "Can I run private sessions too?",
+          "a": "Yes. Private group bookings sit in the same diary as your public classes."
+        },
+        {
+          "q": "What happens when a class is full?",
+          "a": "People can join a waiting list, and a canceled seat goes to the next person."
+        }
+      ],
+      "related": [
+        "waiting-lists",
+        "online-booking",
+        "group-bookings",
+        "sell-everywhere"
+      ],
+      "atTipsyToday": "Private classes built; ticketed sessions to build"
+    },
+    {
+      "slug": "packages-and-memberships",
+      "name": "Packages, memberships and regulars",
+      "group": "win-the-client",
+      "status": "coming-soon",
+      "onlyOnHeyday": false,
+      "existingJobbieSlug": null,
+      "modelledOn": "Recurring jobs",
+      "icon": "hd-packages-and-memberships",
+      "pain": "Stop starting from zero every month.",
+      "searchLine": "Packages, memberships and recurring bookings with direct debits",
+      "outcomes": {
+        "increases": "Increases repeat income."
+      },
+      "intro": "Packages and one-offs, weekly or monthly bookings, memberships, price lists for regular clients and agencies, and direct debits.",
+      "stats": [
+        {
+          "statsBankRow": 8
+        }
+      ],
+      "example": null,
+      "howItWorks": [
+        {
+          "label": "Packages",
+          "heading": "Packages and add-ons",
+          "line": "Good, better and best, plus extras.",
+          "screen": "Three package cards, each with add-ons."
+        },
+        {
+          "label": "Recurring",
+          "heading": "Weekly or monthly bookings",
+          "line": "Set it once and it repeats.",
+          "screen": "A recurring booking: 'Every other Tuesday, 10am'."
+        },
+        {
+          "label": "Memberships",
+          "heading": "Memberships that pay monthly",
+          "line": "Regulars pay each month.",
+          "screen": "A membership card: a monthly price and '4 classes a month'."
+        },
+        {
+          "label": "Regulars",
+          "heading": "Price lists for regulars and agencies",
+          "line": "Their own prices, applied for you.",
+          "screen": "A price list assigned to an agency client."
+        }
+      ],
+      "situations": [
+        {
+          "business": "A window cleaner",
+          "situation": "A customer wants their windows cleaned every month."
+        },
+        {
+          "business": "A yoga teacher",
+          "situation": "Sells a monthly membership of four classes."
+        },
+        {
+          "business": "An event staffing agency",
+          "situation": "Gives a regular venue its own price list."
+        }
+      ],
+      "faq": [
+        {
+          "q": "Can clients pay by direct debit?",
+          "a": "Direct debits are coming soon."
+        },
+        {
+          "q": "Can agencies have their own prices?",
+          "a": "Yes. Price lists for regular clients and agencies are built at Tipsy."
+        }
+      ],
+      "related": [
+        "loyalty",
+        "gift-vouchers",
+        "payments",
+        "scheduling"
+      ],
+      "atTipsyToday": "Agent price lists built; memberships, recurring billing and direct debits to build"
+    },
+    {
+      "slug": "contracts-and-e-signatures",
+      "name": "Contracts and e-signatures",
+      "group": "win-the-client",
+      "status": "coming-soon",
+      "onlyOnHeyday": false,
+      "existingJobbieSlug": null,
+      "modelledOn": "Quotes (signature)",
+      "icon": "hd-contracts-and-e-signatures",
+      "pain": "Stop printing, signing and scanning.",
+      "searchLine": "Online contracts and e-signatures with the quote",
+      "outcomes": {
+        "saves": "Saves time.",
+        "reduces": "Reduces disputes."
+      },
+      "intro": "The client signs your terms with the quote, and pays the deposit in the same step.",
+      "stats": [],
+      "example": null,
+      "howItWorks": [
+        {
+          "label": "Your terms",
+          "heading": "Your terms, attached",
+          "line": "Add your terms once; they go with every quote.",
+          "screen": "A terms document attached to a quote."
+        },
+        {
+          "label": "Sign",
+          "heading": "Sign on any screen",
+          "line": "The client signs on their phone or computer.",
+          "screen": "A phone with a signature pad and a 'Sign and continue' button."
+        },
+        {
+          "label": "Kept",
+          "heading": "Signed copies, kept",
+          "line": "The signed terms stay on the client’s record.",
+          "screen": "A client record showing 'Terms signed' and a date."
+        }
+      ],
+      "situations": [
+        {
+          "business": "A DJ",
+          "situation": "Has the cancellation terms signed before the deposit is taken."
+        },
+        {
+          "business": "A photographer",
+          "situation": "Gets the usage terms signed with the booking."
+        },
+        {
+          "business": "A caterer",
+          "situation": "Gets allergy terms agreed in writing with the quote."
+        }
+      ],
+      "faq": [
+        {
+          "q": "When does the client sign?",
+          "a": "With the quote, in the same step as the deposit."
+        },
+        {
+          "q": "Can my team sign contracts too?",
+          "a": "Yes. Staff contracts are e-signed at Tipsy today."
+        }
+      ],
+      "related": [
+        "quotes",
+        "payments",
+        "client-portal",
+        "hiring-and-onboarding"
+      ],
+      "atTipsyToday": "Staff contracts are e-signed; client signing to build"
+    },
+    {
+      "slug": "group-bookings",
+      "name": "Group bookings and split payments",
+      "group": "win-the-client",
+      "status": "coming-soon",
+      "onlyOnHeyday": true,
+      "existingJobbieSlug": null,
+      "modelledOn": "(Heyday only)",
+      "icon": "hd-group-bookings",
+      "pain": "Let the group pay their own share.",
+      "searchLine": "Group booking with split payments by link",
+      "outcomes": {
+        "increases": "Increases group bookings.",
+        "reduces": "Reduces chasing."
+      },
+      "intro": "Each guest pays their share by link, so the organizer isn’t left chasing friends for money.",
+      "stats": [],
+      "example": {
+        "inputs": "Example numbers: a bachelorette party of 10 books a $600 private class.",
+        "maths": "$600 ÷ 10 = $60 each, paid by link.",
+        "result": "The organizer pays $60, not $600, and doesn’t have to chase anyone."
+      },
+      "howItWorks": [
+        {
+          "label": "Book",
+          "heading": "The organizer books",
+          "line": "One person makes the booking.",
+          "screen": "A booking for 10 with 'Split the cost' switched on."
+        },
+        {
+          "label": "Share",
+          "heading": "Everyone gets a link",
+          "line": "Each guest pays their share.",
+          "screen": "A share sheet with a payment link and '3 of 10 paid'."
+        },
+        {
+          "label": "Paid",
+          "heading": "See who’s paid",
+          "line": "No chasing, no spreadsheets.",
+          "screen": "A guest list with a tick against each person who has paid."
+        }
+      ],
+      "situations": [
+        {
+          "business": "A class host",
+          "situation": "A bachelorette party splits a private class ten ways."
+        },
+        {
+          "business": "An escape room",
+          "situation": "A team books a room and each player pays their share."
+        },
+        {
+          "business": "A private chef",
+          "situation": "A group of friends splits a dinner party."
+        }
+      ],
+      "faq": [
+        {
+          "q": "How do guests pay?",
+          "a": "Each guest pays their share by link."
+        },
+        {
+          "q": "Why split payments?",
+          "a": "Bigger group bookings, and no chasing friends for money."
+        }
+      ],
+      "related": [
+        "classes-and-tickets",
+        "payments",
+        "online-booking",
+        "gift-vouchers"
+      ],
+      "atTipsyToday": "To build"
+    },
+    {
+      "slug": "client-portal",
+      "name": "Client portal and event planning",
+      "group": "run-the-day",
+      "status": "coming-soon",
+      "onlyOnHeyday": false,
+      "existingJobbieSlug": "client-portal",
+      "modelledOn": "Client Hub",
+      "icon": "hd-client-portal",
+      "pain": "Stop answering “what time do you arrive?” again.",
+      "searchLine": "Client portal for event planning, payments and changes",
+      "outcomes": {
+        "reduces": "Reduces calls and emails.",
+        "saves": "Saves time."
+      },
+      "intro": "Clients pay, confirm guest numbers, choose menus, share with the group, request changes and download receipts, all in one place.",
+      "stats": [
+        {
+          "statsBankRow": 14
+        }
+      ],
+      "example": null,
+      "howItWorks": [
+        {
+          "label": "Plan",
+          "heading": "Everything for their booking",
+          "line": "Date, time, arrival and what’s included.",
+          "screen": "A portal home: date, time, arrival time and what’s included."
+        },
+        {
+          "label": "Choose",
+          "heading": "Choices and guest numbers",
+          "line": "Menus, options and final numbers.",
+          "screen": "A menu-choice screen and a guest-number stepper."
+        },
+        {
+          "label": "Change",
+          "heading": "Changes, asked for properly",
+          "line": "Requests arrive in one place.",
+          "screen": "A change-request form and its status."
+        },
+        {
+          "label": "Pay",
+          "heading": "Pay and download receipts",
+          "line": "Balances and receipts, whenever they want them.",
+          "screen": "A 'Balance due' card with 'Pay now', and a list of receipts."
+        }
+      ],
+      "situations": [
+        {
+          "business": "A caterer",
+          "situation": "Collects final guest numbers and menu choices without a single phone call."
+        },
+        {
+          "business": "A mobile bar",
+          "situation": "Lets the host share the cocktail menu with the group."
+        },
+        {
+          "business": "A photographer",
+          "situation": "Gets the shot list and timings through the portal."
+        }
+      ],
+      "faq": [
+        {
+          "q": "Can the client share it with their group?",
+          "a": "Yes."
+        },
+        {
+          "q": "Can they change guest numbers?",
+          "a": "Yes. They confirm guest numbers and request changes in the portal."
+        }
+      ],
+      "related": [
+        "quotes",
+        "payments",
+        "inbox",
+        "on-the-day"
+      ],
+      "atTipsyToday": "Built, needs generalising"
+    },
+    {
+      "slug": "inbox",
+      "name": "One inbox",
+      "group": "run-the-day",
+      "status": "coming-soon",
+      "onlyOnHeyday": false,
+      "existingJobbieSlug": "inbox",
+      "modelledOn": "Customer messaging",
+      "icon": "hd-one-inbox",
+      "pain": "Stop checking five apps to find one message.",
+      "searchLine": "Shared inbox for email, WhatsApp, texts and calls",
+      "outcomes": {
+        "reduces": "Reduces missed messages.",
+        "saves": "Saves time."
+      },
+      "intro": "Email, WhatsApp, texts, calls and app chat in one thread per client, with AI drafts that read the booking. Numbers stay hidden between clients and your team.",
+      "stats": [
+        {
+          "statsBankRow": 3
+        },
+        {
+          "statsBankRow": 18
+        }
+      ],
+      "example": null,
+      "howItWorks": [
+        {
+          "label": "One thread",
+          "heading": "One thread per client",
+          "line": "Every channel, in order.",
+          "screen": "A client thread mixing an email, a WhatsApp, a text and a call note."
+        },
+        {
+          "label": "AI draft",
+          "heading": "A draft that knows the booking",
+          "line": "Replies that read the booking first.",
+          "screen": "An AI draft with notes of what it found."
+        },
+        {
+          "label": "Your team",
+          "heading": "Your team, without your numbers",
+          "line": "Hidden numbers between clients and the team.",
+          "screen": "A message relayed between a client and a team member, with both numbers masked."
+        }
+      ],
+      "situations": [
+        {
+          "business": "A mobile bar",
+          "situation": "Sees a WhatsApp, an email and a missed call from one client in one thread."
+        },
+        {
+          "business": "A tutor",
+          "situation": "Answers parents from one place instead of three apps."
+        },
+        {
+          "business": "An event staffing agency",
+          "situation": "Lets workers message clients on the day without sharing personal numbers."
+        }
+      ],
+      "faq": [
+        {
+          "q": "Which channels?",
+          "a": "Email, WhatsApp, texts, calls and app chat."
+        },
+        {
+          "q": "Can my team message clients without sharing their number?",
+          "a": "Yes. Numbers stay hidden between clients and the team."
+        }
+      ],
+      "related": [
+        "replies-that-write-themselves",
+        "call-notes",
+        "client-records",
+        "missed-call-capture"
+      ],
+      "atTipsyToday": "Built"
+    },
+    {
+      "slug": "client-records",
+      "name": "Client records",
+      "group": "run-the-day",
+      "status": "coming-soon",
+      "onlyOnHeyday": false,
+      "existingJobbieSlug": "client-records",
+      "modelledOn": "CRM",
+      "icon": "hd-client-records",
+      "pain": "Stop starting every conversation from scratch.",
+      "searchLine": "Client records (CRM) that fill themselves",
+      "outcomes": {
+        "saves": "Saves time.",
+        "increases": "Increases repeat bookings."
+      },
+      "intro": "Every email, WhatsApp, text, call and note, and every quote, booking and payment, for one client. Who they are (lead, current customer or past customer) is worked out automatically.",
+      "stats": [
+        {
+          "statsBankRow": 8
+        }
+      ],
+      "example": null,
+      "howItWorks": [
+        {
+          "label": "Everything",
+          "heading": "One record per person",
+          "line": "Messages, quotes, bookings and payments, in one timeline.",
+          "screen": "A client record: a timeline of messages, quotes, bookings and payments."
+        },
+        {
+          "label": "Who they are",
+          "heading": "Lead, customer or past customer",
+          "line": "Worked out for you.",
+          "screen": "A status chip changing from 'Lead' to 'Current customer'."
+        },
+        {
+          "label": "Your fields",
+          "heading": "Fields for your kind of business",
+          "line": "Allergies for a caterer, access notes for a cleaner, skill level for a class host.",
+          "screen": "A custom-fields panel showing those three examples."
+        }
+      ],
+      "situations": [
+        {
+          "business": "A caterer",
+          "situation": "Sees a client’s allergies before quoting their next party."
+        },
+        {
+          "business": "A cleaner",
+          "situation": "Keeps access notes on every home."
+        },
+        {
+          "business": "A class host",
+          "situation": "Records each regular’s skill level."
+        }
+      ],
+      "faq": [
+        {
+          "q": "Do I have to keep it up to date?",
+          "a": "No. Every message, quote, booking and payment lands on the record by itself."
+        },
+        {
+          "q": "Can I add my own fields?",
+          "a": "Custom fields for each type of business are coming soon."
+        }
+      ],
+      "related": [
+        "inbox",
+        "campaigns",
+        "loyalty",
+        "reviews"
+      ],
+      "atTipsyToday": "Built; custom fields to build"
+    },
+    {
+      "slug": "call-notes",
+      "name": "Call notes and follow-ups",
+      "group": "run-the-day",
+      "status": "coming-soon",
+      "onlyOnHeyday": true,
+      "existingJobbieSlug": null,
+      "modelledOn": "(Jobber doesn’t)",
+      "icon": "hd-call-notes",
+      "pain": "Stop scribbling notes during calls.",
+      "searchLine": "Call summaries, transcripts and recap emails",
+      "outcomes": {
+        "saves": "Saves time.",
+        "reduces": "Reduces forgotten promises."
+      },
+      "intro": "Every answered call lands in the inbox with a summary and who it was with. One click drafts a recap email from what was said, and voicemails arrive as text.",
+      "stats": [],
+      "example": null,
+      "howItWorks": [
+        {
+          "label": "Summary",
+          "heading": "Every call, summarized",
+          "line": "Who it was with and what was said.",
+          "screen": "An inbox item: call summary, length and who it was with."
+        },
+        {
+          "label": "Transcript",
+          "heading": "The recording and transcript",
+          "line": "Open it any time.",
+          "screen": "A transcript panel with a play bar."
+        },
+        {
+          "label": "Recap",
+          "heading": "A recap email in one click",
+          "line": "Drafted from the call, for a person to send.",
+          "screen": "A drafted recap email opening 'Great to speak today…', with a Send button."
+        },
+        {
+          "label": "Voicemail",
+          "heading": "Voicemails as text",
+          "line": "Read them instead of listening.",
+          "screen": "A transcribed voicemail in the inbox."
+        }
+      ],
+      "situations": [
+        {
+          "business": "A wedding planner",
+          "situation": "Sends a recap of a long planning call in one click."
+        },
+        {
+          "business": "A caterer",
+          "situation": "Finds what a client said about numbers on last week’s call."
+        },
+        {
+          "business": "A DJ",
+          "situation": "Reads a voicemail between sets."
+        }
+      ],
+      "faq": [
+        {
+          "q": "Does the recap send itself?",
+          "a": "No. It’s drafted for a person to send."
+        },
+        {
+          "q": "Which phone systems?",
+          "a": "The ones Heyday supports [to confirm]. Tipsy uses Zoom Phone today."
+        }
+      ],
+      "related": [
+        "inbox",
+        "missed-call-capture",
+        "replies-that-write-themselves",
+        "client-records"
+      ],
+      "atTipsyToday": "Built"
+    },
+    {
+      "slug": "scheduling",
+      "name": "Scheduling and one diary",
+      "group": "run-the-day",
+      "status": "coming-soon",
+      "onlyOnHeyday": false,
+      "existingJobbieSlug": "scheduling",
+      "modelledOn": "Scheduling",
+      "icon": "hd-scheduling",
+      "pain": "Stop rebuilding your week every time something changes.",
+      "searchLine": "Scheduling software with one diary, clash and travel checks",
+      "outcomes": {
+        "saves": "Saves admin.",
+        "reduces": "Reduces clashes."
+      },
+      "intro": "One diary across every booking source, with clash and travel checks.",
+      "stats": [
+        {
+          "statsBankRow": 14
+        }
+      ],
+      "example": null,
+      "howItWorks": [
+        {
+          "label": "One diary",
+          "heading": "Everything in one place",
+          "line": "Every booking, whatever it came from.",
+          "screen": "A week view with bookings from several sources."
+        },
+        {
+          "label": "Clashes",
+          "heading": "Clashes caught before they happen",
+          "line": "Double bookings flagged straight away.",
+          "screen": "A clash warning between two overlapping bookings."
+        },
+        {
+          "label": "Travel",
+          "heading": "Travel time checked",
+          "line": "Back-to-back jobs you can actually reach.",
+          "screen": "A map strip showing the travel time between two events."
+        }
+      ],
+      "situations": [
+        {
+          "business": "A photographer",
+          "situation": "Sees a clash between a wedding and a portrait session before saying yes."
+        },
+        {
+          "business": "A cleaning business",
+          "situation": "Checks the travel time between two homes."
+        },
+        {
+          "business": "A mobile bar",
+          "situation": "Moves a booking and sees the whole week update."
+        }
+      ],
+      "faq": [
+        {
+          "q": "Does it check travel?",
+          "a": "Yes, with clash and travel checks."
+        },
+        {
+          "q": "Does it include bookings from other platforms?",
+          "a": "That’s the aim: one diary across every booking source. Other platforms are coming soon."
+        }
+      ],
+      "related": [
+        "shift-offers",
+        "sell-everywhere",
+        "on-the-day",
+        "online-booking"
+      ],
+      "atTipsyToday": "Built, needs generalising"
+    },
+    {
+      "slug": "shift-offers",
+      "name": "Shift offers and staffing",
+      "group": "run-the-day",
+      "status": "coming-soon",
+      "onlyOnHeyday": false,
+      "existingJobbieSlug": "staff-allocation",
+      "modelledOn": "Team management; Scheduling",
+      "icon": "hd-team-and-shifts",
+      "pain": "Stop texting your whole team to fill one shift.",
+      "searchLine": "Shift offers for employees and subcontractors",
+      "outcomes": {
+        "saves": "Saves hours.",
+        "reduces": "Reduces no-shows."
+      },
+      "intro": "Offer the job to the right people, and let the first yes take it. Employees and subcontractors accept or decline, and placement can be automatic, by distance and rating.",
+      "stats": [],
+      "example": null,
+      "howItWorks": [
+        {
+          "label": "Offer",
+          "heading": "Offer to the right people",
+          "line": "Ranked by distance, reliability and rating.",
+          "screen": "A shift offer to three ranked people, each with a distance and a rating."
+        },
+        {
+          "label": "First yes",
+          "heading": "The first yes takes it",
+          "line": "Everyone else sees it’s filled.",
+          "screen": "An 'Accepted' chip on one person; the others show 'Filled'."
+        },
+        {
+          "label": "Automatic",
+          "heading": "Or let it place people itself",
+          "line": "Automatic placement by distance and rating.",
+          "screen": "Automatic placement settings: distance and rating."
+        }
+      ],
+      "situations": [
+        {
+          "business": "An event staffing agency",
+          "situation": "Fills forty shifts for a festival weekend without a group chat."
+        },
+        {
+          "business": "A mobile bar",
+          "situation": "Offers a Saturday wedding to the three nearest bartenders."
+        },
+        {
+          "business": "A caterer",
+          "situation": "Finds servers for a last-minute corporate lunch."
+        }
+      ],
+      "faq": [
+        {
+          "q": "Can I choose who gets offered?",
+          "a": "Yes, or let placement run automatically by distance and rating."
+        },
+        {
+          "q": "Does it work for subcontractors?",
+          "a": "Yes. Employees and subcontractors both accept or decline."
+        }
+      ],
+      "related": [
+        "team",
+        "scheduling",
+        "on-the-day",
+        "team-pay-and-expenses"
+      ],
+      "atTipsyToday": "Built (automatic on some bookings; more being tested)"
+    },
+    {
+      "slug": "checklists-and-kit-lists",
+      "name": "Checklists, shopping and kit lists",
+      "group": "run-the-day",
+      "status": "coming-soon",
+      "onlyOnHeyday": false,
+      "existingJobbieSlug": null,
+      "modelledOn": "Checklists and forms",
+      "icon": "hd-checklists-and-kit-lists",
+      "pain": "Stop finding out on the day that something’s missing.",
+      "searchLine": "Checklists, shopping lists and kit lists for every event",
+      "outcomes": {
+        "reduces": "Reduces mistakes.",
+        "saves": "Saves last-minute trips."
+      },
+      "intro": "Pre-event checks, shopping lists from the client’s choices, kit ordering and waivers.",
+      "stats": [],
+      "example": null,
+      "howItWorks": [
+        {
+          "label": "Checks",
+          "heading": "Pre-event checks",
+          "line": "The same checks, every time.",
+          "screen": "A pre-event checklist with ticks."
+        },
+        {
+          "label": "Shopping",
+          "heading": "Shopping lists from their choices",
+          "line": "Built from what the client picked.",
+          "screen": "A shopping list generated from a menu choice."
+        },
+        {
+          "label": "Kit",
+          "heading": "Kit lists and ordering",
+          "line": "What to pack, and what to order.",
+          "screen": "A kit list with quantities and an Order button."
+        },
+        {
+          "label": "Waivers",
+          "heading": "Waivers, signed before they arrive",
+          "line": "For activities that need one.",
+          "screen": "A waiver for guests to sign."
+        }
+      ],
+      "situations": [
+        {
+          "business": "A mobile bar",
+          "situation": "Gets a shopping list built from the cocktails the client chose."
+        },
+        {
+          "business": "A photo booth company",
+          "situation": "Packs from the same kit list for every booth."
+        },
+        {
+          "business": "An outdoor activity",
+          "situation": "Sends a waiver with every booking."
+        }
+      ],
+      "faq": [
+        {
+          "q": "Where do shopping lists come from?",
+          "a": "From the client’s choices, such as their menu."
+        },
+        {
+          "q": "Can guests sign waivers?",
+          "a": "Yes. Waivers are part of this feature."
+        }
+      ],
+      "related": [
+        "on-the-day",
+        "client-portal",
+        "tasks",
+        "shift-offers"
+      ],
+      "atTipsyToday": "Built (kit ordering being tested)"
+    },
+    {
+      "slug": "on-the-day",
+      "name": "On the day",
+      "group": "run-the-day",
+      "status": "coming-soon",
+      "onlyOnHeyday": false,
+      "existingJobbieSlug": "job-tracking",
+      "modelledOn": "Dispatch; Jobs",
+      "icon": "hd-on-the-day",
+      "pain": "Stop worrying whether your team turned up.",
+      "searchLine": "Event day reminders, briefings and team check-in",
+      "outcomes": {
+        "reduces": "Reduces no-shows.",
+        "increases": "Increases peace of mind."
+      },
+      "intro": "Reminders, briefings, check-in with alerts, and emergency cover.",
+      "stats": [
+        {
+          "statsBankRow": 14
+        }
+      ],
+      "example": null,
+      "howItWorks": [
+        {
+          "label": "Reminders",
+          "heading": "Day-before and day-of reminders",
+          "line": "For your customer and your team.",
+          "screen": "Day-before and day-of reminder messages."
+        },
+        {
+          "label": "Briefing",
+          "heading": "Everyone knows the plan",
+          "line": "Crew briefing notes: where, when and what to bring.",
+          "screen": "A crew briefing: 'Arrive 5:30pm', the address and a what-to-bring list."
+        },
+        {
+          "label": "Check-in",
+          "heading": "Check-in with alerts",
+          "line": "You know when your team has arrived.",
+          "screen": "A team check-in list with one late alert."
+        },
+        {
+          "label": "Cover",
+          "heading": "Emergency cover",
+          "line": "If someone can’t make it, the shift goes out again.",
+          "screen": "An urgent shift offer sent to nearby people."
+        }
+      ],
+      "situations": [
+        {
+          "business": "An event staffing agency",
+          "situation": "Sees every worker check in across three venues."
+        },
+        {
+          "business": "A DJ",
+          "situation": "Gets the day’s timings and the venue contact in one briefing."
+        },
+        {
+          "business": "A caterer",
+          "situation": "Gets an alert when a server hasn’t checked in, and offers the shift again."
+        }
+      ],
+      "faq": [
+        {
+          "q": "What happens if someone doesn’t check in?",
+          "a": "You get an alert, and emergency cover can be offered."
+        },
+        {
+          "q": "Do customers get reminders?",
+          "a": "Yes, the day before and on the day."
+        }
+      ],
+      "related": [
+        "shift-offers",
+        "checklists-and-kit-lists",
+        "client-portal",
+        "tips"
+      ],
+      "atTipsyToday": "Built"
+    },
+    {
+      "slug": "tasks",
+      "name": "Tasks",
+      "group": "run-the-day",
+      "status": "coming-soon",
+      "onlyOnHeyday": true,
+      "existingJobbieSlug": null,
+      "modelledOn": "(Jobber doesn’t)",
+      "icon": "hd-tasks",
+      "pain": "Stop holding every to-do in your head.",
+      "searchLine": "Task management with deadlines that chase each person",
+      "outcomes": {
+        "reduces": "Reduces missed jobs.",
+        "saves": "Saves mental load."
+      },
+      "intro": "To-dos with tagged colleagues and deadlines that chase each person. Jobs Heyday raises itself, such as a call back, go in the same list.",
+      "stats": [
+        {
+          "statsBankRow": 20
+        }
+      ],
+      "example": null,
+      "howItWorks": [
+        {
+          "label": "Add",
+          "heading": "Tag a colleague, set a deadline",
+          "line": "One list for the whole team.",
+          "screen": "A task with a tagged colleague and a deadline."
+        },
+        {
+          "label": "Chase",
+          "heading": "Deadlines that chase",
+          "line": "Reminders go to the person, not just the list.",
+          "screen": "A reminder notification: 'Due today'."
+        },
+        {
+          "label": "Raised for you",
+          "heading": "Jobs Heyday raises itself",
+          "line": "Call backs and follow-ups land in the same list.",
+          "screen": "A call-back task raised automatically."
+        }
+      ],
+      "situations": [
+        {
+          "business": "A wedding planner",
+          "situation": "Hands off supplier calls to an assistant with a deadline."
+        },
+        {
+          "business": "A caterer",
+          "situation": "Gets a call-back task after a missed call from a client."
+        },
+        {
+          "business": "An escape room",
+          "situation": "Tracks room repairs between bookings."
+        }
+      ],
+      "faq": [
+        {
+          "q": "Can I assign tasks?",
+          "a": "Yes. Tag a colleague and set a deadline."
+        },
+        {
+          "q": "Does Heyday add tasks itself?",
+          "a": "Yes. Jobs it raises, such as a call back, go in the same list."
+        }
+      ],
+      "related": [
+        "missed-call-capture",
+        "team",
+        "reporting",
+        "checklists-and-kit-lists"
+      ],
+      "atTipsyToday": "Built"
+    },
+    {
+      "slug": "hiring-and-onboarding",
+      "name": "Hiring and onboarding",
+      "group": "run-the-day",
+      "status": "coming-soon",
+      "onlyOnHeyday": true,
+      "existingJobbieSlug": null,
+      "modelledOn": "(Jobber doesn’t)",
+      "icon": "hd-hiring-and-onboarding",
+      "pain": "Stop drowning in applications.",
+      "searchLine": "Hiring and onboarding for event staff and crews",
+      "outcomes": {
+        "saves": "Saves hiring time.",
+        "reduces": "Reduces bad hires."
+      },
+      "intro": "AI screening, self-booked interviews, ID checks, e-signed contracts and training sign-off.",
+      "stats": [],
+      "example": null,
+      "howItWorks": [
+        {
+          "label": "Screen",
+          "heading": "AI screening",
+          "line": "The strongest applicants first.",
+          "screen": "An applicant list with AI screening notes."
+        },
+        {
+          "label": "Interview",
+          "heading": "Interviews they book themselves",
+          "line": "No back-and-forth over times.",
+          "screen": "An interview booking calendar."
+        },
+        {
+          "label": "Check",
+          "heading": "Work eligibility checks",
+          "line": "Form I-9 for employees, Form W-9 for subcontractors.",
+          "screen": "A checks list with an I-9 or W-9 status on each person."
+        },
+        {
+          "label": "Onboard",
+          "heading": "Contracts and training",
+          "line": "Signed, trained and ready.",
+          "screen": "An e-signed contract and training sign-off ticks."
+        }
+      ],
+      "situations": [
+        {
+          "business": "An event staffing agency",
+          "situation": "Screens two hundred applicants before a busy season."
+        },
+        {
+          "business": "A mobile bar",
+          "situation": "Lets applicants book their own interview slot."
+        },
+        {
+          "business": "A photo booth company",
+          "situation": "Onboards new attendants with a signed contract and training."
+        }
+      ],
+      "faq": [
+        {
+          "q": "Does it handle US checks?",
+          "a": "US work eligibility checks are coming soon. Tipsy’s version is built for UK rules."
+        },
+        {
+          "q": "Can applicants book their own interview?",
+          "a": "Yes."
+        }
+      ],
+      "related": [
+        "team",
+        "policies-and-procedures",
+        "shift-offers",
+        "contracts-and-e-signatures"
+      ],
+      "atTipsyToday": "Built for UK rules; US checks to build"
+    },
+    {
+      "slug": "time-tracking",
+      "name": "Time tracking",
+      "group": "run-the-day",
+      "status": "coming-soon",
+      "onlyOnHeyday": false,
+      "existingJobbieSlug": "time-tracking",
+      "modelledOn": "Time tracking",
+      "icon": "hd-time-tracking",
+      "pain": "Stop guessing hours on a Friday.",
+      "searchLine": "Time tracking and timesheets for your team",
+      "outcomes": {
+        "reduces": "Reduces pay mistakes.",
+        "saves": "Saves admin."
+      },
+      "intro": "Hours for employees, starting from check-in on the day. Timesheets are coming soon.",
+      "stats": [],
+      "example": null,
+      "howItWorks": [
+        {
+          "label": "Check in",
+          "heading": "Hours start at check-in",
+          "line": "Check-in and check-out times on every shift.",
+          "screen": "A shift with check-in and check-out times."
+        },
+        {
+          "label": "Timesheets",
+          "heading": "Timesheets, done for you",
+          "line": "A week of hours in one place.",
+          "screen": "A weekly timesheet, marked 'Coming soon'."
+        },
+        {
+          "label": "Into pay",
+          "heading": "Hours into pay",
+          "line": "No retyping.",
+          "screen": "Hours flowing into the team pay screen."
+        }
+      ],
+      "situations": [
+        {
+          "business": "A caterer",
+          "situation": "Pays servers from their checked-in hours."
+        },
+        {
+          "business": "A cleaning business",
+          "situation": "Sees hours per home at the end of the week."
+        },
+        {
+          "business": "An event staffing agency",
+          "situation": "Checks hours before paying a big weekend."
+        }
+      ],
+      "faq": [
+        {
+          "q": "Is time tracking live?",
+          "a": "Check-in is built at Tipsy. Timesheets are coming soon."
+        },
+        {
+          "q": "Does it connect to pay?",
+          "a": "Yes. Hours feed team pay."
+        }
+      ],
+      "related": [
+        "team-pay-and-expenses",
+        "on-the-day",
+        "team",
+        "profit-per-job"
+      ],
+      "atTipsyToday": "Check-in only; timesheets to build"
+    },
+    {
+      "slug": "payments",
+      "name": "Payments and deposits",
+      "group": "get-paid",
+      "status": "coming-soon",
+      "onlyOnHeyday": false,
+      "existingJobbieSlug": "payments",
+      "modelledOn": "Payments",
+      "icon": "hd-payments",
+      "pain": "Stop losing dates to no-shows.",
+      "searchLine": "Online payments and deposits for bookings",
+      "outcomes": {
+        "reduces": "Reduces no-shows.",
+        "increases": "Increases cash up front."
+      },
+      "intro": "Deposits and balances, by card, Apple Pay, Google Pay or pay-by-bank, with payment plans for big bookings.",
+      "stats": [
+        {
+          "statsBankRow": 15
+        },
+        {
+          "statsBankRow": 6
+        }
+      ],
+      "example": null,
+      "howItWorks": [
+        {
+          "label": "Deposit",
+          "heading": "A deposit at booking",
+          "line": "The date is theirs once the deposit is in.",
+          "screen": "A deposit taken at booking."
+        },
+        {
+          "label": "Balance",
+          "heading": "The balance, on time",
+          "line": "Due dates and reminders, set once.",
+          "screen": "A balance due date with an automatic reminder."
+        },
+        {
+          "label": "Ways to pay",
+          "heading": "Card, wallets or bank",
+          "line": "Card, Apple Pay, Google Pay and pay-by-bank.",
+          "screen": "Payment method buttons: card, Apple Pay, Google Pay and bank."
+        },
+        {
+          "label": "Plans",
+          "heading": "Payment plans for big bookings",
+          "line": "Split into stages.",
+          "screen": "A three-payment plan schedule."
+        }
+      ],
+      "situations": [
+        {
+          "business": "A wedding photographer",
+          "situation": "Takes a deposit at booking and the balance a month before."
+        },
+        {
+          "business": "A class host",
+          "situation": "Takes full payment for seats up front."
+        },
+        {
+          "business": "A caterer",
+          "situation": "Offers a payment plan for a large wedding."
+        }
+      ],
+      "faq": [
+        {
+          "q": "Can I charge saved cards automatically?",
+          "a": "Coming soon."
+        },
+        {
+          "q": "Can I take Tap to Pay in person?",
+          "a": "Coming soon."
+        }
+      ],
+      "related": [
+        "invoicing",
+        "tips",
+        "contracts-and-e-signatures",
+        "online-booking"
+      ],
+      "atTipsyToday": "Built; saved cards charged automatically, and Tap to Pay, to build"
+    },
+    {
+      "slug": "tips",
+      "name": "Tips by QR and tap",
+      "group": "get-paid",
+      "status": "coming-soon",
+      "onlyOnHeyday": false,
+      "existingJobbieSlug": null,
+      "modelledOn": "Payments (tips)",
+      "icon": "hd-tips",
+      "pain": "Stop leaving tips on the table.",
+      "searchLine": "Digital tips by QR code, shared across your team",
+      "outcomes": {
+        "increases": "Increases your team’s pay."
+      },
+      "intro": "A QR tip jar shared across the team, and tap tips.",
+      "stats": [],
+      "example": null,
+      "howItWorks": [
+        {
+          "label": "QR",
+          "heading": "A tip jar guests can scan",
+          "line": "No cash needed.",
+          "screen": "A QR tip card on a bar."
+        },
+        {
+          "label": "Shared",
+          "heading": "Shared across the team",
+          "line": "Everyone on the job gets their share.",
+          "screen": "Tips split between three team members."
+        },
+        {
+          "label": "Tap",
+          "heading": "Tap to tip",
+          "line": "Coming soon.",
+          "screen": "A phone tapped to tip, marked 'Coming soon'."
+        }
+      ],
+      "situations": [
+        {
+          "business": "A mobile bar",
+          "situation": "Puts a QR tip card on the bar and shares tips across the team."
+        },
+        {
+          "business": "A tour guide",
+          "situation": "Shows a QR code at the end of the walk."
+        },
+        {
+          "business": "A DJ",
+          "situation": "Adds a tip QR to the request card."
+        }
+      ],
+      "faq": [
+        {
+          "q": "How are tips shared?",
+          "a": "Across the team on the job."
+        },
+        {
+          "q": "Can guests tap to tip?",
+          "a": "Coming soon."
+        }
+      ],
+      "related": [
+        "payments",
+        "team-pay-and-expenses",
+        "on-the-day",
+        "guest-capture"
+      ],
+      "atTipsyToday": "QR tip jar built; tap to build"
+    },
+    {
+      "slug": "invoicing",
+      "name": "Invoicing and chasing",
+      "group": "get-paid",
+      "status": "coming-soon",
+      "onlyOnHeyday": false,
+      "existingJobbieSlug": "invoicing",
+      "modelledOn": "Invoicing",
+      "icon": "hd-invoicing",
+      "pain": "Stop spending your time chasing clients for payment.",
+      "searchLine": "Automatic payment reminders that get you paid faster",
+      "outcomes": {
+        "saves": "Saves chasing time.",
+        "reduces": "Reduces late payments."
+      },
+      "intro": "Pro forma and final invoices, and overdue chasing by email and WhatsApp, until it’s paid.",
+      "stats": [
+        {
+          "statsBankRow": 6
+        },
+        {
+          "statsBankRow": 7
+        }
+      ],
+      "example": null,
+      "howItWorks": [
+        {
+          "label": "Invoice",
+          "heading": "Pro forma and final invoices",
+          "line": "Sent for you, at the right time.",
+          "screen": "An invoice with line items."
+        },
+        {
+          "label": "Chase",
+          "heading": "Chasing by email and WhatsApp",
+          "line": "Friendly, then firmer.",
+          "screen": "A reminder sequence across email and WhatsApp."
+        },
+        {
+          "label": "Paid",
+          "heading": "It stops when it’s paid",
+          "line": "No awkward reminder after they’ve paid.",
+          "screen": "'Paid' ticking over, and the reminders stopped."
+        }
+      ],
+      "situations": [
+        {
+          "business": "A corporate caterer",
+          "situation": "Stops chasing a company’s accounts team by hand."
+        },
+        {
+          "business": "A photographer",
+          "situation": "Lets reminders go out for the balance before the wedding."
+        },
+        {
+          "business": "A cleaning business",
+          "situation": "Sends monthly invoices to regular clients."
+        }
+      ],
+      "faq": [
+        {
+          "q": "How are reminders sent?",
+          "a": "By email and WhatsApp."
+        },
+        {
+          "q": "When do reminders stop?",
+          "a": "As soon as it’s paid."
+        }
+      ],
+      "related": [
+        "payments",
+        "reporting",
+        "client-portal",
+        "replies-that-write-themselves"
+      ],
+      "atTipsyToday": "Built, needs generalising"
+    },
+    {
+      "slug": "team-pay-and-expenses",
+      "name": "Team pay and expenses",
+      "group": "get-paid",
+      "status": "coming-soon",
+      "onlyOnHeyday": false,
+      "existingJobbieSlug": null,
+      "modelledOn": "Payroll (via Gusto)",
+      "icon": "hd-team-pay-and-expenses",
+      "pain": "Stop spending payday on spreadsheets.",
+      "searchLine": "Team pay, payouts and expenses",
+      "outcomes": {
+        "saves": "Saves admin.",
+        "reduces": "Reduces pay mistakes."
+      },
+      "intro": "Pay worked out automatically, payouts, self-serve cash-out and expenses with rules.",
+      "stats": [
+        {
+          "statsBankRow": 7
+        }
+      ],
+      "example": null,
+      "howItWorks": [
+        {
+          "label": "Worked out",
+          "heading": "Pay worked out for you",
+          "line": "Hours, rates and tips.",
+          "screen": "A pay breakdown per shift: hours, rate and tips."
+        },
+        {
+          "label": "Payouts",
+          "heading": "Payouts, sent",
+          "line": "For subcontractors.",
+          "screen": "A list of payouts."
+        },
+        {
+          "label": "Cash out",
+          "heading": "Self-serve cash-out",
+          "line": "Your team takes what they’ve earned.",
+          "screen": "A team member’s app with a 'Cash out' button."
+        },
+        {
+          "label": "Expenses",
+          "heading": "Expenses with rules",
+          "line": "Receipts checked against your rules.",
+          "screen": "An expense claim with a receipt and a rule check."
+        }
+      ],
+      "situations": [
+        {
+          "business": "An event staffing agency",
+          "situation": "Pays a weekend of shifts without a spreadsheet."
+        },
+        {
+          "business": "A mobile bar",
+          "situation": "Adds shared tips to each bartender’s pay."
+        },
+        {
+          "business": "A caterer",
+          "situation": "Approves a server’s parking expense against its rules."
+        }
+      ],
+      "faq": [
+        {
+          "q": "Does it pay people in the US?",
+          "a": "US payouts are coming soon. Tipsy’s version pays in the UK."
+        },
+        {
+          "q": "What about employees?",
+          "a": "Employees are paid through a payroll provider; subcontractors get payouts."
+        }
+      ],
+      "related": [
+        "tips",
+        "time-tracking",
+        "shift-offers",
+        "profit-per-job"
+      ],
+      "atTipsyToday": "Built for the UK (Wise); US payouts to build"
+    },
+    {
+      "slug": "profit-per-job",
+      "name": "Profit per job",
+      "group": "get-paid",
+      "status": "coming-soon",
+      "onlyOnHeyday": false,
+      "existingJobbieSlug": "job-costing",
+      "modelledOn": "Job costing",
+      "icon": "hd-profit-per-job",
+      "pain": "Stop guessing which jobs make money.",
+      "searchLine": "Job costing and profit per event",
+      "outcomes": {
+        "increases": "Increases profit."
+      },
+      "intro": "The margin on every quote, and profit per job or event.",
+      "stats": [],
+      "example": {
+        "inputs": "Example numbers: a $1,450 event; 2 team members for 6 hours at $25 an hour; $180 of supplies; a 3% card fee.",
+        "maths": "$1,450 − $300 team − $180 supplies − $43.50 fees = $926.50.",
+        "result": "$926.50 profit, or 64%, shown before you send the quote."
+      },
+      "howItWorks": [
+        {
+          "label": "On the quote",
+          "heading": "Margin on every quote",
+          "line": "Know before you send it.",
+          "screen": "A quote with a margin chip."
+        },
+        {
+          "label": "Per job",
+          "heading": "Profit per job",
+          "line": "Team, supplies and fees, taken off.",
+          "screen": "A job's costs: team, supplies, fees and profit."
+        },
+        {
+          "label": "Patterns",
+          "heading": "See which jobs pay best",
+          "line": "Profit by type of booking.",
+          "screen": "A chart of profit by type of booking, labelled example data."
+        }
+      ],
+      "situations": [
+        {
+          "business": "A caterer",
+          "situation": "Sees that small lunches barely break even."
+        },
+        {
+          "business": "A mobile bar",
+          "situation": "Checks the margin on a long-distance wedding before quoting."
+        },
+        {
+          "business": "A class host",
+          "situation": "Compares public classes with private groups."
+        }
+      ],
+      "faq": [
+        {
+          "q": "When do I see the margin?",
+          "a": "On every quote, before you send it."
+        },
+        {
+          "q": "Where do labor costs come from?",
+          "a": "Labor costs from tracked hours are coming soon."
+        }
+      ],
+      "related": [
+        "reporting",
+        "team-pay-and-expenses",
+        "quotes",
+        "time-tracking"
+      ],
+      "atTipsyToday": "Margin shown on quotes; labor costs from hours to build"
+    },
+    {
+      "slug": "reporting",
+      "name": "Reports and the Command Centre",
+      "group": "get-paid",
+      "status": "coming-soon",
+      "onlyOnHeyday": false,
+      "existingJobbieSlug": "reporting",
+      "modelledOn": "Dashboard; Reporting",
+      "icon": "hd-reports",
+      "pain": "Know your numbers without opening a spreadsheet.",
+      "searchLine": "Business reports and a dashboard in plain English",
+      "outcomes": {
+        "saves": "Saves time.",
+        "increases": "Increases control."
+      },
+      "intro": "Reports in plain English, a morning report and profit per channel, with the Command Centre showing what needs you today.",
+      "stats": [
+        {
+          "statsBankRow": 20
+        }
+      ],
+      "example": null,
+      "howItWorks": [
+        {
+          "label": "Ask",
+          "heading": "Ask in plain English",
+          "line": "Type a question, get an answer.",
+          "screen": "A question box ('How many bookings in June?') and an answer."
+        },
+        {
+          "label": "Morning report",
+          "heading": "A report every morning",
+          "line": "What happened, and what needs you.",
+          "screen": "A morning report email."
+        },
+        {
+          "label": "Channels",
+          "heading": "Profit per channel",
+          "line": "Where the money really comes from.",
+          "screen": "A table: channel, bookings, profit, labelled example data."
+        },
+        {
+          "label": "Command Centre",
+          "heading": "What needs you today",
+          "line": "The exceptions, not the noise.",
+          "screen": "A dashboard of today's exceptions."
+        }
+      ],
+      "situations": [
+        {
+          "business": "A mobile bar",
+          "situation": "Reads the morning report before the first call of the day."
+        },
+        {
+          "business": "A class host",
+          "situation": "Asks which classes sold best last quarter."
+        },
+        {
+          "business": "A photographer",
+          "situation": "Sees which channel brings the weddings."
+        }
+      ],
+      "faq": [
+        {
+          "q": "Can I ask questions in plain English?",
+          "a": "Yes."
+        },
+        {
+          "q": "What’s the morning report?",
+          "a": "A daily summary of what happened and what needs you."
+        }
+      ],
+      "related": [
+        "profit-per-job",
+        "ads-that-know-which-bookings-pay",
+        "tasks",
+        "integrations"
+      ],
+      "atTipsyToday": "Built"
+    },
+    {
+      "slug": "reviews",
+      "name": "Reviews",
+      "group": "get-rebooked",
+      "status": "coming-soon",
+      "onlyOnHeyday": false,
+      "existingJobbieSlug": "reviews",
+      "modelledOn": "Reviews",
+      "icon": "hd-reviews",
+      "pain": "Get more five-star reviews without the awkward ask.",
+      "searchLine": "Automated review requests after every booking",
+      "outcomes": {
+        "increases": "Increases reviews.",
+        "reduces": "Reduces bad reviews going public."
+      },
+      "intro": "The next day, customers give a thumbs up or down. A thumbs up gets a referral code, then the review ask. A thumbs down gets “how can we improve?” and the complaint loop, with a manager signing off.",
+      "stats": [
+        {
+          "statsBankRow": 11
+        },
+        {
+          "statsBankRow": 12
+        },
+        {
+          "statsBankRow": 13
+        }
+      ],
+      "example": null,
+      "howItWorks": [
+        {
+          "label": "Next day",
+          "heading": "A thumbs up or down",
+          "line": "One tap, the day after.",
+          "screen": "A next-day message with thumbs up and thumbs down."
+        },
+        {
+          "label": "Thumbs up",
+          "heading": "Referral code, then the review",
+          "line": "Happy customers share first, then review.",
+          "screen": "A referral code card, then a review link."
+        },
+        {
+          "label": "Thumbs down",
+          "heading": "“How can we improve?”",
+          "line": "Problems come to you, not to the internet.",
+          "screen": "A short questionnaire."
+        }
+      ],
+      "situations": [
+        {
+          "business": "A photographer",
+          "situation": "Gets reviews from happy couples without asking in person."
+        },
+        {
+          "business": "A class host",
+          "situation": "Hears about a problem privately before it becomes a review."
+        },
+        {
+          "business": "An escape room",
+          "situation": "Sends the review ask the day after every game."
+        }
+      ],
+      "faq": [
+        {
+          "q": "Why the referral code first?",
+          "a": "A happy customer gets a code to share first, then the review ask: more word of mouth, and more reviews."
+        },
+        {
+          "q": "What happens after a bad experience?",
+          "a": "They’re asked how you can improve, and the complaint loop starts, with a manager signing off."
+        }
+      ],
+      "related": [
+        "referrals",
+        "complaints",
+        "client-records",
+        "campaigns"
+      ],
+      "atTipsyToday": "Feedback and the complaint flow built; the automatic review ask to be restored; referral-then-review to build"
+    },
+    {
+      "slug": "referrals",
+      "name": "Referrals",
+      "group": "get-rebooked",
+      "status": "coming-soon",
+      "onlyOnHeyday": false,
+      "existingJobbieSlug": "referrals",
+      "modelledOn": "Referrals",
+      "icon": "hd-referrals",
+      "pain": "Turn happy customers into your sales team.",
+      "searchLine": "Customer referral program with codes",
+      "outcomes": {
+        "increases": "Increases new customers."
+      },
+      "intro": "A code for happy clients that rewards both sides.",
+      "stats": [
+        {
+          "statsBankRow": 9
+        },
+        {
+          "statsBankRow": 10
+        }
+      ],
+      "example": null,
+      "howItWorks": [
+        {
+          "label": "Code",
+          "heading": "A code for happy customers",
+          "line": "Sent after a thumbs up.",
+          "screen": "A referral code card."
+        },
+        {
+          "label": "Share",
+          "heading": "Easy to share",
+          "line": "By text, email or social.",
+          "screen": "A share sheet."
+        },
+        {
+          "label": "Reward",
+          "heading": "Both sides rewarded",
+          "line": "The friend and the customer.",
+          "screen": "A reward applied to both people."
+        }
+      ],
+      "situations": [
+        {
+          "business": "A private chef",
+          "situation": "Gets new dinner parties from guests at the last one."
+        },
+        {
+          "business": "A DJ",
+          "situation": "Rewards couples who send their friends."
+        },
+        {
+          "business": "A cleaning business",
+          "situation": "Rewards neighbors who refer each other."
+        }
+      ],
+      "faq": [
+        {
+          "q": "When do customers get a code?",
+          "a": "After a thumbs up."
+        },
+        {
+          "q": "Who gets rewarded?",
+          "a": "Both sides."
+        }
+      ],
+      "related": [
+        "reviews",
+        "partners",
+        "loyalty",
+        "gift-vouchers"
+      ],
+      "atTipsyToday": "Partner links exist; client referrals to build"
+    },
+    {
+      "slug": "gift-vouchers",
+      "name": "Gift vouchers",
+      "group": "get-rebooked",
+      "status": "coming-soon",
+      "onlyOnHeyday": true,
+      "existingJobbieSlug": null,
+      "modelledOn": "(Jobber doesn’t)",
+      "icon": "hd-gift-vouchers",
+      "pain": "Get paid for bookings that haven’t happened yet.",
+      "searchLine": "Gift vouchers and gift cards for experiences",
+      "outcomes": {
+        "increases": "Increases cash up front."
+      },
+      "intro": "Sell vouchers for an amount or for a specific experience, check balances and redeem them.",
+      "stats": [
+        {
+          "statsBankRow": 21
+        },
+        {
+          "statsBankRow": 22
+        }
+      ],
+      "example": null,
+      "howItWorks": [
+        {
+          "label": "Sell",
+          "heading": "An amount or an experience",
+          "line": "'$100' or 'A cocktail class for two'.",
+          "screen": "Two voucher cards: an amount and an experience."
+        },
+        {
+          "label": "Give",
+          "heading": "Delivered as a gift",
+          "line": "By email, ready to forward.",
+          "screen": "A gift email with a voucher code."
+        },
+        {
+          "label": "Redeem",
+          "heading": "Redeemed at checkout",
+          "line": "With the balance kept.",
+          "screen": "A checkout applying a voucher and showing the balance left."
+        }
+      ],
+      "situations": [
+        {
+          "business": "A cocktail class host",
+          "situation": "Sells class vouchers before the holidays."
+        },
+        {
+          "business": "A spa or wellness business",
+          "situation": "Sells treatment vouchers for birthdays."
+        },
+        {
+          "business": "An escape room",
+          "situation": "Sells a voucher for a team game."
+        }
+      ],
+      "faq": [
+        {
+          "q": "Can vouchers be for an amount or an experience?",
+          "a": "Both."
+        },
+        {
+          "q": "Can people check their balance?",
+          "a": "Yes."
+        }
+      ],
+      "related": [
+        "loyalty",
+        "packages-and-memberships",
+        "online-booking",
+        "classes-and-tickets"
+      ],
+      "atTipsyToday": "To build"
+    },
+    {
+      "slug": "loyalty",
+      "name": "Loyalty",
+      "group": "get-rebooked",
+      "status": "coming-soon",
+      "onlyOnHeyday": true,
+      "existingJobbieSlug": null,
+      "modelledOn": "(Jobber doesn’t)",
+      "icon": "hd-loyalty",
+      "pain": "Stop letting regulars drift away.",
+      "searchLine": "Loyalty cards and rewards for regulars",
+      "outcomes": {
+        "increases": "Increases repeat bookings."
+      },
+      "intro": "Loyalty cards and rewards for regulars.",
+      "stats": [
+        {
+          "statsBankRow": 8
+        }
+      ],
+      "example": null,
+      "howItWorks": [
+        {
+          "label": "Card",
+          "heading": "A loyalty card",
+          "line": "Every booking counts.",
+          "screen": "A digital stamp card with four of six stamps."
+        },
+        {
+          "label": "Reward",
+          "heading": "A reward for coming back",
+          "line": "Set by you.",
+          "screen": "A reward unlocked message, labelled example data."
+        },
+        {
+          "label": "Remind",
+          "heading": "A nudge when they’re close",
+          "line": "One more visit to go.",
+          "screen": "A reminder: 'One more class to your reward'."
+        }
+      ],
+      "situations": [
+        {
+          "business": "A class host",
+          "situation": "Rewards regulars on their tenth class."
+        },
+        {
+          "business": "A cleaning business",
+          "situation": "Rewards long-standing weekly customers."
+        },
+        {
+          "business": "A mobile bar",
+          "situation": "Thanks repeat party hosts."
+        }
+      ],
+      "faq": [
+        {
+          "q": "Is loyalty the same as memberships?",
+          "a": "No. Memberships are monthly plans; loyalty rewards regulars for coming back."
+        },
+        {
+          "q": "Is loyalty live?",
+          "a": "Coming soon."
+        }
+      ],
+      "related": [
+        "packages-and-memberships",
+        "gift-vouchers",
+        "campaigns",
+        "referrals"
+      ],
+      "atTipsyToday": "To build"
+    },
+    {
+      "slug": "fill-quiet-dates",
+      "name": "Fill quiet dates",
+      "group": "get-rebooked",
+      "status": "coming-soon",
+      "onlyOnHeyday": true,
+      "existingJobbieSlug": null,
+      "modelledOn": "(Heyday only)",
+      "icon": "hd-fill-quiet-dates",
+      "pain": "Stop letting quiet dates go to waste.",
+      "searchLine": "Fill quiet dates with offers to your most likely customers",
+      "outcomes": {
+        "increases": "Increases bookings on quiet days."
+      },
+      "intro": "When the diary looks thin, offers go to the customers most likely to book those dates, for you to approve.",
+      "stats": [],
+      "example": {
+        "inputs": "Example numbers: 3 empty weekday slots a month; an off-peak offer fills 1 of them; an average off-peak booking is $400.",
+        "maths": "1 × $400 = $400 a month. $400 × 12 = $4,800.",
+        "result": "$4,800 a year from dates that would have stayed empty."
+      },
+      "howItWorks": [
+        {
+          "label": "Spot",
+          "heading": "Heyday spots the thin dates",
+          "line": "Weeks ahead, not the night before.",
+          "screen": "A diary with the thin dates highlighted."
+        },
+        {
+          "label": "Pick",
+          "heading": "It picks the likely customers",
+          "line": "The people most likely to book those dates.",
+          "screen": "A suggested audience list."
+        },
+        {
+          "label": "Approve",
+          "heading": "You approve the offer",
+          "line": "Nothing goes out without you.",
+          "screen": "An offer draft with an Approve button."
+        }
+      ],
+      "situations": [
+        {
+          "business": "A mobile bar",
+          "situation": "Offers midweek dates to past corporate clients."
+        },
+        {
+          "business": "An escape room",
+          "situation": "Fills quiet Tuesday slots."
+        },
+        {
+          "business": "A class host",
+          "situation": "Offers a quiet Sunday class to people who asked about weekends."
+        }
+      ],
+      "faq": [
+        {
+          "q": "Does it send offers by itself?",
+          "a": "No. Offers wait for you to approve."
+        },
+        {
+          "q": "Who gets the offers?",
+          "a": "The customers most likely to book those dates."
+        }
+      ],
+      "related": [
+        "campaigns",
+        "waiting-lists",
+        "quotes",
+        "scheduling"
+      ],
+      "atTipsyToday": "To build"
+    },
+    {
+      "slug": "waiting-lists",
+      "name": "Waiting lists",
+      "group": "get-rebooked",
+      "status": "coming-soon",
+      "onlyOnHeyday": true,
+      "existingJobbieSlug": null,
+      "modelledOn": "(Heyday only)",
+      "icon": "hd-waiting-lists",
+      "pain": "Stop losing money on cancellations.",
+      "searchLine": "Automatic waiting lists for classes and dates",
+      "outcomes": {
+        "reduces": "Reduces empty seats and dates."
+      },
+      "intro": "A canceled seat or date goes to the next person on the list automatically.",
+      "stats": [],
+      "example": null,
+      "howItWorks": [
+        {
+          "label": "Join",
+          "heading": "Full? Join the list",
+          "line": "For a class, a session or a date.",
+          "screen": "A 'Join the waiting list' button on a full class."
+        },
+        {
+          "label": "Cancel",
+          "heading": "Someone cancels",
+          "line": "The place opens up.",
+          "screen": "A cancellation notice."
+        },
+        {
+          "label": "Offer",
+          "heading": "The next person is offered it",
+          "line": "Automatically.",
+          "screen": "A waiting list with the next person marked 'Offered'."
+        }
+      ],
+      "situations": [
+        {
+          "business": "A pottery studio",
+          "situation": "Fills a canceled seat the same day."
+        },
+        {
+          "business": "A photographer",
+          "situation": "Offers a canceled date to the next couple."
+        },
+        {
+          "business": "A tour guide",
+          "situation": "Fills a canceled place on a sold-out walk."
+        }
+      ],
+      "faq": [
+        {
+          "q": "What happens when someone cancels?",
+          "a": "The seat or date goes to the next person on the list automatically."
+        },
+        {
+          "q": "Does it work for dates as well as classes?",
+          "a": "Yes: seats and dates."
+        }
+      ],
+      "related": [
+        "classes-and-tickets",
+        "fill-quiet-dates",
+        "online-booking",
+        "scheduling"
+      ],
+      "atTipsyToday": "To build"
+    },
+    {
+      "slug": "complaints",
+      "name": "Complaints settled fairly",
+      "group": "get-rebooked",
+      "status": "coming-soon",
+      "onlyOnHeyday": true,
+      "existingJobbieSlug": null,
+      "modelledOn": "(Heyday only)",
+      "icon": "hd-complaints",
+      "pain": "Stop letting one bad day become a bad review.",
+      "searchLine": "Complaint handling with fair, fast outcomes",
+      "outcomes": {
+        "reduces": "Reduces bad reviews.",
+        "saves": "Saves time."
+      },
+      "intro": "The team member sees the complaint, approves the reply and can offer part of a refund. A manager signs off.",
+      "stats": [
+        {
+          "statsBankRow": 11
+        }
+      ],
+      "example": null,
+      "howItWorks": [
+        {
+          "label": "Heard",
+          "heading": "The complaint comes to you",
+          "line": "From a thumbs down or a message.",
+          "screen": "A complaint raised from a thumbs down."
+        },
+        {
+          "label": "The team member",
+          "heading": "The person who was there has a say",
+          "line": "The AI drafts; the team member responds.",
+          "screen": "An AI-drafted reply for the team member to approve, with a part-refund option."
+        },
+        {
+          "label": "Signed off",
+          "heading": "A manager signs off",
+          "line": "Fair, fast and on the record.",
+          "screen": "A manager approval card."
+        }
+      ],
+      "situations": [
+        {
+          "business": "A caterer",
+          "situation": "Settles a complaint about a late delivery with a part refund."
+        },
+        {
+          "business": "A class host",
+          "situation": "Lets the teacher reply before the manager decides."
+        },
+        {
+          "business": "A mobile bar",
+          "situation": "Hears the bartender’s side before answering."
+        }
+      ],
+      "faq": [
+        {
+          "q": "Who decides a refund?",
+          "a": "The team member can offer part of a refund, and a manager signs off."
+        },
+        {
+          "q": "Does the AI reply on its own?",
+          "a": "No. The AI drafts, the team member responds, and a manager signs off."
+        }
+      ],
+      "related": [
+        "reviews",
+        "replies-that-write-themselves",
+        "team",
+        "client-records"
+      ],
+      "atTipsyToday": "Partly built"
+    }
+  ]
+}
