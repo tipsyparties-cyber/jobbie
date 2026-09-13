@@ -197,3 +197,63 @@ them will otherwise think it was missed.
 
 Everything else in B3 is followed: the header stays, the letters still assemble
 on load, and the right-hand side of the hero becomes `RisingCards`.
+
+---
+
+## 5. Progress — read this first when resuming
+
+Built on branch `redesign/mono-binary-intro`. **63 static routes** so far.
+
+### Done
+
+| Phase | What | Commit |
+|---|---|---|
+| 0 | Pack in, SITE-PLAN, tokens, fonts, agency removed, wordmark | `f8167d6` |
+| — | Pack 3: the marketplace splits off | `b09cb0c` |
+| 1 | The whole design system, and `/styleguide` | `0e2b321` |
+| — | Pack 4: Tipsy off the site, A9 loses its extras | `a68a84d` |
+| 2a | The header, all three panels | `614c514` |
+| 2b | Hero: rising cards, decorative suns | `e7e5338` |
+| 2c | The footer | `ed73eeb` |
+| 3 | Feature template, 46 feature pages, index, 6 group pages | `2dac2b8` |
+
+### What exists, and where
+
+- **Design system:** `components/ui/button.tsx` (A4), `ui/surfaces.tsx`
+  (Panel, Card, Sticker, StatusChip — A5), `components/heyday/motion.tsx`
+  (SectionReveal, RevealGroup, Parallax — A6), `heyday-mark.tsx` +
+  `lib/heyday-mark.ts` (A11, the ported engine), `heyday-line.tsx` (A8),
+  `icon.tsx` (A7), `rising-cards.tsx` (A9), `more-info-section.tsx` (A12),
+  `decor-suns.tsx` (A10).
+- **Data:** `lib/site.ts` (name, placeholders, CTAs), `lib/groups.ts` (the
+  six), `lib/heyday-features.ts` (reads the pack's JSON directly — do NOT
+  retype it), `lib/stats-bank.ts`, `lib/nav.ts`, `lib/hero-cards.ts`,
+  `lib/palette.ts`.
+- **Templates:** `components/heyday/feature-page.tsx` (T2).
+- **Check everything at once:** `/styleguide`.
+
+### Still to build, in order
+
+| Phase | What |
+|---|---|
+| 2 (rest) | The homepage's other sections, B4 items 2–12: what Heyday is, the two sideways scrolls, the sticky scroll, the feature rows with more-info, the workflow builder, the story row, the closing block |
+| 4 | `/features/ai` (T11), `/how-it-works` (T5), `/who-its-for` (T6), `/stories` + 7 stories (T7) |
+| 5 | `/pricing` (T8), `/compare` + 5 (T9), `/integrations` (T10) |
+| 6 | `/resources` (T12), 3 tools + quiz (T13, T14), `/templates`, guides and blog (T15) |
+| 7 | About, Security, Help, Contact, Demo, Early access, Login, `/for-ai`, `/terms`, `/privacy`, 404, `/whats-new` — and the redirects already in `next.config.ts` |
+| 8 | Whole-site pass: links, search metadata, sitemap, robots, keyboard, contrast, reduced motion, 400px |
+
+### Standing rules, learned the hard way
+
+- **The dev server is port 3001**, and `upandup` on 3000 is a different
+  site. The browser tab says "Heyday" or "upandup" — that is the only cue.
+- **Editing `globals.css` serves stale CSS.** Stop the server, `rm -rf
+  .next`, restart, hard-reload.
+- **Lint baseline is 7 warnings**, all in old unmounted components.
+  Anything above that is new. The React compiler rejects `set-state-in-
+  effect` and mutating a ref'd DOM node's style — both have bitten already.
+- **Claude cannot see the running site.** Verify with typecheck, lint, HTTP
+  status and greps of the served HTML; ask Russell for screenshots.
+- **Tipsy Parties is never named on the site.**
+- **No invented customers, numbers, prices, ratings or quotes.** Statistics
+  come from `lib/stats-bank.ts` by row number and print their source.
