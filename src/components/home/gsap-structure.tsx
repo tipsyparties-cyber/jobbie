@@ -5,7 +5,12 @@ import Link from "next/link";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { SynergyBrain } from "@/components/home/synergy-brain";
 import { Wordmark } from "@/components/ui/wordmark";
-import { LetterReveal, WordReveal } from "@/components/home/reveal-text";
+import { WordReveal } from "@/components/home/reveal-text";
+import {
+  HeroHeadline,
+  HeroShapes,
+  useHeroProgress,
+} from "@/components/home/hero-motion";
 import { CREAM, SAGE, BLUE, YELLOW, LAVENDER } from "@/lib/palette";
 import { SHELL, Rule, Braced, Pill } from "@/components/home/section-kit";
 
@@ -38,63 +43,63 @@ import { SHELL, Rule, Braced, Pill } from "@/components/home/section-kit";
  * -------------------------------------------------------------- */
 
 export function GsapHero() {
+  const ref = useRef<HTMLDivElement | null>(null);
+  const progress = useHeroProgress(ref);
+
   return (
-    <div className={`${SHELL} relative`}>
-      {/* The decorative element. gsap pairs its headline with something that
-          moves; ours is the synergy brain, held behind the type and well
-          back in contrast so it reads as motion in the room rather than as
-          a second thing to look at. */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute -right-24 top-1/2 hidden -translate-y-1/2 opacity-40 lg:block"
-      >
-        <div className="origin-center scale-[0.72]">
-          <SynergyBrain />
-        </div>
-      </div>
+    <div ref={ref} className="relative min-h-screen py-24">
+      {/* The shapes. gsap scatters four of these through its hero at odd
+          positions, one of them hanging off the left edge — that asymmetry
+          is what keeps them from reading as decoration in a row. Each
+          drifts on its own loop and parallaxes at its own rate. */}
+      <HeroShapes progress={progress} />
 
-      <div className="relative">
-        {/* Sized to the longest line, not to gsap's 19vw.
-            "Animate/Anything" is two eight-letter words, so it can run at
-            19vw and still fit. This headline's longest line is 25 characters
-            — at anything near that size it would leave the screen — so the
-            type is set from the line instead of from the reference. Weight
-            600 and leading 0.9 keep the scale gsap gets from sheer size.
-
-            Broken one sentence per line because that is how the copy is
-            written: the turn is at the full stop. */}
-        <h1 className="font-body text-[clamp(2.1rem,7.4vw,6.5rem)] font-semibold leading-[0.9] tracking-[-0.04em]">
-          <span className="block">
-            <LetterReveal text="Do what you love." delay={0.15} stagger={0.03} />
-          </span>
-          <span className="block">
-            <LetterReveal
-              text="Let Hey Day run the rest."
-              delay={0.66}
-              stagger={0.03}
-            />
-          </span>
-        </h1>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 1.15, ease: [0.16, 1, 0.3, 1] }}
+      <div className={`${SHELL} relative flex min-h-[70vh] flex-col justify-center`}>
+        {/* The synergy brain, well back. It carries meaning as well as
+            movement, but at full strength it competes with the headline for
+            the same attention. */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute -right-32 top-1/2 hidden -translate-y-1/2 opacity-25 xl:block"
         >
-          {/* Set larger than the old sub — this line carries the argument
-              now rather than describing the product, so it reads as the
-              second half of the headline rather than as caption. */}
-          <p className="mt-10 max-w-2xl font-body text-xl leading-relaxed text-ink/75 md:text-2xl">
-            You didn&apos;t start a business to work for it. We make it work
-            for you.
-          </p>
-          <div className="mt-9 flex flex-wrap gap-3">
-            <Pill href="/contact" solid>
-              Start a conversation
-            </Pill>
-            <Pill href="/features">See what it does</Pill>
+          <div className="origin-center scale-[0.62]">
+            <SynergyBrain />
           </div>
-        </motion.div>
+        </div>
+
+        <div className="relative">
+          {/* Sized to the longest line, not to gsap's 19vw. Their headline
+              is two eight-letter words; this one's longest line is 25
+              characters and would leave the screen at that size.
+
+              Assembles on load, comes apart as you scroll away — gsap's
+              own device, reversed. They can afford an unreadable headline
+              at rest because everyone arriving already knows the site. */}
+          <HeroHeadline
+            lines={["Do what you love.", "Let Hey Day run the rest."]}
+            className="font-body text-[clamp(2.1rem,7.4vw,6.5rem)] font-semibold leading-[0.9] tracking-[-0.04em]"
+          />
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 1.5, ease: [0.16, 1, 0.3, 1] }}
+          >
+            {/* Set larger than the old sub — it carries the argument now
+                rather than describing the product, so it reads as the
+                second half of the headline rather than as a caption. */}
+            <p className="mt-10 max-w-2xl font-body text-xl leading-relaxed text-ink/75 md:text-2xl">
+              You didn&apos;t start a business to work for it. We make it work
+              for you.
+            </p>
+            <div className="mt-9 flex flex-wrap gap-3">
+              <Pill href="/contact" solid>
+                Start a conversation
+              </Pill>
+              <Pill href="/features">See what it does</Pill>
+            </div>
+          </motion.div>
+        </div>
       </div>
     </div>
   );

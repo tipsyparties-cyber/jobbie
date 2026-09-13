@@ -156,7 +156,10 @@ const sections = [
      "raw" means the section manages its own height and scroll and must not
      be wrapped in the standard one-screen parallax frame — the sideways band
      is four viewports tall, and the footer is shorter than one. */
-  { id: "g-hero", content: () => <GsapHero /> },
+  /* raw: the hero manages its own height and reads its own scroll
+     position to scatter the headline. Wrapping it in the standard
+     one-screen frame would fade it out against its own animation. */
+  { id: "g-hero", raw: true, content: () => <GsapHero /> },
   { id: "g-statement", content: () => <GsapStatement /> },
   { id: "g-sideways", raw: true, content: () => <GsapSideways /> },
   { id: "g-features", raw: true, content: () => <GsapFeatures /> },
