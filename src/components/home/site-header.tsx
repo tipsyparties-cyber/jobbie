@@ -21,6 +21,7 @@ import { Wordmark } from "@/components/ui/wordmark";
  */
 
 const LINKS = [
+  { href: "/features", label: "Features" },
   { href: "/services", label: "Services" },
   { href: "/projects", label: "Projects" },
   { href: "/about", label: "About" },
