@@ -92,13 +92,25 @@ export function GsapHero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 1.5, ease: [0.16, 1, 0.3, 1] }}
           >
-            {/* The headline does the recognising now, so the sub is the
-                answer to it. "Everything, always, instantly" is three beats
-                on purpose — the rhythm is doing the work, which is why it is
-                punctuated as three rather than run together. */}
+            {/* The headline does the recognising, so the line under it is the
+                answer. "Times a thousand" spelled out rather than set as
+                ×1000: at this size a numeral reads as a statistic, and it is
+                a figure of speech. */}
             <p className="mt-10 max-w-2xl font-body text-xl leading-relaxed text-ink/75 md:text-2xl">
-              Heyday is you &times;1000, running 24/7. Everything, always,
-              instantly.
+              Think of Heyday as you, times a thousand. Always on, always
+              instant.
+            </p>
+
+            {/* The small line carries the scope, which is the thing the
+                claim above it leaves open: how much, and how far. It names
+                the whole workflow — the brief's own positioning line — and
+                then hands the dial back to the owner, which is the answer to
+                the obvious worry about an AI that never sleeps. Set smaller
+                and quieter so it reads as a footnote to the line above
+                rather than competing with it. */}
+            <p className="mt-5 max-w-xl font-body text-base leading-relaxed text-ink/55">
+              From the first hello to the next booking. Automate as much or as
+              little as you want.
             </p>
             {/* Heyday's two actions everywhere (prompt section 1).
                  "Start free trial" opens early access, because the product
