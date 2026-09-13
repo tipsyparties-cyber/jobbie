@@ -24,7 +24,7 @@ Read "What we're trying to achieve" and section 0 first, then follow the build o
 
 Many sell the same skill two ways: as a service at someone's event, and as an experience or class. Heyday handles both.
 
-**Where it comes from:** it grew out of the Tipsy system, which runs Tipsy Parties every day. It grows with each business the way Tipsy grew: from doing everything yourself, to running it as an owner, to a team, to a business that runs itself. Customers can also find these businesses on the Heyday marketplace, which has its own site and its own look.
+**Background, not for the site:** the ideas behind Heyday come from how Tipsy Parties runs its own business, but Heyday isn't built by Tipsy Parties. Don't mention Tipsy Parties anywhere on the site unless Jem and Russell decide otherwise (`DECISIONS-NEEDED.md`). Heyday grows with each business: from doing everything yourself, to running it as an owner, to a team, to a business that runs itself. Customers can also find these businesses on the Heyday marketplace, which has its own site and its own look.
 
 **What makes it different:** HoneyBook and Jobber both say "all-in-one". Heyday runs **the whole workflow, not just the paperwork**:
 - the team who deliver the job, their shifts and their pay;
@@ -166,12 +166,13 @@ Tick every item before you call the build finished. The detail for each one is i
 - [ ] Buttons: 8px corners that round to a pill on hover and focus, in 0.2s. Nothing else moves (A4)
 - [ ] Panels, cards and stickers: thin ink outlines and hard offset shadows with no blur. Stickers straighten on hover (A5)
 - [ ] Sections that overlap with 56px rounded tops, with faint outline shapes behind (A10, B1)
+- [ ] Decorative suns of different sizes instead of blurred orbs, with one crossing into the next section (A10)
 
 **Motion**
 - [ ] The rise and parallax (A6)
 - [ ] The background colour fading between sections, on jobbie (B2)
-- [ ] The hero, kept as it is: headline, sub-line, the letter scatter from `hero-motion.tsx`, and "Start free trial" and "Book a demo" (B3, B4)
-- [ ] The rising workflow cards on the right of the hero, with the sun peeking in and nudging each card (A9, B5)
+- [ ] The hero with its new copy (label, headline, line and small line), the letter scatter from `hero-motion.tsx`, and "Start free trial" and "Book a demo" (B3, B4)
+- [ ] The rising workflow cards on the right of the hero, scrolling up one at a time (A9, B5)
 - [ ] The sticky scroll: the copy scrolls and the picture changes (B7)
 - [ ] Two sideways scrolls, kept apart: "How Heyday runs your day" and "Only on Heyday" (B6)
 - [ ] The workflow builder section, with its placeholder still, ready for a video (B8)
@@ -199,7 +200,7 @@ It has the same shape as getjobber.com and honeybook.com, at a size a small team
   - The promo card: "Build it your way" (the workflow builder).
 - **Who it's for:** the cards panel.
   - Six cards: Events and hospitality; Classes and experiences; Photo, video and entertainment; Home and personal services; Beauty, wellness and fitness; Staffing and hire. Each has a one-line "who that means" and links to the matching part of `/who-its-for`.
-  - The featured strip: two example story cards, with Tipsy's first.
+  - The featured strip: two example story cards.
   - The panel ends with "Not on the list? If you sell your time, your skills or an experience, it's for you."
   - Retire the old business-type links that all pointed at `/features`.
 - **Resources:** the list panel: Free tools, Templates, Guides, Blog, Compare, Help, and What's new.
@@ -223,14 +224,14 @@ It has the same shape as getjobber.com and honeybook.com, at a size a small team
 | `/integrations` and `/integrations/[slug]` | Integrations | T10 | HoneyBook's integration pages; Jobber's App Marketplace |
 | `/whats-new` | Product updates | T15 (list) | Jobber Product Updates |
 | `/who-its-for` | Who it's for | T6 | HoneyBook's business types; Jobber's industries, as one page |
-| `/stories` and `/stories/[slug]` | The seven example stories, with Tipsy's the only real one | T7 | Jobber's customer stories |
+| `/stories` and `/stories/[slug]` | The seven example stories, all labelled Example | T7 | Jobber's customer stories |
 | `/pricing` | Pricing | T8 | Both sites' pricing pages |
 | `/compare` and `/compare/[slug]` | vs HoneyBook, vs Jobber, vs Check Cherry, vs Flashquotes, vs spreadsheets | T9 | Jobber's comparison hub |
 | `/resources` | The resources hub | T12 | Both sites' resources menus |
 | `/tools` and `/tools/[slug]` | Class and event pricing calculator; quote template; the "leak check" score | T13, T14 | Jobber's free tools and Home Service Score |
 | `/templates` | Quote template, follow-up message templates, invoice template | T13 | HoneyBook's template gallery |
 | `/guides`, `/guides/[slug]`, `/blog` and `/blog/[slug]` | Guides and blog | T15 | Jobber Academy; HoneyBook blog |
-| `/about` | About: built by people who run an events business | T16 | Both |
+| `/about` | About: who's behind Heyday, with the story [TBC] | T16 | Both |
 | `/security` | Security, in plain words: payments, two-factor login, data export | T16 | Better than both |
 | `/help` | Help and onboarding: how to reach a person, `[support hours to confirm]`, the setup call `[to confirm]` | T16 | Both |
 | `/contact` | Contact | T16 | Both |
@@ -263,7 +264,7 @@ This section summarises the templates. The spec files in `spec/` write out every
 
 ### T1. Home
 
-Build it exactly as `HEYDAY-SITES-DESIGN-BRIEF.md`, B4, sets out, with the copy from SaaS brief 3.7 ("Homepage copy").
+Build it exactly as `HEYDAY-SITES-DESIGN-BRIEF.md`, B4, sets out, with the copy from SaaS brief 3.7 ("Homepage copy"). The hero uses Jem's new copy in `spec/01-global-and-home.md`, not the SaaS brief's.
 - Take the old site's sections off the homepage: the flock, orb, synergy brain, particle and neural canvases, and the binary intro. Leave their files on disk.
 
 ### T2. Feature page
@@ -331,13 +332,13 @@ This is Jobber's template (SaaS brief 5.5 and Appendix C), plus Jem's additions 
 ### T7. Story page
 
 Like Jobber's customer stories, set out as an article.
-1. **Hero:** the kind of business and what it sells, labelled "Example" (except Tipsy's), with a line naming the chore that hurts most.
+1. **Hero:** the kind of business and what it sells, labelled "Example", with a line naming the chore that hurts most.
 2. **The four growth stages as a sticky scroll:** the picture shows the features switching on at each stage.
 3. **The features used:** small icon cards, linking to each feature page.
 4. **The early-access box.**
 
 **Rules:**
-- Only Tipsy's story is real, and it uses approved numbers only.
+- Every story is labelled Example until real customers replace them.
 - The others use no invented names, quotes, logos or numbers.
 
 ### T8. Pricing
@@ -378,7 +379,7 @@ Check every rival fact on the day you write it. `research/` is a starting point 
 - related features;
 - its status.
 
-**Status:** only what the briefs say. Stripe and Zapier are connected at Tipsy today; everything else says "Coming soon" (the briefs name QuickBooks, Xero, Google Calendar, Google and Microsoft Ads, WhatsApp, and Airbnb Experiences, ClassBento, Togather, LetsBatch and Yuup).
+**Status:** every integration says "Coming soon" until Heyday is live (the briefs name QuickBooks, Xero, Google Calendar, Google and Microsoft Ads, WhatsApp, and Airbnb Experiences, ClassBento, Togather, LetsBatch and Yuup).
 
 **Logos:** don't use other companies' logos until Jem confirms it's allowed. Use their names.
 
@@ -531,6 +532,7 @@ Commit at the end of every phase. Before each commit, check that the typecheck, 
   - Every statistic comes from `STATS-BANK.md` and shows its source.
 - **Placeholders stay visible.** Every placeholder listed in `DECISIONS-NEEDED.md` stays on the page exactly as written until Jem or Russell gives the answer.
 - **"Start free trial"** opens early access. The form stores and sends nothing yet.
+- **Tipsy Parties:** don't mention Tipsy Parties anywhere on the site, and never say it built Heyday, unless Jem and Russell decide otherwise (`DECISIONS-NEEDED.md`).
 - **Never touch the Tipsy system.** Only this repo.
 - **Don't re-propose** anything in the design record's "Do not re-propose" table.
 - **You can't see the running site.** The design record says Claude's browser is on another machine. So:

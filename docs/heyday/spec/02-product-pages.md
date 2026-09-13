@@ -1139,7 +1139,7 @@ Each page is set out section by section, with its layout, holding copy, image, i
 - **What it's for:** every integration, with a card for each linking to its page.
 - **Layout:**
   - A grid of cards, three across, grouped under category headings.
-  - Each card has the name in text, the category in Geist Mono, one line on what it connects, and a status chip: "Connected at Tipsy" or "Coming soon".
+  - Each card has the name in text, the category in Geist Mono, one line on what it connects, and a status chip: "Coming soon" (every integration, until Heyday is live).
   - No logos until Jem confirms we may use them.
 - **Holding copy:** the integration pages below.
 - **Image:** none.
@@ -1178,8 +1178,8 @@ Each page is set out section by section, with its layout, holding copy, image, i
 
 | Page | Category | What it connects, in plain words | Status | Related features |
 |---|---|---|---|---|
-| `/integrations/stripe` | Payments | Takes card payments for deposits, balances and invoices. | Connected at Tipsy | Payments and deposits; Invoicing and chasing |
-| `/integrations/zapier` | Automation | Connects Heyday to other apps you use, so information moves between them. | Connected at Tipsy | Follow-ups and autoresponders; Integrations and importing |
+| `/integrations/stripe` | Payments | Takes card payments for deposits, balances and invoices. | Coming soon | Payments and deposits; Invoicing and chasing |
+| `/integrations/zapier` | Automation | Connects Heyday to other apps you use, so information moves between them. | Coming soon | Follow-ups and autoresponders; Integrations and importing |
 | `/integrations/quickbooks` | Accounting | Sends your clients, invoices and payments to your accounts. | Coming soon | Invoicing and chasing; Reports and the Command Centre |
 | `/integrations/xero` | Accounting | Sends your clients, invoices and payments to your accounts. | Coming soon | Invoicing and chasing; Reports and the Command Centre |
 | `/integrations/google-calendar` | Calendar | Keeps your Heyday diary and your Google Calendar in step. | Coming soon | Scheduling and one diary |

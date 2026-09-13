@@ -41,7 +41,7 @@ export const TBC = {
   importMethod: "[import method to confirm]",
   /** Rival facts. Re-check on the day the page goes live. */
   checkOnTheDay: "[check on the day]",
-  /** Tipsy figures Russell has not yet approved. Leave the claim out. */
+  /** Figures Russell has not yet approved. Leave the claim out. */
   needsApproval: "[needs approval]",
   generic: "[TBC]",
   /** The marketplace has its own site; the address is not settled here. */

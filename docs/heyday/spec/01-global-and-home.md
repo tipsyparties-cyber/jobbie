@@ -86,7 +86,7 @@ Keep the current header: a 72px bar, the three panels shaped differently, and th
 | Staffing and hire | Event staffing agencies, rentals and equipment hire. |
 
 - Each card links to its anchor on `/who-its-for`.
-- **The featured strip:** two story cards: "How Tipsy Parties runs on Heyday" and "How a class host could run on Heyday" (labelled Example).
+- **The featured strip:** two example story cards: "How a mobile bartender could run on Heyday" and "How a class host could run on Heyday", both labelled Example.
 - **The panel's last line:** "Not on the list? If you sell your time, your skills or an experience, it's for you."
 
 **The Resources panel** (the list shape): Free tools · Templates · Guides · Blog · Compare Heyday · Help · What's new.
@@ -157,6 +157,8 @@ Every product-screen picture is a small SVG React component drawn in the style o
 - **Share images:** 1200×630. The page's group shape sits on its group colour, with the page title in the heading font, and the wordmark bottom left. Pages with no group use the sun on cream.
 - **Favicon and app icons:** made from `assets/heyday-mark.svg` at 16, 32, 180 and 512px. Use the blue sun on the cream tile for the app icon.
 - **Theme colour:** cream #F2E9E1.
+- **Structured data on the homepage:** a `SoftwareApplication` entry with the name Heyday, the category `BusinessApplication`, the operating system "Web", and a plain description.
+  - Leave out ratings, reviews and prices until they're real.
 - **Other files:** `sitemap.xml` and `robots.txt`. Holding and sample pages are `noindex` until they're real.
 
 ### A10. The sun's colour
@@ -173,8 +175,8 @@ always one colour, and never black or orange.
 ## `/`: Home
 - **Template:** T1 (design brief B4, homepage copy from SaaS brief 3.7)
 - **What this page is for:** show a busy owner, in one scroll, that Heyday runs their whole workflow, and get them to early access or a demo.
-- **Title and description (for search):** "Heyday: software that runs your events, class or service business" / "Instant quotes, bookings, payments, your team, your inbox and every follow-up, in one workflow that grows with you. Coming soon: join early access."
-- **Grounds, top to bottom:** cream (hero), cream (who it's for strip), paper (statement), sky (How Heyday runs your day), the four feature rows each on paper with its shape in its colour, lavender (What it does), blue (Build it your way), paper (The AI), cream (Only on Heyday), paper (who it's for and stories), sage-tinted paper (grows with you), blue (sell everywhere), cream (switching), ink (closing), then the ink footer.
+- **Title and description (for search):** "Heyday | All-in-one software for event, class and service businesses" / "Quotes, bookings, payments, your team, follow-ups and reviews for events, class and service businesses, in one automated workflow. Join early access."
+- **Grounds, top to bottom:** cream (hero), cream (what Heyday is), paper (statement), sky (How Heyday runs your day), the four feature rows each on paper with its shape in its colour, lavender (What it does), blue (Build it your way), paper (The AI), cream (Only on Heyday), paper (who it's for and stories), sage-tinted paper (grows with you), blue (sell everywhere), cream (switching), ink (closing), then the ink footer.
 
 ### 1. Header
 - Part A3.
@@ -182,12 +184,29 @@ always one colour, and never black or orange.
 ### 2. Hero
 - **What it's for:** say what Heyday is and why it's different in the first second, and show the whole workflow moving.
 - **Layout:** two columns, 1280px and wider. On the left, the copy. On the right, the rising cards panel (blue #93B7E8, with 56px top corners and faint outline shapes behind it). Below 1280px, one landed card sits under the copy.
+- **Decorative suns (instead of the orbs):** the blurred pastel orbs go. In their place go three Heyday suns of different sizes. Each is one colour (design brief A11), never black or orange:
+  - **A big one** (about 520px) in sage #9AAD92, low on the left. It's cut off by the page edge and runs down across the rounded top of the next section, so it carries the eye into "What Heyday is". It sits above both sections' backgrounds and behind all text.
+  - **A medium one** (about 160px) in lavender #D6D0F5, near the top left, half off the page edge.
+  - **A small one** (about 64px) in sky #AEC9EE, between the copy and the rising cards panel.
+  - **Below 1280px,** where the panel isn't shown, add a medium blue #93B7E8 one at the top right.
+  - **They're decoration:** `aria-hidden`, with no pointer events, and never over the headline's letters.
+- **Motion for the suns:**
+  - Each turns on its own rhythm with the dial click: 45° in 0.7s, every 6 to 10 seconds, staggered so they never move together.
+  - Each has a gentle parallax, so they drift as you scroll. The big one moves the most, up to 80px.
+  - With reduced motion, they're still.
+- **Replace, don't add:** the rising cards panel takes the place of what's on the right of the hero now. That means the faint radial diagram, whose labels (customer service, sales, receptionist and so on) come from the old site, and the blurred pastel blobs. Remove both from the hero.
+- **The animation, from anyone.com's hero, in our own art:**
+  - Tall white cards rise one at a time through the blue panel.
+  - Each card rises for 1.67s, holds for 0.83s, then exits upward over 2.5s, with a new card every 3s.
+  - The cards simply scroll up and away. There's no ripple, no pop-in, and nothing peeking in. Each card shows all its details the whole time.
+  - The full timing is in design brief A9.
+  - Never use anyone.com's artwork or its animation file.
 - **Holding copy:**
-  - **Headline:** "Do what you love, Heyday runs the rest." This is live in the repo; keep it.
-  - **Sub-line:** "You didn't start a business to work for it. We make your business work for you." Keep the live wording.
-  - **The line that says what it is:** "The all-in-one app for events, entertainment, activity, class and service businesses. Instant quotes, bookings and payments, your team, your inbox and every follow-up, in one place that grows with you."
+  - **Label:** `{ easy automation, your way }`
+  - **Headline:** "You didn't start a business to have an admin job." This is Jem's hero, chosen on 13 September. It replaces "Do what you love, Heyday runs the rest.", which is live in the repo now.
+  - **Line:** "Think of Heyday as you, times a thousand. Always on, always instant."
+  - **Small line:** "From the first hello to the next booking. Automate as much or as little as you want."
   - **Buttons:** "Start free trial →" (primary; it opens early access) and "Book a demo" (ghost).
-  - **The rotating line:** "Built for caterers / class hosts / photographers / mobile bars / DJs / cleaners / escape rooms / you."
   - **The panel's accessible label:** "Example workflow: an enquiry becomes a booked, paid, staffed and reviewed job."
 - **Image:** `RisingCards` with the eight workflow cards from the design brief, B5:
   1. New enquiry
@@ -200,25 +219,36 @@ always one colour, and never black or orange.
   8. Rebooked
 
   Each card has its step label, small icon, rows and orange pill, and all the data is example data. `assets/heyday-hero-still.svg` is the reference.
-- **Icons and marks:** each card's small icon (hd-one-inbox, hd-instant-quotes, hd-online-booking, hd-team-and-shifts, hd-tasks, hd-payments, hd-reviews, hd-shape-loop). The HeydayMark sun, in paper #FBF9F6 on the blue panel, peeks in from the right edge and nudges each card as it lands.
+- **Icons and marks:** each card's small icon (hd-one-inbox, hd-instant-quotes, hd-online-booking, hd-team-and-shifts, hd-tasks, hd-payments, hd-reviews, hd-shape-loop).
 - **Motion:**
   - the letter scatter and assembly from `hero-motion.tsx`, on load and on scroll away;
   - RisingCards: 1.67s rise, 0.83s hold, 2.5s exit, a new card every 3s;
-  - the lavender ripple and the details popping in as each card lands;
-  - the sun's nudge;
   - the HeydayLine under the panel lighting the current step.
 
   With reduced motion, the cards stop on one landed card.
 
-### 3. Who it's for strip, with the proof line
-- **What it's for:** let every kind of business see itself straight away, and say where Heyday comes from.
-- **Layout:** a full-width marquee of business types in Geist Mono, then one centred proof line under it.
+### 3. What Heyday is (with the business types)
+- **What it's for:**
+  - Straight after the hero, it says plainly what Heyday is and who it's for.
+  - It's also where the homepage's search wording lives. The hero headline is the owner's pain; this section carries the words people type into Google.
+- **Layout:** on cream, centred under the hero, in this order: the label, the heading (an H2), one line, a row of feature links, and the business-type marquee.
 - **Holding copy:**
-  - **The marquee:** "Mobile bars · Caterers · Private chefs · Photographers · DJs · Performers · Photo booths · Planners · Florists · Class hosts · Tours · Escape rooms · Cleaners · Trades · Tutors · Beauty and wellness · Fitness · Staffing agencies · and anyone who sells their time, skills or an experience".
-  - **The proof line:** "Built by Tipsy Parties. Running Tipsy Parties every day."
+  - **Label:** `{ what heyday is }`
+  - **Heading (H2):** "The all-in-one software that runs your **events, class or service business**."
+  - **Line:** "Enquiries, instant quotes, bookings and payments, your team's shifts and pay, client messages, follow-ups, reviews and rebookings, all in one automated workflow. For anyone who sells their time, skills or an experience, from one-person businesses to growing teams."
+  - **Feature links** (small chips, each linking to its feature page): Instant quotes · Online booking · Payments and deposits · One inbox · Shift offers · Team pay · Follow-ups · Reviews
+  - **The marquee:** "Mobile bars · Caterers · Private chefs · Photographers · DJs · Performers · Photo booths · Planners · Florists · Class hosts · Tours · Escape rooms · Cleaners · Trades · Tutors · Beauty and wellness · Fitness · Staffing agencies · and anyone who sells their time, skills or an experience"
 - **Image:** none.
-- **Icons and marks:** none.
-- **Motion:** the marquee drifts slowly and pauses on hover. With reduced motion, it's a still, wrapped line. The proof line rises in (SectionReveal).
+- **Icons and marks:** each chip has its small icon: hd-instant-quotes, hd-online-booking, hd-payments, hd-one-inbox, hd-team-and-shifts, hd-team-pay-and-expenses, hd-automations, hd-reviews.
+- **Search:**
+  - **Headings:** the hero headline stays the page's only H1, and this heading is the H2 that names what Heyday is.
+  - **The business types:** write them once as real text, as a list whose items link to the anchors on `/who-its-for`. The moving copies that make the marquee loop are `aria-hidden` and aren't links, so search engines and screen readers see each word once.
+  - **The feature chips** are real links to the feature pages, so search engines can see how the site fits together.
+  - **Wording:** use the words people search for naturally, never stuffed in. For example: all-in-one business software, business automation, booking software, quoting software, event business software, class booking software, CRM and client management, staff scheduling, team pay, deposits and payments.
+- **Motion:**
+  - The heading and line rise in (SectionReveal), then the chips rise in turn (RevealGroup, 150ms apart).
+  - The marquee drifts slowly and pauses on hover.
+  - With reduced motion, everything is still.
 
 ### 4. Statement
 - **What it's for:** name the problem in one big sentence.
@@ -399,8 +429,8 @@ always one colour, and never black or orange.
   - **Heading:** "Built for businesses that sell **time, skills and experiences.**"
   - **Line:** "If you sell your time, your skills or an experience, it's for you."
   - **The chips:** the six kinds from the header's Who it's for panel.
-  - **The story cards** (Tipsy's is the real one; the rest are labelled Example):
-    - "Tipsy Parties: from one person behind the bar to a team"
+  - **The story cards** (all labelled Example until real customers replace them):
+    - "A mobile bartender: from one person behind the bar to a team"
     - "A caterer: staffing big events without a group chat"
     - "A class host: filling seats and taking private bookings"
     - "A performer: quoting while performing every weekend"
@@ -413,7 +443,7 @@ always one colour, and never black or orange.
 - **Motion:** the cards rise in (RevealGroup). The row swipes or drags. There's no pinning.
 
 ### 12. Grows with you
-- **What it's for:** show that Heyday grows from a one-person business to a business that runs itself, the way Tipsy did.
+- **What it's for:** show that Heyday grows from a one-person business to a business that runs itself.
 - **Layout:** four stickers on the HeydayLine, left to right.
 - **Holding copy:**
   - **Label:** `{ grows with you }`
@@ -423,7 +453,6 @@ always one colour, and never black or orange.
     2. **Owner-operator:** "Automations and follow-ups carry the routine."
     3. **A team:** "Shift offers, checks and pay, all in one place."
     4. **It runs itself:** "You oversee the exceptions."
-  - **The Tipsy line:** "Tipsy Parties started with one person behind a bar. Today a team of [needs approval] bartenders runs from one system." Leave it out until the number is approved.
 - **Image:** none.
 - **Icons and marks:** the stickers carry hd-instant-quotes, hd-automations, hd-team-and-shifts and hd-shape-inf.
 - **Motion:** the stickers straighten on hover, rise in turn, and the HeydayLine fills.

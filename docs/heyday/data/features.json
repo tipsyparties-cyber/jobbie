@@ -281,7 +281,7 @@
         "saves": "Saves double entry.",
         "reduces": "Reduces errors."
       },
-      "intro": "Connect the tools you already use, and bring your clients and bookings with you from old ones. Stripe and Zapier are connected at Tipsy today; the rest are coming soon.",
+      "intro": "Connect the tools you already use, and bring your clients and bookings with you from old ones. They're all coming soon.",
       "stats": [
         {
           "statsBankRow": 20
@@ -293,7 +293,7 @@
           "label": "Payments",
           "heading": "Take payments through Stripe",
           "line": "Card and wallet payments, connected.",
-          "screen": "An integrations grid, names only and no logos: Stripe marked 'Connected at Tipsy', the others 'Coming soon'."
+          "screen": "An integrations grid, names only and no logos, each marked 'Coming soon'."
         },
         {
           "label": "Accounts",
@@ -335,7 +335,7 @@
         },
         {
           "q": "Which integrations work today?",
-          "a": "Stripe and Zapier are connected at Tipsy today. QuickBooks, Xero and Google Calendar are coming soon."
+          "a": "Stripe, Zapier, QuickBooks, Xero and Google Calendar are all coming soon."
         }
       ],
       "related": [
@@ -635,7 +635,7 @@
         },
         {
           "q": "Can I send to just some customers?",
-          "a": "Segments are coming soon. Broadcasts and the email editor exist at Tipsy today."
+          "a": "Segments, broadcasts and the email editor are all coming soon."
         }
       ],
       "related": [
@@ -929,7 +929,7 @@
       "faq": [
         {
           "q": "Can I set my own lead types?",
-          "a": "Yes, the lead types and their rules are yours. Priority ranking is built at Tipsy; lead types you set are coming soon."
+          "a": "Yes, the lead types and their rules are yours to set. Coming soon."
         },
         {
           "q": "Which channels?",
@@ -1359,7 +1359,7 @@
         },
         {
           "q": "Can I change the timings?",
-          "a": "Yes, in the settings studio. At Tipsy today the timings are fixed; the studio you edit yourself is coming soon."
+          "a": "Yes, in the settings studio, which is coming soon."
         }
       ],
       "related": [
@@ -1611,7 +1611,7 @@
         },
         {
           "q": "Can agencies have their own prices?",
-          "a": "Yes. Price lists for regular clients and agencies are built at Tipsy."
+          "a": "Yes. Price lists for regular clients and agencies are coming soon."
         }
       ],
       "related": [
@@ -1681,7 +1681,7 @@
         },
         {
           "q": "Can my team sign contracts too?",
-          "a": "Yes. Staff contracts are e-signed at Tipsy today."
+          "a": "Yes, staff contracts can be e-signed too. Coming soon."
         }
       ],
       "related": [
@@ -2062,7 +2062,7 @@
         },
         {
           "q": "Which phone systems?",
-          "a": "The ones Heyday supports [to confirm]. Tipsy uses Zoom Phone today."
+          "a": "The ones Heyday supports [to confirm]."
         }
       ],
       "related": [
@@ -2508,7 +2508,7 @@
       "faq": [
         {
           "q": "Does it handle US checks?",
-          "a": "US work eligibility checks are coming soon. Tipsy’s version is built for UK rules."
+          "a": "US work eligibility checks are coming soon."
         },
         {
           "q": "Can applicants book their own interview?",
@@ -2578,7 +2578,7 @@
       "faq": [
         {
           "q": "Is time tracking live?",
-          "a": "Check-in is built at Tipsy. Timesheets are coming soon."
+          "a": "Check-in and timesheets are coming soon."
         },
         {
           "q": "Does it connect to pay?",
@@ -2887,7 +2887,7 @@
       "faq": [
         {
           "q": "Does it pay people in the US?",
-          "a": "US payouts are coming soon. Tipsy’s version pays in the UK."
+          "a": "US payouts are coming soon."
         },
         {
           "q": "What about employees?",

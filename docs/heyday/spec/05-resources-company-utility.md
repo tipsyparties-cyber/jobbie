@@ -532,28 +532,28 @@ This part covers the resources hub, the three free tools (with the pricing calcu
 ## `/about`: About
 
 - **Template:** T16
-- **What this page is for:** who's behind Heyday and why it exists: built by people who run an events business.
-- **Title and description (for search):** "About Heyday: built by people who run an events business" / "Heyday grew out of the system that runs Tipsy Parties, a mobile cocktail bar and cocktail class business. Now it's for every business that sells time, skills or an experience."
+- **What this page is for:** who's behind Heyday and why it exists. [Jem and Russell to write the story.]
+- **Title and description (for search):** "About Heyday" / "Why Heyday exists: software that runs the whole business, for anyone who sells their time, skills or an experience. [About story TBC]"
 - **Grounds, top to bottom:** cream #F2E9E1 (hero), fading to sage #9AAD92 (the origin), paper #FBF9F6 (grows with you), lavender #D6D0F5 (what we believe), paper #FBF9F6 (the people), ink #0A0A0A (closing call to action)
 
 ### 1. Hero
 - **What it's for:** the one-line reason Heyday exists.
 - **Layout:** type-led hero. The Heyday sun sits large on the right.
-- **Holding copy:** label `{ about }`; headline "Built by people who **run an events business**"; line "We built it to run our own. Now it's for anyone who sells their time, their skills or an experience."
+- **Holding copy:** label `{ about }`; headline "Software that runs **the whole business**"; line "For anyone who sells their time, their skills or an experience. [Who's behind Heyday: Jem and Russell to write.]"
 - **Image:** none.
 - **Icons and marks:** the Heyday sun (`HeydayMark`, large).
 - **Motion:** `HeydayMark` bounces once on load (none with reduced motion).
 
 ### 2. The origin
-- **What it's for:** the Tipsy story, honestly.
+- **What it's for:** where Heyday comes from, in Jem's and Russell's words. It doesn't mention Tipsy Parties unless they decide it should.
 - **Layout:** copy on the left, picture on the right.
-- **Holding copy:** label `{ where it comes from }`; headline "It started with **one person** and a cocktail class"; body: "Tipsy Parties is a mobile cocktail bar and cocktail class business in the UK and the US. Its owners built their own system to run the whole business, from the first enquiry to the rebooking. Heyday is that system, opened up for other businesses." Approved-numbers line: "[Team size: needs approval]", "[Steps that run themselves in each booking: needs approval]".
-- **Image:** `HoldingImage` 4:5. Art direction: a Tipsy bartender mid-pour at a real event, or a cocktail class in full swing (Jem supplies a real photo).
+- **Holding copy:** label `{ where it comes from }`; headline "[Headline TBC]"; body "[Heyday's story: Jem and Russell to write]".
+- **Image:** `HoldingImage` 4:5. Art direction: [TBC, to match the story].
 - **Icons and marks:** none.
 - **Motion:** `SectionReveal`; `Parallax` on the picture.
 
 ### 3. Grows with you
-- **What it's for:** show the path Tipsy took, which is the path Heyday offers.
+- **What it's for:** show the path Heyday offers, from doing every job yourself to a business that runs itself.
 - **Layout:** four `Sticker` cards on the `HeydayLine`.
 - **Holding copy:** label `{ grows with you }`; headline "From doing it all **to a business that runs itself**"; stages:
   - "Doing it all yourself": instant quotes, online booking, one inbox.
@@ -615,7 +615,7 @@ This part covers the resources hub, the three free tools (with the pricing calcu
 - **Holding copy:**
   - **Payments:** "Card payments are handled by [payment provider: to confirm]. [Whether Heyday ever sees full card numbers: to confirm]."
   - **Logging in:** "[Two-factor login: to confirm]. [Sign in with Google or Apple: to confirm]."
-  - **Who sees what:** "You decide what each team member can see and do, with roles and permissions." (Team management is built in the Tipsy system; for Heyday it's coming soon.)
+  - **Who sees what:** "You decide what each team member can see and do, with roles and permissions." (Coming soon.)
   - **Your data is yours:** "[Export your clients, bookings and payments at any time: to confirm]."
   - **Keeping each business separate:** "[How each business's data is kept apart: to confirm]."
   - **AI and your data:** "You choose how much the AI does. It drafts, and a person approves anything involving money or promises." "[Which AI providers are used, and whether your data trains them: to confirm]."
@@ -809,7 +809,7 @@ This part covers the resources hub, the three free tools (with the pricing calcu
 >
 > **Who it is for.** Businesses that sell their time, their skills or an experience. Examples: mobile bars, caterers and private chefs, photographers, planners, DJs and musicians, entertainers, photo booths, florists, workshop and class hosts, team-building, tours and escape rooms, home services and cleaning, beauty and wellness, fitness, tutoring, pet care and rentals. It is for one-person businesses and for businesses with a team. Many of these businesses sell the same skill two ways: as a service at someone's event, and as a class or experience. Heyday is designed to run both in one diary.
 >
-> **Where it comes from.** Heyday grew out of the system that runs Tipsy Parties, a mobile cocktail bar and cocktail class business trading in the UK and the US. Tipsy's owners built that system to run their own business. Heyday is that system being opened up for other businesses.
+> **Where it comes from.** [To confirm: what Heyday says about where it comes from.]
 >
 > **What it is designed to do, in six parts** (all coming soon):
 > - **Get ahead:** set up prices, packages, rules and the team before the first enquiry, with an AI setup assistant.
@@ -821,7 +821,7 @@ This part covers the resources hub, the three free tools (with the pricing calcu
 >
 > **How it differs from other tools.** It is designed to run the whole workflow in one place: the customer side (quotes, booking, payment), the team who deliver the job (shifts, pay, check-in, tips), and the aftercare. It handles a service and a class or experience in one diary. The owner chooses how much the AI does: it can draft for approval, learn from corrections, or, later, handle simple messages on its own within the owner's rules. Anything involving money or promises passes a person.
 >
-> **What is true today.** The underlying system runs Tipsy Parties every day. Heyday's plans, prices, launch dates and which features will be live at launch have not been announced.
+> **What is true today.** Heyday's plans, prices, launch dates and which features will be live at launch have not been announced.
 >
 > **Pricing.** Not published yet.
 >

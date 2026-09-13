@@ -1,5 +1,8 @@
 # Hey Day business software (SaaS): website brief for Claude Code
 
+> **Note for Claude Code (14 September 2026):** this is a background document. Where it suggests mentioning Tipsy Parties on the site (a "Built by Tipsy Parties" proof line, Tipsy's real story, Tipsy's numbers, or "built by people who run an events business"), don't. Heyday isn't built by Tipsy Parties, and the site doesn't mention Tipsy unless Jem and Russell decide otherwise. The spec files in `spec/` and the build prompt's rules win.
+
+
 **Prepared for:** Claude Code, to design and build the website for Hey Day: self-serve software (SaaS) that runs a whole events, entertainment, activity, services or class business. Companion brief: `HEYDAY-MARKETPLACE-WEBSITE-BRIEF.md`.
 **Prepared by:** Jem, with Claude, 13 September 2026. Russell to review.
 **Status:** exploration. Nothing here is a final business decision unless it says so. Open questions are listed in section 8.

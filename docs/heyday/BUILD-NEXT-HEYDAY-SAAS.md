@@ -1,5 +1,8 @@
 # Hey Day business software (the jobbie site): what to build next
 
+> **Note for Claude Code (14 September 2026):** this is a background document. Where it suggests mentioning Tipsy Parties on the site (a "Built by Tipsy Parties" proof line, Tipsy's real story, Tipsy's numbers, or "built by people who run an events business"), don't. Heyday isn't built by Tipsy Parties, and the site doesn't mention Tipsy unless Jem and Russell decide otherwise. The spec files in `spec/` and the build prompt's rules win.
+
+
 **For:** Claude Code, working in `tipsyparties-cyber/jobbie`, branch `redesign/mono-binary-intro` (runs on port 3001).
 **From:** Jem, with Claude, 13 September 2026. Russell to review.
 **Read with:** `HEYDAY-SAAS-WEBSITE-BRIEF.md`, which has the research behind this plan: sections 3.3 to 3.9 (the product and the website plan), 5 (Jobber compared with what we have), 6.1 (how getjobber.com is built), and Appendices A and C (every capability, and every Jobber feature page). This file says what to build and in what order. That one says why.

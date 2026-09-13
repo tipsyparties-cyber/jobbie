@@ -13,7 +13,7 @@ export function ProjectTeaser() {
                 Featured Project
               </p>
               <h2 className="mt-4 font-display text-4xl font-light md:text-5xl">
-                Tipsy Parties
+                Example story
               </h2>
               <p className="mt-6 text-mid-grey leading-relaxed">
                 A fully autonomous operations system &mdash; from instant quoting and
@@ -22,7 +22,7 @@ export function ProjectTeaser() {
                 itself.
               </p>
               <Link
-                href="/stories/tipsy-parties"
+                href="/stories/example"
                 className="mt-8 inline-flex items-center gap-2 font-sans text-sm font-medium text-accent transition-colors hover:text-accent-hover"
               >
                 View case study

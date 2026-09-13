@@ -1,10 +1,18 @@
 # Still to decide
 
-Every placeholder left in the Heyday site spec, grouped by what it's waiting for. It was compiled on 13 September 2026.
+Every placeholder left in the Heyday site spec, grouped by what it's waiting for. It was compiled on 14 September 2026.
 
 **Claude Code:** build every one of these as a visible placeholder, exactly as written (for example `[PRICE TBC]`). Don't fill them in or guess. Jem or Russell will give the answers, and the pages will be updated then.
 
 **Jem and Russell:** this is the list to work through before launch.
+
+## First: Tipsy Parties
+
+**Who decides:** Jem and Russell.
+
+- **Can the site mention Tipsy Parties at all?** If it can, where and how: a customer story, the About page, or the page for AI search tools.
+- **Whatever you decide,** the site never says Tipsy Parties built Heyday.
+- **Until you decide,** the site doesn't mention Tipsy, and every story is labelled Example.
 
 | What it's waiting for | Who decides | How many |
 |---|---|---|
@@ -14,8 +22,9 @@ Every placeholder left in the Heyday site spec, grouped by what it's waiting for
 | The trial | Jem and Russell | 3 |
 | How customers move their data across | Jem and Russell | 3 |
 | Promises and policies to confirm | Jem and Russell | 17 |
-| Numbers that need approval (Tipsy's figures) | Russell | 3 |
-| Other details to decide | Jem and Russell | 101 |
+| Heyday's story (About page and the page for AI search tools) | Jem and Russell | 6 |
+| Numbers that need approval | Russell | 1 |
+| Other details to decide | Jem and Russell | 113 |
 | Rival facts to check on the day of publishing | Claude Code, on the day each page goes live | 18 |
 | Dates to update when publishing | Claude Code, when publishing | 11 |
 
@@ -105,17 +114,28 @@ Every placeholder left in the Heyday site spec, grouped by what it's waiting for
 | `/early-access` | Button: "Join early access" (primary). What you'll get: "An invite when it opens", "Help setting up [to confirm]". |
 | `/features/marketplace-listing` | That’s still being decided. [to confirm] |
 | `/features/partners` | That’s still being decided. [to confirm] |
-| `/features/call-notes` | The ones Heyday supports [to confirm]. Tipsy uses Zoom Phone today. |
+| `/features/call-notes` | The ones Heyday supports [to confirm]. |
 
-## Numbers that need approval (Tipsy's figures)
+## Heyday's story (About page and the page for AI search tools)
+
+**Who decides:** Jem and Russell.
+
+| Page | Where it appears |
+|---|---|
+| `/about` | What this page is for:** who's behind Heyday and why it exists. [Jem and Russell to write the story.] |
+| `/about` | Title and description (for search):** "About Heyday" / "Why Heyday exists: software that runs the whole business, for anyone who sells their time, skills or an experie… |
+| `/about` | Holding copy:** label `{ about }`; headline "Software that runs **the whole business**"; line "For anyone who sells their time, their skills or an experience. [Who's b… |
+| `/about` | Holding copy:** label `{ where it comes from }`; headline "[Headline TBC]"; body "[Heyday's story: Jem and Russell to write]". |
+| `/about` | Image:** `HoldingImage` 4:5. Art direction: [TBC, to match the story]. |
+| `/for-ai` | Where it comes from.** [To confirm: what Heyday says about where it comes from.] |
+
+## Numbers that need approval
 
 **Who decides:** Russell.
 
 | Page | Where it appears |
 |---|---|
-| `/` | The Tipsy line:** "Tipsy Parties started with one person behind a bar. Today a team of [needs approval] bartenders runs from one system." Leave it out until the number… |
 | `(whole site)` | Every section gives what it's for, the layout, holding copy, the image slot, the icons and marks, and the motion. **All copy here is holding copy for Jem to edit.** An… |
-| `/stories/tipsy-parties` | Naming:** whether Tipsy can be named, and which numbers can be published, is open question 6 in the SaaS brief section 8. Build the page with Tipsy named and every num… |
 
 ## Other details to decide
 
@@ -124,6 +144,7 @@ Every placeholder left in the Heyday site spec, grouped by what it's waiting for
 | Page | Where it appears |
 |---|---|
 | `(whole site)` | All copy here is holding copy for Jem to edit.** Where the briefs already have wording (the hero, the homepage copy, the headline bank), it's used as is. Anything not … |
+| `A. The parts every page` | Bottom row:** "© [year] [company name TBC]", a note that pages marked Coming soon describe features that aren't live yet, and the two buttons ("Start free trial" and "… |
 | `(whole site)` | Each page is set out section by section, with its layout, holding copy, image, icons and motion. All the copy is holding copy, written so each section's job is clear; … |
 | `/features/ai` | Which plans include which level?** "[TBC]. Plans aren't decided yet." |
 | `/features/ai` | What does it cost to run?** "[TBC]. The cost controls will show it." |
@@ -167,6 +188,7 @@ Every placeholder left in the Heyday site spec, grouped by what it's waiting for
 | `/pricing` | Complaints settled fairly  /  [TBC]  /  [TBC]  /  [TBC]  /  |
 | `/pricing` | 2. "Do I need a card to start?" / "[TBC]" |
 | `/pricing` | 4. "Can I change plans later?" / "[TBC]" |
+| `/pricing` | 5. "What are the card fees?" / "They're shown on this page before you sign up. [rates TBC]" |
 | `/compare/honeybook` | Card fees  /  2.9% + 25¢ on the comparison table; its pricing page also says "from 2.7% + 10¢", which is its Tap to Pay rate [check on the day]  /  [TBC]  /  |
 | `/compare/honeybook` | 2. "Will my templates come across?" / "[TBC]" |
 | `/compare/jobber` | Card fees  /  2.9% + 30¢; Tap to Pay 2.7% + 30¢; bank payments 1%  /  [TBC]  /  |
@@ -177,6 +199,14 @@ Every placeholder left in the Heyday site spec, grouped by what it's waiting for
 | `/compare/flashquotes` | Line: "All coming soon. Heyday's fees: [TBC]." |
 | `/compare/flashquotes` | 1. "Will Heyday add a fee to my customer's bill?" / "[TBC]" |
 | `/blog` | Layout:** the same reading layout as guides, with date and author. The author name stays a [TBC] placeholder; no invented names. |
+| `/about` | Holding copy:** label `{ where it comes from }`; headline "[Headline TBC]"; body "[Heyday's story: Jem and Russell to write]". |
+| `/about` | Holding copy:** "[Names, roles and photos: TBC by Jem and Russell]". No invented names. |
+| `/security` | Reporting a problem:** "[Security contact: TBC]." |
+| `/help` | "Email: [EMAIL TBC]". Line: "We reply within [response time: to confirm]." |
+| `/contact` | Holding copy:** label `{ contact }`; headline "Say **hey**"; fields: first name, email, "What's it about?" (select: "A demo", "Early access", "Something else"), messag… |
+| `/contact` | Rule:** until the privacy notice and consent wording are agreed, the form stores and sends nothing. The Send button is disabled, with the line "The form opens soon. Em… |
+| `/demo` | Holding copy:** label `{ demo }`; headline "See it run **your kind of business**"; line "[Length: TBC], with [who: TBC]."; what you'll see: |
+| `/demo` | Holding copy:** "[Booking calendar goes here: provider TBC]". Until it's connected: "Email [EMAIL TBC] to book a time." |
 
 ## Rival facts to check on the day of publishing
 
@@ -219,4 +249,4 @@ Every placeholder left in the Heyday site spec, grouped by what it's waiting for
 | `/compare/flashquotes` | Title and description (for search):** "Heyday vs Flashquotes: an honest comparison" / "How Heyday compares with Flashquotes for mobile bars, coffee carts, photo booths… |
 | `/compare/flashquotes` | 3. "When was this page checked?" / "13 September 2026. [update on publishing]" |
 | `/guides` | Holding copy:** the title as H1; a standfirst of one or two sentences; "[n] min read"; "Updated [date]". |
-| `/for-ai` | > Last updated: [date]. |
+| `/for-ai` | Last updated: [date]. |

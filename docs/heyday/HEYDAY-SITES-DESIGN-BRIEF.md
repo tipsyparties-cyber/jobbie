@@ -59,7 +59,6 @@ Everything in Part A applies across the whole site.
 - **Where it goes:**
   - the favicon and app icon: a blue sun on a cream tile (the mark page also shows paper on blue, paper on sage and blue on yellow);
   - next to the wordmark in the header;
-  - the hero (A9);
   - the section marks and the more-info sections (A11, A12);
   - as the parent of every feature icon (A7).
 - **It changes shape** (A11): the same eight arrows fold into a flat shape for each part of the business (the section marks), and it bounces now and then.
@@ -198,10 +197,7 @@ Build one component, `RisingCards`:
   - Use `cubic-bezier(0.333, 0, 0.667, 1)` for the motion.
   - Build it as framer-motion keyframes at 0%, 33% and 50%, then 100% for the exit.
 - **Rhythm:** a new card every 3s. The loop lasts the number of cards × 3s.
-- **Landing moment:**
-  - An orange ripple spreads behind the landed card: two soft lavender circles.
-  - The card's details pop in over 1s with `cubic-bezier(0.77, 0, 0.18, 1)`.
-  - On jobbie, the Heyday sun mark (A11) rolls in from the right edge in paper #FBF9F6, bounces once and nudges the card. `heyday-hero-still.svg` shows it half in view.
+- **No extras:** the cards simply scroll up and away. There's no ripple, no pop-in and no sun peeking in, and each card shows all its details the whole time.
 - **Screen sizes:**
   - 1280px and wider: the animation runs.
   - Narrower: one card sits still, with the Heyday line under it.
@@ -214,6 +210,12 @@ Build one component, `RisingCards`:
 The site uses the anyone.com overlap. Each section after the hero has 56px rounded top corners and sits 56px up over the one before, so the page reads as a stack of cards.
 
 - The colour fades between sections (see B2).
+
+**Decorative suns instead of orbs:** wherever the old site used blurred orbs or blobs, use Heyday suns instead.
+- Use different sizes, each in one colour (A11), and at most three per screen.
+- One may run across a section edge, to link two sections, as in the homepage hero (spec part 1, homepage section 2).
+- They sit behind text and never make it harder to read.
+- They turn slowly with the dial click, and drift with a gentle parallax. With reduced motion, they're still.
 
 ## A11. The mark in motion, and the section marks
 
@@ -338,7 +340,11 @@ Jem's idea: each section's shape sits beside the headline. Press "more info" and
 ## B3. What stays, what goes
 
 - **Keep the header** with the three dropdown panels (commit 8aebdb3). Restyle its buttons to A4. "Book a demo" is ghost; "Start free trial" is primary.
-- **Keep the hero copy that's live now** (commits d06ee47 and a8c69b9): "Do what you love, Heyday runs the rest." with the line under it.
+- **The hero copy is new** (Jem, 13 September). It replaces the live "Do what you love, Heyday runs the rest.":
+  - **Label:** `{ easy automation, your way }`
+  - **Headline:** "You didn't start a business to have an admin job."
+  - **Line:** "Think of Heyday as you, times a thousand. Always on, always instant."
+  - **Small line:** "From the first hello to the next booking. Automate as much or as little as you want."
 - **Replace the scatter animation's right-hand side with `RisingCards`.** `hero-motion.tsx` (594b770) has the letter scatter. Keep the letters assembling on load if Jem likes it, but the right half of the hero becomes `RisingCards`.
 - **Replace:** `button.tsx` (A4), `neo-card.tsx` (A5), `section-reveal.tsx` (A6), and the glass panels on the Heyday pages.
 - **Take off the Heyday homepage** anything that doesn't fit this direction, if it's still there. That means the neural, particle, flock and murmuration canvases, and the binary intro. Leave the files; just don't render them on the homepage.
@@ -349,9 +355,9 @@ The copy comes from `HEYDAY-SAAS-WEBSITE-BRIEF.md` section 3.7, "Homepage copy".
 
 1. **Header** (kept).
 2. **Hero:**
-   - **Left:** headline, the line under it, and the smaller "what it is" line. Then "Start free trial" (primary, with arrow) and "Book a demo" (ghost), and the rotating "Built for caterers / class hosts / … / you."
+   - **Left:** the label, headline, line and small line (B3), then "Start free trial" (primary, with arrow) and "Book a demo" (ghost).
    - **Right:** `RisingCards` with the eight workflow cards (B5). See `heyday-hero-still.svg`.
-3. **Who it's for strip:** a slow marquee of business types in Geist Mono, ending "and anyone who sells their time, skills or an experience".
+3. **What Heyday is:** the plain description and search wording, with feature links and the business-type marquee (spec part 1, homepage section 3).
 4. **Statement:** `{ why Heyday }` and "Six apps, a group chat and your evenings. That's how most small businesses run. It doesn't have to be." One big sentence, lots of space.
 5. **Sideways scroll 1, "How Heyday runs your day"** (B6): the twelve steps of the real flow, grouped under the six group names, on the Heyday line. Heading: "One workflow for your whole business, from the first hello to the next booking."
 6. **The feature rows, kept as Russell chose them** (the design record's Addendum 34):
@@ -366,7 +372,7 @@ The copy comes from `HEYDAY-SAAS-WEBSITE-BRIEF.md` section 3.7, "Homepage copy".
 8. **"Build it your way"** (B8): the workflow builder, using the placeholder still.
 9. **The AI:** three cards (Draft, Draft and train, Autopilot, the last marked coming soon), in panel style, on the Heyday line from left to right, to show the levels going up.
 10. **Sideways scroll 2, "Only on Heyday"** (B6): the features neither Jobber nor HoneyBook has (brief section 3.8, part 3). Show the eight strongest, and mark anything not built "coming soon".
-11. **Who it's for and example stories:** the seven story cards (Tipsy first) in a swipeable row. It isn't pinned; people swipe or drag it.
+11. **Who it's for and example stories:** the seven story cards in a swipeable row, all labelled Example. It isn't pinned; people swipe or drag it.
 12. **Grows with you:** the four stages as stickers on the Heyday line.
 13. **Sell everywhere:** "Selling on Airbnb, ClassBento or Togather? Keep them." This block is a solid block in jobbie's own blue #93B7E8, with ink text, as the bridge to the marketplace. jobbie uses only its own colours. It's a preview of the marketplace and the visual bridge between the two sites.
 14. **Switching:** three steps.

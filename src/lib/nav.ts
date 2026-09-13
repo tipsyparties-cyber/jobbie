@@ -87,7 +87,7 @@ const BUSINESS_FEATURED = [
   {
     label: "Mobile bars",
     desc: "Quote an event, staff it, and invoice it without a spreadsheet.",
-    href: "/stories/tipsy-parties",
+    href: "/stories",
     tint: BLUE,
   },
   {

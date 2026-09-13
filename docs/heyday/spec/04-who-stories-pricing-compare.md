@@ -160,7 +160,7 @@ Every section gives what it's for, the layout, holding copy, the image slot, the
     2. **Owner-operator.** "You still deliver, with a few helpers. Shift offers, your team's pay and tips, checklists and a client portal."
     3. **A team.** "You run the business and a team delivers. Hiring and onboarding, the Command Centre, reports and AI replies."
     4. **It runs itself.** "You handle the exceptions. Automations you set, AI that drafts and asks, and alerts when something needs a person."
-  - Line under: "Tipsy Parties grew this way, from one person behind a bar to a team run from one system. [team size needs approval]"
+  - Line under: "Every business on Heyday can grow this way, from one person doing every job to a team run from one system."
 - **Image:** none.
 - **Icons and marks:** `hd-shape-inf` (It runs itself), small and still, at the end of the line.
 - **Motion:**
@@ -169,7 +169,7 @@ Every section gives what it's for, the layout, holding copy, the image slot, the
 
 ### 7. Stories
 - **What it's for:** send people to the example story nearest their own business.
-- **Layout:** a swipeable row of seven story cards (a normal swipe row with scroll snap, not pinned), with Tipsy's first. Each card has:
+- **Layout:** a swipeable row of seven story cards (a normal swipe row with scroll snap, not pinned), with the mobile bartender's first. Each card has:
   - a 4:3 `HoldingImage`;
   - an "Example" or "Real story" label chip;
   - the kind of business;
@@ -225,7 +225,7 @@ Every section gives what it's for, the layout, holding copy, the image slot, the
 - **Holding copy:**
   - Label: `{ stories }`
   - Headline: "Businesses that **grow on Heyday**."
-  - Line: "Each story follows one kind of business from doing every job itself to a business that runs itself. Tipsy Parties' story is real. The others are clearly marked examples until real customers replace them."
+  - Line: "Each story follows one kind of business from doing every job itself to a business that runs itself. Every story is clearly marked as an example until real customers replace them."
   - Filter chips: "All", "Events and hospitality", "Classes and experiences", "Photo, video and entertainment", "Staffing and hire".
 - **Image:** none.
 - **Icons and marks:** none.
@@ -233,14 +233,14 @@ Every section gives what it's for, the layout, holding copy, the image slot, the
 
 ### 2. The stories
 - **What it's for:** the list of stories.
-- **Layout:** a grid of story cards (card style): two columns, one on phones. Tipsy's card is first and spans both columns.
-  - Each card has a `HoldingImage`: 16:9 for Tipsy's, 4:3 for the rest.
+- **Layout:** a grid of story cards (card style): two columns, one on phones. The mobile bartender's card is first and spans both columns.
+  - Each card has a `HoldingImage`: 16:9 for the first, 4:3 for the rest.
   - Then a label chip ("Real story" in ink, "Example" in paper with an ink outline), the kind of business, the chore that hurts most as a headline, the growth moment, and "Read the story →".
 - **Holding copy:**
 
 | Card | Label | Headline (the chore) | Growth moment |
 |---|---|---|---|
-| A mobile bartender: Tipsy Parties | Real story | "From one bartender to a team run from one system." | "Bar hire for events, and cocktail classes." |
+| A mobile bartender | Example | "From one bartender to a team run from one system." | "Bar hire for events, and cocktail classes." |
 | A caterer | Example | "Stop chasing clients for final guest numbers and dietary requirements." | "Staffing big events without a group chat." |
 | A class host | Example | "Stop running your classes from a spreadsheet." | "Filling seats, and taking private bookings in the same diary." |
 | A performer | Example | "Stop losing enquiries while you're on stage." | "Answering enquiries and sending quotes while performing every weekend." |
@@ -252,12 +252,12 @@ Every section gives what it's for, the layout, holding copy, the image slot, the
 - **Icons and marks:** none.
 - **Motion:**
   - `RevealGroup` on the cards (150ms steps, capped at the seventh).
-  - `Parallax` on Tipsy's wide picture only.
+  - `Parallax` on the first card's wide picture only.
 
 ### 3. A note on examples
 - **What it's for:** be plain about what's real.
 - **Layout:** one short paragraph in Geist Mono, 13px, in a paper panel with an ink outline.
-- **Holding copy:** "Only Tipsy Parties' story is real. The others show how that kind of business could run on Heyday: no invented names, quotes or numbers. We'll replace them with real customer stories as customers join. Want to be one? Tell us about your business."
+- **Holding copy:** "These stories show how each kind of business could run on Heyday: no invented names, quotes or numbers. We'll replace them with real customer stories as customers join. Want to be one? Tell us about your business."
 - **Image:** none.
 - **Icons and marks:** none.
 - **Motion:** none.
@@ -267,12 +267,12 @@ Same as the Who it's for page, section 8.
 
 ---
 
-## `/stories/tipsy-parties`: A mobile bartender: Tipsy Parties
+## `/stories/mobile-bartender`: A mobile bartender
 
 - **Template:** T7
-- **What this page is for:** the one real story: Heyday is the system Tipsy Parties already runs on. Use approved numbers only.
-- **Title and description (for search):** "Tipsy Parties: from one bartender to a team run on Heyday" / "How a mobile cocktail bar and cocktail class business grew from one person behind the bar to a team run from one system. The system that became Heyday."
-- **Naming:** whether Tipsy can be named, and which numbers can be published, is open question 6 in the SaaS brief section 8. Build the page with Tipsy named and every number as `[needs approval]`. Keep it unpublished until Jem and Russell approve.
+- **What this page is for:** an example of how a mobile bartender could grow on Heyday, from one person behind the bar to a team.
+- **Title and description (for search):** "How a mobile bartender could run on Heyday" / "An example: a mobile bar and cocktail class business growing from one person behind the bar to a team, with the Heyday features it uses at each stage."
+- **Naming:** labelled Example, with no business names or numbers, like the other stories.
 - **Grounds, top to bottom:**
 
 | Section | Ground |
@@ -287,13 +287,13 @@ Same as the Who it's for page, section 8.
 - **What it's for:** introduce the business and what it sells, both ways.
 - **Layout:** two columns. Copy on the left; a 4:5 `HoldingImage` on the right in a panel (A5).
 - **Holding copy:**
-  - Label chip: "Real story".
+  - Label chip: "Example".
   - Label: `{ a mobile bartender }`
   - Headline: "From one bartender to **a team run from one system**."
-  - Line: "Tipsy Parties sells bar hire for parties and weddings, and cocktail classes, in the UK and the US. Its owners built the system that runs the whole business. That system is becoming Heyday."
+  - Line: "A mobile bartender sells bar hire for parties and weddings, and cocktail classes."
   - Two chips: "The service: bar hire for events" and "The experience: cocktail classes".
   - Button: "Join early access" (primary).
-- **Image:** `HoldingImage` 4:5: "a Tipsy bartender shaking a cocktail at a guest's party, guests laughing in the background". Use real Tipsy photography once approved.
+- **Image:** `HoldingImage` 4:5: "a bartender shaking a cocktail at a guest's party, guests laughing in the background".
 - **Icons and marks:** none.
 - **Motion:** none on the copy. `Parallax` on the picture.
 
@@ -303,19 +303,18 @@ Same as the Who it's for page, section 8.
 - **Holding copy:**
   - Label: `{ what hurt most }`
   - Statement: "Every booking meant **dozens of steps**: the quote, the chasing, the staff, the kit, the pay. Most of them were done by hand."
-  - Line: "[Russell's own words about the early days: needs approval]"
 - **Image:** none.
 - **Icons and marks:** none.
 - **Motion:** `SectionReveal` on the statement.
 
 ### 3. Growth stages
-- **What it's for:** follow Tipsy through the four stages, showing which features switched on at each.
+- **What it's for:** follow the business through the four stages, showing which features switched on at each.
 - **Layout:** `StickyScroll` (B7 mechanics). Four copy blocks on the left. On the right, a sticky panel whose `ScreenIllustration` changes per stage. A vertical `HeydayLine` beside the blocks, one dot per stage. On phones, each picture sits above its block.
 - **Holding copy** (each block: label, headline, two lines, feature chips):
   1. `{ doing it all yourself }`. "One person, **every job**." "It started with one person delivering the cocktail class. Instant quotes and online booking meant customers could price and book a party without a phone call." Chips: Instant quotes, Online booking and instant book, Payments and deposits.
   2. `{ owner-operator }`. "Help, **without a group chat**." "As bookings grew, shifts went out as offers that freelance bartenders accept or decline, with tips shared through a QR tip jar." Chips: Shift offers and staffing, Tips, Checklists and kit lists.
-  3. `{ a team }`. "A team of **[number: needs approval]** bartenders." "Hiring, checks and onboarding run in the same system, and one inbox holds every email, WhatsApp, text and call, with AI drafting the replies." Chips: Hiring and onboarding, One inbox, Replies that write themselves.
-  4. `{ it runs itself }`. "Most steps **run by themselves**." "In one booking, [23 of the 36: needs approval] business-side steps now run without anyone touching them. The owners handle the exceptions." Chips: Follow-ups and autoresponders, Reports and the Command Centre, Tasks.
+  3. `{ a team }`. "A team of **bartenders**." "Hiring, checks and onboarding run in the same system, and one inbox holds every email, WhatsApp, text and call, with AI drafting the replies." Chips: Hiring and onboarding, One inbox, Replies that write themselves.
+  4. `{ it runs itself }`. "Most steps **run by themselves**." "Most of the steps in each booking run without anyone touching them. The owner handles the exceptions." Chips: Follow-ups and autoresponders, Reports and the Command Centre, Tasks.
 - **Image:** four `ScreenIllustration` panels, labelled "Illustration · example data":
   1. The instant quote for a party: guests, hours, date, package cards, total `[example]`, "Book with deposit".
   2. A shift offer: event card, three bartenders ranked by distance and rating, "Accepted" on the first.
@@ -340,7 +339,7 @@ Same as the Who it's for page, section 8.
 - **Layout:** the ink block. On the left, a headline and line; on the right, the `EarlyAccessForm` (name, email, kind of business, what you sell), which stores and sends nothing yet.
 - **Holding copy:**
   - Label: `{ early access }`
-  - Headline: "Run your business **the way Tipsy does**."
+  - Headline: "Pour the drinks. **Let Heyday run the rest.**"
   - Line: "Join early access. Tell us what you sell and we'll show you what Heyday can take off your hands."
   - Button: "Join early access".
 - **Image:** none.
@@ -358,7 +357,7 @@ Same as the Who it's for page, section 8.
 
 ### 1. Hero
 - **What it's for:** introduce the kind of business and what it sells.
-- **Layout:** as the Tipsy story's hero.
+- **Layout:** as the mobile bartender story's hero.
 - **Holding copy:**
   - Label chip: "Example".
   - Label: `{ a caterer }`
@@ -382,7 +381,7 @@ Same as the Who it's for page, section 8.
 
 ### 3. Growth stages
 - **What it's for:** the four stages, ending on the growth moment, "staffing big events without a group chat".
-- **Layout:** `StickyScroll`, as the Tipsy story.
+- **Layout:** `StickyScroll`, as the mobile bartender story.
 - **Holding copy:**
   1. `{ doing it all yourself }`. "Quotes **per head**, not per hour of your evening." "Menus, add-ons and staffing priced by guest count and date, with a deposit taken in the same step." Chips: Instant quotes, Payments and deposits, Follow-ups and autoresponders.
   2. `{ taking on help }`. "Guest numbers **in one place**." "The client confirms guest numbers, menu choices and allergies in their portal, and the shopping list builds itself from their choices." Chips: Client portal and event planning, Checklists and kit lists.
@@ -398,7 +397,7 @@ Same as the Who it's for page, section 8.
 
 ### 4. Features used
 - **What it's for:** link every feature in the story.
-- **Layout:** as the Tipsy story.
+- **Layout:** as the mobile bartender story.
 - **Holding copy:**
   - Headline: "The features **behind the story**."
   - Cards: Instant quotes; Payments and deposits; Follow-ups and autoresponders; Client portal and event planning; Checklists and kit lists; Shift offers and staffing; On the day; Team pay and expenses; Invoicing and chasing; Reviews; Profit per job.
@@ -407,7 +406,7 @@ Same as the Who it's for page, section 8.
 - **Motion:** `RevealGroup`.
 
 ### 5. Early access
-As the Tipsy story, with the headline "Cater the event. **Let Heyday run the rest.**"
+As the mobile bartender story, with the headline "Cater the event. **Let Heyday run the rest.**"
 
 ---
 
@@ -420,7 +419,7 @@ As the Tipsy story, with the headline "Cater the event. **Let Heyday run the res
 
 ### 1. Hero
 - **What it's for:** introduce the business.
-- **Layout:** as the Tipsy story.
+- **Layout:** as the mobile bartender story.
 - **Holding copy:**
   - Label chip: "Example".
   - Label: `{ a class host }`
@@ -459,7 +458,7 @@ As the Tipsy story, with the headline "Cater the event. **Let Heyday run the res
 - **Everything else:** as the caterer story.
 
 ### 5. Early access
-As the Tipsy story, with the headline "Teach the class. **Let Heyday fill it.**"
+As the mobile bartender story, with the headline "Teach the class. **Let Heyday fill it.**"
 
 ---
 
@@ -479,7 +478,7 @@ As the Tipsy story, with the headline "Teach the class. **Let Heyday fill it.**"
   - Chips: "The service: shows and parties" and "The experience: magic workshops".
   - Button: "Join early access".
 - **Image:** `HoldingImage` 4:5: "a magician mid-trick at a kid's party, children leaning in".
-- **Layout, icons, motion:** as the Tipsy story.
+- **Layout, icons, motion:** as the mobile bartender story.
 
 ### 2. The chore
 - **Holding copy:** Label `{ what hurts most }`; statement: "Stop losing enquiries **while you're on stage**."
@@ -1212,7 +1211,7 @@ As the HoneyBook page, section 6.
 
 ### 7. FAQ
 - **Holding copy:**
-  1. "I run a mobile bar. Which is better for me?" / "Check Cherry is ready today. Heyday is built by a mobile bar business, Tipsy Parties, and adds your team's pay and classes. Coming soon."
+  1. "I run a mobile bar. Which is better for me?" / "Check Cherry is ready today. Heyday adds your team's pay and classes, and it's coming soon."
   2. "Can I bring my Check Cherry bookings across?" / "[import method to confirm]"
   3. "When was this page checked?" / "13 September 2026. [update on publishing]"
 

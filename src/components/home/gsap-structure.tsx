@@ -69,12 +69,11 @@ export function GsapHero() {
         </div>
 
         <div className="relative">
-          {/* The kicker carries the brand line. "Your heyday, your way" is a
-              strapline, not a proposition — it sets tone but never says what
-              the thing does, so it cannot be the headline. Here it does the
-              job it is actually good at. */}
+          {/* The label, from design brief B3. A braced label sets the tone
+              and never has to carry the proposition, which is why the brand
+              line belongs here rather than in the headline. */}
           <div className="mb-8">
-            <Braced>Your heyday, your way</Braced>
+            <Braced>easy automation, your way</Braced>
           </div>
 
           {/* Three lines, not two. The headline sizes itself to its longest
@@ -384,7 +383,7 @@ export function GsapFeatures() {
  * -------------------------------------------------------------- */
 
 /**
- * Real systems from the Tipsy Parties build — not invented clients and not
+ * Real systems, not invented clients and not
  * borrowed logos. Each tile is a colour field where the screenshot goes.
  */
 const SHOWCASE = [
@@ -460,7 +459,7 @@ export function GsapShowcase() {
       </div>
 
       <div className={`${SHELL} mt-10`}>
-        <Pill href="/stories/tipsy-parties">Read the story</Pill>
+        <Pill href="/stories">Read the stories</Pill>
       </div>
     </div>
   );

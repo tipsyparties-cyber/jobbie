@@ -2,9 +2,8 @@
 
 import { useEffect, useRef, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
-import { HeydayMark } from "@/components/heyday/heyday-mark";
 import { HeydayLine } from "@/components/heyday/heyday-line";
-import { PAPER, LAVENDER, ORANGE } from "@/lib/palette";
+import { PAPER, ORANGE } from "@/lib/palette";
 
 /* ==================================================================== *
  *  The hero's rising cards — design brief A9.
@@ -18,6 +17,12 @@ import { PAPER, LAVENDER, ORANGE } from "@/lib/palette";
  *  upward 730px over 2.5s, a new card every 3s. Expressed as keyframes at
  *  0 / 33% / 50% / 100% of a 5s cycle, which is what those four numbers add
  *  up to.
+ *
+ *  Pack 4 took the extras out: no ripple, no pop-in, no sun peeking in.
+ *  Each card shows all its details the whole time and simply scrolls up and
+ *  away. The restraint is the point — the cards are the content, and three
+ *  effects layered on a moving card is where a hero starts to look like a
+ *  demo reel.
  *
  *  Three things the brief asks for that are easy to skip and matter:
  *
@@ -154,12 +159,6 @@ export function RisingCards({
           </div>
         )}
 
-        {/* The sun rolls in from the right edge and nudges the card. The
-            hero still shows it half in view, which is the point — it reads
-            as something arriving rather than an icon parked in a corner. */}
-        <div aria-hidden className="pointer-events-none absolute -right-10 bottom-16">
-          <HeydayMark shape="sun" sun={PAPER} size={96} bounceOnLoad />
-        </div>
       </div>
 
       <div className="mt-6 flex justify-center">
@@ -172,18 +171,6 @@ export function RisingCards({
 function CardFace({ card }: { card: RisingCard }) {
   return (
     <div className="relative">
-      {/* The landing ripple: two soft lavender circles behind the card. */}
-      <span
-        aria-hidden
-        className="absolute left-1/2 top-1/2 -z-10 block rounded-full"
-        style={{
-          width: 380,
-          height: 380,
-          marginLeft: -190,
-          marginTop: -190,
-          background: `radial-gradient(circle, ${LAVENDER}88 0%, ${LAVENDER}22 55%, transparent 72%)`,
-        }}
-      />
       <div
         className="rounded-2xl border-2 border-ink p-6"
         style={{
