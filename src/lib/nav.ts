@@ -1,151 +1,195 @@
-import { CREAM, SAGE, BLUE, LAVENDER } from "@/lib/palette";
-import { BUCKETS, featuresIn } from "@/lib/features";
+import { BLUE, LAVENDER } from "@/lib/palette";
+import { GROUPS } from "@/lib/groups";
+import { FEATURES, featuresInGroup } from "@/lib/heyday-features";
+import { CTA, TBC } from "@/lib/site";
 
 /* ==================================================================== *
- *  The header's navigation, modelled on honeybook.com.
+ *  The header's navigation — spec part 1, A3.
  *
- *  Measured off the live site. Their bar is 72px, white, with the logo hard
- *  left, the navigation centred, and "Log in" plus one dark pill hard
- *  right. Three of the five items open a panel and two are plain links.
+ *  The three panels keep their different shapes, which is the thing worth
+ *  copying from honeybook: each menu is laid out for what is actually in
+ *  it. Only the contents change.
  *
- *  The panels are not all the same shape, which is the part worth copying:
+ *  The Product panel is GENERATED from the feature data, not typed out.
+ *  Six columns of up to eleven links is sixty lines of hand-written markup
+ *  that would drift from the pages it points at the first time a feature is
+ *  renamed.
  *
- *    "Business types"  a grid of title + one-line description, then a strip
- *                      of two tinted feature cards along the bottom
- *    "Product"         columns under muted headings, plain links, plus one
- *                      featured promo card on the right
- *    "Resources"       a plain single list
- *
- *  Using one panel shape for all three would be easier and would lose the
- *  thing that makes their header feel considered — each menu is laid out
- *  for what is actually in it.
- *
- *  Product's columns are generated from lib/features.ts rather than typed
- *  out again, so adding a feature puts it in the menu automatically.
+ *  Long columns show six and then link to the rest, because Win the client
+ *  and Run the day have eleven features each and a menu column that tall
+ *  stops being scannable.
  * ==================================================================== */
 
-export type NavLink = { label: string; href: string; desc?: string };
+export type NavLink = { label: string; href: string; desc?: string; icon?: string };
 
 export type NavPanel =
   | {
       kind: "cards";
       items: NavLink[];
-      /** The strip along the bottom. */
       featured: { label: string; desc: string; href: string; tint: string }[];
+      footnote?: string;
     }
   | {
       kind: "columns";
-      columns: { head: string; links: NavLink[] }[];
-      promo: { label: string; desc: string; href: string; tint: string };
+      columns: {
+        head: string;
+        /** The group's section mark, small and still. */
+        shape: string;
+        colour: string;
+        links: NavLink[];
+        more?: NavLink;
+      }[];
+      bottom: NavLink[];
+      promo: {
+        label: string;
+        desc: string;
+        href: string;
+        tint: string;
+        image?: string;
+      };
     }
   | { kind: "list"; items: NavLink[] };
 
 export type NavItem = { label: string; href: string; panel?: NavPanel };
 
+/** Six visible, then a link to the rest of the group. */
+const COLUMN_CAP = 6;
+
+const PRODUCT_COLUMNS = GROUPS.map((g) => {
+  const all = featuresInGroup(g.id);
+  return {
+    head: g.name,
+    shape: g.shape,
+    colour: g.colour,
+    links: all.slice(0, COLUMN_CAP).map((f) => ({
+      label: f.name,
+      href: `/features/${f.slug}`,
+      icon: f.icon,
+    })),
+    more:
+      all.length > COLUMN_CAP
+        ? { label: `All ${g.name} features`, href: `/how-it-works/${g.id}` }
+        : undefined,
+  };
+});
+
 /**
- * Business types. honeybook names the trade and then says who that means in
- * plain words underneath — "Planners, photographers, DJs, florists" — which
- * does more work than the category label on its own.
- *
- * These all point at /features for now. Per-industry pages are the obvious
- * next build; the menu is ready for them.
+ * Who it's for. Each names the category and then says who that means in
+ * plain words, which does more work than the label alone — a mobile
+ * bartender does not scan for "Events and hospitality", they scan for
+ * "mobile bars".
  */
 const BUSINESS_TYPES: NavLink[] = [
   {
-    label: "Events & hospitality",
-    desc: "Mobile bars, caterers, venues, planners, and more.",
-    href: "/features",
+    label: "Events and hospitality",
+    desc: "Mobile bars, caterers, private chefs, venues, planners, and more.",
+    href: "/who-its-for#events-and-hospitality",
   },
   {
-    label: "Photo & video",
-    desc: "Wedding and portrait photographers, videographers, and more.",
-    href: "/features",
+    label: "Classes and experiences",
+    desc: "Workshops, cooking and cocktail classes, tours, escape rooms, team-building.",
+    href: "/who-its-for#classes-and-experiences",
   },
   {
-    label: "Beauty & wellbeing",
-    desc: "Salons, mobile therapists, trainers, clinics, and more.",
-    href: "/features",
+    label: "Photo, video and entertainment",
+    desc: "Photographers, videographers, DJs, musicians, performers, photo booths.",
+    href: "/who-its-for#photo-video-and-entertainment",
   },
   {
-    label: "Trades & maintenance",
-    desc: "Plumbers, electricians, landscapers, cleaners, and more.",
-    href: "/features",
+    label: "Home and personal services",
+    desc: "Cleaners, trades, landscapers, pet care, tutors, childcare.",
+    href: "/who-its-for#home-and-personal-services",
   },
   {
-    label: "Personal services",
-    desc: "Tutors, dog walkers, childcare, drivers, and more.",
-    href: "/features",
+    label: "Beauty, wellness and fitness",
+    desc: "Mobile beauty, therapists, personal trainers, instructors.",
+    href: "/who-its-for#beauty-wellness-and-fitness",
   },
   {
-    label: "Staffing & hire",
-    desc: "Agencies, equipment hire, removals, and more.",
-    href: "/features",
+    label: "Staffing and hire",
+    desc: "Event staffing agencies, rentals and equipment hire.",
+    href: "/who-its-for#staffing-and-hire",
   },
 ];
-
-const BUSINESS_FEATURED = [
-  {
-    label: "Mobile bars",
-    desc: "Quote an event, staff it, and invoice it without a spreadsheet.",
-    href: "/stories",
-    tint: BLUE,
-  },
-  {
-    label: "Venues",
-    desc: "Tours, contracts, clients and payments in one place.",
-    href: "/features",
-    tint: LAVENDER,
-  },
-];
-
-/** Four columns, one per outcome, built from the feature list itself. Capped
- *  at five so the tallest column cannot run away with the panel. */
-const PRODUCT_COLUMNS = BUCKETS.map((b) => ({
-  head: b.title,
-  links: featuresIn(b.id)
-    .slice(0, 5)
-    .map((f) => ({ label: f.name, href: `/features/${f.slug}` })),
-}));
 
 export const NAV: NavItem[] = [
-  {
-    label: "Business types",
-    href: "/features",
-    panel: {
-      kind: "cards",
-      items: BUSINESS_TYPES,
-      featured: BUSINESS_FEATURED,
-    },
-  },
   {
     label: "Product",
     href: "/features",
     panel: {
       kind: "columns",
       columns: PRODUCT_COLUMNS,
+      bottom: [
+        { label: "All features", href: "/features" },
+        { label: "How it works", href: "/how-it-works" },
+        { label: "The AI", href: "/features/ai" },
+        { label: "Integrations", href: "/integrations" },
+        { label: "What's new", href: "/whats-new" },
+      ],
       promo: {
-        label: "See everything it does",
-        desc: "Twenty features, sorted by what they fix rather than alphabetically.",
-        href: "/features",
-        tint: SAGE,
+        label: "Build it your way",
+        desc: "Drag in a step. Click it to make it yours.",
+        href: "/features/follow-ups",
+        tint: BLUE,
+        image: "/placeholders/workflow-builder.svg",
       },
     },
   },
-  { label: "Pricing", href: "/contact" },
+  {
+    label: "Who it's for",
+    href: "/who-its-for",
+    panel: {
+      kind: "cards",
+      items: BUSINESS_TYPES,
+      /* Both labelled Example. Nothing on this site claims a customer it
+         does not have, and no real business is named (prompt, pack 4). */
+      featured: [
+        {
+          label: "How a mobile bartender could run on Heyday",
+          desc: "Example",
+          href: "/stories/mobile-bartender",
+          tint: BLUE,
+        },
+        {
+          label: "How a class host could run on Heyday",
+          desc: "Example",
+          href: "/stories/class-host",
+          tint: LAVENDER,
+        },
+      ],
+      footnote:
+        "Not on the list? If you sell your time, your skills or an experience, it's for you.",
+    },
+  },
   {
     label: "Resources",
-    href: "/blog",
+    href: "/resources",
     panel: {
       kind: "list",
       items: [
+        { label: "Free tools", href: "/tools" },
+        { label: "Templates", href: "/templates" },
+        { label: "Guides", href: "/guides" },
         { label: "Blog", href: "/blog" },
-        { label: "Stories", href: "/stories" },
-        { label: "About us", href: "/about" },
-        { label: "Contact", href: "/contact" },
+        { label: "Compare Heyday", href: "/compare" },
+        { label: "Help", href: "/help" },
+        { label: "What's new", href: "/whats-new" },
       ],
     },
   },
+  { label: "Pricing", href: "/pricing" },
 ];
 
-/** The tint behind an open nav item, and behind the promo card. */
-export const NAV_ACTIVE_TINT = CREAM;
+/**
+ * The right-hand side. The phone is rendered only once it stops being a
+ * placeholder — a header that says [PHONE TBC] to a visitor is worse than
+ * a header with no phone at all.
+ */
+export const HEADER_ACTIONS = {
+  login: CTA.login,
+  phone: TBC.phone,
+  demo: CTA.secondary,
+  trial: CTA.primary,
+};
+
+export const FEATURE_COUNT = FEATURES.length;

@@ -4,94 +4,156 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { Wordmark } from "@/components/ui/wordmark";
-import { NAV, NAV_ACTIVE_TINT, type NavItem, type NavPanel } from "@/lib/nav";
+import { Button } from "@/components/ui/button";
+import { HeydayMark, SectionMark } from "@/components/heyday/heyday-mark";
+import { Icon } from "@/components/heyday/icon";
+import { NAV, HEADER_ACTIONS, type NavItem, type NavPanel } from "@/lib/nav";
+import { BLUE, CREAM, PAPER } from "@/lib/palette";
+import { TBC } from "@/lib/site";
+import type { ShapeName } from "@/lib/heyday-mark";
 
 /* ==================================================================== *
- *  The header, modelled on honeybook.com.
+ *  The header — spec part 1, A3.
  *
- *  Measured off the live site: a 72px white bar, logo hard left, navigation
- *  centred, "Log in" and one dark pill hard right, and an announcement
- *  strip above it. The open item takes a tinted pill and its chevron flips.
+ *  The bar itself is unchanged from 8aebdb3: 72px, three panels shaped
+ *  differently, and the grace delay when the pointer leaves. What is in it
+ *  is new.
  *
- *  The three panels are deliberately different shapes — a grid of
- *  descriptions, columns of links, and a plain list — because that is what
- *  honeybook does and it is the reason their menus feel laid out rather
- *  than generated. Shapes live in lib/nav.ts.
+ *  Left is the Heyday wordmark in ink with the sun beside it in blue,
+ *  bouncing once on first load and never again — the brief is specific that
+ *  this is the header's only motion, and it is right. A header that
+ *  animates on every route change reads as a page that has not finished
+ *  loading.
  *
- *  Opens on hover with a short close delay, because a menu that vanishes
- *  the instant the pointer crosses the gap between the trigger and the
- *  panel is the single most common way this component is got wrong. It also
- *  opens on focus and closes on Escape, so it works from the keyboard.
+ *  The grace delay is the detail most often missed: without it the panel
+ *  closes while the pointer is crossing the gap between the trigger and the
+ *  panel, and the menu becomes unusable at exactly the moment someone
+ *  commits to it.
  * ==================================================================== */
 
-function Chevron({ open }: { open: boolean }) {
-  return (
-    <motion.svg
-      aria-hidden
-      width="10"
-      height="7"
-      viewBox="0 0 10 7"
-      className="ml-1.5"
-      animate={{ rotate: open ? 180 : 0 }}
-      transition={{ duration: 0.2 }}
-    >
-      <path
-        d="M1 1.5L5 5.5L9 1.5"
-        stroke="currentColor"
-        strokeWidth="1.4"
-        fill="none"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </motion.svg>
-  );
-}
-
-/** The small circular arrow honeybook puts on its featured cards. */
-function ArrowDot() {
-  return (
-    <span className="mt-5 inline-flex h-8 w-8 items-center justify-center rounded-full bg-ink text-cream transition-transform group-hover:translate-x-1">
-      <span aria-hidden className="text-sm leading-none">
-        →
-      </span>
-    </span>
-  );
-}
 
 function PanelBody({ panel }: { panel: NavPanel }) {
+  if (panel.kind === "columns") {
+    return (
+      <div className="p-8">
+        <div className="grid gap-7 lg:grid-cols-[repeat(6,minmax(0,1fr))_minmax(0,1.3fr)]">
+          {panel.columns.map((col) => (
+            <div key={col.head}>
+              <p className="flex items-center gap-2">
+                <SectionMark
+                  shape={col.shape as ShapeName}
+                  size={18}
+                  colour={col.colour}
+                />
+                <span className="font-mono text-[12px] tracking-[0.02em] text-ink/55">
+                  {col.head}
+                </span>
+              </p>
+              <ul className="mt-4 flex flex-col gap-2.5">
+                {col.links.map((l) => (
+                  <li key={l.href}>
+                    <Link
+                      href={l.href}
+                      className="flex items-start gap-2 font-body text-[15px] leading-snug text-ink transition-opacity hover:opacity-60"
+                    >
+                      {l.icon && (
+                        <Icon name={l.icon} size={20} ground={PAPER} className="mt-0.5 shrink-0" />
+                      )}
+                      <span>{l.label}</span>
+                    </Link>
+                  </li>
+                ))}
+                {col.more && (
+                  <li>
+                    <Link
+                      href={col.more.href}
+                      className="font-body text-[14px] font-medium text-ink underline-offset-4 hover:underline"
+                    >
+                      {col.more.label} →
+                    </Link>
+                  </li>
+                )}
+              </ul>
+            </div>
+          ))}
+
+          <Link
+            href={panel.promo.href}
+            className="group hidden flex-col overflow-hidden rounded-2xl border-2 border-ink lg:flex"
+            style={{
+              backgroundColor: panel.promo.tint,
+              boxShadow: "11px 11px 0 0 rgba(10,10,10,0.08)",
+            }}
+          >
+            {panel.promo.image && (
+              <span
+                aria-hidden
+                className="block h-28 w-full bg-cover bg-top"
+                style={{ backgroundImage: `url(${panel.promo.image})` }}
+              />
+            )}
+            <span className="flex flex-1 flex-col p-5">
+              <span className="font-display text-base font-semibold">
+                {panel.promo.label}
+              </span>
+              <span className="mt-1.5 font-body text-sm leading-snug text-ink/75">
+                {panel.promo.desc}
+              </span>
+            </span>
+          </Link>
+        </div>
+
+        <ul className="mt-8 flex flex-wrap gap-x-7 gap-y-3 border-t border-ink/12 pt-5">
+          {panel.bottom.map((l) => (
+            <li key={l.href}>
+              <Link
+                href={l.href}
+                className="font-body text-[15px] font-medium text-ink transition-opacity hover:opacity-60"
+              >
+                {l.label}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </div>
+    );
+  }
+
   if (panel.kind === "cards") {
     return (
       <>
-        <div className="grid gap-x-10 gap-y-7 px-10 pb-9 pt-9 md:grid-cols-3">
+        <div className="grid gap-x-10 gap-y-7 px-9 pb-8 pt-9 md:grid-cols-3">
           {panel.items.map((it) => (
-            <Link key={it.label} href={it.href} className="group block">
-              <p className="font-body text-base font-medium text-ink">
-                {it.label}
-              </p>
-              <p className="mt-1.5 max-w-[24ch] font-body text-sm leading-snug text-ink/55">
+            <Link key={it.href} href={it.href} className="group block">
+              <p className="font-display text-[15px] font-semibold">{it.label}</p>
+              <p className="mt-1.5 max-w-[26ch] font-body text-sm leading-snug text-ink/55">
                 {it.desc}
               </p>
             </Link>
           ))}
         </div>
 
-        {/* The strip along the bottom — two tinted cards, full-bleed to the
-            panel edge exactly as honeybook has them. */}
+        {panel.footnote && (
+          <p className="px-9 pb-7 font-body text-sm text-ink/60">{panel.footnote}</p>
+        )}
+
         <div className="grid overflow-hidden rounded-b-2xl sm:grid-cols-2">
           {panel.featured.map((f) => (
             <Link
-              key={f.label}
+              key={f.href}
               href={f.href}
-              className="group block p-8"
+              className="group block p-7"
               style={{ backgroundColor: f.tint }}
             >
-              <p className="font-body text-base font-medium text-ink">
+              <span className="font-mono text-[11px] uppercase tracking-[0.02em] text-ink/55">
+                {f.desc}
+              </span>
+              <p className="mt-2 max-w-[24ch] font-display text-base font-semibold">
                 {f.label}
               </p>
-              <p className="mt-1.5 max-w-[30ch] font-body text-sm leading-snug text-ink/65">
-                {f.desc}
-              </p>
-              <ArrowDot />
+              <span className="mt-4 inline-flex h-8 w-8 items-center justify-center rounded-full bg-ink text-cream transition-transform group-hover:translate-x-1">
+                <span aria-hidden className="text-sm leading-none">→</span>
+              </span>
             </Link>
           ))}
         </div>
@@ -99,54 +161,13 @@ function PanelBody({ panel }: { panel: NavPanel }) {
     );
   }
 
-  if (panel.kind === "columns") {
-    return (
-      <div className="grid gap-8 px-10 py-9 lg:grid-cols-[repeat(4,minmax(0,1fr))_minmax(0,1.15fr)]">
-        {panel.columns.map((col) => (
-          <div key={col.head}>
-            {/* Muted column heading, links in full ink — honeybook's exact
-                hierarchy, and it is what stops five columns of links
-                reading as one undifferentiated block. */}
-            <p className="font-body text-sm text-ink/45">{col.head}</p>
-            <ul className="mt-4 flex flex-col gap-2.5">
-              {col.links.map((l) => (
-                <li key={l.href}>
-                  <Link
-                    href={l.href}
-                    className="font-body text-base text-ink transition-opacity hover:opacity-60"
-                  >
-                    {l.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-        ))}
-
-        <Link
-          href={panel.promo.href}
-          className="group hidden flex-col rounded-2xl p-6 lg:flex"
-          style={{ backgroundColor: panel.promo.tint }}
-        >
-          <p className="font-body text-base font-medium text-ink">
-            {panel.promo.label}
-          </p>
-          <p className="mt-1.5 font-body text-sm leading-snug text-ink/70">
-            {panel.promo.desc}
-          </p>
-          <ArrowDot />
-        </Link>
-      </div>
-    );
-  }
-
   return (
-    <ul className="flex flex-col gap-1 px-8 py-7">
+    <ul className="flex flex-col gap-1 px-7 py-6">
       {panel.items.map((l) => (
         <li key={l.href}>
           <Link
             href={l.href}
-            className="block rounded-lg px-3 py-2 font-body text-base text-ink transition-colors hover:bg-ink/5"
+            className="block rounded-lg px-3 py-2 font-body text-[15px] text-ink transition-colors hover:bg-ink/5"
           >
             {l.label}
           </Link>
@@ -161,8 +182,8 @@ export function SiteHeader() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  // A short grace period on leave. Without it the panel closes while the
-  // pointer is crossing the gap between the trigger and the panel itself.
+  /** The grace period. Without it the panel closes while the pointer is
+   *  crossing the gap between the trigger and the panel. */
   const scheduleClose = () => {
     if (closeTimer.current) clearTimeout(closeTimer.current);
     closeTimer.current = setTimeout(() => setOpen(null), 140);
@@ -186,35 +207,17 @@ export function SiteHeader() {
   }, []);
 
   const active = NAV.find((n) => n.label === open);
+  const hasPhone = !TBC.phone.startsWith("[");
 
   return (
-    <header
-      className="fixed inset-x-0 top-0 z-[100]"
-      onMouseLeave={scheduleClose}
-    >
-      {/* The announcement strip. honeybook runs one above the bar; this one
-          points at the feature pages rather than claiming an offer that
-          does not exist. */}
-      <div style={{ backgroundColor: NAV_ACTIVE_TINT }}>
-        <div className="mx-auto flex max-w-[1400px] items-center justify-center gap-4 px-6 py-2.5">
-          <p className="font-body text-sm text-ink/80">
-            Twenty features, one system, built for service businesses.
-          </p>
-          <Link
-            href="/features"
-            className="hidden rounded-full bg-paper px-4 py-1.5 font-body text-xs font-medium text-ink transition-opacity hover:opacity-75 sm:block"
-          >
-            Take a look
-          </Link>
-        </div>
-      </div>
-
+    <header className="fixed inset-x-0 top-0 z-[100]" onMouseLeave={scheduleClose}>
       <div className="bg-paper">
-        <div className="relative mx-auto flex h-[72px] max-w-[1400px] items-center px-6">
-          <Wordmark className="text-ink" />
+        <div className="relative mx-auto flex h-[72px] max-w-[1280px] items-center gap-3 px-6">
+          <Link href="/" aria-label="Heyday, home" className="flex items-center gap-2.5">
+            <HeydayMark shape="sun" sun={BLUE} size={28} bounceOnLoad />
+            <Wordmark height={22} asLink={false} className="text-ink" />
+          </Link>
 
-          {/* Centred, absolutely positioned so it stays centred on the bar
-              rather than on whatever is left after the logo and buttons. */}
           <nav className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-1 lg:flex">
             {NAV.map((item: NavItem) => {
               const isOpen = open === item.label;
@@ -230,32 +233,61 @@ export function SiteHeader() {
                     href={item.href}
                     onFocus={() => setOpen(item.panel ? item.label : null)}
                     aria-expanded={item.panel ? isOpen : undefined}
-                    className="flex items-center rounded-full px-4 py-2 font-body text-[15px] text-ink transition-colors"
-                    style={{
-                      backgroundColor: isOpen ? NAV_ACTIVE_TINT : "transparent",
-                    }}
+                    className="flex items-center gap-1.5 rounded-lg px-3.5 py-2 font-body text-[15px] text-ink transition-colors"
+                    style={{ backgroundColor: isOpen ? CREAM : "transparent" }}
                   >
                     {item.label}
-                    {item.panel && <Chevron open={isOpen} />}
+                    {item.panel && (
+                      <motion.svg
+                        aria-hidden
+                        width="10"
+                        height="7"
+                        viewBox="0 0 10 7"
+                        animate={{ rotate: isOpen ? 180 : 0 }}
+                        transition={{ duration: 0.2 }}
+                      >
+                        <path
+                          d="M1 1.5L5 5.5L9 1.5"
+                          stroke="currentColor"
+                          strokeWidth="1.4"
+                          fill="none"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </motion.svg>
+                    )}
                   </Link>
                 </div>
               );
             })}
           </nav>
 
-          <div className="ml-auto flex items-center gap-5">
+          <div className="ml-auto flex items-center gap-3">
             <Link
-              href="/contact"
+              href={HEADER_ACTIONS.login.href}
               className="hidden font-body text-[15px] text-ink underline-offset-4 hover:underline sm:block"
             >
-              Log in
+              {HEADER_ACTIONS.login.label}
             </Link>
-            <Link
-              href="/contact"
-              className="rounded-full bg-ink px-5 py-2.5 font-body text-sm font-medium text-cream transition-opacity hover:opacity-85"
+            {hasPhone && (
+              <a
+                href={`tel:${TBC.phone}`}
+                className="hidden font-body text-[15px] text-ink lg:block"
+              >
+                {TBC.phone}
+              </a>
+            )}
+            <Button href={HEADER_ACTIONS.demo.href} variant="ghost" className="hidden lg:inline-flex">
+              {HEADER_ACTIONS.demo.label}
+            </Button>
+            <Button
+              href={HEADER_ACTIONS.trial.href}
+              variant="primary"
+              arrow
+              className="hidden sm:inline-flex"
             >
-              Get started for free
-            </Link>
+              {HEADER_ACTIONS.trial.label}
+            </Button>
 
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
@@ -268,10 +300,13 @@ export function SiteHeader() {
             </button>
           </div>
         </div>
+        <div className="mx-auto max-w-[1280px] px-6">
+          <div className="h-px w-full bg-ink/12" />
+        </div>
       </div>
 
-      {/* The panel. One element that swaps its contents, so moving between
-          two open menus slides rather than closing and reopening. */}
+      {/* One panel that swaps contents, so moving between menus slides
+          rather than closing and reopening. */}
       <AnimatePresence>
         {active?.panel && (
           <motion.div
@@ -281,22 +316,20 @@ export function SiteHeader() {
             exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.18, ease: [0.16, 1, 0.3, 1] }}
             onMouseEnter={cancelClose}
-            className="mx-auto hidden w-full max-w-[1400px] px-6 lg:block"
+            className="mx-auto hidden w-full max-w-[1280px] px-6 lg:block"
           >
-            {/* Width is set per panel kind rather than left to `w-fit`.
-                The columns panel holds a grid of `minmax(0,1fr)` tracks, and
-                inside a shrink-to-fit parent those collapse to their
-                minimum — the menu comes out as a thin strip of wrapped
-                text. honeybook's own Product panel is 960px; these are
-                sized to the same intent. */}
+            {/* Width per panel kind, not `w-fit`: the columns grid uses
+                minmax(0,1fr) tracks, which collapse to their minimum inside
+                a shrink-to-fit parent and render the menu as a thin strip. */}
             <div
-              className={`overflow-hidden rounded-2xl bg-paper shadow-[0_18px_40px_-12px_rgba(10,10,10,0.18)] ${
+              className={`overflow-hidden rounded-2xl border-2 border-ink bg-paper ${
                 active.panel.kind === "columns"
-                  ? "w-[min(1120px,100%)]"
+                  ? "w-full"
                   : active.panel.kind === "cards"
-                    ? "w-[min(900px,100%)]"
+                    ? "w-[min(880px,100%)]"
                     : "w-[260px]"
               }`}
+              style={{ boxShadow: "11px 11px 0 0 rgba(10,10,10,0.08)" }}
             >
               <PanelBody panel={active.panel} />
             </div>
@@ -304,47 +337,55 @@ export function SiteHeader() {
         )}
       </AnimatePresence>
 
-      {/* Mobile. The panels flatten to a single scrollable list — the
-          three-shape layout above is a pointer-and-width idea and does not
-          survive a phone. */}
+      {/* Phones: full screen on cream, the groups as accordions, the two
+          buttons at the bottom. The three-panel layout is a pointer-and-
+          width idea and does not survive a narrow column. */}
       <AnimatePresence>
         {mobileOpen && (
           <motion.nav
-            initial={{ opacity: 0, y: -8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="max-h-[70vh] overflow-y-auto bg-paper px-6 pb-8 pt-2 lg:hidden"
+            className="fixed inset-x-0 bottom-0 top-[72px] overflow-y-auto lg:hidden"
+            style={{ backgroundColor: CREAM }}
           >
-            {NAV.map((item) => (
-              <div key={item.label} className="border-t border-ink/10 py-4">
-                <Link
-                  href={item.href}
-                  onClick={() => setMobileOpen(false)}
-                  className="font-body text-base font-medium text-ink"
-                >
-                  {item.label}
-                </Link>
-                {item.panel && (
-                  <ul className="mt-3 flex flex-col gap-2">
-                    {(item.panel.kind === "columns"
-                      ? item.panel.columns.flatMap((c) => c.links)
-                      : item.panel.items
-                    ).map((l) => (
-                      <li key={l.href + l.label}>
-                        <Link
-                          href={l.href}
-                          onClick={() => setMobileOpen(false)}
-                          className="font-body text-sm text-ink/65"
-                        >
-                          {l.label}
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                )}
+            <div className="px-6 pb-10 pt-4">
+              {NAV.map((item) => (
+                <details key={item.label} className="border-b border-ink/12 py-4">
+                  <summary className="cursor-pointer list-none font-display text-lg font-semibold">
+                    {item.label}
+                  </summary>
+                  {item.panel && (
+                    <ul className="mt-3 flex flex-col gap-2 pb-2">
+                      {(item.panel.kind === "columns"
+                        ? item.panel.columns.flatMap((c) => c.links)
+                        : item.panel.items
+                      ).map((l) => (
+                        <li key={l.href + l.label}>
+                          <Link
+                            href={l.href}
+                            onClick={() => setMobileOpen(false)}
+                            className="font-body text-[15px] text-ink/70"
+                          >
+                            {l.label}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </details>
+              ))}
+
+              <div className="mt-8 flex flex-col gap-3">
+                <Button href={HEADER_ACTIONS.trial.href} variant="primary" arrow>
+                  {HEADER_ACTIONS.trial.label}
+                </Button>
+                <Button href={HEADER_ACTIONS.demo.href} variant="ghost">
+                  {HEADER_ACTIONS.demo.label}
+                </Button>
               </div>
-            ))}
+            </div>
           </motion.nav>
         )}
       </AnimatePresence>

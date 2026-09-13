@@ -24,6 +24,16 @@ import { Mark, reducedMotion, type ShapeName } from "@/lib/heyday-mark";
  *  spin or flow. With reduced motion it shows the finished shape, still.
  * ==================================================================== */
 
+/**
+ * Bounce once per session, not once per route change.
+ *
+ * Module scope rather than component state: the header remounts on every
+ * navigation, and a mark that hops each time reads as a page still
+ * loading. Kept here rather than in the header so anything asking for
+ * bounceOnLoad gets the same restraint for free.
+ */
+let bounced = false;
+
 export function HeydayMark({
   shape = "sun",
   sun,
@@ -65,7 +75,10 @@ export function HeydayMark({
     const mark = new Mark(svg, wrapRef.current, start, { sun });
     markRef.current = mark;
 
-    if (bounceOnLoad) mark.bounce();
+    if (bounceOnLoad && !bounced) {
+      bounced = true;
+      mark.bounce();
+    }
 
     let timer: ReturnType<typeof setInterval> | null = null;
     let io: IntersectionObserver | null = null;
