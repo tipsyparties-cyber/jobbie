@@ -21,11 +21,10 @@ Where a document says `~/Projects/heyday-upandup-brief/`, it means this folder. 
 | `data/features.json` | The holding content for every feature page: headline, search line, outcomes, how it works, situations, FAQ, related features, icon and status |
 | `spec/04-who-stories-pricing-compare.md` | Part 4: Who it's for, the seven stories, pricing, the compare hub and pages |
 | `spec/05-resources-company-utility.md` | Part 5: resources, the free tools and quiz, templates, guides and blog, the company pages, early access, the page for AI search tools, legal pages and the 404 |
-| `HEYDAY-SITES-DESIGN-BRIEF.md` | The design: colours, type, buttons, cards, the Heyday sun and its section marks, icons, and the motion (rise, rising cards, sticky and sideways scrolls, the workflow builder, and the more-info grow). Part C is heyday.co |
+| `HEYDAY-SITES-DESIGN-BRIEF.md` | The design: colours, type, buttons, cards, the Heyday sun and its section marks, icons, and the motion (rise, rising cards, sticky and sideways scrolls, the workflow builder, and the more-info grow). |
 | `BUILD-NEXT-HEYDAY-SAAS.md` | Every page and feature of the host software site, a headline for each, and the statuses and rules |
 | `HEYDAY-SAAS-WEBSITE-BRIEF.md` | The copy and the research: who it's for, the 12-step flow, the homepage copy, the AI levels, the Quotes page, how getjobber.com is built, and every Jobber feature page |
 | `STATS-BANK.md` | The only statistics allowed, with sources |
-| `HEYDAY-MARKETPLACE-WEBSITE-BRIEF.md` and `BUILD-NEXT-HEYDAY-MARKETPLACE.md` | heyday.co, the marketplace. For reference; it isn't built in this repo |
 | `research/JOBBER-INVENTORY.md` | Every Jobber feature, add-on, plan and integration, checked 13 September 2026 |
 | `research/HONEYBOOK-INVENTORY.md` | Every HoneyBook feature, plan, integration and published statistic, checked 13 September 2026 |
 | `research/DESIGN-REFERENCES.md` | Measurements from anyone.com, allinnhomeofstudents.com and themagic8.co.uk |
@@ -34,9 +33,6 @@ Where a document says `~/Projects/heyday-upandup-brief/`, it means this folder. 
 | `assets/heyday-mark-motion.js` | The points for every shape the sun turns into, and the engine that morphs between them |
 | `assets/heyday-section-marks.svg` | The section shapes, as still images |
 | `assets/heyday-family-sprite.svg` | The small icons: the mark plus one icon for every feature page (46), each with a small version |
-| `assets/heyday-icons-sprite.svg` | The older icon set, for heyday.co's categories until they're redrawn |
 | `assets/heyday-workflow-builder-still.svg` | The drag-and-drop workflow builder, a still standing in for the demo video |
 | `assets/heyday-hero-still.svg` | A still frame of the homepage hero |
 | `reference/heyday-sun-mark.html` | Working page: the sun, every shape, the morph, the bounce and the more-info grow |
-| `reference/heyday-brand.html` | Working page: the brand exploration, the hero idea, the workflow builder, and the buttons and cards |
-| `reference/heyday-co-colours.html` | Working page: heyday.co's colour combinations (heyday.co only) |

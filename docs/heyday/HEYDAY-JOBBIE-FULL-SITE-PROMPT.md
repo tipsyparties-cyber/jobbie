@@ -24,7 +24,7 @@ Read "What we're trying to achieve" and section 0 first, then follow the build o
 
 Many sell the same skill two ways: as a service at someone's event, and as an experience or class. Heyday handles both.
 
-**Where it comes from:** it grew out of the Tipsy system, which runs Tipsy Parties every day. It grows with each business the way Tipsy grew: from doing everything yourself, to running it as an owner, to a team, to a business that runs itself. Customers can find these businesses on heyday.co, the Heyday marketplace.
+**Where it comes from:** it grew out of the Tipsy system, which runs Tipsy Parties every day. It grows with each business the way Tipsy grew: from doing everything yourself, to running it as an owner, to a team, to a business that runs itself. Customers can also find these businesses on the Heyday marketplace, which has its own site and its own look.
 
 **What makes it different:** HoneyBook and Jobber both say "all-in-one". Heyday runs **the whole workflow, not just the paperwork**:
 - the team who deliver the job, their shifts and their pay;
@@ -78,7 +78,7 @@ If this session runs on the Mac where `~/Projects/heyday-upandup-brief` exists, 
 3. **`docs/heyday/spec/` and `docs/heyday/data/features.json`: the page-by-page spec.** It covers every page, section by section: what each section is for, its layout, holding copy, image slots, icons and marks, motion and colours.
    - Build every page from it, in full, with holding copy and holding images. You're building a finished structure, like honeybook.com and getjobber.com, ready for Jem to swap in the real words and pictures.
    - Start with `spec/01-global-and-home.md`.
-4. `docs/heyday/HEYDAY-SITES-DESIGN-BRIEF.md`: the look, colours, type, buttons, cards, marks, icons and motion. Parts A, B and D apply to this site. Part C is heyday.co, which is built elsewhere.
+4. `docs/heyday/HEYDAY-SITES-DESIGN-BRIEF.md`: the look, colours, type, buttons, cards, marks, icons and motion. All of it applies to this site.
 5. `docs/heyday/BUILD-NEXT-HEYDAY-SAAS.md`: every page and feature, the headline for each page, the statuses and the rules.
 6. `docs/heyday/HEYDAY-SAAS-WEBSITE-BRIEF.md`: the copy and the research. Read these sections most closely:
    - 1 (who it's for and the growth path)
@@ -95,10 +95,8 @@ If this session runs on the Mac where `~/Projects/heyday-upandup-brief` exists, 
    - the measurements taken from the reference sites (anyone.com, allinnhomeofstudents.com, themagic8.co.uk).
 
    Use it for the comparison pages, and check every rival fact again on the day you publish it.
-9. `docs/heyday/reference/`: three working pages from the design sessions. Open them in a browser.
-   - **`heyday-sun-mark.html`** runs every shape, the morph, the bounce and the more-info grow. Its script is the reference for `HeydayMark` and `MoreInfoSection`.
-   - **`heyday-brand.html`** has the hero still, the workflow builder, the buttons and the cards.
-   - **`heyday-co-colours.html`** is heyday.co's palette. It's for reference only, and none of it is used on this site.
+9. `docs/heyday/reference/heyday-sun-mark.html`: a working page from the design sessions. Open it in a browser.
+   - It runs every shape, the morph, the bounce and the more-info grow. Its script is the reference for `HeydayMark` and `MoreInfoSection`.
 10. `docs/heyday/assets/`: the files you'll copy in (section 6).
 11. In this repo, `docs/superpowers/specs/2026-09-10-mono-reskin-binary-intro-design.md`: read the "Do not re-propose" table, Addendum 34 and "Environment gotchas".
 
@@ -128,7 +126,7 @@ When two instructions disagree, follow the first one on this list:
 - **The six groups** organise the whole site: Get ahead, Get found, Win the client, Run the day, Get paid, Get rebooked. "It runs itself" is the thread through all six.
   - Use them instead of the four groups `features.ts` has now; `BUILD-NEXT-HEYDAY-SAAS.md` Phase 3 has the regrouping table.
   - The section marks and their colours are built on these six.
-- **jobbie's colours don't change:** cream, sage, blue, sky, lavender, yellow and paper, plus Heyday orange #F26B2A for actions. heyday.co's colours are for heyday.co only.
+- **jobbie's colours don't change:** cream, sage, blue, sky, lavender, yellow and paper, plus Heyday orange #F26B2A for actions.
 - **The mark is the Heyday sun.** It's always one colour, never black or orange, and suits the section it sits in. Its shapes, the small icons and the more-info grow are all in the design brief (A1, A7, A11 and A12).
 - **Who it's for:** one Who it's for page plus example stories. No page for each type of business.
 - **English:** US English, dollars and US terms.
@@ -210,7 +208,7 @@ It has the same shape as getjobber.com and honeybook.com, at a size a small team
 
 **Footer:**
 - **Columns:** Product (features, how it works, pricing, integrations, the Heyday marketplace), Who it's for (the page and the stories), Resources, Company (about, security, help, contact), and Legal.
-- **Also:** the Heyday sun slowly cycling through the six shapes, "Make your day a Heyday.", and a link to heyday.co.
+- **Also:** the Heyday sun slowly cycling through the six shapes, "Make your day a Heyday.", and a link to the Heyday marketplace.
 
 **Routes:**
 

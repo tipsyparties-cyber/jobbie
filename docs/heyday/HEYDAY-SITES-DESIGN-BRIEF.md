@@ -1,6 +1,6 @@
-Claude Code: this is the design direction for the Heyday host software site (the jobbie repo, branch `redesign/mono-binary-intro`). Read it all, then read `AGENTS.md` in the repo, because this Next.js version has breaking changes. Build Part A and Part B in the order in Part D. Part C is for the marketplace site (heyday.co), which has no repo yet, so don't build it here. Keep it in mind so the shared parts in Part A work for both sites. Commit to the current branch as you go.
+Claude Code: this is the design direction for the Heyday host software site (the jobbie repo, branch `redesign/mono-binary-intro`). Read it all, then read `AGENTS.md` in the repo, because this Next.js version has breaking changes. Build Part A and Part B in the order in Part C. Commit to the current branch as you go.
 
-# Heyday: design direction for the host software site and heyday.co
+# Heyday: design direction for the host software site
 
 **From:** Jem, with Claude, 13 September 2026.
 **Read with:** `HEYDAY-SAAS-WEBSITE-BRIEF.md` (the copy, the six groups, the features) and `BUILD-NEXT-HEYDAY-SAAS.md` (the task list).
@@ -11,7 +11,6 @@ Claude Code: this is the design direction for the Heyday host software site (the
 - `heyday-workflow-builder-still.svg`: the placeholder for the workflow-builder demo video. It goes on the site as `public/placeholders/workflow-builder.svg`.
 - `heyday-mark.svg`: the Heyday sun, the brand mark. It goes on the site as `public/brand/heyday-mark.svg`.
 - `heyday-family-sprite.svg`: the mark and the 11 feature icons drawn from it, each with a small version. It goes on the site as `public/icons/heyday-family.svg`.
-- `heyday-icons-sprite.svg`: the older icon set. Use it only for the 12 marketplace category icons until they're redrawn in the family style (A7). It goes on the site as `public/icons/heyday-icons.svg`.
 - `heyday-mark-motion.js`: the exact points for every shape the mark turns into, and a small engine that morphs between them. It goes in the site as `src/lib/heyday-mark-motion.js` (A11).
 - `heyday-section-marks.svg`: still versions of the section shapes, for places that don't animate. It goes on the site as `public/icons/heyday-section-marks.svg`.
 - The mark page, with every animation and the more-info section working: https://claude.ai/code/artifact/83c4116a-5aaf-4c2f-bff3-93baef24a1df. All four new files (the mark, the motion, the section marks and the small icons) have copy buttons there.
@@ -45,9 +44,9 @@ Result: techy, confident and gender-neutral, still warm.
 
 ---
 
-# Part A: the shared system (both sites)
+# Part A: the design system
 
-Both sites use everything in Part A. That shared system, more than matching colours, is what makes them feel related.
+Everything in Part A applies across the whole site.
 
 ## A1. Name, wordmark, symbol
 
@@ -68,20 +67,19 @@ Both sites use everything in Part A. That shared system, more than matching colo
 
 ## A2. Colour
 
-The two sites have different grounds but share the action colour and the rules.
+The core colours, and the rules for using them. The rest of jobbie's palette (sage, blue, sky, lavender) is in B2.
 
-| Token | jobbie | heyday.co | Use |
-|---|---|---|---|
-| ink | #0A0A0A (current) | #2E2A20 (Jem's) | Text, outlines, offset shadows, icon strokes |
-| cream | #F2E9E1 | stone #E8E6DE | Resting ground |
-| paper | #FBF9F6 | #FBF9F6 | Cards |
-| **orange** | **#F26B2A** | **#F26B2A** | **jobbie: every button and active state. heyday.co: the booking and search buttons (C2)** |
-| yellow | #FCFC72 | butter #EBD67F, lemon #F4ED8C | jobbie: highlights only. heyday.co: grounds (C2) |
+| Token | Colour | Use |
+|---|---|---|
+| ink | #0A0A0A | Text, outlines, offset shadows, icon strokes |
+| cream | #F2E9E1 | Resting ground |
+| paper | #FBF9F6 | Cards |
+| **orange** | **#F26B2A** | **Every button and active state** |
+| yellow | #FCFC72 | Highlights only (a marker behind a phrase, a sticker) |
 
 Rules:
 - **Orange is a fill, never a text colour.** Orange text on cream fails contrast. Buttons are orange with *ink* text. Ink on orange passes WCAG AA (about 6:1). White on orange doesn't.
 - **Yellow and orange never touch.** Don't put an orange button on a yellow ground or a yellow highlight next to an orange button. Where they'd meet, the button goes ink.
-- heyday.co's colours come in combinations from Jem's colour board (C2). Its coral, #E8483B, is a near twin of Heyday orange, so never put an orange button on a block whose partner is coral.
 
 ## A3. Type
 
@@ -92,7 +90,6 @@ Rules:
 - **Body:** Inter, as now.
 - **Small labels, step numbers, stat sources and the braced labels like `{ why Heyday }`:** Geist Mono (Google Fonts), 12–13px, letter-spacing 0.02em. This is the "techy" note. Use it sparingly.
 - **Remove Cormorant Garamond from the Heyday pages.**
-- **heyday.co keeps Jem's fonts** (Anton, Bowlby One, Big Shoulders Display, Quicksand, Hanken Grotesk). Its buttons use Hanken Grotesk 700 at the same size as jobbie's.
 
 ## A4. Buttons: the corners round off on hover
 
@@ -107,8 +104,8 @@ Rewrite `src/components/ui/button.tsx`:
 - **Focus ring:** a visible 2px ink outline, offset 3px, as well as the radius change.
 
 Variants:
-- `primary`: orange fill, ink text. Examples: "Start free trial", "Find experiences".
-- `dark`: ink fill, cream text. Use on yellow or red grounds.
+- `primary`: orange fill, ink text. Examples: "Start free trial", "Join early access".
+- `dark`: ink fill, cream text. Use on yellow grounds.
 - `ghost`: transparent, ink text, ink outline. Example: "Book a demo".
 
 ## A5. Cards: thin outline, hard shadow
@@ -121,7 +118,7 @@ Measured from themagic8.co.uk. Replace `neo-card.tsx` (the neumorphic shadows) w
 - **Card** (feature cards, sideways-scroll cards, story cards, hero cards):
   - 2px ink border, 16px radius.
   - Shadow `11px 11px 0 0` in ink at 8% opacity.
-- **Sticker** (playful moments: group icons, stat callouts, heyday.co category tiles):
+- **Sticker** (playful moments: group icons, stat callouts):
   - The same as the card, but tilted −8°. It straightens on hover in 0.5s with `cubic-bezier(.4,0,.2,1)`.
   - Magic8 tilts to −12°; −8° reads calmer. Use no more than three stickers per screen.
 
@@ -178,8 +175,6 @@ Every feature icon comes from the Heyday sun: it's the sun with one part turned 
 | Get paid | `hd-payments` |
 | Get rebooked | `hd-reviews` |
 
-**Marketplace categories** (for heyday.co) still come from the older set, `heyday-icons-sprite.svg`, until they're redrawn in the family style.
-
 ## A8. The Heyday line (the "one workflow" device)
 
 - **What it is:** a 2px ink line with 10px dots at each step. The current step's dot fills orange and grows to 14px. Connectors between steps get a small orange "+" (as in the workflow-builder still).
@@ -187,14 +182,13 @@ Every feature icon comes from the Heyday sun: it's the sun with one part turned 
   - Under the hero cards, as the step indicator.
   - As the progress bar on both sideways-scroll sections.
   - Joining the icons in the six-group rail.
-  - On heyday.co, joining "Find it, book it, love it, book again".
 - **Why:** it's the visual version of "one workflow". Every time an icon or card appears in a row, it's on the line.
 
 ## A9. The hero's rising cards (from anyone.com, in our own art)
 
 anyone.com's hero has tall white cards rising one at a time through a rounded panel on the right. It's a Lottie file and it's their artwork, so **copy the pattern and the timing, never the file or the art.** Ours is DOM plus framer-motion; no Lottie or Rive is needed.
 
-Build one component, `RisingCards`, used on both sites:
+Build one component, `RisingCards`:
 - **Panel:** the right half of the hero, clipped, with 56px rounded top corners. Behind the cards sit three or four faint 1px rounded-rectangle outlines (paper at 55% opacity on a coloured ground).
 - **Cards:** 300×420, paper, 2px ink border, 16px radius, hard shadow (A5).
 - **Motion, per card:**
@@ -205,7 +199,7 @@ Build one component, `RisingCards`, used on both sites:
   - Build it as framer-motion keyframes at 0%, 33% and 50%, then 100% for the exit.
 - **Rhythm:** a new card every 3s. The loop lasts the number of cards × 3s.
 - **Landing moment:**
-  - An orange ripple spreads behind the landed card: two soft lavender circles on jobbie, butter on heyday.co.
+  - An orange ripple spreads behind the landed card: two soft lavender circles.
   - The card's details pop in over 1s with `cubic-bezier(0.77, 0, 0.18, 1)`.
   - On jobbie, the Heyday sun mark (A11) rolls in from the right edge in paper #FBF9F6, bounces once and nudges the card. `heyday-hero-still.svg` shows it half in view.
 - **Screen sizes:**
@@ -217,10 +211,9 @@ Build one component, `RisingCards`, used on both sites:
 
 ## A10. Section shape
 
-Both sites use the anyone.com overlap. Each section after the hero has 56px rounded top corners and sits 56px up over the one before, so the page reads as a stack of cards. It's the second strongest tie between the two sites, after the buttons.
+The site uses the anyone.com overlap. Each section after the hero has 56px rounded top corners and sits 56px up over the one before, so the page reads as a stack of cards.
 
-- **jobbie:** the colour fades between sections (see B2).
-- **heyday.co:** the colour changes in solid blocks (see C2).
+- The colour fades between sections (see B2).
 
 ## A11. The mark in motion, and the section marks
 
@@ -255,11 +248,6 @@ The same eight arrows and core fold into a flat shape for each part of the busin
 | Get paid | Paid | The rays close into a ring around a tick | Sage #9AAD92 |
 | Get rebooked | Loop | The arrows chase each other round, spinning | Sky #AEC9EE |
 | It runs itself | Infinity | The arrows flow along a figure-eight | Ink |
-
-**heyday.co, one shape per kind of experience.** These three are examples; the other categories follow the same rule.
-- Wellness: a sun over water, in lime #D8F35C on purple #B67EE2.
-- Music and dance: sound bars, in pink #F064C8 on olive #5B5A14.
-- Food and drink: a glass with an olive and fizz, in coral #E8483B on mint #C6E6D3.
 
 **Colour notes:**
 - The section marks use jobbie's own palette, unchanged.
@@ -327,7 +315,6 @@ Jem's idea: each section's shape sits beside the headline. Press "more info" and
 **Where it goes:**
 - **The jobbie homepage feature rows** (B4 item 6): each of the four "Stop…" rows, with its group's shape.
 - **Group and feature pages:** each can open with its group's shape.
-- **heyday.co:** the category sections, each with its own shape.
 
 ---
 
@@ -384,7 +371,7 @@ The copy comes from `HEYDAY-SAAS-WEBSITE-BRIEF.md` section 3.7, "Homepage copy".
 13. **Sell everywhere:** "Selling on Airbnb, ClassBento or Togather? Keep them." This block is a solid block in jobbie's own blue #93B7E8, with ink text, as the bridge to the marketplace. jobbie uses only its own colours. It's a preview of the marketplace and the visual bridge between the two sites.
 14. **Switching:** three steps.
 15. **Closing:** "Ready for your Heyday?" on an ink block, with the two buttons.
-16. **Footer:** with "Make your day a Heyday." (the marketplace tagline), linking to heyday.co.
+16. **Footer:** with "Make your day a Heyday." (the marketplace tagline), linking to the Heyday marketplace.
 
 Keep the two sideways sections apart (5 and 10). Two in a row would feel like the page had taken over the scroll.
 
@@ -500,109 +487,7 @@ The Quotes page keeps its interactive quote and the worked example of lost reven
 
 ---
 
-# Part C: the marketplace site (heyday.co)
-
-Not built yet. The layout is Jem's "Heyday Homepage" design (https://claude.ai/code/artifact/5384682b-c265-4ffd-9ee4-c3cb2ded4432, described in `HEYDAY-MARKETPLACE-WEBSITE-BRIEF.md` section 2). This part sets how it looks and moves, so it matches jobbie.
-
-## C1. Feel
-
-- Bolder and more editorial than jobbie: big display type, photography, and solid colour.
-- It's for customers looking for something to do, so it feels like a place, not software.
-- It uses the same buttons, cards, stickers, icons, rise, rising cards and section shape as jobbie (Part A).
-
-## C2. Solid colour blocks, no fades
-
-Jem's words: "I don't want the background changing colour transition fade, I'd rather have blocks of colour but still tying both sites together".
-
-**Each section is one solid colour,** with no gradient and no fade. Sections still overlap with the 56px rounded tops (A10), so the colour changes at a clean curved edge. That shared shape is the tie to jobbie.
-
-**The colours come in combinations,** from Jem's colour board (13 September). They replace the colours in Jem's first homepage design.
-- Each block uses one combination: a ground, a bright partner for the big type, the shapes and the wordmark, and sometimes a third colour for buttons or a small accent.
-- The hex values were picked by eye from the board. Swap in the exact codes if Jem has them.
-- The colours page shows every combination, and a mock of the homepage: https://claude.ai/code/artifact/32fad0f8-6f9a-4486-b577-36e17b0ab912
-
-| Combination | Ground | Partner | Third | The partner on the ground | Body text |
-|---|---|---|---|---|---|
-| Stone and forest | #E8E6DE | #1E3F2F | – | Body text OK | #1E3F2F |
-| Burgundy and blush | #560A18 | #F6A5B8 | #F2607A | Body text OK | #F6A5B8 |
-| Mint and coral | #C6E6D3 | #E8483B | – | Shapes and wordmark only | #2E2A20 |
-| Olive, pink and marigold | #5B5A14 | #F064C8 | #F6B233 | Shapes and wordmark only | #FBF6EE |
-| Purple and lime | #B67EE2 | #D8F35C | – | Shapes and wordmark only | #2E2A20 |
-| Navy and pink | #1E3A6E | #EBA2C8 | – | Body text OK | #EBA2C8 |
-| Butter, coral and cobalt | #EBD67F | #E5532F | #2F66D0 | Shapes and wordmark only | #2E2A20 |
-| Lilac and chocolate | #ECCFEC | #4A3833 | – | Body text OK | #4A3833 |
-| Cherry, cream and cobalt | #8C0B0E | #F6E9DA | #3D5DA8 | Body text OK | #F6E9DA |
-| Lemon and sage | #F4ED8C | #8FC49A | #3FA79A | Shapes and wordmark only | #2E2A20 |
-| Forest and mint | #0B3D3A | #9FD8C8 | – | Body text OK | #9FD8C8 |
-
-**Readability:** the "partner on the ground" column is the contrast check. Where it says big type or shapes only, set body copy in the colour in the last column.
-
-**Buttons:**
-- **"Find experiences", "Book" and "Check dates"** are Heyday orange #F26B2A with ink text on every block, so the moment someone commits looks the same on both sites.
-  - On cherry, and on blocks whose partner is coral (Mint and coral; Butter, coral and cobalt), they're ink with cream text instead.
-- **Every other button** takes the block's third colour, or its partner if it has no third. The text is the ground colour, or ink or cream, whichever reads best.
-- **Every button** has the same size, outline and rounding hover as jobbie (A4).
-
-**Ties to jobbie:** heyday.co's palette is the deep, saturated cousin of jobbie's.
-
-| jobbie | heyday.co |
-|---|---|
-| Sage | Mint and forest |
-| Lavender | Lilac and purple |
-| Yellow | Butter and lemon |
-| Blue and sky | Cobalt and navy |
-| Orange | Coral |
-
-Pink, olive, burgundy and cherry are heyday.co's own.
-
-**Rules:**
-- Never use the same combination twice in a row.
-- Use three colours at most in one block, plus ink.
-- Photos sit on the light blocks (stone, mint, butter, lilac, lemon). The dark blocks (forest, burgundy, olive, navy, cherry) carry big type and shapes.
-- When "more info" grows a shape (A12), it grows in the partner colour, and the text on it switches to ink or cream, whichever reads.
-
-**Suggested order, following Jem's sections:**
-1. Hero: Stone and forest, with the rising cards (C3).
-2. "More doing. Less scrolling.": Burgundy and blush.
-3. The categories, each on its own combination. For example:
-   - Food and drink: Mint and coral.
-   - Music and dance: Olive, pink and marigold.
-   - Wellness: Purple and lime.
-4. "Your place or theirs?": Navy and pink.
-5. "Lots of ways to experience": Butter, coral and cobalt.
-6. "What people are saying": Lilac and chocolate.
-7. Hosts ("Good things are made by good people"): Cherry, cream and cobalt, ending with "Become a Heyday host →".
-8. "Have a nose around": Stone and forest, for its photos.
-9. Newsletter: Lemon and sage, with forest text.
-10. Closing: Forest and mint, with "Make your day a Heyday."
-
-## C3. The hero: activities, hosts and inspiration rising
-
-- **Left:** Jem's "Find something brilliant to do", the search bar with the At yours / At theirs / Either toggle, and "Find experiences".
-- **Right:** the same `RisingCards` component (A9). The cards are experiences, hosts and ideas, not workflow steps. The ripple is the hero combination's partner colour.
-- **Each card has:**
-  - a photo on the top 60% (Jem's art-direction slots until real photography exists, for example "a finished handmade mug, still on the wheel");
-  - the title;
-  - the host;
-  - an At yours / At theirs tag;
-  - "from £…";
-  - a rating.
-- **Mix three kinds of card:**
-  - experiences ("Cocktail class at yours", "Pottery night", "Sunset kayak");
-  - hosts ("Meet Priya, pasta maker");
-  - ideas ("Hen party, but make it pottery").
-- Label them as examples until real listings exist.
-
-## C4. What heyday.co has and doesn't have
-
-- **It has:** the rise and parallax (A6), especially on photos; stickers for the category tiles and host cards; the icon set for categories and At yours / At theirs / Online / Gifts; and the Heyday line for "Find it, book it, love it, book again".
-- **No sticky scroll.**
-- **No pinned sideways scroll.** Swipeable rows, like the activity strip, are fine.
-- **A "For hosts" block** in jobbie's lavender, as a single solid block. It reads "Run your whole business on Heyday" and links to the host software site. It mirrors jobbie's "Sell everywhere" block, so each site carries a small piece of the other.
-
----
-
-# Part D: build order for jobbie, and checks
+# Part C: build order, and checks
 
 1. **Tokens and fonts:**
    - Add orange, the Heyday ink shadow value and Geist Mono.
@@ -614,7 +499,6 @@ Pink, olive, burgundy and cherry are heyday.co's own.
    - the family to `public/icons/heyday-family.svg`;
    - the section marks to `public/icons/heyday-section-marks.svg`;
    - the motion file to `src/lib/heyday-mark-motion.js`;
-   - the older sprite to `public/icons/heyday-icons.svg`;
    - the workflow still to `public/placeholders/workflow-builder.svg`.
    - Then make the favicon from the mark.
 4. **`HeydayMark`** (A11), **`RisingCards`** (A9), then the hero (B4 item 2, B5), then **`MoreInfoSection`** (A12).

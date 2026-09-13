@@ -101,7 +101,7 @@ Keep the current header: a 72px bar, the three panels shaped differently, and th
 - **Ground:** ink #0A0A0A, with cream text. It has the 56px rounded top, sitting over the section above.
 - **Top row:**
   - on the left, the Heyday wordmark in cream, with the sun beside it in sky #AEC9EE, slowly cycling through the six shapes, each in its own colour (A11 in the design brief);
-  - on the right, "Make your day a Heyday." and a link, "Find something to do on heyday.co →".
+  - on the right, "Make your day a Heyday." and a link to the Heyday marketplace, "Find something to do →".
 - **Columns:**
   - **Product:** All features · How it works · The AI · Integrations · Pricing · What's new · The Heyday marketplace
   - **Who it's for:** Who it's for · Stories · the six kinds of business, as anchors
@@ -429,13 +429,13 @@ always one colour, and never black or orange.
 - **Motion:** the stickers straighten on hover, rise in turn, and the HeydayLine fills.
 
 ### 13. Sell everywhere
-- **What it's for:** say that Heyday works alongside the marketplaces they already use, and link to heyday.co. This is the bridge between the two sites.
+- **What it's for:** say that Heyday works alongside the marketplaces they already use, and link to the Heyday marketplace.
 - **Layout:** a solid block in jobbie's own blue #93B7E8 with ink text. The copy is on the left; on the right, a diary picture.
 - **Holding copy:**
   - **Label:** `{ sell everywhere }`
   - **Heading:** "Selling on Airbnb, ClassBento or Togather? **Keep them.**"
   - **Line:** "Bring every booking into one diary, and win your customers back to book direct." Marked Coming soon.
-  - **Buttons:** "See Sell everywhere →" (ghost). A text link: "Find something to do on heyday.co →".
+  - **Buttons:** "See Sell everywhere →" (ghost). A text link to the Heyday marketplace: "Find something to do →".
 - **Image:** a `ScreenIllustration` of one week's diary. Bookings come from four sources, each tagged in Geist Mono: your booking page, the Heyday marketplace, another platform, a repeat client. One clash is flagged in orange.
 - **Icons and marks:** hd-online-booking.
 - **Motion:** the picture has a gentle parallax, and the copy rises in.

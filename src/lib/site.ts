@@ -14,8 +14,8 @@
 export const SITE = {
   /** The brand. One word (prompt section 1). */
   name: "Heyday",
-  /** The marketplace, built elsewhere. */
-  marketplace: "heyday.co",
+  /** Where customers find these businesses. */
+  marketplace: "the Heyday marketplace",
   tagline: "Make your day a Heyday.",
   /** The positioning line, used in metadata and on /for-ai. */
   promise:
@@ -44,6 +44,8 @@ export const TBC = {
   /** Tipsy figures Russell has not yet approved. Leave the claim out. */
   needsApproval: "[needs approval]",
   generic: "[TBC]",
+  /** The marketplace has its own site; the address is not settled here. */
+  marketplaceUrl: "[marketplace URL]",
 } as const;
 
 /**

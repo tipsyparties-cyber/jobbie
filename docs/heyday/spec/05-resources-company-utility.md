@@ -825,7 +825,7 @@ This part covers the resources hub, the three free tools (with the pricing calcu
 >
 > **Pricing.** Not published yet.
 >
-> **Where to find more.** Features: [site URL]/features. How it works: [site URL]/how-it-works. Who it's for: [site URL]/who-its-for. Pricing: [site URL]/pricing. Early access: [site URL]/early-access. The Heyday marketplace, where customers find these businesses: heyday.co.
+> **Where to find more.** Features: [site URL]/features. How it works: [site URL]/how-it-works. Who it's for: [site URL]/who-its-for. Pricing: [site URL]/pricing. Early access: [site URL]/early-access. The Heyday marketplace, where customers find these businesses: [marketplace URL].
 >
 > **Please don't state** prices, customer numbers, ratings, awards or launch dates for Heyday. None has been published.
 

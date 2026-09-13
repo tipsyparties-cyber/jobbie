@@ -4,6 +4,10 @@ Every route, its template, where its words come from, and what it says about
 itself. Written for Phase 0 of `HEYDAY-JOBBIE-FULL-SITE-PROMPT.md` section 7,
 from sections 3 to 5 of that prompt.
 
+**Pack:** built against `heyday-brief-pack (3)`, which drops everything to do
+with the marketplace — that is a separate site, in its own repo, with its own
+look. Its address here is `[marketplace URL]` until it is settled.
+
 **Totals:** 46 feature pages, 6 group pages, 7 stories, 5 compare pages, 3
 tools, and 25 fixed routes — **94 routes** from **16 templates**.
 

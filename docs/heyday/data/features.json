@@ -442,7 +442,7 @@
       "outcomes": {
         "increases": "Increases new customers."
       },
-      "intro": "Switch on a listing on heyday.co, the Heyday marketplace, with your real prices and live availability. Customers find you and book you, and the booking lands in your diary.",
+      "intro": "Switch on a listing on the Heyday marketplace, with your real prices and live availability. Customers find you and book you, and the booking lands in your diary.",
       "stats": [],
       "example": null,
       "howItWorks": [
@@ -456,7 +456,7 @@
           "label": "Real prices",
           "heading": "Real prices, live dates",
           "line": "The listing uses the same prices, rules and diary as your own page.",
-          "screen": "A heyday.co listing card: photo slot, title, an 'At yours' tag and 'from $…'."
+          "screen": "A Heyday marketplace listing card: photo slot, title, an 'At yours' tag and 'from $…'."
         },
         {
           "label": "It lands with you",
