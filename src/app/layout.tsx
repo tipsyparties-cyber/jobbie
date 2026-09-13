@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { serif, sans } from "@/lib/fonts";
+import { serif, sans, hero } from "@/lib/fonts";
 import { GsapProvider } from "@/lib/gsap-provider";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
@@ -50,7 +50,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${serif.variable} ${sans.variable}`}>
+    <html lang="en" className={`${serif.variable} ${sans.variable} ${hero.variable}`}>
       <body>
         <div className="bg-blobs" aria-hidden="true">
           <div className="blob blob-1" />

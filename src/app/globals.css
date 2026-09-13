@@ -24,6 +24,9 @@
 
   --font-display: var(--font-serif), "Georgia", serif;
   --font-body: var(--font-sans), system-ui, sans-serif;
+  /* The hero face. Stands in for gsap.com's PP Mori, which is a paid
+     licence — see lib/fonts.ts. */
+  --font-hero: var(--font-hero-face), var(--font-sans), system-ui, sans-serif;
 
   /* Neumorphic shadows recomputed for the off-white ground */
   --shadow-neo: 6px 6px 14px #dfe3e8, -6px -6px 14px #ffffff;

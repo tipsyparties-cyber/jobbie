@@ -77,7 +77,7 @@ export function GsapHero() {
               at rest because everyone arriving already knows the site. */}
           <HeroHeadline
             lines={["Do what you love.", "Let Hey Day run the rest."]}
-            className="font-body text-[clamp(2.1rem,7.4vw,6.5rem)] font-semibold leading-[0.9] tracking-[-0.04em]"
+            className="font-hero text-[clamp(2.1rem,7.4vw,6.5rem)] font-semibold leading-[0.9] tracking-[-0.04em]"
           />
 
           <motion.div
