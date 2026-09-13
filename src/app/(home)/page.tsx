@@ -20,6 +20,12 @@ import {
   GsapShowcase,
   GsapFooter,
 } from "@/components/home/gsap-structure";
+import {
+  ProductSurface,
+  AiSection,
+  IndustriesSection,
+  SupportSection,
+} from "@/components/home/product-sections";
 import { CREAM, SAGE, BLUE, PAPER, LAVENDER } from "@/lib/palette";
 import { SiteHeader } from "@/components/home/site-header";
 
@@ -78,6 +84,12 @@ const GROUNDS: Record<string, string> = {
   "g-statement": PAPER,
   "g-sideways": PAPER,
   "g-features": PAPER,
+  // The product sections stay on paper. They are the reading part of the
+  // page — four colour changes in a row would make it feel like a brochure.
+  "g-surface": PAPER,
+  "g-ai": PAPER,
+  "g-industries": PAPER,
+  "g-support": PAPER,
   "g-showcase": LAVENDER,
   "g-footer": CREAM,
 
@@ -148,6 +160,16 @@ const sections = [
   { id: "g-statement", content: () => <GsapStatement /> },
   { id: "g-sideways", raw: true, content: () => <GsapSideways /> },
   { id: "g-features", raw: true, content: () => <GsapFeatures /> },
+  /* The product sections. They sit here deliberately — after the feature
+     rows have said what jobbie is for, and before the showcase says who has
+     used it. This is where the page stops selling the idea and explains the
+     software. Running order taken from getjobber.com's home page: product
+     surface, then the AI, then breadth, then what switching involves. */
+  { id: "g-surface", raw: true, content: () => <ProductSurface /> },
+  { id: "g-ai", raw: true, content: () => <AiSection /> },
+  { id: "g-industries", raw: true, content: () => <IndustriesSection /> },
+  { id: "g-support", raw: true, content: () => <SupportSection /> },
+
   { id: "g-showcase", content: () => <GsapShowcase /> },
   { id: "g-footer", raw: true, content: () => <GsapFooter /> },
 
@@ -742,6 +764,10 @@ const CHAPTERS: { label: string; index: number }[] = [
   { label: "Why now", index: sections.findIndex((s) => s.id === "g-statement") },
   { label: "What we do", index: sections.findIndex((s) => s.id === "g-sideways") },
   { label: "Why up+up", index: sections.findIndex((s) => s.id === "g-features") },
+  { label: "What it does", index: sections.findIndex((s) => s.id === "g-surface") },
+  { label: "The agents", index: sections.findIndex((s) => s.id === "g-ai") },
+  { label: "Who it's for", index: sections.findIndex((s) => s.id === "g-industries") },
+  { label: "Getting started", index: sections.findIndex((s) => s.id === "g-support") },
   { label: "Built", index: sections.findIndex((s) => s.id === "g-showcase") },
   { label: "Start", index: sections.findIndex((s) => s.id === "g-footer") },
   { label: "Flight", index: sections.findIndex((s) => s.id === "flock-1") },

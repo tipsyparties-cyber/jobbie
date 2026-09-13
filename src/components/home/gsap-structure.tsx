@@ -7,6 +7,7 @@ import { SynergyBrain } from "@/components/home/synergy-brain";
 import { Wordmark } from "@/components/ui/wordmark";
 import { LetterReveal, WordReveal } from "@/components/home/reveal-text";
 import { CREAM, SAGE, BLUE, YELLOW, LAVENDER } from "@/lib/palette";
+import { SHELL, Rule, Braced, Pill } from "@/components/home/section-kit";
 
 /* ==================================================================== *
  *  The six sections of gsap.com, rebuilt for up+up.
@@ -31,56 +32,6 @@ import { CREAM, SAGE, BLUE, YELLOW, LAVENDER } from "@/lib/palette";
  *  The content spine stays getjobber.com/features: everything sorted by
  *  outcome rather than listed as features.
  * ==================================================================== */
-
-/** Content column, matching gsap's ~6vw gutter. */
-const SHELL = "mx-auto w-full max-w-[1400px] px-6";
-
-/** The hairline that bounds most sections. */
-function Rule() {
-  return <div className={SHELL}><div className="h-px w-full bg-ink/12" /></div>;
-}
-
-/**
- * The bracketed label. Small bold text held inside a pair of thin outline
- * braces — 13px on the live site, not the 14px-in-a-serif-brace we had.
- */
-function Braced({ children }: { children: React.ReactNode }) {
-  return (
-    <span className="inline-flex items-stretch gap-2 font-body text-[13px] font-medium tracking-tight text-ink/80">
-      <span aria-hidden className="font-body text-3xl font-extralight leading-none text-ink/50">
-        {"{"}
-      </span>
-      <span className="self-center">{children}</span>
-      <span aria-hidden className="font-body text-3xl font-extralight leading-none text-ink/50">
-        {"}"}
-      </span>
-    </span>
-  );
-}
-
-/** The pill button. Outline, fully rounded, medium weight. */
-function Pill({
-  href,
-  children,
-  solid = false,
-}: {
-  href: string;
-  children: React.ReactNode;
-  solid?: boolean;
-}) {
-  return (
-    <Link
-      href={href}
-      className={
-        solid
-          ? "inline-block rounded-full bg-ink px-7 py-3 font-body text-sm font-medium text-cream transition-opacity hover:opacity-85"
-          : "inline-block rounded-full border border-ink/70 px-7 py-3 font-body text-sm font-medium text-ink transition-colors hover:bg-ink hover:text-cream"
-      }
-    >
-      {children}
-    </Link>
-  );
-}
 
 /* -------------------------------------------------------------- *
  *  1. Hero
