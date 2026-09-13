@@ -27,7 +27,7 @@ import {
   SupportSection,
 } from "@/components/home/product-sections";
 import { CREAM, SAGE, BLUE, PAPER, LAVENDER } from "@/lib/palette";
-import { SiteHeader } from "@/components/home/site-header";
+import { SiteHeader } from "@/components/layout/site-header";
 
 function seededRandom(seed: number) {
   const x = Math.sin(seed * 9301 + 49297) * 49297;
@@ -979,7 +979,7 @@ export default function Home() {
       <SiteHeader />
 
       {/* The document. */}
-      <div className="relative z-10 pt-[4.5rem]">
+      <div className="relative z-10 pt-[7.2rem]">
         {sections.map((s, i) => (
           <ScrollSection
             key={s.id}

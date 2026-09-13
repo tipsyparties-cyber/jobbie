@@ -1,4 +1,4 @@
-import { Navbar } from "@/components/layout/navbar";
+import { SiteHeader } from "@/components/layout/site-header";
 import { Footer } from "@/components/layout/footer";
 
 export default function SiteLayout({
@@ -8,8 +8,9 @@ export default function SiteLayout({
 }) {
   return (
     <>
-      <Navbar />
-      <main>{children}</main>
+      <SiteHeader />
+      {/* Clears the fixed bar: the announcement strip plus the 72px row. */}
+      <main className="pt-[7.2rem]">{children}</main>
       <div className="flex justify-center py-8">
         <a href="#top" className="text-ink/30 hover:text-ink/60 transition-colors text-2xl" style={{ display: "inline-block" }}>^</a>
       </div>
