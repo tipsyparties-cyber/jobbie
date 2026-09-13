@@ -3,6 +3,17 @@
 @theme inline {
   /* Ink — everything that used to be white text is now this */
   --color-ink: #0A0A0A;
+
+  /* Heyday orange (A2). The one colour that separates this from HoneyBook,
+     whose pastels ours already shares.
+
+     It is a FILL and never a text colour: orange text on cream fails
+     contrast. Buttons are orange with INK text — ink on orange is about
+     6:1 and passes AA, white on orange does not.
+
+     Orange and yellow never touch. Where they would meet, the button goes
+     ink instead. */
+  --color-orange: #F26B2A;
   --color-ink-soft: #3A3D42;
 
   /* Ground and greys */
@@ -27,6 +38,12 @@
   /* The hero face. Stands in for gsap.com's PP Mori, which is a paid
      licence — see lib/fonts.ts. */
   --font-hero: var(--font-hero-face), var(--font-sans), system-ui, sans-serif;
+  /* Headings, buttons and card titles (A3). Cabinet Grotesk is the brief’s
+     first choice but is a Fontshare licence; Schibsted Grotesk is its own
+     named Google fallback and is what ships until that is cleared. */
+  --font-display-sans: var(--font-display-face), var(--font-sans), system-ui, sans-serif;
+  /* Small labels, step numbers, stat sources and { braced } labels (A3). */
+  --font-mono: var(--font-mono-face), ui-monospace, monospace;
 
   /* Neumorphic shadows recomputed for the off-white ground */
   --shadow-neo: 6px 6px 14px #dfe3e8, -6px -6px 14px #ffffff;

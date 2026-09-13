@@ -1,12 +1,48 @@
-import { Cormorant_Garamond, Inter, Plus_Jakarta_Sans } from "next/font/google";
+import {
+  Cormorant_Garamond,
+  Inter,
+  Plus_Jakarta_Sans,
+  Schibsted_Grotesk,
+  Geist_Mono,
+} from "next/font/google";
 
-export const serif = Cormorant_Garamond({
+/* ==================================================================== *
+ *  The type system — design brief A3.
+ *
+ *  Four faces, each with one job. No serif: Cormorant Garamond reads
+ *  wedding-soft, which is HoneyBook's territory and the thing Heyday is
+ *  most at risk of being mistaken for.
+ * ==================================================================== */
+
+/**
+ * Hero headline. Plus Jakarta Sans stands in for PP Mori, which gsap.com
+ * uses and which is a paid Pangram Pangram licence. If Mori is ever
+ * bought, this is the only line that changes.
+ */
+export const hero = Plus_Jakarta_Sans({
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600"],
-  variable: "--font-serif",
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-hero-face",
   display: "swap",
 });
 
+/**
+ * Headings, buttons and card titles.
+ *
+ * The brief's first choice is Cabinet Grotesk, the face Magic8 uses. It is
+ * free from Fontshare rather than Google, so it needs self-hosting with
+ * `next/font/local` and a licence check before shipping. Schibsted Grotesk
+ * is the brief's own named Google fallback, so the build runs on that until
+ * the licence is confirmed — a swap of this one declaration.
+ */
+export const display = Schibsted_Grotesk({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-display-face",
+  display: "swap",
+});
+
+/** Body. */
 export const sans = Inter({
   subsets: ["latin"],
   variable: "--font-sans",
@@ -14,25 +50,24 @@ export const sans = Inter({
 });
 
 /**
- * The hero face.
- *
- * gsap.com sets its hero in PP Mori (Pangram Pangram) — confirmed from their
- * own @font-face rules: PPMori-Regular and PPMori-SemiBold. Mori is a
- * commercial licence, so it is not bundled here: shipping their woff2 files
- * would be redistributing a licensed font we have not paid for.
- *
- * Plus Jakarta Sans is the closest free stand-in — the same low-contrast
- * geometric grotesque with a tall x-height, and it has a real 600 weight,
- * which is the weight gsap's hero actually uses.
- *
- * It is deliberately its own variable rather than a change to `sans`. If
- * Russ licenses Mori, this is the only place that changes: swap this for a
- * `next/font/local` call pointing at the woff2 files and every hero on the
- * site follows. Nothing else needs touching.
+ * Small labels, step numbers, stat sources and the { braced } labels.
+ * 12–13px with 0.02em tracking. This is the techy note, and it only works
+ * while it stays rare.
  */
-export const hero = Plus_Jakarta_Sans({
+export const mono = Geist_Mono({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-hero-face",
+  weight: ["400", "500"],
+  variable: "--font-mono-face",
+  display: "swap",
+});
+
+/**
+ * Retired from the Heyday pages, kept only so the agency routes still
+ * compile until they are removed in Phase 7.
+ */
+export const serif = Cormorant_Garamond({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600"],
+  variable: "--font-serif",
   display: "swap",
 });

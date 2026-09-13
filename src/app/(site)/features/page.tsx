@@ -2,9 +2,10 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { SHELL, Rule } from "@/components/home/section-kit";
 import { BUCKETS, featuresIn, FEATURES } from "@/lib/features";
+import { CTA, SITE } from "@/lib/site";
 
 /**
- * The features index — jobbie's equivalent of getjobber.com/features.
+ * The features index — Heyday's equivalent of getjobber.com/features.
  *
  * Sorted by outcome rather than alphabetically, the same way the home page's
  * sideways band is, because that is the sort a business owner is actually
@@ -17,7 +18,7 @@ import { BUCKETS, featuresIn, FEATURES } from "@/lib/features";
 export const metadata: Metadata = {
   title: "Features",
   description:
-    "Everything jobbie does, sorted by what it fixes: getting found, winning the work, running it without you, and keeping more of it.",
+    "Everything Heyday does, sorted by what it fixes: getting found, winning the work, running it without you, and keeping more of it.",
 };
 
 export default function FeaturesIndex() {
@@ -33,7 +34,7 @@ export default function FeaturesIndex() {
         </nav>
 
         <h1 className="mt-12 max-w-[16ch] font-body text-[clamp(2.25rem,7vw,5.5rem)] font-semibold leading-[0.94] tracking-[-0.04em]">
-          Everything jobbie does.
+          Everything {SITE.name} does.
         </h1>
         <p className="mt-8 max-w-2xl font-body text-lg leading-relaxed text-ink/75">
           {FEATURES.length} features, sorted by what they fix rather than
@@ -98,10 +99,10 @@ export default function FeaturesIndex() {
         </h2>
         <div className="mt-10">
           <Link
-            href="/contact"
+            href={CTA.primary.href}
             className="inline-block rounded-full bg-ink px-7 py-3 font-body text-sm font-medium text-cream transition-opacity hover:opacity-85"
           >
-            Start a conversation
+            {CTA.primary.label}
           </Link>
         </div>
       </section>

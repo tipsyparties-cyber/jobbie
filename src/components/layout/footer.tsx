@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { SITE } from "@/lib/site";
 import { Wordmark } from "@/components/ui/wordmark";
 
 const legalLinks = [
@@ -34,7 +35,7 @@ export function Footer() {
               </Link>
             ))}
             <p className="text-xs text-ink/30">
-              &copy; {new Date().getFullYear()} up+up
+              &copy; {new Date().getFullYear()} {SITE.name}
             </p>
           </div>
         </div>

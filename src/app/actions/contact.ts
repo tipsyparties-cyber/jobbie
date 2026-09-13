@@ -33,11 +33,11 @@ export async function submitContactForm(
 
   try {
     await resend.emails.send({
-      from: "up+up Website <noreply@upandup.agency>",
-      to: process.env.CONTACT_EMAIL || "hello@upandup.agency",
+      from: "Heyday Website <noreply@heyday.app>",
+      to: process.env.CONTACT_EMAIL || "hello@heyday.app",
       subject: `New enquiry from ${name} — ${business}`,
       html: `
-        <h2>New Enquiry via up+up Website</h2>
+        <h2>New Enquiry via Heyday Website</h2>
         <p><strong>Name:</strong> ${name}</p>
         <p><strong>Email:</strong> ${email}</p>
         <p><strong>Phone:</strong> ${phone || "Not provided"}</p>

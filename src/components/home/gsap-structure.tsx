@@ -13,9 +13,10 @@ import {
 } from "@/components/home/hero-motion";
 import { CREAM, SAGE, BLUE, YELLOW, LAVENDER } from "@/lib/palette";
 import { SHELL, Rule, Braced, Pill } from "@/components/home/section-kit";
+import { CTA, SITE } from "@/lib/site";
 
 /* ==================================================================== *
- *  The six sections of gsap.com, rebuilt for up+up.
+ *  The six sections of gsap.com, rebuilt for Heyday.
  *
  *  Second pass. The first was written to a description of gsap.com; this
  *  one is written to measurements taken off the live page, which turned
@@ -99,11 +100,15 @@ export function GsapHero() {
               Heyday is you &times;1000, running 24/7. Everything, always,
               instantly.
             </p>
+            {/* Heyday's two actions everywhere (prompt section 1).
+                 "Start free trial" opens early access, because the product
+                 is not open to other businesses yet — the honesty lives on
+                 the page it opens, not in a weaker button. */}
             <div className="mt-9 flex flex-wrap gap-3">
-              <Pill href="/contact" solid>
-                Start a conversation
+              <Pill href={CTA.primary.href} solid>
+                {CTA.primary.label}
               </Pill>
-              <Pill href="/features">See what it does</Pill>
+              <Pill href={CTA.secondary.href}>{CTA.secondary.label}</Pill>
             </div>
           </motion.div>
         </div>
@@ -271,7 +276,7 @@ const ROWS = [
     accent: "one system",
     accentColour: BLUE,
     copy: "Every agent shares the same view of your business. The one that answers the phone knows what the one that sent the quote said yesterday.",
-    href: "/services",
+    href: "/features",
     cta: "How it fits together",
   },
   {
@@ -354,7 +359,7 @@ function FeatureRow({ row, flip }: { row: (typeof ROWS)[number]; flip: boolean }
 export function GsapFeatures() {
   return (
     <div className="mx-auto w-full max-w-[1400px] px-6">
-      <Braced>Why up+up</Braced>
+      <Braced>Why {SITE.name}</Braced>
       {ROWS.map((r, i) => (
         <FeatureRow key={r.accent} row={r} flip={i % 2 === 1} />
       ))}
@@ -443,7 +448,7 @@ export function GsapShowcase() {
       </div>
 
       <div className={`${SHELL} mt-10`}>
-        <Pill href="/projects/tipsy-parties">Read the case study</Pill>
+        <Pill href="/stories/tipsy-parties">Read the story</Pill>
       </div>
     </div>
   );
@@ -458,10 +463,10 @@ const FOOTER_COLS = [
     head: "What we do",
     tint: BLUE,
     links: [
-      { label: "AI agents", href: "/services" },
-      { label: "Automation", href: "/services" },
-      { label: "Custom systems", href: "/services" },
-      { label: "Integrations", href: "/services" },
+      { label: "All features", href: "/features" },
+      { label: "How it works", href: "/how-it-works" },
+      { label: "Pricing", href: "/pricing" },
+      { label: "Integrations", href: "/integrations" },
     ],
   },
   {
@@ -469,7 +474,7 @@ const FOOTER_COLS = [
     tint: SAGE,
     links: [
       { label: "About", href: "/about" },
-      { label: "Projects", href: "/projects" },
+      { label: "Stories", href: "/stories" },
       { label: "Blog", href: "/blog" },
       { label: "Contact", href: "/contact" },
     ],
@@ -491,8 +496,8 @@ export function GsapFooter() {
         Ready to see what&apos;s possible?
       </h2>
       <div className="mt-10">
-        <Pill href="/contact" solid>
-          Start a conversation
+        <Pill href={CTA.primary.href} solid>
+          {CTA.primary.label}
         </Pill>
       </div>
 
@@ -536,7 +541,7 @@ export function GsapFooter() {
       </div>
 
       <p className="mt-14 font-body text-xs text-ink/35">
-        &copy; {new Date().getFullYear()} up+up
+        &copy; {new Date().getFullYear()} {SITE.name}
       </p>
     </div>
   );

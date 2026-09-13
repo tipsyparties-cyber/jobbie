@@ -8,9 +8,9 @@ import { motion, AnimatePresence } from "framer-motion";
 const navLinks = [
   { href: "/", label: "Home" },
   { href: "/features", label: "Features" },
-  { href: "/services", label: "Services" },
+  { href: "/how-it-works", label: "How it works" },
   { href: "/about", label: "About" },
-  { href: "/projects", label: "Projects" },
+  { href: "/pricing", label: "Pricing" },
   { href: "/blog", label: "Blog" },
   { href: "/contact", label: "Contact" },
 ];

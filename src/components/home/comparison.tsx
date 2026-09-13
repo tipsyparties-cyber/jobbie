@@ -46,7 +46,7 @@ export function Comparison() {
           <SectionReveal delay={0.1}>
             <GlassPanel className="h-full">
               <h3 className="mb-6 text-center font-sans text-sm font-medium uppercase tracking-widest text-mid-grey">
-                Without up+up
+                Without Heyday
               </h3>
               <ul className="space-y-3">
                 {without.map((item) => (
@@ -67,7 +67,7 @@ export function Comparison() {
           >
             <GlassPanel className="h-full border-accent/20">
               <h3 className="mb-6 text-center font-sans text-sm font-medium uppercase tracking-widest text-accent">
-                With up+up
+                With Heyday
               </h3>
               <ul className="space-y-3">
                 {withUpUp.map((item) => (

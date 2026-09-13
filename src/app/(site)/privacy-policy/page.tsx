@@ -19,9 +19,9 @@ export default function PrivacyPolicyPage() {
         <h2>Third parties</h2>
         <p>We use Vercel (hosting), Resend (email delivery), and Google Fonts (typography). These services may process data as described in their respective privacy policies.</p>
         <h2>Your rights</h2>
-        <p>You can request deletion of any data we hold about you by emailing hello@upandup.agency.</p>
+        <p>You can request deletion of any data we hold about you by emailing hello@heyday.app.</p>
         <h2>Contact</h2>
-        <p>For any privacy-related questions, email hello@upandup.agency.</p>
+        <p>For any privacy-related questions, email hello@heyday.app.</p>
       </div>
     </div>
   );

@@ -22,7 +22,7 @@ export function ProjectTeaser() {
                 itself.
               </p>
               <Link
-                href="/projects/tipsy-parties"
+                href="/stories/tipsy-parties"
                 className="mt-8 inline-flex items-center gap-2 font-sans text-sm font-medium text-accent transition-colors hover:text-accent-hover"
               >
                 View case study

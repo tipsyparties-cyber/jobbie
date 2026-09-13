@@ -87,7 +87,7 @@ const BUSINESS_FEATURED = [
   {
     label: "Mobile bars",
     desc: "Quote an event, staff it, and invoice it without a spreadsheet.",
-    href: "/projects/tipsy-parties",
+    href: "/stories/tipsy-parties",
     tint: BLUE,
   },
   {
@@ -139,9 +139,8 @@ export const NAV: NavItem[] = [
       kind: "list",
       items: [
         { label: "Blog", href: "/blog" },
-        { label: "Case studies", href: "/projects" },
+        { label: "Stories", href: "/stories" },
         { label: "About us", href: "/about" },
-        { label: "Services", href: "/services" },
         { label: "Contact", href: "/contact" },
       ],
     },

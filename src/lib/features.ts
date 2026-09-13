@@ -14,14 +14,14 @@ import { CREAM, SAGE, BLUE, LAVENDER } from "@/lib/palette";
  *  the page. Twenty hand-built pages would drift within a week and mean
  *  twenty edits every time the template changes.
  *
- *  Copy is written for jobbie's user — a service business that quotes,
+ *  Copy is written for Heyday's user — a service business that quotes,
  *  books, staffs and invoices — rather than translated from jobber's field
  *  trades. Where jobber says "before you pack up from the jobsite", the
  *  equivalent here is "before the van leaves", and the difference matters:
  *  it is the tell that a page was written rather than swapped.
  *
  *  All copy is placeholder in the sense that Russ has final say, but it is
- *  real copy — specific, and about jobbie — not lorem.
+ *  real copy — specific, and about Heyday — not lorem.
  * ==================================================================== */
 
 export type FeatureBlock = {
@@ -94,7 +94,7 @@ export const FEATURES: Feature[] = [
     promise: "Ask every happy customer, automatically, at the moment they are happiest.",
     h1: "Review software that asks while the job is still fresh",
     intro:
-      "The best time to ask for a review is the hour after the work is done, and that is exactly when nobody has time to ask. jobbie asks for you, to the right customer, on the channel they already replied on.",
+      "The best time to ask for a review is the hour after the work is done, and that is exactly when nobody has time to ask. Heyday asks for you, to the right customer, on the channel they already replied on.",
     blocks: [
       {
         kicker: "Ask at the right moment",
@@ -209,7 +209,7 @@ export const FEATURES: Feature[] = [
     promise: "A priced, branded quote while you are still on the phone.",
     h1: "Quoting software that prices the job the way you would",
     intro:
-      "Quoting is where most service businesses lose both time and margin — hours writing them, and money guessing. jobbie builds the quote from your own rules, so the number is right and it goes out the same day.",
+      "Quoting is where most service businesses lose both time and margin — hours writing them, and money guessing. Heyday builds the quote from your own rules, so the number is right and it goes out the same day.",
     blocks: [
       {
         kicker: "Your pricing, encoded",
@@ -273,7 +273,7 @@ export const FEATURES: Feature[] = [
     promise: "Every enquiry captured, answered and triaged.",
     h1: "Enquiry forms that start the job, not a to-do",
     intro:
-      "An enquiry that sits unanswered for a day is usually an enquiry someone else answered. jobbie captures them from every channel, replies immediately, and tells you which ones are worth your morning.",
+      "An enquiry that sits unanswered for a day is usually an enquiry someone else answered. Heyday captures them from every channel, replies immediately, and tells you which ones are worth your morning.",
     blocks: [
       {
         kicker: "Every channel",
@@ -300,7 +300,7 @@ export const FEATURES: Feature[] = [
     promise: "Nothing goes quiet because you got busy.",
     h1: "Automated follow-up that sounds like you wrote it",
     intro:
-      "The difference between a busy quarter and a quiet one is usually second messages. jobbie sends them — to quotes, to enquiries, to customers who have not booked in a while — and stops the second someone replies.",
+      "The difference between a busy quarter and a quiet one is usually second messages. Heyday sends them — to quotes, to enquiries, to customers who have not booked in a while — and stops the second someone replies.",
     blocks: [
       {
         kicker: "Sequences",
@@ -329,7 +329,7 @@ export const FEATURES: Feature[] = [
     promise: "Jobs on the calendar, people on the jobs, everyone told.",
     h1: "Scheduling software that survives a busy Saturday",
     intro:
-      "Most scheduling breaks at the point something changes. jobbie handles the change — the cancellation, the extra hour, the person who called in sick — and tells everyone affected without you writing a single message.",
+      "Most scheduling breaks at the point something changes. Heyday handles the change — the cancellation, the extra hour, the person who called in sick — and tells everyone affected without you writing a single message.",
     blocks: [
       {
         kicker: "See the whole week",
@@ -356,7 +356,7 @@ export const FEATURES: Feature[] = [
     promise: "The right people on the right job, clashes caught first.",
     h1: "Staff allocation that knows who can actually do the job",
     intro:
-      "Assigning people is not a calendar problem, it is a matching problem — skills, certificates, distance, who works well together, who you promised a Saturday off. jobbie holds all of it.",
+      "Assigning people is not a calendar problem, it is a matching problem — skills, certificates, distance, who works well together, who you promised a Saturday off. Heyday holds all of it.",
     blocks: [
       {
         kicker: "Match on what matters",
@@ -415,7 +415,7 @@ export const FEATURES: Feature[] = [
     promise: "Hours logged where the work happened.",
     h1: "Time tracking that does not rely on anyone remembering",
     intro:
-      "Hours are what you pay and often what you charge, so guessing at them is expensive twice. jobbie logs them against the job automatically and flags the ones that do not look right.",
+      "Hours are what you pay and often what you charge, so guessing at them is expensive twice. Heyday logs them against the job automatically and flags the ones that do not look right.",
     blocks: [
       {
         kicker: "Automatic",
@@ -496,7 +496,7 @@ export const FEATURES: Feature[] = [
     promise: "Every channel, one thread per customer.",
     h1: "One inbox for email, WhatsApp, SMS and web forms",
     intro:
-      "Conversations scattered across four apps and three phones is how things get missed. jobbie puts them in one thread per customer, with the job attached and an agent covering the hours you cannot.",
+      "Conversations scattered across four apps and three phones is how things get missed. Heyday puts them in one thread per customer, with the job attached and an agent covering the hours you cannot.",
     blocks: [
       {
         kicker: "One thread",
@@ -552,7 +552,7 @@ export const FEATURES: Feature[] = [
     promise: "Get paid on completion, not thirty days later.",
     h1: "Payment processing that gets you paid before the van leaves",
     intro:
-      "Every day between finishing a job and being paid for it is a day you have lent someone money. jobbie takes payment online, in person, on a schedule, or automatically the moment the job closes.",
+      "Every day between finishing a job and being paid for it is a day you have lent someone money. Heyday takes payment online, in person, on a schedule, or automatically the moment the job closes.",
     blocks: [
       {
         kicker: "Paid online",

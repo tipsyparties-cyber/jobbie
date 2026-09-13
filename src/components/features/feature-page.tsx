@@ -5,12 +5,13 @@ import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { SHELL, Rule, Braced, Pill, HEAD, SUBHEAD } from "@/components/home/section-kit";
 import { BUCKETS, relatedTo, type Feature } from "@/lib/features";
+import { CTA, SITE } from "@/lib/site";
 
 /* ==================================================================== *
  *  The feature page.
  *
  *  One component for all twenty. getjobber's feature pages are the same
- *  page with different words, so this is that page — in jobbie's styling,
+ *  page with different words, so this is that page — in Heyday's styling,
  *  built from the same section-kit parts as the home page so the two cannot
  *  drift apart.
  *
@@ -82,8 +83,8 @@ export function FeaturePage({ feature }: { feature: Feature }) {
           </p>
 
           <div className="mt-10 flex flex-wrap gap-3">
-            <Pill href="/contact" solid>
-              Start a conversation
+            <Pill href={CTA.primary.href} solid>
+              {CTA.primary.label}
             </Pill>
             <Pill href="/features">See all features</Pill>
           </div>
@@ -93,7 +94,7 @@ export function FeaturePage({ feature }: { feature: Feature }) {
       {/* ---- How it works, with jump links ---- */}
       <section className={`${SHELL} py-20`}>
         <h2 className={`max-w-[20ch] ${HEAD}`}>
-          How does jobbie&apos;s {feature.name.toLowerCase()} work?
+          How does {SITE.name}&apos;s {feature.name.toLowerCase()} work?
         </h2>
         <ul className="mt-10 flex flex-wrap gap-2.5">
           {feature.blocks.map((b) => (
@@ -129,7 +130,7 @@ export function FeaturePage({ feature }: { feature: Feature }) {
                     {b.copy}
                   </p>
                   <div className="mt-8">
-                    <Pill href="/contact">Start a conversation</Pill>
+                    <Pill href={CTA.primary.href}>{CTA.primary.label}</Pill>
                   </div>
                 </div>
 
@@ -203,8 +204,8 @@ export function FeaturePage({ feature }: { feature: Feature }) {
             Ready to see what&apos;s possible?
           </h2>
           <div className="mt-10">
-            <Pill href="/contact" solid>
-              Start a conversation
+            <Pill href={CTA.primary.href} solid>
+              {CTA.primary.label}
             </Pill>
           </div>
         </div>

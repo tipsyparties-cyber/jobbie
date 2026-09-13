@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 
 export const metadata: Metadata = {
   title: "About",
-  description: "Where up+up came from, who runs it, and what we\u2019ve learned from a decade of building, scaling and automating real businesses.",
+  description: "Where Heyday came from, who runs it, and what we\u2019ve learned from a decade of building, scaling and automating real businesses.",
 };
 
 export default function AboutPage() {
@@ -124,7 +124,7 @@ export default function AboutPage() {
 
           <SectionReveal delay={0.1}>
             <div className="mt-16 text-center">
-              <Button href="/contact">Start a conversation</Button>
+              <Button href="/contact">Start free trial</Button>
             </div>
           </SectionReveal>
         </div>

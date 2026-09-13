@@ -6,7 +6,7 @@ import { useEffect, useRef } from "react";
  * Binary rain intro.
  *
  * Phase 1  rain fills the screen, top to bottom
- * Phase 2  characters inside the up+up letterforms hold hard black; every
+ * Phase 2  characters inside the Heyday letterforms hold hard black; every
  *          character outside settles to a ghost, so the wordmark emerges out of
  *          the noise as a density difference rather than being drawn
  * Phase 3  on scroll, the wordmark *travels up the page still made of code* —

@@ -4,6 +4,7 @@ import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { SHELL, Rule, Braced, Pill, HEAD, SUBHEAD } from "@/components/home/section-kit";
 import { CREAM, SAGE, BLUE, YELLOW, LAVENDER } from "@/lib/palette";
+import { CTA } from "@/lib/site";
 
 /* ==================================================================== *
  *  The product sections.
@@ -21,7 +22,7 @@ import { CREAM, SAGE, BLUE, YELLOW, LAVENDER } from "@/lib/palette";
  *    3. proves breadth                ("…in over 50 industries")
  *    4. promises support              ("You've got this, and we've got your back")
  *
- *  Same four here, tailored to who jobbie is for: service businesses that
+ *  Same four here, tailored to who Heyday is for: service businesses that
  *  quote, book, staff and invoice — and that lose most of their week to the
  *  admin between those four things rather than to the work itself.
  *
@@ -211,7 +212,7 @@ export function AiSection() {
         </div>
 
         <div className="mt-14">
-          <Pill href="/services">See how the agents work</Pill>
+          <Pill href="/features/ai">See how the AI works</Pill>
         </div>
       </div>
     </div>
@@ -227,7 +228,7 @@ export function AiSection() {
  * more than a count does: a plumber scanning a page stops at "Plumbing", not
  * at "over 50 industries".
  *
- * These are chosen to say something true about jobbie's reach — the
+ * These are chosen to say something true about Heyday's reach — the
  * scheduled, staffed, quoted service business — rather than to pad a grid.
  */
 const INDUSTRIES = [
@@ -349,8 +350,8 @@ export function SupportSection() {
         </div>
 
         <div className="mt-14">
-          <Pill href="/contact" solid>
-            Talk to us about switching
+          <Pill href={CTA.primary.href} solid>
+            {CTA.primary.label}
           </Pill>
         </div>
       </div>

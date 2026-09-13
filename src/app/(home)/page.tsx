@@ -59,7 +59,7 @@ const sections = [
   { id: "g-sideways", raw: true, content: () => <GsapSideways /> },
   { id: "g-features", raw: true, content: () => <GsapFeatures /> },
   /* The product sections. They sit here deliberately — after the feature
-     rows have said what jobbie is for, and before the showcase says who has
+     rows have said what Heyday is for, and before the showcase says who has
      used it. This is where the page stops selling the idea and explains the
      software. Running order taken from getjobber.com's home page: product
      surface, then the AI, then breadth, then what switching involves. */

@@ -4,7 +4,7 @@ import { ArticleCard } from "@/components/blog/article-card";
 
 export const metadata: Metadata = {
   title: "Blog",
-  description: "Insights on AI & automation for businesses — practical guides, industry analysis, and honest advice from up+up.",
+  description: "Insights on AI & automation for businesses — practical guides, industry analysis, and honest advice from Heyday.",
 };
 
 export default function BlogPage() {
