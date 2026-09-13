@@ -40,10 +40,15 @@ import {
 export function LetterReveal({
   text,
   delay = 0,
+  // Per-letter gap. 0.045s suits a single short word; a whole sentence needs
+  // it tighter or the last letter lands three seconds after the first and
+  // the reader has stopped waiting.
+  stagger = 0.045,
   className = "",
 }: {
   text: string;
   delay?: number;
+  stagger?: number;
   className?: string;
 }) {
   return (
@@ -63,7 +68,7 @@ export function LetterReveal({
             animate={{ y: "0%", rotateX: 0, opacity: 1 }}
             transition={{
               duration: 0.85,
-              delay: delay + i * 0.045,
+              delay: delay + i * stagger,
               ease: [0.16, 1, 0.3, 1],
             }}
           >
