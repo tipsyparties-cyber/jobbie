@@ -68,22 +68,20 @@ export function GsapHero() {
         </div>
 
         <div className="relative">
-          {/* Size.
-              gsap runs 221px on a 1148px viewport — 19vw — across two
-              eight-letter words. The first attempt here shrank the type to
-              7.4vw to fit a 25-character line on two lines, which was
-              solving the wrong half of the problem: the answer is to break
-              the copy into more, shorter lines and keep the type big.
+          {/* The kicker carries the brand line. "Your heyday, your way" is a
+              strapline, not a proposition — it sets tone but never says what
+              the thing does, so it cannot be the headline. Here it does the
+              job it is actually good at. */}
+          <div className="mb-8">
+            <Braced>Your heyday, your way</Braced>
+          </div>
 
-              Three lines, longest "Do what you love." at roughly 7.7em
-              after tracking. Against the 1400px column that allows about
-              12.5vw — nearly double what was here.
-
-              Capped against viewport HEIGHT as well, because three lines
-              this size overflow a short laptop window where two would not.
-              min() takes whichever limit bites first. */}
+          {/* Two lines rather than one, because the headline sizes itself to
+              its longest line: "Think of us as" is fourteen characters, so
+              breaking here buys considerably larger type than setting the
+              whole sentence on one line would. */}
           <HeroHeadline
-            lines={["Do what you love,", "Heyday runs the rest."]}
+            lines={["Think of us as", "you \u00d71000."]}
             className="relative font-hero font-semibold leading-[0.9] tracking-[-0.04em]"
           />
 
@@ -92,12 +90,14 @@ export function GsapHero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 1.5, ease: [0.16, 1, 0.3, 1] }}
           >
-            {/* Set larger than the old sub — it carries the argument now
-                rather than describing the product, so it reads as the
-                second half of the headline rather than as a caption. */}
+            {/* The sub does the recognising. The headline is the arresting
+                claim; this is the line that makes an owner feel seen, and
+                then says plainly what the agents actually do so the claim
+                above it is not left floating. */}
             <p className="mt-10 max-w-2xl font-body text-xl leading-relaxed text-ink/75 md:text-2xl">
-              You didn&apos;t start a business to work for it. We make your
-              business work for you.
+              You didn&apos;t start a business to have an admin job.
+              Heyday&apos;s agents quote, book, answer and chase the way you
+              would — around the clock.
             </p>
             <div className="mt-9 flex flex-wrap gap-3">
               <Pill href="/contact" solid>
