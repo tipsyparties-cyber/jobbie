@@ -1,15 +1,14 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { FEATURES, featureBySlug } from "@/lib/features";
-import { FeaturePage } from "@/components/features/feature-page";
+import { FEATURES, featureBySlug } from "@/lib/heyday-features";
+import { FeaturePage } from "@/components/heyday/feature-page";
+import { SITE } from "@/lib/site";
 
 /**
- * One route for all twenty feature pages. The words live in lib/features.ts
- * and the page lives in components/features/feature-page.tsx; this file only
- * joins them and handles metadata.
+ * All forty-six feature pages, from one template and one data file.
  *
- * Statically generated — every slug is known at build time, so these are
- * plain HTML rather than anything that has to run per request.
+ * Statically generated: every slug is known at build time, so these are
+ * plain HTML rather than anything that runs per request.
  */
 
 export function generateStaticParams() {
@@ -22,11 +21,13 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const feature = featureBySlug(slug);
-  if (!feature) return {};
+  const f = featureBySlug(slug);
+  if (!f) return {};
+  // The title uses the search line's words, as the brief asks, so the page
+  // answers the search someone actually typed.
   return {
-    title: feature.name,
-    description: feature.promise,
+    title: f.name,
+    description: f.searchLine ?? `${f.name} — ${SITE.name}`,
   };
 }
 
