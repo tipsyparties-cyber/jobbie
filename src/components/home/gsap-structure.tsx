@@ -68,16 +68,23 @@ export function GsapHero() {
         </div>
 
         <div className="relative">
-          {/* Sized to the longest line, not to gsap's 19vw. Their headline
-              is two eight-letter words; this one's longest line is 25
-              characters and would leave the screen at that size.
+          {/* Size.
+              gsap runs 221px on a 1148px viewport — 19vw — across two
+              eight-letter words. The first attempt here shrank the type to
+              7.4vw to fit a 25-character line on two lines, which was
+              solving the wrong half of the problem: the answer is to break
+              the copy into more, shorter lines and keep the type big.
 
-              Assembles on load, comes apart as you scroll away — gsap's
-              own device, reversed. They can afford an unreadable headline
-              at rest because everyone arriving already knows the site. */}
+              Three lines, longest "Do what you love." at roughly 7.7em
+              after tracking. Against the 1400px column that allows about
+              12.5vw — nearly double what was here.
+
+              Capped against viewport HEIGHT as well, because three lines
+              this size overflow a short laptop window where two would not.
+              min() takes whichever limit bites first. */}
           <HeroHeadline
-            lines={["Do what you love.", "Let Hey Day run the rest."]}
-            className="font-hero text-[clamp(2.1rem,7.4vw,6.5rem)] font-semibold leading-[0.9] tracking-[-0.04em]"
+            lines={["Do what you love.", "Let Hey Day", "run the rest."]}
+            className="font-hero text-[clamp(2.25rem,min(12.5vw,16vh),12rem)] font-semibold leading-[0.9] tracking-[-0.04em]"
           />
 
           <motion.div

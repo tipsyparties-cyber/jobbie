@@ -65,14 +65,29 @@ function Letter({
     <span
       aria-hidden
       className="inline-block overflow-hidden align-bottom"
-      // overflow-hidden clips the leading, so the box needs slack below the
-      // baseline or descenders get sheared off.
-      style={{ paddingBottom: "0.12em", marginBottom: "-0.12em" }}
+      /* The descender fix.
+       *
+       * Plus Jakarta Sans has an em box about 1.25em tall (ascent 1.0,
+       * descent 0.25). At `leading-[0.9]` the content box is 0.9em, so the
+       * half-leading is (0.9 − 1.25) / 2 = −0.175em at each end: the box
+       * bottom sits 0.175em ABOVE where the descender actually reaches, and
+       * `overflow: hidden` cuts straight through the tail of every y, g and
+       * p. 0.12em of padding was not enough to clear it.
+       *
+       * 0.3em clears it with room to spare, and the negative margin keeps
+       * the line box the same height so nothing below shifts.
+       */
+      style={{ paddingBottom: "0.3em", marginBottom: "-0.3em" }}
     >
       <motion.span className="inline-block" style={{ y, x, rotateY }}>
         <motion.span
           className="inline-block"
-          initial={{ y: "110%", rotateX: -55, opacity: 0 }}
+          /* 150%, not 110%. The mask is now 1.2em deep (0.9em box plus
+           * 0.3em of descender padding) while the letter is 0.9em tall, so
+           * it has to start at least 133% of its own height below the top
+           * to stay hidden. At 110% the top of every letter was already
+           * peeking into the padded area before it moved. */
+          initial={{ y: "150%", rotateX: -55, opacity: 0 }}
           animate={{ y: "0%", rotateX: 0, opacity: 1 }}
           transition={{
             duration: 0.85,
@@ -112,20 +127,30 @@ export function HeroHeadline({
     <h1 ref={ref} className={className} aria-label={lines.join(" ")}>
       {lines.map((line, li) => (
         <span key={line} className="block">
-          <span className="inline-flex flex-wrap">
-            {line.split("").map((ch, ci) => {
-              const i = n++;
-              return (
-                <Letter
-                  key={`${li}-${ci}`}
-                  ch={ch}
-                  i={i}
-                  delay={0.15 + li * 0.5}
-                  stagger={0.03}
-                  progress={scrollYProgress}
-                />
-              );
-            })}
+          {/* Letters are grouped into words, and each word is nowrap.
+              Without that, every letter is its own inline-block and the
+              flex container will happily break a line in the middle of
+              "love" on a narrow screen. The word gap is a flex gap rather
+              than a space character, so there is no stray clip box to
+              account for. */}
+          <span className="inline-flex flex-wrap gap-x-[0.26em]">
+            {line.split(" ").map((word, wi) => (
+              <span key={`${li}-${wi}`} className="inline-flex whitespace-nowrap">
+                {word.split("").map((ch, ci) => {
+                  const i = n++;
+                  return (
+                    <Letter
+                      key={`${li}-${wi}-${ci}`}
+                      ch={ch}
+                      i={i}
+                      delay={0.15 + li * 0.34}
+                      stagger={0.028}
+                      progress={scrollYProgress}
+                    />
+                  );
+                })}
+              </span>
+            ))}
           </span>
         </span>
       ))}
