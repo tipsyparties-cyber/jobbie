@@ -3,7 +3,8 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { HeydayLine } from "@/components/heyday/heyday-line";
-import { PAPER, ORANGE } from "@/lib/palette";
+import { PAPER, ORANGE, CREAM } from "@/lib/palette";
+import { Icon } from "@/components/heyday/icon";
 
 /* ==================================================================== *
  *  The hero's rising cards — design brief A9.
@@ -37,10 +38,16 @@ import { PAPER, ORANGE } from "@/lib/palette";
 
 /** The workflow, one card per step. */
 export type RisingCard = {
+  /** "STEP 2". Geist Mono. */
   step: string;
   title: string;
-  line: string;
-  tint: string;
+  /** Two or three label-and-value rows. Example data, and the panel label
+   *  says so — nothing here is a real booking. */
+  rows: [string, string][];
+  /** The orange status pill. */
+  pill: string;
+  /** The step icon, shown in a cream tile. */
+  icon: string;
 };
 
 const CYCLE = 5;
@@ -105,7 +112,7 @@ export function RisingCards({
     <div ref={wrapRef} className={className}>
       <div
         role="img"
-        aria-label="Example workflow: an enquiry becomes a booked, paid, staffed and reviewed job"
+        aria-label="Example workflow, with example data: an enquiry becomes a quote, a booking, a staffed job, a payment, a review and a rebooking"
         className="relative overflow-hidden rounded-t-[56px] border border-ink/10"
         style={{ backgroundColor: ground, height: 520 }}
       >
@@ -170,28 +177,47 @@ export function RisingCards({
 
 function CardFace({ card }: { card: RisingCard }) {
   return (
-    <div className="relative">
-      <div
-        className="rounded-2xl border-2 border-ink p-6"
-        style={{
-          height: 420,
-          backgroundColor: PAPER,
-          boxShadow: "11px 11px 0 0 rgba(10,10,10,0.08)",
-        }}
-      >
-        <span className="font-mono text-[12px] tracking-[0.02em]" style={{ color: ORANGE }}>
+    <div
+      className="flex flex-col rounded-2xl border-2 border-ink p-6"
+      style={{
+        height: 420,
+        backgroundColor: PAPER,
+        boxShadow: "11px 11px 0 0 rgba(10,10,10,0.08)",
+      }}
+    >
+      <div className="flex items-start justify-between">
+        <span className="font-mono text-[12px] tracking-[0.02em] text-ink/55">
           {card.step}
         </span>
-        <p className="mt-4 font-display text-2xl font-semibold leading-tight">
-          {card.title}
-        </p>
-        <p className="mt-3 font-body text-sm leading-relaxed text-ink/65">{card.line}</p>
-        <div
-          aria-hidden
-          className="mt-6 h-40 w-full rounded-xl"
-          style={{ backgroundColor: card.tint }}
-        />
+        <span
+          className="inline-block rounded-full px-3 py-1 font-mono text-[11px] tracking-[0.02em] text-ink"
+          style={{ backgroundColor: ORANGE }}
+        >
+          {card.pill}
+        </span>
       </div>
+
+      {/* The step icon in a cream tile. */}
+      <span
+        aria-hidden
+        className="mt-5 inline-flex h-14 w-14 items-center justify-center rounded-xl"
+        style={{ backgroundColor: CREAM }}
+      >
+        <Icon name={card.icon} size={32} ground={CREAM} />
+      </span>
+
+      <p className="mt-5 font-display text-2xl font-semibold leading-tight">
+        {card.title}
+      </p>
+
+      <dl className="mt-5 flex flex-col gap-2.5 border-t border-ink/12 pt-4">
+        {card.rows.map(([k, v]) => (
+          <div key={k} className="flex items-baseline justify-between gap-4">
+            <dt className="font-mono text-[11px] tracking-[0.02em] text-ink/50">{k}</dt>
+            <dd className="text-right font-body text-sm text-ink/85">{v}</dd>
+          </div>
+        ))}
+      </dl>
     </div>
   );
 }

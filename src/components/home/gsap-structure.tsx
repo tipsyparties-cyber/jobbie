@@ -3,15 +3,14 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { SynergyBrain } from "@/components/home/synergy-brain";
 import { Wordmark } from "@/components/ui/wordmark";
 import { WordReveal } from "@/components/home/reveal-text";
-import {
-  HeroHeadline,
-  HeroShapes,
-  useHeroProgress,
-} from "@/components/home/hero-motion";
-import { CREAM, SAGE, BLUE, YELLOW, LAVENDER } from "@/lib/palette";
+import { HeroHeadline } from "@/components/home/hero-motion";
+import { RisingCards } from "@/components/heyday/rising-cards";
+import { DecorSuns } from "@/components/heyday/decor-suns";
+import { Button } from "@/components/ui/button";
+import { HERO_CARDS } from "@/lib/hero-cards";
+import { CREAM, SAGE, BLUE, SKY, YELLOW, LAVENDER } from "@/lib/palette";
 import { SHELL, Rule, Braced, Pill } from "@/components/home/section-kit";
 import { CTA, SITE } from "@/lib/site";
 
@@ -44,84 +43,80 @@ import { CTA, SITE } from "@/lib/site";
  * -------------------------------------------------------------- */
 
 export function GsapHero() {
-  const ref = useRef<HTMLDivElement | null>(null);
-  const progress = useHeroProgress(ref);
-
   return (
-    <div ref={ref} className="relative min-h-screen py-24">
-      {/* The shapes. gsap scatters four of these through its hero at odd
-          positions, one of them hanging off the left edge — that asymmetry
-          is what keeps them from reading as decoration in a row. Each
-          drifts on its own loop and parallaxes at its own rate. */}
-      <HeroShapes progress={progress} />
+    <div className="relative min-h-screen py-24">
+      {/* Decorative suns, replacing the blurred orbs (A10, pack 4). Three,
+          different sizes, one colour each, the last hanging past the bottom
+          edge so it links the hero to the section under it. They sit behind
+          the text and never make it harder to read. */}
+      <DecorSuns />
 
-      <div className={`${SHELL} relative flex min-h-[70vh] flex-col justify-center`}>
-        {/* The synergy brain, well back. It carries meaning as well as
-            movement, but at full strength it competes with the headline for
-            the same attention. */}
-        <div
-          aria-hidden
-          className="pointer-events-none absolute -right-32 top-1/2 hidden -translate-y-1/2 opacity-25 xl:block"
-        >
-          <div className="origin-center scale-[0.62]">
-            <SynergyBrain />
-          </div>
-        </div>
-
-        <div className="relative">
-          {/* The label, from design brief B3. A braced label sets the tone
-              and never has to carry the proposition, which is why the brand
-              line belongs here rather than in the headline. */}
-          <div className="mb-8">
-            <Braced>easy automation, your way</Braced>
-          </div>
-
-          {/* Three lines, not two. The headline sizes itself to its longest
-              line, so "to have an admin job." at twenty-one characters buys
-              noticeably larger type than "You didn't start a business" at
-              twenty-seven would. The breaks also fall on sense: the subject,
-              the act, then the thing they never signed up for. */}
-          <HeroHeadline
-            lines={["You didn\u2019t", "start a business", "to have an admin job."]}
-            className="relative font-hero font-semibold leading-[0.9] tracking-[-0.04em]"
-          />
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 1.5, ease: [0.16, 1, 0.3, 1] }}
-          >
-            {/* The headline does the recognising, so the line under it is the
-                answer. "Times a thousand" spelled out rather than set as
-                ×1000: at this size a numeral reads as a statistic, and it is
-                a figure of speech. */}
-            <p className="mt-10 max-w-2xl font-body text-xl leading-relaxed text-ink/75 md:text-2xl">
-              Think of Heyday as you, times a thousand. Always on, always
-              instant.
-            </p>
-
-            {/* The small line carries the scope, which is the thing the
-                claim above it leaves open: how much, and how far. It names
-                the whole workflow — the brief's own positioning line — and
-                then hands the dial back to the owner, which is the answer to
-                the obvious worry about an AI that never sleeps. Set smaller
-                and quieter so it reads as a footnote to the line above
-                rather than competing with it. */}
-            <p className="mt-5 max-w-xl font-body text-base leading-relaxed text-ink/55">
-              From the first hello to the next booking. Automate as much or as
-              little as you want.
-            </p>
-            {/* Heyday's two actions everywhere (prompt section 1).
-                 "Start free trial" opens early access, because the product
-                 is not open to other businesses yet — the honesty lives on
-                 the page it opens, not in a weaker button. */}
-            <div className="mt-9 flex flex-wrap gap-3">
-              <Pill href={CTA.primary.href} solid>
-                {CTA.primary.label}
-              </Pill>
-              <Pill href={CTA.secondary.href}>{CTA.secondary.label}</Pill>
+      <div className={`${SHELL} relative`}>
+        <div className="grid items-center gap-12 lg:grid-cols-[1.05fr_0.95fr]">
+          <div>
+            {/* The label, from design brief B3. A braced label sets the tone
+                and never has to carry the proposition, which is why the
+                brand line belongs here rather than in the headline. */}
+            <div className="mb-8">
+              <Braced>easy automation, your way</Braced>
             </div>
-          </motion.div>
+
+            {/* Three lines, not two. The headline sizes itself to its longest
+                line, so "to have an admin job." at twenty-one characters buys
+                noticeably larger type than "You didn't start a business" at
+                twenty-seven would. The breaks also fall on sense: the
+                subject, the act, then the thing they never signed up for. */}
+            <HeroHeadline
+              lines={["You didn\u2019t", "start a business", "to have an admin job."]}
+              className="relative font-hero font-semibold leading-[0.9] tracking-[-0.04em]"
+              maxHeightFraction={0.42}
+            />
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 1.5, ease: [0.16, 1, 0.3, 1] }}
+            >
+              {/* The headline does the recognising, so the line under it is
+                  the answer. "Times a thousand" spelled out rather than set
+                  as a numeral: at this size a numeral reads as a statistic,
+                  and it is a figure of speech. */}
+              <p className="mt-10 max-w-xl font-body text-xl leading-relaxed text-ink/75">
+                Think of Heyday as you, times a thousand. Always on, always
+                instant.
+              </p>
+
+              {/* The small line carries the scope, which is what the claim
+                  above it leaves open: how much, and how far. It names the
+                  whole workflow and then hands the dial back to the owner,
+                  which answers the obvious worry about an AI that never
+                  sleeps. */}
+              <p className="mt-5 max-w-lg font-body text-base leading-relaxed text-ink/55">
+                From the first hello to the next booking. Automate as much or
+                as little as you want.
+              </p>
+
+              {/* "Start free trial" opens early access, because the product
+                  is not open to other businesses yet — the honesty lives on
+                  the page it opens, not in a weaker button. */}
+              <div className="mt-9 flex flex-wrap gap-3">
+                <Button href={CTA.primary.href} variant="primary" arrow>
+                  {CTA.primary.label}
+                </Button>
+                <Button href={CTA.secondary.href} variant="ghost">
+                  {CTA.secondary.label}
+                </Button>
+              </div>
+            </motion.div>
+          </div>
+
+          {/* The right half is the workflow, rising one card at a time
+              (A9, B5). Eight steps, from the first enquiry to the
+              rebooking — which is the hero's actual argument: not "here is
+              a quoting tool" but "here is your whole year, running". */}
+          <div className="hidden lg:block">
+            <RisingCards cards={HERO_CARDS} ground={SKY} />
+          </div>
         </div>
       </div>
     </div>

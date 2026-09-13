@@ -10,6 +10,7 @@ import { MoreInfoSection } from "@/components/heyday/more-info-section";
 import { SectionReveal, RevealGroup, Parallax } from "@/components/heyday/motion";
 import { Wordmark } from "@/components/ui/wordmark";
 import { GROUPS, RUNS_ITSELF } from "@/lib/groups";
+import { HERO_CARDS } from "@/lib/hero-cards";
 import {
   INK,
   ORANGE,
@@ -303,12 +304,7 @@ export function StyleguideBody() {
         <div className="max-w-xl">
           <RisingCards
             ground={SKY}
-            cards={[
-              { step: "Enquiry", title: "A message at 11pm", line: "Answered in seconds, not in the morning.", tint: CREAM },
-              { step: "Quote", title: "Priced from your rules", line: "Sent while they are still reading.", tint: BLUE },
-              { step: "Booked", title: "On the calendar", line: "Deposit taken, team checked, date held.", tint: SAGE },
-              { step: "Paid", title: "Before the van leaves", line: "Invoice raised, payment in.", tint: LAVENDER },
-            ]}
+            cards={HERO_CARDS.slice(0, 4)}
           />
         </div>
         <p className="mt-6 max-w-2xl font-body text-sm leading-relaxed text-ink/60">
