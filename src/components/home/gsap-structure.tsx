@@ -83,8 +83,8 @@ export function GsapHero() {
               this size overflow a short laptop window where two would not.
               min() takes whichever limit bites first. */}
           <HeroHeadline
-            lines={["Do what you love.", "Let Hey Day", "run the rest."]}
-            className="font-hero text-[clamp(2.25rem,min(12.5vw,16vh),12rem)] font-semibold leading-[0.9] tracking-[-0.04em]"
+            lines={["Do what you love,", "Heyday runs the rest."]}
+            className="relative font-hero font-semibold leading-[0.9] tracking-[-0.04em]"
           />
 
           <motion.div

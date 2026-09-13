@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 import { motion, useScroll, useTransform, type MotionValue } from "framer-motion";
 import { CREAM, SAGE, BLUE, YELLOW, LAVENDER } from "@/lib/palette";
 
@@ -25,6 +25,10 @@ import { CREAM, SAGE, BLUE, YELLOW, LAVENDER } from "@/lib/palette";
  *  what the site is; a business whose visitors are deciding whether to
  *  trust it cannot.
  * ==================================================================== */
+
+/** The size the ruler is laid out at. Any value works; 100 keeps the
+ *  arithmetic readable. */
+const PROBE = 100;
 
 /** Deterministic per-letter jitter. Index-seeded rather than random, so the
  *  server and the client agree and React does not throw a hydration error. */
@@ -105,37 +109,109 @@ function Letter({
 /**
  * The headline. Assembles on load, comes apart as you scroll away.
  *
- * The scroll window ends before the section does, so the letters are fully
- * scattered by the time the hero leaves rather than still drifting as the
- * next section arrives.
+ * It also SIZES ITSELF.
+ *
+ * Every previous version picked a vw number by hand, which meant every copy
+ * change needed a new one — and getting it wrong wraps a line, which is what
+ * put "love." on a line of its own. A headline whose wording is still being
+ * written should not depend on someone re-deriving its font size.
+ *
+ * So: the longest line is measured once at a known probe size, and the real
+ * size is whatever makes that line exactly fill the column. Lines are
+ * nowrap, so the measurement is the whole story — there is no reflow to
+ * account for. A height cap stops a short, wide line from making three lines
+ * that do not fit a laptop window.
  */
 export function HeroHeadline({
   lines,
   className = "",
+  /** Fraction of the viewport height the whole headline may occupy. */
+  maxHeightFraction = 0.52,
+  /** Never smaller than this, however narrow the screen. */
+  minPx = 30,
+  /** Never larger than this, however wide. */
+  maxPx = 260,
 }: {
   lines: string[];
   className?: string;
+  maxHeightFraction?: number;
+  minPx?: number;
+  maxPx?: number;
 }) {
   const ref = useRef<HTMLHeadingElement | null>(null);
+  const probe = useRef<HTMLSpanElement | null>(null);
+  const [size, setSize] = useState<number | null>(null);
+
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start start", "end start"],
   });
 
+  // The line the size has to be solved for.
+  const longest = lines.reduce((a, b) => (b.length > a.length ? b : a), "");
+
+  useLayoutEffect(() => {
+    const fit = () => {
+      const el = ref.current;
+      const pr = probe.current;
+      if (!el || !pr) return;
+
+      const avail = el.clientWidth;
+      // Probe is rendered at PROBE px; width scales linearly with font size,
+      // so one measurement gives the answer for every size.
+      const w = pr.getBoundingClientRect().width;
+      if (!avail || !w) return;
+
+      const byWidth = (avail / w) * PROBE;
+      // Leading is 0.9; that is what turns a font size into a block height.
+      const byHeight =
+        (window.innerHeight * maxHeightFraction) / (lines.length * 0.9);
+
+      setSize(
+        Math.max(minPx, Math.min(maxPx, Math.floor(Math.min(byWidth, byHeight))))
+      );
+    };
+
+    fit();
+    window.addEventListener("resize", fit);
+    // Web fonts land after first paint and change every metric, so measure
+    // again once they are ready or the size is solved against the fallback.
+    if (typeof document !== "undefined" && document.fonts) {
+      document.fonts.ready.then(fit).catch(() => {});
+    }
+    return () => window.removeEventListener("resize", fit);
+  }, [longest, lines.length, maxHeightFraction, minPx, maxPx]);
+
   let n = 0;
   return (
-    <h1 ref={ref} className={className} aria-label={lines.join(" ")}>
+    <h1
+      ref={ref}
+      className={className}
+      aria-label={lines.join(" ")}
+      // Hidden until measured, rather than flashing at the probe size.
+      style={{ fontSize: size ? `${size}px` : undefined, opacity: size ? 1 : 0 }}
+    >
+      {/* The ruler. Same font, weight and tracking as the real thing —
+          inherited, not restated, so the two cannot drift — laid out at a
+          fixed size off-screen. */}
+      <span
+        ref={probe}
+        aria-hidden
+        className="pointer-events-none absolute left-0 top-0 -z-10 whitespace-nowrap opacity-0"
+        style={{ fontSize: `${PROBE}px` }}
+      >
+        {longest}
+      </span>
+
       {lines.map((line, li) => (
-        <span key={line} className="block">
-          {/* Letters are grouped into words, and each word is nowrap.
-              Without that, every letter is its own inline-block and the
-              flex container will happily break a line in the middle of
-              "love" on a narrow screen. The word gap is a flex gap rather
-              than a space character, so there is no stray clip box to
-              account for. */}
-          <span className="inline-flex flex-wrap gap-x-[0.26em]">
+        <span key={line} className="block whitespace-nowrap">
+          {/* Letters are grouped into words. Each letter is its own
+              inline-block, so without the grouping a flex container is free
+              to break a line mid-word. The word gap is a flex gap rather
+              than a space character, so there is no stray clip box. */}
+          <span className="inline-flex gap-x-[0.26em]">
             {line.split(" ").map((word, wi) => (
-              <span key={`${li}-${wi}`} className="inline-flex whitespace-nowrap">
+              <span key={`${li}-${wi}`} className="inline-flex">
                 {word.split("").map((ch, ci) => {
                   const i = n++;
                   return (
