@@ -76,12 +76,13 @@ export function GsapHero() {
             <Braced>Your heyday, your way</Braced>
           </div>
 
-          {/* Two lines rather than one, because the headline sizes itself to
-              its longest line: "Think of us as" is fourteen characters, so
-              breaking here buys considerably larger type than setting the
-              whole sentence on one line would. */}
+          {/* Three lines, not two. The headline sizes itself to its longest
+              line, so "to have an admin job." at twenty-one characters buys
+              noticeably larger type than "You didn't start a business" at
+              twenty-seven would. The breaks also fall on sense: the subject,
+              the act, then the thing they never signed up for. */}
           <HeroHeadline
-            lines={["Think of us as", "you \u00d71000."]}
+            lines={["You didn\u2019t", "start a business", "to have an admin job."]}
             className="relative font-hero font-semibold leading-[0.9] tracking-[-0.04em]"
           />
 
@@ -90,14 +91,13 @@ export function GsapHero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 1.5, ease: [0.16, 1, 0.3, 1] }}
           >
-            {/* The sub does the recognising. The headline is the arresting
-                claim; this is the line that makes an owner feel seen, and
-                then says plainly what the agents actually do so the claim
-                above it is not left floating. */}
+            {/* The headline does the recognising now, so the sub is the
+                answer to it. "Everything, always, instantly" is three beats
+                on purpose — the rhythm is doing the work, which is why it is
+                punctuated as three rather than run together. */}
             <p className="mt-10 max-w-2xl font-body text-xl leading-relaxed text-ink/75 md:text-2xl">
-              You didn&apos;t start a business to have an admin job.
-              Heyday&apos;s agents quote, book, answer and chase the way you
-              would — around the clock.
+              Heyday is you &times;1000, running 24/7. Everything, always,
+              instantly.
             </p>
             <div className="mt-9 flex flex-wrap gap-3">
               <Pill href="/contact" solid>
