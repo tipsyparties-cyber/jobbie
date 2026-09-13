@@ -1,5 +1,5 @@
 import { SiteHeader } from "@/components/layout/site-header";
-import { Footer } from "@/components/layout/footer";
+import { SiteFooter } from "@/components/layout/site-footer";
 
 export default function SiteLayout({
   children,
@@ -14,7 +14,7 @@ export default function SiteLayout({
       <div className="flex justify-center py-8">
         <a href="#top" className="text-ink/30 hover:text-ink/60 transition-colors text-2xl" style={{ display: "inline-block" }}>^</a>
       </div>
-      <Footer />
+      <SiteFooter />
     </>
   );
 }

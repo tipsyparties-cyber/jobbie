@@ -8,7 +8,6 @@ import {
   GsapSideways,
   GsapFeatures,
   GsapShowcase,
-  GsapFooter,
 } from "@/components/home/gsap-structure";
 import {
   ProductSurface,
@@ -18,6 +17,7 @@ import {
 } from "@/components/home/product-sections";
 import { CREAM, PAPER, LAVENDER } from "@/lib/palette";
 import { SiteHeader } from "@/components/layout/site-header";
+import { SiteFooter } from "@/components/layout/site-footer";
 
 /**
  * Ground colour per section. The page blends between these as you scroll,
@@ -40,7 +40,6 @@ const GROUNDS: Record<string, string> = {
   "g-industries": PAPER,
   "g-support": PAPER,
   "g-showcase": LAVENDER,
-  "g-footer": CREAM,
 
 };
 
@@ -69,7 +68,6 @@ const sections = [
   { id: "g-support", raw: true, content: () => <SupportSection /> },
 
   { id: "g-showcase", content: () => <GsapShowcase /> },
-  { id: "g-footer", raw: true, content: () => <GsapFooter /> },
 
 ];
 
@@ -98,7 +96,6 @@ const CHAPTERS: { label: string; index: number }[] = [
   { label: "Who it's for", index: sections.findIndex((s) => s.id === "g-industries") },
   { label: "Getting started", index: sections.findIndex((s) => s.id === "g-support") },
   { label: "Built", index: sections.findIndex((s) => s.id === "g-showcase") },
-  { label: "Start", index: sections.findIndex((s) => s.id === "g-footer") },
 ].filter((c) => c.index >= 0);
 
 /* --- colour blending, so the ground moves with the scroll rather than
@@ -273,6 +270,8 @@ export default function Home() {
           </ScrollSection>
         ))}
       </div>
+
+      <SiteFooter />
 
       {/* Chapter rail. Labels appear on hover — a bare dot column tells you
           how far through you are but not what is there. */}
