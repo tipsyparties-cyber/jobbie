@@ -7,6 +7,8 @@ import { HeydayHero } from "@/components/home/heyday-hero";
 import { Statement } from "@/components/heyday/statement";
 import { GoalTabs } from "@/components/heyday/goal-tabs";
 import { StatBand } from "@/components/heyday/stat-band";
+import { OldWayNewWay } from "@/components/heyday/old-way-new-way";
+import { SectionReveal } from "@/components/heyday/motion";
 import {
   WhatHeydayIs,
   WorkflowScroll,
@@ -103,6 +105,27 @@ export default function HomePage() {
           <Wrap>
             <StatementHead />
             <Statement text="Six apps, a group chat and your evenings. That's how most small businesses run. It doesn't have to be." />
+          </Wrap>
+        </Sheet>
+
+        {/* 4b. The old way against the Heyday way. Russell's, after
+            anyone.com — and the one section that makes the hero's claim
+            watchable rather than assertable: at dusk the left-hand side
+            stops and the right-hand side does not. */}
+        <Sheet colour={SKY} label="The old way and the Heyday way">
+          <Wrap>
+            <SectionReveal>
+              <div className="flex justify-center">
+                <p className="hd-label">the difference</p>
+              </div>
+              <h2 className="hd-h2 mx-auto max-w-[22ch] text-center">
+                Same day. <span className="hd-hl">Same night.</span>
+              </h2>
+              <p className="hd-sub mx-auto mb-12 text-center">
+                Watch what happens to each of them when the sun goes down.
+              </p>
+            </SectionReveal>
+            <OldWayNewWay />
           </Wrap>
         </Sheet>
 
