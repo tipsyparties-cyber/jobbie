@@ -116,12 +116,12 @@ export function WorkflowScroll() {
         </SectionReveal>
       }
     >
-      {FLOW.map((s, i) => {
+      {FLOW.map((s) => {
         const group = GROUPS.find((g) => g.id === s.group)!;
         return (
           <SideCard
             key={`${s.group}-${s.step}`}
-            group={`${String(i + 1).padStart(2, "0")} · ${group.name}`}
+            group={group.name.toUpperCase()}
             title={s.step}
             style={{ backgroundColor: PAPER }}
           >

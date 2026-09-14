@@ -12,7 +12,7 @@ import { Screen, ScreenRow, ScreenAction, ScreenPick } from "@/components/heyday
 import { FEATURE_ROWS, ONLY_ON_HEYDAY, BUILDER_POINTS, AI_LEVELS } from "@/lib/home-content";
 import { GROUPS, groupById } from "@/lib/groups";
 import { statByRow } from "@/lib/stats-bank";
-import { PAPER, CREAM, INK, BLUE, SKY } from "@/lib/palette";
+import { PAPER, CREAM, INK, BLUE, SKY, LAVENDER } from "@/lib/palette";
 
 /* ==================================================================== *
  *  Homepage sections 6 to 10 — the product itself.
@@ -45,9 +45,13 @@ export function FeatureRow({ index }: { index: number }) {
       headline={row.headline}
       highlight={row.highlight}
       line={row.line}
+      /* Alternating sides, row by row — Addendum 34, which Russell asked
+         to keep and which the prototype keeps too. */
+      flip={index % 2 === 1}
       detail={
         <div className={dark ? "text-cream" : undefined}>
-          <h3 className="hd-h2">{row.detailHeading}</h3>
+          <p className="hd-label">{group.name.toLowerCase()}</p>
+          <h3 className="hd-h2 max-w-[22ch]">{row.detailHeading}</h3>
           <div className="mb-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {row.cards.map((c) => (
               <Card
@@ -407,7 +411,7 @@ export function OnlyOnHeyday() {
             <Sticker
               className="px-3 py-1.5 font-display text-[13px] font-bold"
               tilt={-6}
-              style={{ backgroundColor: "#D6D0F5", boxShadow: "6px 6px 0 0 rgba(10,10,10,0.08)" }}
+              style={{ backgroundColor: LAVENDER, boxShadow: "6px 6px 0 0 rgba(10,10,10,0.08)" }}
             >
               Only on Heyday
             </Sticker>
@@ -421,6 +425,10 @@ export function OnlyOnHeyday() {
       {ONLY_ON_HEYDAY.map((c) => (
         <SideCard
           key={c.title}
+          /* The label is on every card, not only in the section heading —
+             the cards travel sideways, so a reader can meet one without
+             ever having seen the heading. */
+          group="ONLY ON HEYDAY"
           title={c.title}
           style={{ backgroundColor: PAPER }}
         >
@@ -444,11 +452,14 @@ export function OnlyOnHeyday() {
         style={{ backgroundColor: INK, color: CREAM }}
       >
         <SectionMark shape="inf" size={40} colour={SKY} />
+        <p className="m-0 text-[15.5px] text-cream/80">
+          Everything Heyday does, in one list.
+        </p>
         <Link
-          href="/features?filter=only-on-heyday"
+          href="/features"
           className="font-display text-sm font-semibold text-cream underline underline-offset-[3px]"
         >
-          See every feature →
+          All features →
         </Link>
       </SideCard>
     </SideScroll>

@@ -3,7 +3,7 @@
 import { useId, useRef, useState } from "react";
 import Link from "next/link";
 import { GOALS, GOAL_QUOTE } from "@/lib/home-goals";
-import { statByRow } from "@/lib/stats-bank";
+import { statByRow, sourceLine } from "@/lib/stats-bank";
 import { HoldingImage } from "@/components/heyday/holding-image";
 import {
   Screen,
@@ -179,18 +179,10 @@ export function GoalTabs() {
                     {stat.claim}
                   </b>
                   <small className="font-mono text-[11.5px] leading-[1.4] text-ink/55">
-                    {stat.source} · {stat.covers} · {stat.kind}
+                    {sourceLine(stat, true)}
                   </small>
                 </div>
-              ) : (
-                <p
-                  className="m-0 font-mono text-[11.5px] leading-[1.4] text-ink/55"
-                  style={{ ["--i" as string]: 4 }}
-                >
-                  No credible published figure for this one yet, so there
-                  isn&rsquo;t one here.
-                </p>
-              )}
+              ) : null}
 
               <div
                 className="mt-1.5 flex items-center gap-3.5"

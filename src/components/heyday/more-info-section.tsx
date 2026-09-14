@@ -4,6 +4,7 @@ import { useEffect, useId, useRef, useState } from "react";
 import { motion, useReducedMotion, useSpring } from "framer-motion";
 import { Mark, reducedMotion } from "@/lib/heyday-mark";
 import { Button } from "@/components/ui/button";
+import { SectionReveal } from "@/components/heyday/motion";
 import { INK, CREAM } from "@/lib/palette";
 import type { Group } from "@/lib/groups";
 
@@ -34,6 +35,7 @@ export function MoreInfoSection({
   highlight,
   line,
   detail,
+  flip = false,
   className = "",
 }: {
   group: Group;
@@ -42,6 +44,15 @@ export function MoreInfoSection({
   highlight?: string;
   line: string;
   detail: React.ReactNode;
+  /**
+   * Put the shape on the left and the copy on the right.
+   *
+   * The rows alternate down the page — Addendum 34's treatment, which
+   * Russell asked to keep and which the prototype keeps too. Without it
+   * four rows of the same shape read as a repeated component rather than
+   * as four different arguments.
+   */
+  flip?: boolean;
   className?: string;
 }) {
   const still = useReducedMotion();
@@ -152,58 +163,71 @@ export function MoreInfoSection({
   return (
     <div
       ref={sectionRef}
-      className={`relative isolate overflow-hidden rounded-[40px] ${className}`}
-      style={{ backgroundColor: open ? group.colour : group.ground }}
+      className={`relative isolate overflow-hidden ${className}`}
+      style={{ backgroundColor: open ? group.colour : "transparent" }}
     >
       {/* Resting content and detail share one grid cell, so the section is
           tall enough for whichever is showing and does not jump. */}
       <div className="grid">
         <div
-          className="col-start-1 row-start-1 grid items-center gap-10 p-10 md:p-14 lg:grid-cols-2"
+          className="col-start-1 row-start-1 mx-auto grid w-full max-w-[1280px] items-center gap-10 px-[clamp(16px,4vw,48px)] pb-[150px] pt-[110px] lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)]"
           style={{ visibility: open ? "hidden" : "visible" }}
           inert={open}
         >
-          <div>
-            <h2 className="max-w-[16ch] font-display text-[clamp(1.9rem,4vw,3.2rem)] font-semibold leading-[1.05] tracking-[-0.03em]">
-              {highlight ? (
-                <>
-                  {headline.split(highlight)[0]}
-                  <span className="rounded-md bg-yellow px-1.5 decoration-clone">
-                    {highlight}
-                  </span>
-                  {headline.split(highlight)[1]}
-                </>
-              ) : (
-                headline
-              )}
-            </h2>
-            <p className="mt-5 max-w-md font-body text-base leading-relaxed text-ink/70">
-              {line}
-            </p>
-            <div ref={buttonRef} className="mt-8">
-              <Button
-                variant="ghost"
-                arrow
-                onClick={openPanel}
-                aria-expanded={open}
-                aria-controls={panelId}
+          <div className={flip ? "lg:order-2" : undefined}>
+            <SectionReveal>
+              <p className="hd-label">{group.name.toLowerCase()}</p>
+            </SectionReveal>
+            <SectionReveal delay={0.15}>
+              <h3
+                className="m-0 mb-4 font-display font-bold leading-[1.05] tracking-[-0.03em]"
+                style={{ fontSize: "clamp(32px, 4vw, 52px)", textWrap: "balance" }}
               >
-                How it fits together
-              </Button>
-            </div>
+                {highlight ? (
+                  <>
+                    {headline.split(highlight)[0]}
+                    <span className="hd-hl">{highlight}</span>
+                    {headline.split(highlight)[1]}
+                  </>
+                ) : (
+                  headline
+                )}
+              </h3>
+            </SectionReveal>
+            <SectionReveal delay={0.3}>
+              <p className="hd-sub">{line}</p>
+            </SectionReveal>
+            <SectionReveal delay={0.45}>
+              <div ref={buttonRef}>
+                <Button
+                  variant="ghost"
+                  arrow
+                  onClick={openPanel}
+                  aria-expanded={open}
+                  aria-controls={panelId}
+                >
+                  How it fits together
+                </Button>
+              </div>
+            </SectionReveal>
           </div>
 
-          <div className="flex justify-center lg:justify-end">
+          <div
+            className={`relative z-[1] flex justify-center ${flip ? "lg:order-1" : ""}`}
+          >
             <motion.span
-              className="inline-block"
+              className="inline-block w-[min(100%,320px)]"
               style={{
-                width: 180,
-                height: 180,
-                transformOrigin: "50% 50%",
+                aspectRatio: "1",
+                transformOrigin: "50% 88%",
                 scale,
               }}
             >
-              <svg ref={svgRef} width={180} height={180} viewBox="0 0 100 100" />
+              <svg
+                ref={svgRef}
+                viewBox="0 0 100 100"
+                className="block h-full w-full overflow-visible"
+              />
             </motion.span>
           </div>
         </div>
@@ -211,7 +235,7 @@ export function MoreInfoSection({
         {/* The detail layer. */}
         <motion.div
           id={panelId}
-          className="col-start-1 row-start-1 p-10 md:p-14"
+          className="col-start-1 row-start-1 mx-auto w-full max-w-[1280px] px-[clamp(16px,4vw,48px)] pb-[150px] pt-[110px]"
           style={{ pointerEvents: open ? "auto" : "none", color: onInk ? CREAM : INK }}
           initial={false}
           animate={{ opacity: open ? 1 : 0, y: open ? 0 : 20 }}

@@ -1,4 +1,4 @@
-import { statByRow } from "@/lib/stats-bank";
+import { statByRow, sourceLine } from "@/lib/stats-bank";
 import { SectionReveal } from "@/components/heyday/motion";
 
 /* ==================================================================== *
@@ -62,7 +62,7 @@ export function StatBand() {
                   {stat.headline.line}
                 </p>
                 <p className="mx-auto max-w-[32ch] font-mono text-[11.5px] font-medium leading-[1.4] text-ink/55">
-                  {stat.source}. {stat.covers}. {stat.kind}.
+                  {sourceLine(stat)}
                 </p>
               </div>
             </SectionReveal>

@@ -295,3 +295,22 @@ export const DO_NOT_USE = [
  * neighbouring claim.
  */
 export const statByRow = (row: number) => STATS.find((s) => s.row === row);
+
+/**
+ * The source line, written out.
+ *
+ * Always ends with the row number. That is not bureaucracy: it is what
+ * lets anyone reading the site trace a figure back to STATS-BANK.md and
+ * see what was actually measured, which is the difference between citing
+ * a study and gesturing at one.
+ *
+ * `short` drops "who it covers" for places with no room — the homepage's
+ * goal tabs — but never drops the row number or the kind of evidence,
+ * because those are the two that change how the number should be read.
+ */
+export function sourceLine(stat: Stat, short = false): string {
+  const parts = [stat.source];
+  if (!short) parts.push(stat.covers);
+  parts.push(stat.kind);
+  return `Source: ${parts.join(". ")}. (Stats bank row ${stat.row})`;
+}
