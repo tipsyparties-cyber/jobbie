@@ -59,3 +59,27 @@ export const onlyOnHeyday = () => FEATURES.filter((f) => f.onlyOnHeyday);
  *  (prompt section 8), which is what the data already says for all 46. */
 export const statusLabel = (s: FeatureStatus) =>
   s === "live" ? "Live" : "Coming soon";
+
+/* ==================================================================== *
+ *  A build-time guard on feature links.
+ *
+ *  Seven of the homepage's links were written from the spec's prose names
+ *  — "instant quotes", "one inbox", "reports" — and the data's slugs are
+ *  `quotes`, `inbox` and `reporting`. Those would have shipped as seven
+ *  404s that nothing would have caught, because a wrong href is still a
+ *  valid href.
+ *
+ *  Every hand-written link to a feature page goes through here instead.
+ *  The pages are statically generated, so a bad slug stops the build with
+ *  the slug printed, rather than becoming a dead link on a live site.
+ * ==================================================================== */
+export function featureHref(slug: string): string {
+  if (!FEATURES.some((f) => f.slug === slug)) {
+    throw new Error(
+      `featureHref: no feature with the slug "${slug}". ` +
+        `Check docs/heyday/data/features.json — the spec's prose names and ` +
+        `the data's slugs are not always the same word.`
+    );
+  }
+  return `/features/${slug}`;
+}

@@ -297,3 +297,128 @@ body {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* ==================================================================== *
+ *  Sheets — design brief A10, B2, and the mechanic the reference kit
+ *  uses on every marketing page (docs/heyday/reference/site/kit.css).
+ *
+ *  Every marketing section is a "sheet": its own opaque ground colour, a
+ *  56px rounded top, and a -56px top margin so it sits over the section
+ *  before it. In source order each one paints above the last, so the top
+ *  of a sheet cuts off whatever is behind it.
+ *
+ *  This is how the colour fade and the occlusion coexist. I had built the
+ *  fade as a page-level background behind transparent sections, which
+ *  meant nothing could ever be covered — and that is exactly why the
+ *  bottom of the hero's card strip was a hard cut rather than an
+ *  occlusion. Here each sheet is opaque and animates its OWN background
+ *  from the previous sheet's colour to its own as it arrives. You get the
+ *  fade and the cover at once, and the cards run under the next section
+ *  the way they run under the header.
+ * ==================================================================== */
+
+.hd-sheet {
+  position: relative;
+  border-radius: 56px 56px 0 0;
+  margin-top: -56px;
+  padding: 120px 0 150px;
+  background: var(--c, var(--color-paper));
+  transition: background-color 0.9s ease;
+}
+
+/* Set by SheetStack before the sheet arrives: hold the previous sheet's
+   colour, then release it, and the transition above does the fade. */
+.hd-sheet.is-pre {
+  background: var(--prev, var(--color-paper));
+}
+
+.hd-sheet-ink {
+  color: var(--color-cream);
+}
+
+/* The { braced } label. The braces are ink at half strength so they read
+   as punctuation rather than as part of the word. */
+.hd-label {
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 1.2;
+  letter-spacing: 0.02em;
+  color: #57514A;
+  margin: 0 0 14px;
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+}
+.hd-sheet-ink .hd-label { color: #CFC7BC; }
+.hd-label::before { content: "{"; font-size: 20px; color: currentColor; opacity: 0.6; }
+.hd-label::after  { content: "}"; font-size: 20px; color: currentColor; opacity: 0.6; }
+
+/* The highlighted phrase inside a headline — the jobbie look, kept by
+   Addendum 34. Yellow only, and never where orange is touching it. */
+.hd-hl {
+  background: var(--color-yellow);
+  border-radius: 8px;
+  padding: 0 0.12em;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+/* Heading scale, matched to kit.css so a section built here and a section
+   read off the prototype are the same size. */
+.hd-h2 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(34px, 4.4vw, 58px);
+  line-height: 1.04;
+  letter-spacing: -0.03em;
+  margin: 0 0 18px;
+  text-wrap: balance;
+}
+.hd-sub {
+  color: #57514A;
+  max-width: 60ch;
+  margin: 0 0 26px;
+  font-size: 18px;
+}
+.hd-sheet-ink .hd-sub { color: #D9D1C6; }
+
+/* The marquee of business types. The visible copy is real text; the
+   duplicate that makes it loop is aria-hidden, so each word is read once. */
+.hd-marquee {
+  overflow: hidden;
+  border-block: 1px solid rgba(10, 10, 10, 0.12);
+  padding: 14px 0;
+  white-space: nowrap;
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: 15px;
+}
+.hd-marquee-track {
+  display: inline-block;
+  animation: hd-marq 40s linear infinite;
+}
+.hd-marquee:hover .hd-marquee-track { animation-play-state: paused; }
+@keyframes hd-marq { to { transform: translateX(-50%); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .hd-marquee-track { animation: none; }
+  .hd-sheet { transition: none; }
+  .hd-sheet.is-pre { background: var(--c, var(--color-paper)); }
+}
+
+/* The goal tabs' swap: the stat cards, the illustration and the words rise
+   in 80ms apart when a pill is picked (spec 3a). The panel is keyed on the
+   active tab, so React remounts these and the animation restarts — the
+   same result kit.js gets by forcing a reflow. */
+.hd-goal-in > * {
+  animation: hd-goal-in 0.55s cubic-bezier(0.215, 0.61, 0.355, 1) both;
+  animation-delay: calc(var(--i, 0) * 80ms);
+}
+@keyframes hd-goal-in {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hd-goal-in > * { animation: none; }
+}

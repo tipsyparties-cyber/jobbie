@@ -1,315 +1,187 @@
-"use client";
-
-import { useState, useEffect, useRef } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
-import {
-  GsapHero,
-  GsapStatement,
-  GsapSideways,
-  GsapFeatures,
-  GsapShowcase,
-} from "@/components/home/gsap-structure";
-import {
-  ProductSurface,
-  AiSection,
-  IndustriesSection,
-  SupportSection,
-} from "@/components/home/product-sections";
-import { CREAM, PAPER, LAVENDER } from "@/lib/palette";
+import type { Metadata } from "next";
 import { SiteHeader } from "@/components/layout/site-header";
 import { SiteFooter } from "@/components/layout/site-footer";
+import { Sheet, Wrap } from "@/components/heyday/sheet";
+import { SheetStack } from "@/components/heyday/sheet-stack";
+import { HeydayHero } from "@/components/home/heyday-hero";
+import { Statement } from "@/components/heyday/statement";
+import { GoalTabs } from "@/components/heyday/goal-tabs";
+import { StatBand } from "@/components/heyday/stat-band";
+import {
+  WhatHeydayIs,
+  WorkflowScroll,
+  StatementHead,
+  StatBandHead,
+} from "@/components/home/sections-top";
+import {
+  FeatureRow,
+  WhatItDoes,
+  BuildYourWay,
+  AiLevels,
+  OnlyOnHeyday,
+} from "@/components/home/sections-product";
+import {
+  WhoAndStories,
+  GrowsWithYou,
+  SellEverywhere,
+  Switching,
+  Closing,
+} from "@/components/home/sections-bottom";
+import { SITE } from "@/lib/site";
+import { PAPER, CREAM, LAVENDER, SKY, BLUE, INK } from "@/lib/palette";
 
-/**
- * Ground colour per section. The page blends between these as you scroll,
- * so colour signals where you are rather than decorating.
+/* ==================================================================== *
+ *  The homepage — spec part 1, section B, and the working page at
+ *  docs/heyday/reference/heyday-homepage-prototype.html.
  *
- * Keyed by section id rather than set on each section object, so the whole
- * mapping can be read and retuned in one place.
- */
-const GROUNDS: Record<string, string> = {
-  // The six sections of gsap.com, in order. Yellow is deliberately absent
-  // as a ground — it appears once, as a keyword highlight in a feature row.
-  "g-hero": CREAM,
-  "g-statement": PAPER,
-  "g-sideways": PAPER,
-  "g-features": PAPER,
-  // The product sections stay on paper. They are the reading part of the
-  // page — four colour changes in a row would make it feel like a brochure.
-  "g-surface": PAPER,
-  "g-ai": PAPER,
-  "g-industries": PAPER,
-  "g-support": PAPER,
-  "g-showcase": LAVENDER,
+ *  Nineteen sheets in the prototype's order. Each one is opaque, has a
+ *  56px rounded top and sits 56px over the one before, so the page reads
+ *  as a stack of cards rather than a scroll of bands — and each one fades
+ *  from the previous sheet's colour to its own as it arrives (see
+ *  components/heyday/sheet.tsx).
+ *
+ *  The old site's sections are gone: the flock, the orb, the synergy
+ *  brain, the particle and neural canvases, the binary intro and the
+ *  gsap-derived showcase. Pack 6 settles that explicitly — where the
+ *  current site and the pack differ, the pack wins. Their files stay on
+ *  disk; nothing is deleted, it is just no longer on this page.
+ *
+ *  Two things survive from the old site, and both because the brief says
+ *  so: the header with its three panels, and the feature rows' treatment
+ *  from Addendum 34 — the highlighted phrase, the alternating sides, no
+ *  dividers — now carrying each group's section mark.
+ *
+ *  The colour order runs paper → cream → paper → lavender → sky → then
+ *  the four feature rows alternating paper and cream, and on through
+ *  lavender, blue, paper, cream, paper, a pale sage, blue, cream and
+ *  finally ink. No two neighbours are the same, and the ink block at the
+ *  end is the only dark thing on the page, which is what makes it read as
+ *  the end.
+ * ==================================================================== */
 
+export const metadata: Metadata = {
+  title: `${SITE.name}: all-in-one software for events, class and service businesses`,
+  description:
+    "One workflow for your whole business, from the first hello to the next booking. Quotes, bookings, payments, your team's shifts and pay, follow-ups and reviews, in one place.",
 };
 
-/**
- * The running order of the page, top to bottom.
- *
- * Ten sections: the six from gsap.com’s structure, with the four product
- * sections slotted between the feature rows and the showcase.
- */
-const sections = [
-  /* raw: the hero manages its own height and reads its own scroll
-     position to scatter the headline. Wrapping it in the standard
-     one-screen frame would fade it out against its own animation. */
-  { id: "g-hero", raw: true, content: () => <GsapHero /> },
-  { id: "g-statement", content: () => <GsapStatement /> },
-  { id: "g-sideways", raw: true, content: () => <GsapSideways /> },
-  { id: "g-features", raw: true, content: () => <GsapFeatures /> },
-  /* The product sections. They sit here deliberately — after the feature
-     rows have said what Heyday is for, and before the showcase says who has
-     used it. This is where the page stops selling the idea and explains the
-     software. Running order taken from getjobber.com's home page: product
-     surface, then the AI, then breadth, then what switching involves. */
-  { id: "g-surface", raw: true, content: () => <ProductSurface /> },
-  { id: "g-ai", raw: true, content: () => <AiSection /> },
-  { id: "g-industries", raw: true, content: () => <IndustriesSection /> },
-  { id: "g-support", raw: true, content: () => <SupportSection /> },
+/** A pale sage for "Grows with you", matching the prototype's #E7ECE3. */
+const PALE_SAGE = "#E7ECE3";
 
-  { id: "g-showcase", content: () => <GsapShowcase /> },
-
-];
-
-
-/* ------------------------------------------------------------------ *
- *  The scrolling document.
- *
- *  An ordinary tall page: every section is a block in normal flow, with
- *  the ground colour pinned behind and driven by scroll position. Sections
- *  flagged `raw` opt out of the standard one-screen parallax frame because
- *  they manage their own height — the sideways band is four viewports
- *  tall, the footer is shorter than one.
- * ------------------------------------------------------------------ */
-
-/**
- * The rail. Labelled chapters rather than one dot per section — a dot
- * column tells you how far through you are but not what is there.
- */
-const CHAPTERS: { label: string; index: number }[] = [
-  { label: "Top", index: 0 },
-  { label: "Why now", index: sections.findIndex((s) => s.id === "g-statement") },
-  { label: "What we do", index: sections.findIndex((s) => s.id === "g-sideways") },
-  { label: "Why Heyday", index: sections.findIndex((s) => s.id === "g-features") },
-  { label: "What it does", index: sections.findIndex((s) => s.id === "g-surface") },
-  { label: "The agents", index: sections.findIndex((s) => s.id === "g-ai") },
-  { label: "Who it's for", index: sections.findIndex((s) => s.id === "g-industries") },
-  { label: "Getting started", index: sections.findIndex((s) => s.id === "g-support") },
-  { label: "Built", index: sections.findIndex((s) => s.id === "g-showcase") },
-].filter((c) => c.index >= 0);
-
-/* --- colour blending, so the ground moves with the scroll rather than
-       crossfading on a timer after the fact --- */
-
-function hexToRgb(hex: string): [number, number, number] {
-  const h = hex.replace("#", "");
-  return [
-    parseInt(h.slice(0, 2), 16),
-    parseInt(h.slice(2, 4), 16),
-    parseInt(h.slice(4, 6), 16),
-  ];
-}
-
-function mixHex(a: string, b: string, t: number): string {
-  if (t <= 0) return a;
-  if (t >= 1) return b;
-  const [r1, g1, b1] = hexToRgb(a);
-  const [r2, g2, b2] = hexToRgb(b);
-  const m = (x: number, y: number) => Math.round(x + (y - x) * t);
-  return `rgb(${m(r1, r2)}, ${m(g1, g2)}, ${m(b1, b2)})`;
-}
-
-/**
- * One section of the document.
- *
- * The parallax and the reveal both come from this section's own position in
- * the viewport, not from a global clock — content rises as it arrives and
- * keeps rising as it leaves, so the page reads as continuous travel rather
- * than as a series of arrivals. `offset` runs from "this section's top hits
- * the bottom of the screen" to "its bottom hits the top", which is the whole
- * time any part of it is visible.
- */
-function ScrollSection({
-  id,
-  children,
-  register,
-  raw = false,
-}: {
-  id: string;
-  children: React.ReactNode;
-  register: (el: HTMLElement | null) => void;
-  raw?: boolean;
-}) {
-  const ref = useRef<HTMLElement | null>(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start end", "end start"],
-  });
-  // Travels 70px against the scroll. Small enough to read as depth rather
-  // than as the text sliding independently of the page.
-  const y = useTransform(scrollYProgress, [0, 1], [70, -70]);
-  const opacity = useTransform(scrollYProgress, [0, 0.28, 0.72, 1], [0, 1, 1, 0]);
-
-  // A raw section is still registered — the ground map and the chapter rail
-  // both index by section — but it is handed the page as-is. Applying the
-  // one-screen frame to a sticky, four-viewport band would pin the parallax
-  // wrapper instead of the band, and fade the whole thing out halfway
-  // through its own horizontal travel.
-  if (raw) {
-    return (
-      <section
-        id={id}
-        ref={(el) => {
-          ref.current = el;
-          register(el);
-        }}
-        className="relative w-full"
-      >
-        {children}
-      </section>
-    );
-  }
-
+export default function HomePage() {
   return (
-    <section
-      id={id}
-      ref={(el) => {
-        ref.current = el;
-        register(el);
-      }}
-      className="relative flex min-h-screen w-full items-center py-24"
-    >
-      <motion.div style={{ y, opacity }} className="w-full">
-        {children}
-      </motion.div>
-    </section>
-  );
-}
-
-export default function Home() {
-  const els = useRef<(HTMLElement | null)[]>([]);
-  const [active, setActive] = useState(0);
-  const [ground, setGround] = useState<string>(GROUNDS[sections[0].id] ?? PAPER);
-
-  useEffect(() => {
-    let frame = 0;
-
-    const measure = () => {
-      frame = 0;
-      const mid = window.scrollY + window.innerHeight / 2;
-
-      // Which section owns the middle of the screen, and how far through it
-      // we are. Measured from live offsets rather than assuming every section
-      // is exactly one viewport — several carry enough copy to be taller.
-      let i = 0;
-      for (let k = 0; k < els.current.length; k++) {
-        const el = els.current[k];
-        if (!el) continue;
-        if (mid >= el.offsetTop) i = k;
-        else break;
-      }
-      const el = els.current[i];
-      if (!el) return;
-      const f = Math.min(1, Math.max(0, (mid - el.offsetTop) / el.offsetHeight));
-
-      setActive(i);
-
-      // Ground. Held for the first two thirds of a section, then blended into
-      // the next — the colour change lands as you leave, not as you arrive,
-      // so you never read a statement against a colour that is still moving.
-      const cur = GROUNDS[sections[i].id] ?? PAPER;
-      const nxt = GROUNDS[sections[Math.min(i + 1, sections.length - 1)].id] ?? PAPER;
-      setGround(mixHex(cur, nxt, f < 0.66 ? 0 : (f - 0.66) / 0.34));
-
-    };
-
-    const onScroll = () => {
-      if (!frame) frame = requestAnimationFrame(measure);
-    };
-
-    measure();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
-      if (frame) cancelAnimationFrame(frame);
-    };
-  }, []);
-
-  const activeChapter = CHAPTERS.reduce(
-    (best, c, n) => (active >= c.index ? n : best),
-    0
-  );
-
-  return (
-    <div className="relative text-ink">
-      {/* Pinned backdrop. Everything here stays still while the document
-          moves over it; all of it is driven by scroll position. */}
-      <div aria-hidden className="pointer-events-none fixed inset-0 z-0">
-        <div className="absolute inset-0" style={{ backgroundColor: ground }} />
-      </div>
-
-      {/* The header. A fixed bar with real navigation and one call to
-          action, replacing the floating wordmark, the stray "Contact" link
-          and the hamburger that used to stand in for it. */}
+    <SheetStack>
       <SiteHeader />
 
-      {/* The document. */}
-      <div className="relative z-10 pt-[7.2rem]">
-        {sections.map((s, i) => (
-          <ScrollSection
-            key={s.id}
-            id={s.id}
-            raw={"raw" in s && Boolean((s as { raw?: boolean }).raw)}
-            register={(el) => {
-              els.current[i] = el;
-            }}
-          >
-            {s.content()}
-          </ScrollSection>
-        ))}
-      </div>
+      <main id="main">
+        {/* 2. The hero. Not a sheet: it is the bottom of the stack, and
+            the sheet above it is what covers the foot of its card strip. */}
+        <HeydayHero />
 
+        {/* 3. What Heyday is. */}
+        <Sheet colour={PAPER} id="what">
+          <WhatHeydayIs />
+        </Sheet>
+
+        {/* 3a. The goal tabs. */}
+        <Sheet colour={CREAM} id="goals" label="What do you want more of?">
+          <Wrap className="text-center">
+            <div className="flex justify-center">
+              <p className="hd-label">why they come to heyday</p>
+            </div>
+            <h2 className="hd-h2 mx-auto max-w-[22ch]">
+              What do you want <span className="hd-hl">more of</span>?
+            </h2>
+            <GoalTabs />
+          </Wrap>
+        </Sheet>
+
+        {/* 4. The statement. */}
+        <Sheet colour={PAPER} id="statement">
+          <Wrap>
+            <StatementHead />
+            <Statement text="Six apps, a group chat and your evenings. That's how most small businesses run. It doesn't have to be." />
+          </Wrap>
+        </Sheet>
+
+        {/* 4a. The stats band. */}
+        <Sheet colour={LAVENDER} label="Time, money and customers">
+          <Wrap>
+            <StatBandHead />
+            <StatBand />
+          </Wrap>
+        </Sheet>
+
+        {/* 5. Sideways scroll one: how Heyday runs your day. */}
+        <Sheet colour={SKY} flush>
+          <WorkflowScroll />
+        </Sheet>
+
+        {/* 6. The four feature rows. Each is its own sheet so the colour
+            alternates with the side the copy sits on. */}
+        <Sheet colour={PAPER} flush label="Win the client">
+          <FeatureRow index={0} />
+        </Sheet>
+        <Sheet colour={CREAM} flush label="Run the day">
+          <FeatureRow index={1} />
+        </Sheet>
+        <Sheet colour={PAPER} flush label="Get paid">
+          <FeatureRow index={2} />
+        </Sheet>
+        <Sheet colour={CREAM} flush label="Run the day">
+          <FeatureRow index={3} />
+        </Sheet>
+
+        {/* 7. What it does — the sticky scroll. */}
+        <Sheet colour={LAVENDER}>
+          <WhatItDoes />
+        </Sheet>
+
+        {/* 8. Build it your way. */}
+        <Sheet colour={BLUE}>
+          <BuildYourWay />
+        </Sheet>
+
+        {/* 9. The AI. */}
+        <Sheet colour={PAPER}>
+          <AiLevels />
+        </Sheet>
+
+        {/* 10. Sideways scroll two: only on Heyday. Well away from the
+            first one, which is the brief's rule and a sound one — two
+            pinned scrolls back to back feel like the page is stuck. */}
+        <Sheet colour={CREAM} flush>
+          <OnlyOnHeyday />
+        </Sheet>
+
+        {/* 11. Who it's for, and the stories. */}
+        <Sheet colour={PAPER} id="who">
+          <WhoAndStories />
+        </Sheet>
+
+        {/* 12. Grows with you. */}
+        <Sheet colour={PALE_SAGE}>
+          <GrowsWithYou />
+        </Sheet>
+
+        {/* 13. Sell everywhere. */}
+        <Sheet colour={BLUE}>
+          <SellEverywhere />
+        </Sheet>
+
+        {/* 14. Switching. */}
+        <Sheet colour={CREAM}>
+          <Switching />
+        </Sheet>
+
+        {/* 15. The closing call to action. */}
+        <Sheet colour={INK} ink>
+          <Closing />
+        </Sheet>
+      </main>
+
+      {/* 16. The footer. */}
       <SiteFooter />
-
-      {/* Chapter rail. Labels appear on hover — a bare dot column tells you
-          how far through you are but not what is there. */}
-      <nav className="fixed right-6 top-1/2 z-50 hidden -translate-y-1/2 flex-col items-end gap-3 md:flex">
-        {CHAPTERS.map((c, n) => (
-          <button
-            key={c.label}
-            onClick={() =>
-              els.current[c.index]?.scrollIntoView({ behavior: "smooth" })
-            }
-            className="group flex items-center gap-2"
-            aria-label={c.label}
-          >
-            <span className="font-body text-[11px] font-light uppercase tracking-[0.14em] text-ink/0 transition-colors group-hover:text-ink/60">
-              {c.label}
-            </span>
-            <span
-              className={`h-1.5 w-1.5 rounded-full transition-all duration-300 ${
-                n === activeChapter
-                  ? "scale-150 bg-ink"
-                  : "bg-ink/25 group-hover:bg-ink/50"
-              }`}
-            />
-          </button>
-        ))}
-      </nav>
-
-      {/* Scroll hint, first screen only. */}
-      <motion.div
-        className="pointer-events-none fixed bottom-8 left-1/2 z-50 -translate-x-1/2 text-ink/40"
-        animate={{ opacity: active === 0 ? 1 : 0, y: [0, 8, 0] }}
-        transition={{
-          opacity: { duration: 0.4 },
-          y: { duration: 2, repeat: Infinity, ease: "easeInOut" },
-        }}
-      >
-        <span className="text-5xl font-light">^</span>
-      </motion.div>
-    </div>
+    </SheetStack>
   );
 }

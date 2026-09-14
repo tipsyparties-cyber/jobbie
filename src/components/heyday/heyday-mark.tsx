@@ -53,8 +53,15 @@ export function HeydayMark({
   bounceOnLoad?: boolean;
   /** Start as the sun, become `shape` when scrolled into view. */
   morphInView?: boolean;
-  /** Cycle these shapes, one every `cycle.every` ms. The footer. */
-  cycle?: { shapes: ShapeName[]; every?: number };
+  /**
+   * Cycle these shapes, one every `cycle.every` ms.
+   *
+   * The footer runs forever. `once` runs a single pass and then rests as
+   * the sun, which is what the homepage closing block asks for: a
+   * flourish as you arrive, not a thing still moving behind the last
+   * decision on the page.
+   */
+  cycle?: { shapes: ShapeName[]; every?: number; once?: boolean };
   /** Give it a label where it carries meaning; omit where it is decoration. */
   label?: string;
 }) {
@@ -88,7 +95,13 @@ export function HeydayMark({
       let i = 0;
       const shapes = cycle.shapes;
       timer = setInterval(() => {
-        i = (i + 1) % shapes.length;
+        i += 1;
+        if (cycle.once && i >= shapes.length) {
+          if (timer) clearInterval(timer);
+          mark.morph("sun", 600);
+          return;
+        }
+        i %= shapes.length;
         // Back through the sun between two shapes (A11).
         mark.morph("sun", 600).then(() => mark.morph(shapes[i], 900));
       }, cycle.every ?? 5000);
@@ -148,7 +161,8 @@ export function SectionMark({
   colour,
 }: {
   shape: ShapeName;
-  size?: number;
+  /** A string is allowed so a mark can fill its box, e.g. "100%". */
+  size?: number | string;
   className?: string;
   colour?: string;
 }) {
