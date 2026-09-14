@@ -43,8 +43,9 @@ export const metadata: Metadata = {
     images: ["/og-image.png"],
   },
   /**
-   * An ink H on an orange tile — the primary button's own colours, which
-   * is the most recognisable pairing on the site.
+   * A paper H on a blue tile — the colours the Heyday sun takes on a
+   * blue ground (A11). Not orange: orange is the action colour, and a
+   * favicon is not an action.
    *
    * Not the sun, which spec A9 asks for. At 16px the sun's eight strokes
    * turn to mush, for the same reason the icon family has `-small`

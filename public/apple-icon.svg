@@ -5,15 +5,15 @@
   and a tile that has already been rounded ends up with a pale halo where
   the two radii disagree.
 
-  It matches the favicon deliberately. Spec A9 asks for the blue sun on a
-  cream tile, and the sun does read at 180px — but an app icon that is a
-  sun beside a browser tab that is an H would be two identities for one
-  product, and the smaller one is the one people see most.
+  It matches the favicon deliberately: an app icon that differs from the
+  browser tab is two identities for one product, and the smaller one is
+  the one people see most. Spec A9 asks for the sun rather than a letter,
+  which is the open question — the colours here are now A9's.
 -->
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180" role="img" aria-label="Heyday">
-  <rect width="180" height="180" fill="#F26B2A"/>
+  <rect width="180" height="180" fill="#93B7E8"/>
   <path
     d="M45 45h22.5v31h45V45H135v90h-22.5v-36.5h-45V135H45z"
-    fill="#0A0A0A"
+    fill="#FBF9F6"
   />
 </svg>

@@ -10,18 +10,20 @@
   fonts available — a `<text>` element falls back to whatever the system
   has, which is how the old one ended up as a thin system-font caret.
 
-  The colours are the primary button's, which is the most recognisable
-  pairing on the site: orange fill, ink on top. Orange stays a fill and
-  never becomes the letter, per A2.
+  Paper on blue — the colours the Heyday sun takes on a blue ground
+  (A11). Not the primary button's orange, which it used to be: orange is
+  the ACTION colour, and a favicon is not an action. It is the brand
+  sitting still in a tab strip, which is the sun's job and not a
+  button's.
 
   The crossbar sits half a unit above centre. That is the optical
   correction every H needs — a mathematically centred crossbar reads as
   low.
 -->
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="Heyday">
-  <rect width="32" height="32" rx="7" fill="#F26B2A"/>
+  <rect width="32" height="32" rx="7" fill="#93B7E8"/>
   <path
     d="M8 8h4v5.5h8V8h4v16h-4v-6.5h-8V24H8z"
-    fill="#0A0A0A"
+    fill="#FBF9F6"
   />
 </svg>
