@@ -19,6 +19,8 @@ type Props = {
   children: React.ReactNode;
   className?: string;
   style?: React.CSSProperties;
+  /** For cards that are link targets, such as the Who it's for anchors. */
+  id?: string;
 };
 
 /**
@@ -44,9 +46,10 @@ export function Panel({ children, className = "", style }: Props) {
  * A heavier 2px border and a longer 11px shadow than the panel, because a
  * card is usually smaller and needs the weight to hold its own in a row.
  */
-export function Card({ children, className = "", style }: Props) {
+export function Card({ children, className = "", style, id }: Props) {
   return (
     <div
+      id={id}
       className={`rounded-2xl border-2 border-ink ${className}`}
       style={{ boxShadow: "11px 11px 0 0 rgba(10,10,10,0.08)", ...style }}
     >

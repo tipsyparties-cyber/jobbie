@@ -422,3 +422,19 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .hd-goal-in > * { animation: none; }
 }
+
+/* The FAQ's +/– marker. Native <details> keeps find-in-page, the keyboard
+   and no-JS working; only the default triangle needs replacing. */
+.hd-faq-summary { list-style: none; }
+.hd-faq-summary::-webkit-details-marker { display: none; }
+.hd-faq-summary::after {
+  content: "+";
+  font: 500 24px/1 var(--font-mono);
+}
+details[open] > .hd-faq-summary::after { content: "–"; }
+
+/* LineSteps stacks on phones and drops its rule, because a horizontal
+   line behind a vertical list is just a stray mark. */
+@media (max-width: 900px) {
+  .hd-sheet ol[style*="--hd-steps"] { --hd-steps: 1; }
+}
