@@ -5,7 +5,6 @@ import { SectionReveal, RevealGroup } from "@/components/heyday/motion";
 import { HoldingImage } from "@/components/heyday/holding-image";
 import { Card } from "@/components/ui/surfaces";
 import { BELIEFS } from "@/lib/company";
-import { GROWTH } from "@/lib/who-its-for";
 import { SITE, TBC } from "@/lib/site";
 import { PAPER, CREAM, SKY, LAVENDER } from "@/lib/palette";
 
@@ -85,8 +84,15 @@ export default function AboutPage() {
               />
             </h2>
           </SectionReveal>
+          {/* The short form. /who-its-for carries the fuller one; here
+              the page is about the shape of the journey, not the detail. */}
           <LineSteps
-            steps={GROWTH.map((g) => ({ title: g.title, body: g.line }))}
+            steps={[
+              { title: "Doing it all yourself", body: "Instant quotes, online booking, one inbox." },
+              { title: "Owner-operator", body: "Shift offers, team pay and tips, checklists." },
+              { title: "A team", body: "Hiring, the Command Centre, reports." },
+              { title: "It runs itself", body: "Automations you set, AI that drafts and asks." },
+            ]}
           />
         </Wrap>
       </Sheet>

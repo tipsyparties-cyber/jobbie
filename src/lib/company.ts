@@ -21,11 +21,11 @@ export const BELIEFS: { title: string; line: string }[] = [
     line: "Everything is yours to set, starting from sensible defaults. You should never have to configure something before you can use it.",
   },
   {
-    title: "The AI drafts. A person approves.",
+    title: "AI drafts, a person approves.",
     line: "Money and promises always pass a person. You choose how much more it does than that, one type of message at a time.",
   },
   {
-    title: "The goal is that you handle the exceptions.",
+    title: "The goal: you handle the exceptions, and the rest runs.",
     line: "Not that you get faster at the routine. If the software still needs you for the ordinary parts, it hasn’t done its job.",
   },
   {

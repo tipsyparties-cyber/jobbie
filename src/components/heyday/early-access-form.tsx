@@ -104,9 +104,8 @@ export function EarlyAccessForm() {
       {/* Said above the button, not under it. Somebody who fills this in
           deserves to know before they press, not after. */}
       <p className="m-0 font-mono text-xs leading-relaxed text-ink/55">
-        Sign-up isn&rsquo;t open yet. This form stores nothing and sends
-        nothing — not even to us — until the privacy notice and consent
-        wording are agreed. {TBC.confirm}
+        Sign-up opens soon. Nothing is stored or sent until the privacy
+        notice is agreed — not even to us. {TBC.confirm}
       </p>
 
       <div className="flex flex-wrap items-center gap-3">

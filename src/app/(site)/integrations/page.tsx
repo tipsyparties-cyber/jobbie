@@ -41,9 +41,9 @@ export default function IntegrationsPage() {
         highlight="three apps"
         sub={
           <>
-            {SITE.name} connects to the tools you already use. Everything
-            here is on the way, and marked that way. We use their names,
-            not their logos, until we have permission.
+            {SITE.name} connects to the tools you already use. The ones
+            marked &ldquo;Coming soon&rdquo; are on the way. We use their
+            names, not their logos, until we have permission.
           </>
         }
         actions={
@@ -107,16 +107,30 @@ export default function IntegrationsPage() {
             );
           })}
 
-          <p className="mt-12 max-w-[70ch] font-mono text-xs leading-relaxed text-ink/55">
-            Nothing here is connected yet. Marketplace connections depend on
-            each platform&rsquo;s own rules about what may be connected and
-            how, so those are the ones most likely to change. Need something
-            that isn&rsquo;t on this list?{" "}
-            <Link href="/contact" className="underline underline-offset-2">
-              Tell us
-            </Link>
-            .
-          </p>
+          {/* Two notes the prototype carries, and both are worth
+              keeping: the first because a grid of integration cards reads
+              as a list of things that work, and the second because what
+              people ask for is the best signal about what to build. */}
+          <div className="mt-12 max-w-[70ch]">
+            <p className="m-0 font-display text-lg font-semibold">
+              Nothing is connected yet. Every integration is coming soon.
+            </p>
+            <p className="mt-3 font-mono text-xs leading-relaxed text-ink/55">
+              Marketplace connections depend on each platform&rsquo;s own
+              rules about what may be connected and how, so those are the
+              ones most likely to change.
+            </p>
+            <p className="mt-6 font-display text-lg font-semibold">
+              Need something we don&rsquo;t connect to yet?
+            </p>
+            <p className="mt-2 text-ink/65">
+              Tell us which tool you use. It helps us decide what to build
+              next.{" "}
+              <Link href="/contact" className="underline underline-offset-2">
+                Get in touch →
+              </Link>
+            </p>
+          </div>
         </Wrap>
       </Sheet>
 

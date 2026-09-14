@@ -46,7 +46,10 @@ export const metadata: Metadata = {
     "You choose how much the AI does. It drafts and you approve, or it sends the message types you switch on, inside your rules. One switch turns it off.",
 };
 
-const AI_FEATURES: { slug: string; line: string }[] = [
+/* `name` overrides the feature record's name where the AI page calls
+   the same capability something different — "Ask your business" is the
+   AI-facing name for what the Reports page calls reporting. */
+const AI_FEATURES: { slug: string; name?: string; line: string }[] = [
   {
     slug: "replies-that-write-themselves",
     line: "Drafts every reply from the conversation, the client’s record, the booking, your policies and your availability.",
@@ -70,6 +73,16 @@ const AI_FEATURES: { slug: string; line: string }[] = [
   {
     slug: "ai-setup-assistant",
     line: "Reads your website, price list, old emails and policies, and fills in your settings for you to check.",
+  },
+  {
+    slug: "reporting",
+    name: "Ask your business",
+    line: "Ask questions about your business in plain English, and get a weekly coach’s summary.",
+  },
+  {
+    slug: "integrations",
+    name: "AI cost controls",
+    line: "See what the AI costs, and set limits.",
   },
 ];
 
@@ -325,7 +338,7 @@ export default function AiPage() {
                     ground={PAPER}
                   />
                   <b className="font-display text-[19px] font-bold">
-                    {feature?.name ?? f.slug}
+                    {f.name ?? feature?.name ?? f.slug}
                   </b>
                   <p className="m-0 text-[15px] text-ink/60">{f.line}</p>
                   <div className="mt-auto flex items-center justify-between gap-2 pt-3">

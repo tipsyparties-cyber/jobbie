@@ -55,7 +55,7 @@ export function Article({
                 tilt={-4}
                 style={{ backgroundColor: LAVENDER }}
               >
-                SAMPLE · not published, not indexed
+                Sample post · layout only · not published, not indexed
               </Sticker>
             ) : null}
 
@@ -65,10 +65,11 @@ export function Article({
             >
               {stub.title}
             </h1>
+            <p className="mb-5 text-lg leading-relaxed text-ink/70">
+              {stub.line}
+            </p>
             <p className="mb-7 font-mono text-[13px] text-ink/55">
-              {isSample
-                ? "No author, no date — there is nothing here to date."
-                : `${SITE.name}`}
+              {isSample && "byline" in stub ? stub.byline : SITE.name}
             </p>
 
             <HoldingImage art={stub.art} ratio="16:9" tint={SKY} radius={16} />
@@ -141,7 +142,11 @@ export function ArticleBody({
       {blocks.map((b, i) => {
         if (b.kind === "h2")
           return (
-            <h2 key={i} className="mb-3 mt-11 font-display font-bold" style={{ fontSize: "clamp(26px, 3vw, 34px)" }}>
+            <h2
+              key={i}
+              className="mb-3 mt-11 font-display font-bold"
+              style={{ fontSize: "clamp(26px, 3vw, 34px)" }}
+            >
               {b.text}
             </h2>
           );
@@ -153,6 +158,16 @@ export function ArticleBody({
             >
               {b.text}
             </blockquote>
+          );
+        if (b.kind === "list")
+          return (
+            <ul key={i} className="my-4 list-disc pl-5">
+              {b.items?.map((it) => (
+                <li key={it} className="my-1.5 text-[18.5px] leading-[1.7]">
+                  {it}
+                </li>
+              ))}
+            </ul>
           );
         return (
           <p key={i} className="my-4 text-[18.5px] leading-[1.7]">
