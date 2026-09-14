@@ -1,4 +1,27 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-  <rect width="32" height="32" fill="transparent"/>
-  <text x="16" y="22" text-anchor="middle" font-family="sans-serif" font-size="24" font-weight="300" fill="#E8652E">^</text>
+<!--
+  The favicon: an ink H on an orange tile.
+
+  Russell asked for an H, and at favicon size he is right. The Heyday sun
+  is eight strokes radiating from a core; at 16px that turns to mush, for
+  exactly the reason the icon family has `-small` versions at 24px and
+  under. A letter survives the size.
+
+  It is drawn rather than set in a typeface, because a favicon has no web
+  fonts available — a `<text>` element falls back to whatever the system
+  has, which is how the old one ended up as a thin system-font caret.
+
+  The colours are the primary button's, which is the most recognisable
+  pairing on the site: orange fill, ink on top. Orange stays a fill and
+  never becomes the letter, per A2.
+
+  The crossbar sits half a unit above centre. That is the optical
+  correction every H needs — a mathematically centred crossbar reads as
+  low.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="Heyday">
+  <rect width="32" height="32" rx="7" fill="#F26B2A"/>
+  <path
+    d="M8 8h4v5.5h8V8h4v16h-4v-6.5h-8V24H8z"
+    fill="#0A0A0A"
+  />
 </svg>

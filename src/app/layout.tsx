@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { serif, sans, hero, display, mono } from "@/lib/fonts";
 import { SITE } from "@/lib/site";
 import { Analytics } from "@vercel/analytics/react";
@@ -11,6 +11,11 @@ import "./globals.css";
  * because tabs truncate from the right.
  */
 const isDev = process.env.NODE_ENV === "development";
+
+/** Cream, the site's ground — so the browser chrome matches the page. */
+export const viewport: Viewport = {
+  themeColor: "#F2E9E1",
+};
 
 export const metadata: Metadata = {
   title: isDev
@@ -33,8 +38,20 @@ export const metadata: Metadata = {
     description: SITE.description,
     images: ["/og-image.png"],
   },
+  /**
+   * An ink H on an orange tile — the primary button's own colours, which
+   * is the most recognisable pairing on the site.
+   *
+   * Not the sun, which spec A9 asks for. At 16px the sun's eight strokes
+   * turn to mush, for the same reason the icon family has `-small`
+   * versions at 24px and under. The app icon matches the favicon rather
+   * than using the sun at 180px, because two icons for one product is
+   * worse than one that diverges from the spec.
+   *
+   */
   icons: {
-    icon: "/favicon.svg",
+    icon: [{ url: "/favicon.svg", type: "image/svg+xml" }],
+    apple: [{ url: "/apple-icon.svg", type: "image/svg+xml" }],
   },
 };
 
