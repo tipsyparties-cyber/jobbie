@@ -50,7 +50,16 @@ export type DecorSun = {
 export const HERO_SUNS: DecorSun[] = [
   { top: "40px", left: "-50px", size: 150, colour: LAVENDER, drift: -90, turn: 14 },
   { top: "56px", left: "calc(50% - 96px)", size: 62, colour: SKY, drift: -140, turn: -20 },
-  { top: "72%", left: "-4%", size: 240, colour: SAGE, drift: -60, turn: 10 },
+];
+
+/**
+ * The big one in the sheet under the hero, hanging in from the top-left
+ * corner. This is the brief's "one crossing into the next section" (A10):
+ * at 520px it reads as part of the page's construction rather than as
+ * decoration dropped on top.
+ */
+export const WHAT_SUNS: DecorSun[] = [
+  { top: "-150px", left: "-190px", size: 520, colour: SAGE, drift: -40, turn: 8 },
 ];
 
 export const SECTION_SUNS: DecorSun[] = [
@@ -96,9 +105,11 @@ function Sun({
         top: sun.top,
         left: sun.left,
         ...(still ? {} : { y, rotate }),
-        // Well back, because the rule is that they never make text harder
-        // to read and a full-strength mark behind a headline does.
-        opacity: 0.28,
+        // Full strength, as the prototype draws them. These are pale
+        // colours already; dimming them further turned the sage one grey
+        // and made it read as a rendering fault rather than as a mark.
+        // They stay behind the text by z-index, not by fading.
+        zIndex: 0,
       }}
     >
       <HeydayMark shape="sun" sun={sun.colour} size={sun.size} />

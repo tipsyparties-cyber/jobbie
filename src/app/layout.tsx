@@ -1,10 +1,8 @@
 import type { Metadata } from "next";
 import { serif, sans, hero, display, mono } from "@/lib/fonts";
 import { SITE } from "@/lib/site";
-import { GsapProvider } from "@/lib/gsap-provider";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
-import { CustomCursor } from "@/components/ui/custom-cursor";
 import "./globals.css";
 
 /**
@@ -47,18 +45,19 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${serif.variable} ${sans.variable} ${hero.variable} ${display.variable} ${mono.variable}`}>
-      <body>
-        <div className="bg-blobs" aria-hidden="true">
-          <div className="blob blob-1" />
-          <div className="blob blob-2" />
-          <div className="blob blob-3" />
-          <div className="blob blob-4" />
-          <div className="blob blob-5" />
-        </div>
-        <GsapProvider>
-          {children}
-        </GsapProvider>
-        <CustomCursor />
+      {/* Cream, which is the site's ground. Sections paint their own
+          colour over it; this is what shows in the gaps and behind the
+          rounded tops. */}
+      <body className="bg-cream">
+        {/* Skip link: the first thing a keyboard user reaches, on every
+            page (spec A8). */}
+        <a
+          href="#main"
+          className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[200] focus:rounded-lg focus:border focus:border-ink focus:bg-paper focus:px-4 focus:py-2 focus:font-display focus:text-sm focus:font-semibold"
+        >
+          Skip to content
+        </a>
+        {children}
         <Analytics />
         <SpeedInsights />
       </body>

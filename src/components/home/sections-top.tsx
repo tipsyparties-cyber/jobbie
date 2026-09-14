@@ -4,6 +4,7 @@ import { SectionReveal, RevealGroup } from "@/components/heyday/motion";
 import { Icon } from "@/components/heyday/icon";
 import { SectionMark } from "@/components/heyday/heyday-mark";
 import { SideScroll, SideCard } from "@/components/heyday/side-scroll";
+import { DecorSuns, WHAT_SUNS } from "@/components/heyday/decor-suns";
 import { WHAT_CHIPS, BUSINESS_TYPES, FLOW } from "@/lib/home-content";
 import { GROUPS, RUNS_ITSELF } from "@/lib/groups";
 import { PAPER, CREAM, INK } from "@/lib/palette";
@@ -25,7 +26,9 @@ import { PAPER, CREAM, INK } from "@/lib/palette";
  */
 export function WhatHeydayIs() {
   return (
-    <Wrap className="text-center">
+    <>
+      <DecorSuns suns={WHAT_SUNS} />
+      <Wrap className="relative text-center">
       <SectionReveal>
         <div className="flex justify-center">
           <SheetLabel>what heyday is</SheetLabel>
@@ -83,8 +86,9 @@ export function WhatHeydayIs() {
             sells their time, skills or an experience ·{" "}
           </span>
         </div>
-      </div>
-    </Wrap>
+        </div>
+      </Wrap>
+    </>
   );
 }
 

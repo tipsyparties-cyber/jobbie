@@ -50,6 +50,8 @@ type Props = {
   href?: string;
   onClick?: () => void;
   type?: "button" | "submit";
+  /** Only meaningful on a real button. A disabled link is not a thing. */
+  disabled?: boolean;
   variant?: ButtonVariant;
   /** A static arrow. The main call to action only — A4. */
   arrow?: boolean;
@@ -62,6 +64,7 @@ export function Button({
   children,
   href,
   onClick,
+  disabled = false,
   type = "button",
   variant = "primary",
   arrow = false,
@@ -88,7 +91,13 @@ export function Button({
     );
   }
   return (
-    <button type={type} onClick={onClick} className={cls} {...aria}>
+    <button
+      type={type}
+      onClick={onClick}
+      disabled={disabled}
+      className={`${cls} disabled:cursor-not-allowed disabled:opacity-40`}
+      {...aria}
+    >
       {inner}
     </button>
   );

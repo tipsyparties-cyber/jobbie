@@ -73,7 +73,9 @@ export default function HomePage() {
     <SheetStack>
       <SiteHeader />
 
-      <main id="main">
+      {/* Clears the fixed 72px header. The prototype's header is sticky
+          and takes its own space; ours is fixed, so the page has to. */}
+      <main id="main" className="pt-[72px]">
         {/* 2. The hero. Not a sheet: it is the bottom of the stack, and
             the sheet above it is what covers the foot of its card strip. */}
         <HeydayHero />
