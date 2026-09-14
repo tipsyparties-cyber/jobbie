@@ -106,8 +106,11 @@ export function Parallax({
   });
   const y = useTransform(scrollYProgress, [0, 1], [amount, -amount]);
 
+  /* `relative` is not decoration. useScroll measures the target against
+     its offset parent, and a statically positioned target has none — the
+     offsets come back wrong and the browser console says so. */
   return (
-    <div ref={ref} className={className}>
+    <div ref={ref} className={`relative ${className}`}>
       <motion.div style={still ? undefined : { y }}>{children}</motion.div>
     </div>
   );

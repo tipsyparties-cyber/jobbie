@@ -161,7 +161,7 @@ export function MoreInfoSection({
         <div
           className="col-start-1 row-start-1 grid items-center gap-10 p-10 md:p-14 lg:grid-cols-2"
           style={{ visibility: open ? "hidden" : "visible" }}
-          {...(open ? { inert: "" as unknown as boolean } : {})}
+          inert={open}
         >
           <div>
             <h2 className="max-w-[16ch] font-display text-[clamp(1.9rem,4vw,3.2rem)] font-semibold leading-[1.05] tracking-[-0.03em]">
@@ -216,7 +216,7 @@ export function MoreInfoSection({
           initial={false}
           animate={{ opacity: open ? 1 : 0, y: open ? 0 : 20 }}
           transition={{ duration: open ? 0.45 : 0.2, ease: [0.215, 0.61, 0.355, 1] }}
-          {...(open ? {} : { inert: "" as unknown as boolean })}
+          inert={!open}
         >
           {detail}
           <div className="mt-10">
