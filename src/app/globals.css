@@ -563,67 +563,22 @@ details[open] > .hd-faq-summary::after { content: "–"; }
 .hd-article li { margin: 0.4rem 0; }
 
 /* ==================================================================== *
- *  The old way / the Heyday way — the day-and-night sky.
+ *  The old way / the Heyday way — the drifting clouds.
  *
- *  One 32-second cycle: dawn, day, dusk, night, back to dawn. The sun
- *  crosses in the first half, the moon in the second, both left to right,
- *  which is the direction a reader already takes as time passing.
- *
- *  The whole cycle stays on the palette. Dusk is lavender and night is
- *  ink tinted with the brand blue, so the sky never reaches for a colour
- *  the site does not otherwise use — and never for orange, which is the
- *  action colour and would pull the eye away from the workflow in front
- *  of it.
- *
- *  It is CSS rather than JavaScript because the timing is fixed: the
- *  browser can run it off the main thread, and React only has to know
- *  whether it is currently day or night.
+ *  The sky itself, the sun and the moon are all driven by the scroll now,
+ *  in the component: the reader causes sunset by scrolling, rather than
+ *  waiting for a timer that might already have passed. Only the clouds
+ *  stayed on a clock, because drifting cloud is ambient — it should not
+ *  stop when the reader does.
  * ==================================================================== */
 
-@keyframes hd-sky {
-  0%,
-  100% { background-color: color-mix(in srgb, var(--color-blue) 55%, var(--color-paper)); }
-  12%  { background-color: var(--color-blue); }
-  40%  { background-color: var(--color-blue); }
-  50%  { background-color: var(--color-lavender); }
-  60%  { background-color: color-mix(in srgb, var(--color-blue) 18%, #0A0A0A); }
-  90%  { background-color: color-mix(in srgb, var(--color-blue) 18%, #0A0A0A); }
-}
-
-/* The arc. Left to right, and up over the middle. */
-@keyframes hd-sun-arc {
-  0%   { transform: translate(-10%, 120%); opacity: 0; }
-  8%   { opacity: 1; }
-  25%  { transform: translate(180%, -10%); opacity: 1; }
-  44%  { transform: translate(380%, 120%); opacity: 1; }
-  50%, 100% { transform: translate(380%, 120%); opacity: 0; }
-}
-
-@keyframes hd-moon-arc {
-  0%, 50%  { transform: translate(-10%, 120%); opacity: 0; }
-  58%      { opacity: 1; }
-  75%      { transform: translate(180%, -10%); opacity: 1; }
-  94%      { transform: translate(380%, 120%); opacity: 1; }
-  100%     { transform: translate(380%, 120%); opacity: 0; }
-}
-
-/* Clouds drift the other way, slowly, so the sky has depth without
-   competing with the workflow in front of it. */
 @keyframes hd-cloud-drift {
   from { transform: translateX(0); }
   to   { transform: translateX(-52%); }
 }
 
-.hd-sky        { animation: hd-sky 32s linear infinite; }
-.hd-sun-arc    { animation: hd-sun-arc 32s linear infinite; }
-.hd-moon-arc   { animation: hd-moon-arc 32s linear infinite; }
-.hd-cloud-drift{ animation: hd-cloud-drift 46s linear infinite; }
+.hd-cloud-drift { animation: hd-cloud-drift 46s linear infinite; }
 
-/* Reduced motion: hold it at midday. The section still makes its point
-   from the two columns; the sky is the flourish, not the argument. */
 @media (prefers-reduced-motion: reduce) {
-  .hd-sky        { animation: none; background-color: var(--color-blue); }
-  .hd-sun-arc    { animation: none; transform: translate(180%, -10%); }
-  .hd-moon-arc   { animation: none; opacity: 0; }
-  .hd-cloud-drift{ animation: none; }
+  .hd-cloud-drift { animation: none; }
 }

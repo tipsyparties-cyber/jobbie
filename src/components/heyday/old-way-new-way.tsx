@@ -27,6 +27,19 @@ import { PAPER, CREAM, INK, ORANGE, SKY, SAGE } from "@/lib/palette";
  *  still arrive, they just wait. The Heyday side stays lit and counts
  *  what it handled while nobody was awake.
  *
+ *  THE DAY IS TIED TO THE SCROLL, not to a clock. On a timer you could
+ *  scroll past at the wrong moment and see nothing happen at all, which
+ *  is the one outcome that wastes the section entirely. The section holds
+ *  for about one extra screen of scrolling, and the whole cycle plays out
+ *  across it, so sunset is something you cause rather than something you
+ *  have to wait for.
+ *
+ *  It holds by going sticky, not by taking the scroll away: the page
+ *  keeps moving at exactly the speed the reader is moving it, and the
+ *  section simply stays put while they pass. Below 760px it does none of
+ *  this — a full-height sticky section on a phone is a section you have
+ *  to fight past.
+ *
  *  Two things deliberately not copied from anyone.com:
  *
  *  - **No other companies' logos.** Theirs is a wall of Gmail, Zillow and
@@ -38,10 +51,64 @@ import { PAPER, CREAM, INK, ORANGE, SKY, SAGE } from "@/lib/palette";
  *    Heyday has no customers and so no such figure.
  * ==================================================================== */
 
-/** The sky cycle, and where dusk and dawn fall in it. */
-const CYCLE_MS = 32_000;
-const NIGHT_FROM = 0.52;
-const NIGHT_TO = 0.96;
+/**
+ * How far past the section you scroll before the day is over. One extra
+ * screen: enough to watch the sun cross, short enough that it never feels
+ * like the page has stopped working.
+ */
+const SCROLL_SCREENS = 1.1;
+
+/** Where in the scroll dusk falls, and where the sun and moon hand over. */
+const DUSK = 0.58;
+const NIGHT_FROM = 0.62;
+
+/**
+ * The sky, as stops along the scroll. Every colour is the palette's:
+ * pale blue, blue, lavender at dusk, then ink tinted with the brand blue.
+ * Nothing reaches for a colour the site does not otherwise use, and
+ * nothing reaches for orange — orange is the action colour, and a sunset
+ * in it would pull the eye off the workflow in front of it.
+ */
+const SKY_STOPS: [number, string][] = [
+  [0, "#C2D5EE"],
+  [0.16, "#93B7E8"],
+  [0.44, "#93B7E8"],
+  [DUSK, "#D6D0F5"],
+  [0.74, "#232932"],
+  [1, "#232932"],
+];
+
+const clamp01 = (n: number) => Math.min(1, Math.max(0, n));
+
+/** Sample the sky at a point in the scroll. */
+function skyAt(t: number): string {
+  let i = 0;
+  while (i < SKY_STOPS.length - 2 && t > SKY_STOPS[i + 1][0]) i++;
+  const [t0, c0] = SKY_STOPS[i];
+  const [t1, c1] = SKY_STOPS[i + 1];
+  const k = t1 === t0 ? 0 : clamp01((t - t0) / (t1 - t0));
+  const hex = (c: string) => [1, 3, 5].map((n) => parseInt(c.slice(n, n + 2), 16));
+  const [r0, g0, b0] = hex(c0);
+  const [r1, g1, b1] = hex(c1);
+  const mix = (a: number, b: number) => Math.round(a + (b - a) * k);
+  return `rgb(${mix(r0, r1)}, ${mix(g0, g1)}, ${mix(b0, b1)})`;
+}
+
+/**
+ * Where a body sits at time `t`, across a window of the scroll.
+ *
+ * Left to right, arcing over the top — which is the direction a reader
+ * already takes as time passing, whatever a compass would say about it.
+ */
+function arc(t: number, from: number, to: number) {
+  const k = (t - from) / (to - from);
+  if (k < -0.08 || k > 1.08) return null;
+  return {
+    left: `${-6 + k * 112}%`,
+    top: `${64 - Math.sin(clamp01(k) * Math.PI) * 52}%`,
+    opacity: k < 0 ? 1 + k / 0.08 : k > 1 ? 1 - (k - 1) / 0.08 : 1,
+  };
+}
 
 /** The messy side. Channels, never brands. */
 const MESSY: { text: string; via: string; unread?: number; lost?: boolean }[] = [
@@ -66,52 +133,67 @@ const DOING = [
 
 export function OldWayNewWay() {
   const still = useReducedMotion();
-  const ref = useRef<HTMLDivElement | null>(null);
-  const [running, setRunning] = useState(false);
+  const wrapRef = useRef<HTMLDivElement | null>(null);
   const [t, setT] = useState(0);
+  /* Sticky only where there is room for it. Below 760px the section is an
+     ordinary block and holds at midday. */
+  const [pinned, setPinned] = useState(false);
 
   useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    let onScreen = false;
-    const update = () => setRunning(onScreen && !document.hidden);
-    const io = new IntersectionObserver(([e]) => {
-      onScreen = e.isIntersecting;
-      update();
-    });
-    io.observe(el);
-    document.addEventListener("visibilitychange", update);
-    return () => {
-      io.disconnect();
-      document.removeEventListener("visibilitychange", update);
+    const mq = window.matchMedia("(min-width: 760px)");
+    const sync = () => setPinned(mq.matches && !still);
+    sync();
+    mq.addEventListener("change", sync);
+    return () => mq.removeEventListener("change", sync);
+  }, [still]);
+
+  /* The day, read off the scroll. One listener, rAF-throttled: the whole
+     section is derived from this number, so the sky, the sun and the work
+     cannot drift out of step with each other. */
+  useEffect(() => {
+    const el = wrapRef.current;
+    /* Nothing to do when the section is not playing. `t` is never read in
+       that case — every value below is guarded on `pinned` — so there is
+       no state to reset, and resetting it here would be a setState in an
+       effect body, which the React compiler rejects. */
+    if (!el || !pinned) return;
+    let frame = 0;
+    const measure = () => {
+      frame = 0;
+      const r = el.getBoundingClientRect();
+      const travel = el.offsetHeight - window.innerHeight;
+      setT(travel > 0 ? clamp01(-r.top / travel) : 0);
     };
-  }, []);
+    const onScroll = () => {
+      if (!frame) frame = requestAnimationFrame(measure);
+    };
+    /* The first measurement goes through the same frame as every other
+       one, rather than running synchronously inside the effect. */
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      if (frame) cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
+  }, [pinned]);
 
-  /* One clock. Everything is derived from it, so the panels can never
-     drift out of step with the sky behind them. */
-  useEffect(() => {
-    if (!running || still) return;
-    const start = performance.now();
-    const id = setInterval(() => {
-      setT(((performance.now() - start) % CYCLE_MS) / CYCLE_MS);
-    }, 120);
-    return () => clearInterval(id);
-  }, [running, still]);
+  const night = pinned && t >= NIGHT_FROM;
 
-  const night = !still && t >= NIGHT_FROM && t < NIGHT_TO;
-
-  /* The old way only works in daylight. Progress is measured against the
-     daylight part of the cycle, so it stalls the moment the sun goes down
-     and picks up at dawn exactly where it stopped. */
-  const daylight = Math.min(1, t / NIGHT_FROM);
-  const messyDone = still
+  /* The old way only works in daylight. Its progress is measured against
+     the daylight part of the scroll, so it fills as the sun crosses and
+     stops dead the moment the sun goes down. */
+  const messyDone = !pinned
     ? MESSY.length
-    : Math.floor(daylight * (MESSY.length + 1));
+    : Math.floor(clamp01(t / DUSK) * (MESSY.length + 0.999));
 
-  /* Heyday's clock never stops, so this one runs on the whole cycle. */
-  const doingIndex = still ? 0 : Math.floor(t * DOING.length * 4) % DOING.length;
+  /* Heyday's does not stop, so this one runs on the whole scroll. */
+  const doingIndex = !pinned
+    ? 0
+    : Math.floor(t * DOING.length * 2.5) % DOING.length;
   const overnight = night
-    ? Math.max(1, Math.floor(((t - NIGHT_FROM) / (NIGHT_TO - NIGHT_FROM)) * 23))
+    ? Math.max(1, Math.round(((t - NIGHT_FROM) / (1 - NIGHT_FROM)) * 23))
     : 0;
 
   /* On ink, cream. The heading and the section's own copy sit directly on
@@ -120,14 +202,33 @@ export function OldWayNewWay() {
   const onSky = night ? CREAM : INK;
 
   return (
+    /* The tall outer block is the scroll distance the day is played
+       across. The screen inside it sticks, so the page keeps moving at
+       exactly the speed the reader is moving it while the sun crosses. */
     <div
-      ref={ref}
-      className="hd-sky relative overflow-hidden"
-      style={{ paddingBlock: "120px" }}
+      ref={wrapRef}
+      className="relative"
+      style={
+        pinned
+          ? { height: `calc(100vh + ${SCROLL_SCREENS * 100}vh)` }
+          : undefined
+      }
     >
-      <Sky />
+      <div
+        className={
+          pinned
+            ? "sticky top-0 flex h-screen flex-col justify-center overflow-hidden"
+            : "relative overflow-hidden py-[120px]"
+        }
+        style={{
+          backgroundColor: pinned ? skyAt(t) : "#93B7E8",
+          /* No transition: the colour is driven by the scroll, and a
+             transition on top of that lags behind the sun. */
+        }}
+      >
+        <Sky t={t} pinned={pinned} />
 
-      <div className="relative z-[1] mx-auto w-full max-w-[1280px] px-[clamp(16px,4vw,48px)]">
+        <div className="relative z-[1] mx-auto w-full max-w-[1280px] px-[clamp(16px,4vw,48px)]">
         {/* The heading turns over with the sky. */}
         <div
           className="text-center"
@@ -272,6 +373,7 @@ export function OldWayNewWay() {
               }
             />
           </Panel>
+          </div>
         </div>
       </div>
     </div>
@@ -337,7 +439,11 @@ function Panel({
 }
 
 /** The sun, the moon and a few clouds, across the whole section. */
-function Sky() {
+function Sky({ t, pinned }: { t: number; pinned: boolean }) {
+  /* Midday when the section is not playing: the sun up, no moon. */
+  const sun = pinned ? arc(t, 0, DUSK + 0.06) : { left: "46%", top: "18%", opacity: 1 };
+  const moon = pinned ? arc(t, DUSK, 1.06) : null;
+
   return (
     <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
       {[
@@ -368,12 +474,21 @@ function Sky() {
       {/* The sun is the Heyday mark itself, in paper — never black and
           never orange, per A11, and paper is its colour on a blue
           ground. */}
-      <span className="hd-sun-arc absolute left-[2%] top-[14%] block h-20 w-20">
-        <HeydayMark size={80} sun={PAPER} />
-      </span>
+      {sun ? (
+        <span
+          className="absolute block h-20 w-20"
+          style={{ left: sun.left, top: sun.top, opacity: sun.opacity }}
+        >
+          <HeydayMark size={80} sun={PAPER} />
+        </span>
+      ) : null}
 
       {/* The moon: a disc with a bite out of it, in sky on the dark. */}
-      <span className="hd-moon-arc absolute left-[2%] top-[14%] block h-14 w-14">
+      {moon ? (
+        <span
+          className="absolute block h-14 w-14"
+          style={{ left: moon.left, top: moon.top, opacity: moon.opacity }}
+        >
         <svg viewBox="0 0 56 56" width={56} height={56}>
           <defs>
             <mask id="hd-moon-mask">
@@ -382,8 +497,9 @@ function Sky() {
             </mask>
           </defs>
           <circle cx="28" cy="28" r="21" fill={SKY} mask="url(#hd-moon-mask)" />
-        </svg>
-      </span>
+          </svg>
+        </span>
+      ) : null}
     </div>
   );
 }
