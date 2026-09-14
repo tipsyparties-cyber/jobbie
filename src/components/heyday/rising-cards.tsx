@@ -3,45 +3,40 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { HeydayLine } from "@/components/heyday/heyday-line";
-import { PAPER, ORANGE, CREAM } from "@/lib/palette";
 import { Icon } from "@/components/heyday/icon";
+import { PAPER, ORANGE, CREAM } from "@/lib/palette";
 
 /* ==================================================================== *
  *  The hero's rising cards — design brief A9.
  *
- *  anyone.com's hero has tall cards rising one at a time through a rounded
- *  panel. The brief is explicit that we copy THE PATTERN AND THE TIMING,
- *  never their Lottie file or their artwork — so this is DOM plus
- *  framer-motion, and every card is ours.
+ *  A CHAIN, not a window.
  *
- *  The timing is theirs, measured: rise 680px over 1.67s, hold 0.83s, leave
- *  upward 730px over 2.5s, a new card every 3s. Expressed as keyframes at
- *  0 / 33% / 50% / 100% of a 5s cycle, which is what those four numbers add
- *  up to.
+ *  The first build had each card rise into a clipped panel, hold, and leave
+ *  on its own, which reads as a slideshow in a box. anyone.com and
+ *  getjobber.com both do the opposite: the cards are joined in one strip
+ *  that travels, so you see the one before and the one after. That is what
+ *  makes it say "these are steps in a sequence" rather than "here are some
+ *  unrelated screens" — and the sequence IS the argument the hero is
+ *  making.
  *
- *  Pack 4 took the extras out: no ripple, no pop-in, no sun peeking in.
- *  Each card shows all its details the whole time and simply scrolls up and
- *  away. The restraint is the point — the cards are the content, and three
- *  effects layered on a moving card is where a hero starts to look like a
- *  demo reel.
+ *  So the whole set is one track, stepped up by exactly one card at a time
+ *  and holding for a beat. The move is quick and the hold is long, because
+ *  the hold is where the card is actually read; a constant crawl gives the
+ *  eye nowhere to land.
  *
- *  Three things the brief asks for that are easy to skip and matter:
+ *  The loop is seamless because the first card is rendered again at the
+ *  end: the track travels the full length and, by the time it snaps back to
+ *  zero, it is already showing that same card, so the reset cannot be seen.
  *
- *  - It pauses when the hero is off screen or the tab is hidden. An
- *    animation looping behind a footer is pure battery.
- *  - Below 1280px one card sits still with the line under it. A loop this
- *    tall does not survive a narrow column.
- *  - The moving cards are aria-hidden and the panel carries one label. A
- *    screen reader should hear what the picture shows, once, not five
- *    cards cycling forever.
+ *  Masked top and bottom with a gradient rather than a hard edge, so cards
+ *  arrive and leave instead of being cut off by a frame.
  * ==================================================================== */
 
-/** The workflow, one card per step. */
 export type RisingCard = {
   /** "STEP 2". Geist Mono. */
   step: string;
   title: string;
-  /** Two or three label-and-value rows. Example data, and the panel label
+  /** Two or three label-and-value rows. Example data, and the panel's label
    *  says so — nothing here is a real booking. */
   rows: [string, string][];
   /** The orange status pill. */
@@ -50,18 +45,19 @@ export type RisingCard = {
   icon: string;
 };
 
-const CYCLE = 5;
-const EASE = [0.333, 0, 0.667, 1] as const;
+const CARD_H = 360;
+const GAP = 24;
+const STEP = CARD_H + GAP;
+/** Quick move, long hold. The hold is where the card is read. */
+const MOVE = 0.55;
+const HOLD = 1.15;
 
 export function RisingCards({
   cards,
   className = "",
-  ground = PAPER,
 }: {
   cards: RisingCard[];
   className?: string;
-  /** The panel's ground, so the faint outlines behind can be paper on it. */
-  ground?: string;
 }) {
   const still = useReducedMotion();
   const wrapRef = useRef<HTMLDivElement | null>(null);
@@ -70,20 +66,20 @@ export function RisingCards({
   const [index, setIndex] = useState(0);
 
   useEffect(() => {
-    const mq = window.matchMedia("(min-width: 1280px)");
+    const mq = window.matchMedia("(min-width: 1024px)");
     const sync = () => setWide(mq.matches);
     sync();
     mq.addEventListener("change", sync);
     return () => mq.removeEventListener("change", sync);
   }, []);
 
-  // Only while visible, and only while the tab is.
+  /* Only while visible, and only while the tab is. An animation looping
+     behind a footer is pure battery. */
   useEffect(() => {
     const el = wrapRef.current;
     if (!el) return;
     let onScreen = false;
     const update = () => setRunning(onScreen && !document.hidden);
-
     const io = new IntersectionObserver(([e]) => {
       onScreen = e.isIntersecting;
       update();
@@ -97,79 +93,87 @@ export function RisingCards({
   }, []);
 
   const animate = running && wide && !still;
+  const n = cards.length;
 
-  // Which card has just landed, for the step indicator underneath.
+  /* One keyframe pair per card — arrive, then hold there. The final
+     keyframe is one card beyond the end, which is the duplicate. */
+  const { values, times, duration } = (() => {
+    const v: number[] = [];
+    const t: number[] = [];
+    let clock = 0;
+    for (let i = 0; i <= n; i++) {
+      v.push(-i * STEP);
+      t.push(clock);
+      if (i < n) {
+        clock += HOLD;
+        v.push(-i * STEP);
+        t.push(clock);
+        clock += MOVE;
+      }
+    }
+    return { values: v, times: t.map((x) => x / clock), duration: clock };
+  })();
+
+  /** Which card is at the centre, for the line underneath. */
   useEffect(() => {
     if (!animate) return;
     const t = setInterval(
-      () => setIndex((i) => (i + 1) % cards.length),
-      CYCLE * 1000
+      () => setIndex((i) => (i + 1) % n),
+      (HOLD + MOVE) * 1000
     );
     return () => clearInterval(t);
-  }, [animate, cards.length]);
+  }, [animate, n]);
+
+  const chain = [...cards, cards[0]];
+  const MASK =
+    "linear-gradient(to bottom, transparent 0, #000 15%, #000 85%, transparent 100%)";
 
   return (
     <div ref={wrapRef} className={className}>
       <div
         role="img"
         aria-label="Example workflow, with example data: an enquiry becomes a quote, a booking, a staffed job, a payment, a review and a rebooking"
-        className="relative overflow-hidden rounded-t-[56px] border border-ink/10"
-        style={{ backgroundColor: ground, height: 520 }}
+        className="relative overflow-hidden"
+        style={{
+          height: CARD_H + STEP,
+          maskImage: MASK,
+          WebkitMaskImage: MASK,
+        }}
       >
-        {/* The faint outlines behind the cards. */}
-        <div aria-hidden className="pointer-events-none absolute inset-0">
-          {[0, 1, 2, 3].map((i) => (
-            <div
-              key={i}
-              className="absolute left-1/2 rounded-2xl border"
-              style={{
-                width: 300 - i * 18,
-                height: 420 - i * 24,
-                bottom: 40 + i * 14,
-                transform: "translateX(-50%)",
-                borderColor: PAPER,
-                opacity: 0.55,
-              }}
-            />
-          ))}
-        </div>
-
         {animate ? (
-          cards.map((card, i) => (
-            <motion.div
-              key={card.step}
-              aria-hidden
-              className="absolute left-1/2"
-              style={{ width: 300, marginLeft: -150, bottom: 0 }}
-              initial={{ y: 680, opacity: 0 }}
-              animate={{
-                // 0 → rise → hold → leave, over one cycle per card.
-                y: [680, 0, 0, -730],
-                opacity: [0, 1, 1, 0],
-              }}
-              transition={{
-                duration: CYCLE,
-                times: [0, 0.334, 0.5, 1],
-                ease: EASE,
-                repeat: Infinity,
-                repeatDelay: (cards.length - 1) * CYCLE,
-                delay: i * CYCLE,
-              }}
-            >
-              <CardFace card={card} />
-            </motion.div>
-          ))
+          <motion.div
+            aria-hidden
+            className="absolute inset-x-0 flex flex-col items-center"
+            style={{ gap: GAP, top: STEP / 2 }}
+            animate={{ y: values }}
+            transition={{
+              duration,
+              times,
+              ease: "easeInOut",
+              repeat: Infinity,
+              repeatType: "loop",
+            }}
+          >
+            {chain.map((card, i) => (
+              <CardFace key={`${card.step}-${i}`} card={card} />
+            ))}
+          </motion.div>
         ) : (
-          // Narrow, reduced motion, or off screen: one card, still.
-          <div className="absolute left-1/2 bottom-12" style={{ width: 300, marginLeft: -150 }}>
+          /* Narrow, reduced motion, or off screen: the first card, still. */
+          <div
+            className="absolute inset-x-0 flex justify-center"
+            style={{ top: STEP / 2 }}
+          >
             <CardFace card={cards[0]} />
           </div>
         )}
-
       </div>
 
       <div className="mt-6 flex justify-center">
-        <HeydayLine steps={cards.map((c) => c.step)} current={animate ? index : 0} />
+        <HeydayLine
+          steps={cards.map((c) => c.step)}
+          current={animate ? index : 0}
+        />
       </div>
     </div>
   );
@@ -178,42 +182,43 @@ export function RisingCards({
 function CardFace({ card }: { card: RisingCard }) {
   return (
     <div
-      className="flex flex-col rounded-2xl border-2 border-ink p-6"
+      className="flex w-[320px] shrink-0 flex-col rounded-2xl border-2 border-ink p-6"
       style={{
-        height: 420,
+        height: CARD_H,
         backgroundColor: PAPER,
         boxShadow: "11px 11px 0 0 rgba(10,10,10,0.08)",
       }}
     >
-      <div className="flex items-start justify-between">
+      <div className="flex items-start justify-between gap-3">
         <span className="font-mono text-[12px] tracking-[0.02em] text-ink/55">
           {card.step}
         </span>
         <span
-          className="inline-block rounded-full px-3 py-1 font-mono text-[11px] tracking-[0.02em] text-ink"
+          className="inline-block shrink-0 rounded-full px-3 py-1 font-mono text-[11px] tracking-[0.02em] text-ink"
           style={{ backgroundColor: ORANGE }}
         >
           {card.pill}
         </span>
       </div>
 
-      {/* The step icon in a cream tile. */}
       <span
         aria-hidden
-        className="mt-5 inline-flex h-14 w-14 items-center justify-center rounded-xl"
+        className="mt-5 inline-flex h-12 w-12 items-center justify-center rounded-xl"
         style={{ backgroundColor: CREAM }}
       >
-        <Icon name={card.icon} size={32} ground={CREAM} />
+        <Icon name={card.icon} size={28} ground={CREAM} />
       </span>
 
-      <p className="mt-5 font-display text-2xl font-semibold leading-tight">
+      <p className="mt-4 font-display text-2xl font-semibold leading-tight">
         {card.title}
       </p>
 
-      <dl className="mt-5 flex flex-col gap-2.5 border-t border-ink/12 pt-4">
+      <dl className="mt-auto flex flex-col gap-2.5 border-t border-ink/12 pt-4">
         {card.rows.map(([k, v]) => (
           <div key={k} className="flex items-baseline justify-between gap-4">
-            <dt className="font-mono text-[11px] tracking-[0.02em] text-ink/50">{k}</dt>
+            <dt className="font-mono text-[11px] tracking-[0.02em] text-ink/50">
+              {k}
+            </dt>
             <dd className="text-right font-body text-sm text-ink/85">{v}</dd>
           </div>
         ))}

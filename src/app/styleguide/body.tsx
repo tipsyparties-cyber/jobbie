@@ -303,7 +303,6 @@ export function StyleguideBody() {
       <Section title="The hero's rising cards" refs="A9">
         <div className="max-w-xl">
           <RisingCards
-            ground={SKY}
             cards={HERO_CARDS.slice(0, 4)}
           />
         </div>

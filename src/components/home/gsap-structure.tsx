@@ -10,7 +10,7 @@ import { RisingCards } from "@/components/heyday/rising-cards";
 import { DecorSuns } from "@/components/heyday/decor-suns";
 import { Button } from "@/components/ui/button";
 import { HERO_CARDS } from "@/lib/hero-cards";
-import { CREAM, SAGE, BLUE, SKY, YELLOW, LAVENDER } from "@/lib/palette";
+import { CREAM, SAGE, BLUE, YELLOW, LAVENDER } from "@/lib/palette";
 import { SHELL, Rule, Braced, Pill } from "@/components/home/section-kit";
 import { CTA, SITE } from "@/lib/site";
 
@@ -115,7 +115,7 @@ export function GsapHero() {
               rebooking — which is the hero's actual argument: not "here is
               a quoting tool" but "here is your whole year, running". */}
           <div className="hidden lg:block">
-            <RisingCards cards={HERO_CARDS} ground={SKY} />
+            <RisingCards cards={HERO_CARDS} />
           </div>
         </div>
       </div>
