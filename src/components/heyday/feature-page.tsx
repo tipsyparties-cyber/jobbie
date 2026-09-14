@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import Link from "next/link";
 import {
   PageHero,
@@ -15,6 +16,7 @@ import { Screen, ScreenRow, ScreenAction } from "@/components/heyday/screen";
 import { Card, Panel, Sticker, StatusChip } from "@/components/ui/surfaces";
 import { Button } from "@/components/ui/button";
 import { QuoteLeakCalculator } from "@/components/heyday/quote-leak-calculator";
+import { InboxAnimation } from "@/components/heyday/inbox-animation";
 import {
   featureBySlug,
   featureHref,
@@ -53,6 +55,21 @@ import { PAPER, CREAM, SKY, LAVENDER, INK } from "@/lib/palette";
  *    convincing fake screenshot of software that does not exist yet is
  *    the most persuasive lie a page like this could tell.
  * ==================================================================== */
+
+/**
+ * Features whose hero picture is drawn rather than described.
+ *
+ * The rest of the site's illustrations are descriptions of a screen,
+ * labelled as illustrations — which is the honest default when the
+ * software does not exist yet. A few features earn a real drawing because
+ * the picture IS the argument, and this is the list.
+ *
+ * Follow-ups is the other one the brief names explicitly (T2, "two
+ * special pages"): it uses the workflow-builder still.
+ */
+const HERO_PICTURE: Record<string, ReactNode> = {
+  inbox: <InboxAnimation />,
+};
 
 export function FeaturePage({ feature }: { feature: HeydayFeature }) {
   const group = groupById(feature.group)!;
@@ -161,13 +178,19 @@ export function FeaturePage({ feature }: { feature: HeydayFeature }) {
               <Icon name={feature.icon} size={56} ground={PAPER} />
             </Sticker>
             <Panel className="!p-6" style={{ backgroundColor: heroPanel }}>
-              <Screen title={feature.name}>
-                <ScreenRow meta={group.name}>{feature.pain}</ScreenRow>
-                <ScreenRow meta="illustration" hot>
-                  {feature.howItWorks?.[0]?.screen ?? feature.searchLine}
-                </ScreenRow>
-                <ScreenAction>{CTA.comingSoon.label}</ScreenAction>
-              </Screen>
+              {/* A few features have a picture worth drawing properly
+                  rather than describing. Everything else gets the
+                  labelled description, which is honest and which nobody
+                  will mistake for a screenshot. */}
+              {HERO_PICTURE[feature.slug] ?? (
+                <Screen title={feature.name}>
+                  <ScreenRow meta={group.name}>{feature.pain}</ScreenRow>
+                  <ScreenRow meta="illustration" hot>
+                    {feature.howItWorks?.[0]?.screen ?? feature.searchLine}
+                  </ScreenRow>
+                  <ScreenAction>{CTA.comingSoon.label}</ScreenAction>
+                </Screen>
+              )}
             </Panel>
           </div>
         }
