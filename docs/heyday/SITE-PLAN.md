@@ -257,3 +257,53 @@ Built on branch `redesign/mono-binary-intro`. **63 static routes** so far.
 - **Tipsy Parties is never named on the site.**
 - **No invented customers, numbers, prices, ratings or quotes.** Statistics
   come from `lib/stats-bank.ts` by row number and print their source.
+
+---
+
+## 6. Session close — 14 September 2026
+
+Four more commits after the table in section 5:
+
+| What | Commit |
+|---|---|
+| Handover written into this file | `b8c8dac` |
+| Hero cards rebuilt as a CHAIN, not a window | `24c12a8` |
+| Hard edges; the strip runs under the header | `0e7fc60` |
+
+### What the hero cards are now
+
+One connected strip of eight cards, stepped up by exactly one card at a time
+and holding. Russell rejected the first build — a window with one card
+rising at a time — and he was right: that reads as a slideshow of unrelated
+screens, where a chain reads as steps in a sequence, and the sequence is the
+hero's whole argument.
+
+- `MOVE` 0.55s, `HOLD` 1.15s in `rising-cards.tsx`. Quick step, long hold,
+  because the hold is where the card is read.
+- The loop is seamless because the first card is rendered again at the end,
+  so the reset lands on the same card and cannot be seen.
+- **No gradient mask.** A fade reads as mist. Real page furniture does the
+  clipping, which is how anyone.com gets a hard edge.
+
+### The one decision open, for Russell
+
+**The bottom of the strip is a hard cut, not an occlusion.**
+
+The top is genuinely covered by the header, which is opaque and fixed at
+z-100. The bottom should be covered by the next section sliding over it, as
+anyone.com does — but the sections are transparent by design, because the
+ground colour fades between them on one fixed layer behind everything.
+
+1. **Give the section after the hero an opaque background** in its own
+   ground colour. The cards get properly occluded; that one boundary stops
+   fading.
+2. **Leave the hard cut.** Visually very close, nothing else changes.
+
+### Where to pick up
+
+Phase 4, per section 5: `/features/ai` (T11), `/how-it-works` (T5),
+`/who-its-for` (T6), `/stories` and the seven stories (T7).
+
+Before that, Russell should read the 46 feature pages. They all come from
+one template and one data file, so a wrong shape is wrong forty-six times,
+and it is far cheaper to fix before phases 4–8 lean on the same patterns.
