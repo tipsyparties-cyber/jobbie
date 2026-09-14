@@ -43,20 +43,26 @@ export const metadata: Metadata = {
     images: ["/og-image.png"],
   },
   /**
-   * A paper H on a blue tile — the colours the Heyday sun takes on a
-   * blue ground (A11). Not orange: orange is the action colour, and a
-   * favicon is not an action.
+   * Russell's new master logo.
    *
-   * Not the sun, which spec A9 asks for. At 16px the sun's eight strokes
-   * turn to mush, for the same reason the icon family has `-small`
-   * versions at 24px and under. The app icon matches the favicon rather
-   * than using the sun at 180px, because two icons for one product is
-   * worse than one that diverges from the spec.
+   * CAVEAT, and it matters: the file in `public/brand/heyday-logo.png` is
+   * a 160×153 screenshot crop, because that is what was available. It is
+   * plenty for a 16 or 32px browser tab, which is what a favicon is. It
+   * is NOT enough for the 180px home-screen icon, and it has the rounded
+   * cream tile baked into it — iOS applies its own mask, so a pre-rounded
+   * tile will show a halo at the corners.
    *
+   * Both of those need the vector. Until it arrives, the tab is right and
+   * the home-screen icon is passable rather than good. See
+   * QUESTIONS-FOR-RUSSELL.
+   *
+   * The H that was here has gone. It only existed because the old sun
+   * turned to mush at 16px; this mark is drawn to hold at small sizes and
+   * is the actual logo, so it wins on both counts.
    */
   icons: {
-    icon: [{ url: "/favicon.svg", type: "image/svg+xml" }],
-    apple: [{ url: "/apple-icon.svg", type: "image/svg+xml" }],
+    icon: [{ url: "/favicon.png", type: "image/png" }],
+    apple: [{ url: "/favicon.png", type: "image/png" }],
   },
 };
 

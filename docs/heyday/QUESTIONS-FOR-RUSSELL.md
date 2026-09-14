@@ -194,3 +194,35 @@ gap between our site and the prototype.
 - **`node scripts/crawl.mjs`** — checks every page loads and has proper
   metadata. 107 pages, all passing.
 - **`node scripts/vs-prototype.mjs`** — the prototype comparison above.
+
+---
+
+## 6. Added later — the new master logo
+
+**I need the vector.**
+
+The new logo is in as the favicon and it looks right in a browser tab.
+But the file I had to work from is a **160×153 screenshot crop**, taken
+from the image in chat, because no source file was available.
+
+That is genuinely fine for a favicon — a tab renders it at 16 or 32px.
+It is not fine for anything else:
+
+- **The home-screen icon** is 180px, so a 160px source is already being
+  stretched. It currently points at the same file and is passable rather
+  than good.
+- **The crop has the rounded cream tile baked in.** iOS applies its own
+  mask to a home-screen icon, so a tile that is already rounded shows a
+  pale halo at the corners. A full-bleed version fixes it.
+- **Share images** are 1200×630 and would be unusable from this.
+
+**What would help, in order:** the SVG. Failing that, a PNG at 512px or
+more, ideally two — one with the tile and one of the mark alone on
+transparency.
+
+**A second question while the logo is open:** the site still uses the
+eight-ray sun from the brief pack — in the header, the footer, the group
+marks, the 404 and the morphing shapes. Is the new mark replacing that
+too, or is it a logo that sits alongside the sun the way a wordmark does?
+That answer changes a lot more than the favicon, so it is worth being
+explicit about.
