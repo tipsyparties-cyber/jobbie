@@ -52,7 +52,7 @@ export async function generateMetadata({
   const r = rivalBySlug(slug);
   if (!r) return {};
   return {
-    title: `${SITE.name} vs ${r.name}: an honest comparison | ${SITE.name}`,
+    title: `${SITE.name} vs ${r.name}: an honest comparison`,
     description: r.intro.slice(0, 155),
   };
 }

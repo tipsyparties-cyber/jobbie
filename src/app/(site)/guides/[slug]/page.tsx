@@ -25,7 +25,7 @@ export async function generateMetadata({
   const g = guideBySlug(slug);
   if (!g) return {};
   return {
-    title: `${g.title} | ${SITE.name}`,
+    title: `${g.title}`,
     description: g.line,
     // The sample is never indexed. It exists so the template can be seen.
     robots: { index: false, follow: false },

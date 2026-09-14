@@ -19,7 +19,7 @@ import { PAPER, SKY } from "@/lib/palette";
  * ==================================================================== */
 
 export const metadata: Metadata = {
-  title: `The ${SITE.name} blog | ${SITE.name}`,
+  title: `The ${SITE.name} blog`,
   description:
     "Notes on running an events, class or service business: pricing, replying fast, staffing and getting paid.",
 };

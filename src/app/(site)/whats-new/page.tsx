@@ -21,7 +21,7 @@ import { PAPER, BLUE } from "@/lib/palette";
  * ==================================================================== */
 
 export const metadata: Metadata = {
-  title: `What's new in ${SITE.name} | ${SITE.name}`,
+  title: `What's new in ${SITE.name}`,
   description:
     "Product updates for Heyday. The first ones arrive with early access.",
 };

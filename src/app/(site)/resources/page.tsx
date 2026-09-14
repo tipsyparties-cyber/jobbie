@@ -20,7 +20,7 @@ import { PAPER, CREAM, SKY, LAVENDER } from "@/lib/palette";
  * ==================================================================== */
 
 export const metadata: Metadata = {
-  title: `Free tools, templates and guides for event, class and service businesses | ${SITE.name}`,
+  title: `Free tools, templates and guides`,
   description:
     "Tools, templates and guides for businesses that sell their time. No email needed.",
 };

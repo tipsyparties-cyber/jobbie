@@ -32,9 +32,9 @@ import { PAPER, CREAM, SKY, LAVENDER } from "@/lib/palette";
  * ==================================================================== */
 
 export const metadata: Metadata = {
-  title: "How Heyday works: one workflow from enquiry to rebooking | Heyday",
+  title: "How it works: enquiry to rebooking",
   description:
-    "Twelve steps, in the order they really happen: what your customer does, what you do, and what Heyday does for you. From the first hello to the next booking.",
+    "Twelve steps, in the order they really happen: what your customer does, what you do, and what Heyday does for you.",
 };
 
 export default function HowItWorksPage() {

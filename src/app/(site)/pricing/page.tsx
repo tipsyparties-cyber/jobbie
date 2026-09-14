@@ -40,7 +40,7 @@ import { PAPER, CREAM, SKY, LAVENDER } from "@/lib/palette";
  * ==================================================================== */
 
 export const metadata: Metadata = {
-  title: `${SITE.name} pricing: plans for every stage of your business | ${SITE.name}`,
+  title: `Pricing: a plan for each stage of your business`,
   description:
     "Try Heyday free, pick a plan later. Three plans for where your business is now, with card fees shown before you sign up. Prices are being finalized.",
 };

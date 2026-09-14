@@ -21,7 +21,7 @@ import { PAPER, CREAM } from "@/lib/palette";
  * ==================================================================== */
 
 export const metadata: Metadata = {
-  title: `Free quote, follow-up and invoice templates | ${SITE.name}`,
+  title: `Free quote, follow-up and invoice templates`,
   description:
     "A quote template, four follow-up messages and an invoice template, for businesses that sell their time. Free, and no email needed.",
 };

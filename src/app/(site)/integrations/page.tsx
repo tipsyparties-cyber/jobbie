@@ -27,9 +27,9 @@ import { PAPER, CREAM } from "@/lib/palette";
  * ==================================================================== */
 
 export const metadata: Metadata = {
-  title: `${SITE.name} integrations: payments, accounts, calendars, ads and marketplaces | ${SITE.name}`,
+  title: `Integrations: payments, accounts, calendars and ads`,
   description:
-    "Heyday connects to the tools you already use: Stripe, QuickBooks, Xero, Google Calendar, Google and Microsoft Ads, WhatsApp, and the marketplaces you already sell on.",
+    "Heyday connects to Stripe, QuickBooks, Xero, Google Calendar, Google and Microsoft Ads, WhatsApp, and the marketplaces you already sell on.",
 };
 
 export default function IntegrationsPage() {

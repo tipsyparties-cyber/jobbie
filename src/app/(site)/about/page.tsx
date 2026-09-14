@@ -26,7 +26,7 @@ import { PAPER, CREAM, SKY, LAVENDER } from "@/lib/palette";
  * ==================================================================== */
 
 export const metadata: Metadata = {
-  title: `About ${SITE.name} | ${SITE.name}`,
+  title: `About ${SITE.name}`,
   description:
     "Software that runs the whole business, for anyone who sells their time, their skills or an experience.",
 };

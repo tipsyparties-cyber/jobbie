@@ -37,9 +37,9 @@ import { PAPER, CREAM, SKY, LAVENDER } from "@/lib/palette";
 
 export const metadata: Metadata = {
   title:
-    "Who Heyday is for: software for event, class and service businesses | Heyday",
+    "Who it's for: events, classes, services and staffing",
   description:
-    "Built for businesses that sell time, skills and experiences. Mobile bars, caterers, photographers, class hosts, cleaners, beauty and staffing — from one person to a team.",
+    "For businesses that sell time, skills and experiences: mobile bars, caterers, photographers, class hosts, cleaners, beauty and staffing agencies.",
 };
 
 export default function WhoItsForPage() {

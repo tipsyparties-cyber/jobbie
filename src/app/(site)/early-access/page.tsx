@@ -18,7 +18,7 @@ import { PAPER } from "@/lib/palette";
  * ==================================================================== */
 
 export const metadata: Metadata = {
-  title: `Join ${SITE.name} early access | ${SITE.name}`,
+  title: `Join ${SITE.name} early access`,
   description:
     "Heyday is opening to businesses a few at a time. Join early access and we’ll let you know when it’s your turn.",
 };

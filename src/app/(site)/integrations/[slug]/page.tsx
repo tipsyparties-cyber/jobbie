@@ -45,7 +45,7 @@ export async function generateMetadata({
   const i = integrationBySlug(slug);
   if (!i) return {};
   return {
-    title: `${i.name} and ${SITE.name} | ${SITE.name}`,
+    title: `${i.name} and ${SITE.name}`,
     description: i.line,
   };
 }

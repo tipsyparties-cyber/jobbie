@@ -18,7 +18,7 @@ import { PAPER } from "@/lib/palette";
  * ==================================================================== */
 
 export const metadata: Metadata = {
-  title: `Free tools for event, class and service businesses | ${SITE.name}`,
+  title: `Free tools for event, class and service businesses`,
   description:
     "A pricing calculator, a quote template and a 16-question leak check. Free, no email needed, and nothing you type is saved or sent.",
 };

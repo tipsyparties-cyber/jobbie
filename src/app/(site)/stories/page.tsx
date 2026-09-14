@@ -21,7 +21,7 @@ import { PAPER, SKY } from "@/lib/palette";
  * ==================================================================== */
 
 export const metadata: Metadata = {
-  title: `Example stories: how businesses like yours could run on ${SITE.name} | ${SITE.name}`,
+  title: `Example stories: businesses like yours`,
   description:
     "Seven shapes of business, from a mobile bartender to a staffing agency, and the features each would switch on as it grows. Examples, not customers.",
 };

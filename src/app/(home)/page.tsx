@@ -60,9 +60,9 @@ import { PAPER, CREAM, LAVENDER, SKY, BLUE, INK } from "@/lib/palette";
  * ==================================================================== */
 
 export const metadata: Metadata = {
-  title: `${SITE.name}: all-in-one software for events, class and service businesses`,
+  title: `${SITE.name}: software for events, classes and services`,
   description:
-    "One workflow for your whole business, from the first hello to the next booking. Quotes, bookings, payments, your team's shifts and pay, follow-ups and reviews, in one place.",
+    "One workflow for your whole business, from the first hello to the next booking. Quotes, bookings, payments, your team's shifts and pay, and the aftercare.",
 };
 
 /** A pale sage for "Grows with you", matching the prototype's #E7ECE3. */

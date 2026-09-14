@@ -20,7 +20,7 @@ import { PAPER, SKY } from "@/lib/palette";
  * ==================================================================== */
 
 export const metadata: Metadata = {
-  title: `Guides for event, class and service businesses | ${SITE.name}`,
+  title: `Guides for event, class and service businesses`,
   description:
     "Guides on pricing, staffing and running an events, class or service business. Written by people who run one.",
 };

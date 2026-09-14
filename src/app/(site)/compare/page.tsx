@@ -24,7 +24,7 @@ import { PAPER } from "@/lib/palette";
  * ==================================================================== */
 
 export const metadata: Metadata = {
-  title: `${SITE.name} vs HoneyBook, Jobber, Check Cherry, Flashquotes and spreadsheets | ${SITE.name}`,
+  title: `${SITE.name} vs HoneyBook, Jobber and the rest`,
   description:
     "Honest comparisons with the date we checked them, including where the other tool is better. Heyday is coming soon; they’re here today.",
 };

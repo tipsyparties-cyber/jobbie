@@ -52,7 +52,7 @@ export async function generateMetadata({
   const story = storyBySlug(slug);
   if (!story) return {};
   return {
-    title: `How ${story.kind} could run on ${SITE.name} | ${SITE.name}`,
+    title: `How ${story.kind} could run on ${SITE.name}`,
     description: `${story.headline} An example, not a customer: ${SITE.name} is not open to other businesses yet.`,
   };
 }

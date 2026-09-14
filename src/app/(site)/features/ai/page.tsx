@@ -41,9 +41,9 @@ import { PAPER, CREAM, SKY, LAVENDER } from "@/lib/palette";
 
 export const metadata: Metadata = {
   title:
-    "Heyday AI: replies, setup and a receptionist, only as much as you want | Heyday",
+    "The AI: only as much as you want",
   description:
-    "You choose how much the AI does. It drafts, you approve — or at level 3 it sends the types of message you switch on, inside your rules. Turn it off with one switch.",
+    "You choose how much the AI does. It drafts and you approve, or it sends the message types you switch on, inside your rules. One switch turns it off.",
 };
 
 const AI_FEATURES: { slug: string; line: string }[] = [

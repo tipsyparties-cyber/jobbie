@@ -47,7 +47,7 @@ export async function generateMetadata({
   const t = toolBySlug(slug);
   if (!t) return {};
   return {
-    title: `${t.name} (free) | ${SITE.name}`,
+    title: `${t.name} (free)`,
     description: t.sub,
   };
 }
