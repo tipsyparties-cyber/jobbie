@@ -552,3 +552,12 @@ details[open] > .hd-faq-summary::after { content: "–"; }
 @media (prefers-reduced-motion: reduce) {
   .hd-hero-word > span { animation: none; }
 }
+
+/* Articles (T15). A reading column, flat on paper, with no rise and no
+   parallax — the motion table forbids both on body text, and text that
+   moves while you read it is text you read twice. */
+.hd-article p,
+.hd-article li { font-size: 18.5px; line-height: 1.7; }
+.hd-article ul,
+.hd-article ol { padding-left: 1.25rem; }
+.hd-article li { margin: 0.4rem 0; }

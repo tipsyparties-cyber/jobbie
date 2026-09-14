@@ -5,37 +5,37 @@ import { Sheet, Wrap, SheetLabel } from "@/components/heyday/sheet";
 import { SectionReveal, RevealGroup } from "@/components/heyday/motion";
 import { HoldingImage } from "@/components/heyday/holding-image";
 import { Card, StatusChip } from "@/components/ui/surfaces";
-import { POSTS, SAMPLE } from "@/lib/articles";
+import { GUIDES, SAMPLE } from "@/lib/articles";
 import { SITE } from "@/lib/site";
 import { PAPER, SKY } from "@/lib/palette";
 
 /* ==================================================================== *
- *  /blog — the index for template T15.
+ *  /guides — the index for template T15.
  *
- *  This replaces the old agency blog, which section 3 of the prompt says
- *  to remove. Same rule as the guides: the titles are planned, none is
- *  written, and nothing has been produced to make the page look
- *  inhabited.
+ *  The titles are planned, not written, and every card says so. Naming a
+ *  planned guide is honest; writing it on Jem's behalf so the page looks
+ *  full is not — and a guide about pricing a class, written by someone
+ *  who has never priced one, is exactly the kind of filler the brief's
+ *  first rule exists to stop.
  * ==================================================================== */
 
 export const metadata: Metadata = {
-  title: `The ${SITE.name} blog | ${SITE.name}`,
+  title: `Guides for event, class and service businesses | ${SITE.name}`,
   description:
-    "Notes on running an events, class or service business: pricing, replying fast, staffing and getting paid.",
+    "Guides on pricing, staffing and running an events, class or service business. Written by people who run one.",
 };
 
-export default function BlogPage() {
+export default function GuidesPage() {
   return (
     <>
       <PageHero
-        label="blog"
-        h1="Notes from building it."
-        highlight="building it"
+        label="guides"
+        h1="Guides from people who run an events business."
+        highlight="who run an events business"
         sub={
           <>
-            What we&rsquo;re learning about running an events, class or
-            service business, and about building software for one. Nothing
-            is published yet.
+            These are the guides we&rsquo;re writing. None is published yet,
+            and there is nothing here written to fill the page.
           </>
         }
       />
@@ -45,15 +45,15 @@ export default function BlogPage() {
           <SectionReveal>
             <SheetLabel>planned</SheetLabel>
           </SectionReveal>
-          <RevealGroup className="grid gap-[22px] lg:grid-cols-2">
-            {POSTS.map((p) => (
+          <RevealGroup className="grid gap-[22px] lg:grid-cols-3">
+            {GUIDES.map((g) => (
               <Card
-                key={p.slug}
+                key={g.slug}
                 className="flex h-full flex-col overflow-hidden"
                 style={{ backgroundColor: PAPER }}
               >
                 <HoldingImage
-                  art={p.art}
+                  art={g.art}
                   ratio="16:9"
                   tint={SKY}
                   radius={0}
@@ -61,9 +61,9 @@ export default function BlogPage() {
                 />
                 <div className="flex flex-1 flex-col gap-2 p-5">
                   <b className="font-display text-[19px] font-bold leading-tight">
-                    {p.title}
+                    {g.title}
                   </b>
-                  <p className="m-0 text-[15px] text-ink/60">{p.line}</p>
+                  <p className="m-0 text-[15px] text-ink/60">{g.line}</p>
                   <div className="mt-auto pt-3">
                     <StatusChip />
                   </div>
@@ -72,10 +72,11 @@ export default function BlogPage() {
             ))}
           </RevealGroup>
 
+          {/* The one sample, so the template can be looked at. */}
           <p className="mt-12 font-mono text-xs text-ink/55">
             The article template can be seen on{" "}
             <Link
-              href={`/blog/${SAMPLE.slug}`}
+              href={`/guides/${SAMPLE.slug}`}
               className="underline underline-offset-2"
             >
               a sample page
