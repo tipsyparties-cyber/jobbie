@@ -2,7 +2,7 @@
 
 import { useRef } from "react";
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
-import { HeydayMark } from "@/components/heyday/heyday-mark";
+import { HeydayLogo } from "@/components/heyday/heyday-logo";
 import { SAGE, SKY, LAVENDER } from "@/lib/palette";
 
 /* ==================================================================== *
@@ -112,7 +112,7 @@ function Sun({
         zIndex: 0,
       }}
     >
-      <HeydayMark shape="sun" sun={sun.colour} size={sun.size} />
+      <HeydayLogo size={sun.size} colour={sun.colour} />
     </motion.div>
   );
 }

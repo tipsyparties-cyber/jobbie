@@ -3,11 +3,9 @@
 import Link from "next/link";
 import { Wordmark } from "@/components/ui/wordmark";
 import { Button } from "@/components/ui/button";
-import { HeydayMark } from "@/components/heyday/heyday-mark";
-import { GROUPS } from "@/lib/groups";
+import { HeydayLogo } from "@/components/heyday/heyday-logo";
 import { SITE, TBC, CTA } from "@/lib/site";
 import { SKY } from "@/lib/palette";
-import type { ShapeName } from "@/lib/heyday-mark";
 
 /* ==================================================================== *
  *  The footer — spec part 1, A5.
@@ -20,8 +18,6 @@ import type { ShapeName } from "@/lib/heyday-mark";
  *  here holds still — a footer is where people go when they are looking
  *  for something specific, and movement there is only in the way.
  * ==================================================================== */
-
-const CYCLE_SHAPES = GROUPS.map((g) => g.shape as ShapeName);
 
 const COLUMNS: { head: string; links: { label: string; href: string }[] }[] = [
   {
@@ -85,11 +81,10 @@ export function SiteFooter() {
       <div className="mx-auto max-w-[1280px] px-6">
         <div className="flex flex-wrap items-start justify-between gap-8">
           <div className="flex items-center gap-3">
-            <HeydayMark
-              size={40}
-              sun={SKY}
-              cycle={{ shapes: CYCLE_SHAPES, every: 5200 }}
-            />
+            {/* Spin, slowly. The spec gives the footer the spin, and it
+                replaces the old cycle through six shapes — there are no
+                six shapes any more. */}
+            <HeydayLogo size={40} colour={SKY} motion="spin" />
             <Wordmark height={24} className="text-cream" />
           </div>
 

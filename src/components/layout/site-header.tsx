@@ -5,7 +5,8 @@ import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { Wordmark } from "@/components/ui/wordmark";
 import { Button } from "@/components/ui/button";
-import { HeydayMark, SectionMark } from "@/components/heyday/heyday-mark";
+import { SectionMark } from "@/components/heyday/heyday-mark";
+import { HeydayLogo } from "@/components/heyday/heyday-logo";
 import { Icon } from "@/components/heyday/icon";
 import { NAV, HEADER_ACTIONS, type NavItem, type NavPanel } from "@/lib/nav";
 import { BLUE, CREAM, PAPER } from "@/lib/palette";
@@ -214,7 +215,14 @@ export function SiteHeader() {
       <div className="bg-paper">
         <div className="relative mx-auto flex h-[72px] max-w-[1280px] items-center gap-3 px-6">
           <Link href="/" aria-label="Heyday, home" className="flex items-center gap-2.5">
-            <HeydayMark shape="sun" sun={BLUE} size={28} bounceOnLoad />
+            {/* Assemble, once per page load, per the logo spec section 2. Click
+              round on hover, which is what the spec gives hover. */}
+            <HeydayLogo
+              size={28}
+              colour={BLUE}
+              motion="assemble"
+              hoverMotion="click"
+            />
             <Wordmark height={22} asLink={false} className="text-ink" />
           </Link>
 

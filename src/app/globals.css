@@ -582,3 +582,91 @@ details[open] > .hd-faq-summary::after { content: "–"; }
 @media (prefers-reduced-motion: reduce) {
   .hd-cloud-drift { animation: none; }
 }
+
+/* ==================================================================== *
+ *  The Heyday mark's motion — docs/heyday/logo/HEYDAY-LOGO-SPEC.md, § 6.
+ *
+ *  Taken from the spec verbatim rather than reinterpreted. All seven act
+ *  on the three sub-paths, which is why HeydayLogo exposes them.
+ * ==================================================================== */
+
+.hd-logo .outer,
+.hd-logo .inner,
+.hd-logo .burst,
+.hd-logo .all {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+/* Signal — loading, or the header while a page is working. */
+.hd-logo.a-signal .outer { animation: hd-pulse 2.4s ease-in-out infinite; }
+.hd-logo.a-signal .inner { animation: hd-pulse 2.4s ease-in-out 0.28s infinite; }
+@keyframes hd-pulse {
+  0%, 60%, 100% { transform: scale(1); opacity: 1; }
+  25%           { transform: scale(1.07); opacity: 0.55; }
+}
+
+/* Assemble — the header lockup, once on page load. */
+.hd-logo.a-assemble .burst { animation: hd-spring 0.7s cubic-bezier(.34, 1.5, .64, 1) both; }
+.hd-logo.a-assemble .outer { animation: hd-fadein 0.5s 0.22s both; }
+.hd-logo.a-assemble .inner { animation: hd-fadein 0.5s 0.34s both; }
+@keyframes hd-spring {
+  from { transform: scale(0.25); opacity: 0; }
+  to   { transform: scale(1); opacity: 1; }
+}
+@keyframes hd-fadein {
+  from { opacity: 0; transform: scale(0.9); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+/* Click round — hover. */
+.hd-logo.a-click .all,
+.hd-logo-hover-click:hover .all { animation: hd-click45 0.8s cubic-bezier(.34, 1.3, .64, 1) both; }
+@keyframes hd-click45 {
+  from { transform: rotate(0); }
+  to   { transform: rotate(45deg); }
+}
+
+/* Together — something completes. */
+.hd-logo.a-together .outer,
+.hd-logo.a-together .inner { animation: hd-fromleft 0.7s cubic-bezier(.215, .61, .355, 1) both; }
+.hd-logo.a-together .inner { animation-delay: 0.08s; }
+.hd-logo.a-together .burst { animation: hd-fromright 0.7s cubic-bezier(.215, .61, .355, 1) both; }
+@keyframes hd-fromleft {
+  from { transform: translate(-22px, 0); opacity: 0; }
+  to   { transform: none; opacity: 1; }
+}
+@keyframes hd-fromright {
+  from { transform: translate(18px, 12px); opacity: 0; }
+  to   { transform: none; opacity: 1; }
+}
+
+/* Spin — a long wait, and the footer. */
+.hd-logo.a-spin .all { animation: hd-turn 12s linear infinite; }
+@keyframes hd-turn { to { transform: rotate(360deg); } }
+
+/* Sunrise — the first page load only. The spec is firm that it shows an
+   empty circle for its first moments, which reads as deliberate on a load
+   screen and as a broken image anywhere else. */
+.hd-logo.a-sunrise { clip-path: inset(0 0 12% 0); }
+.hd-logo.a-sunrise .all { animation: hd-risesun 2.1s cubic-bezier(.25, .65, .25, 1) both; }
+@keyframes hd-risesun {
+  from { transform: translateY(108px); }
+  to   { transform: translateY(0); }
+}
+
+/* Beat — the header, or a button that is waiting. */
+.hd-logo.a-beat .all { animation: hd-beat 2.6s ease-in-out infinite; }
+@keyframes hd-beat {
+  0%, 62%, 100% { transform: scale(1); }
+  74%           { transform: scale(1.18); }
+  86%           { transform: scale(0.96); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hd-logo .outer,
+  .hd-logo .inner,
+  .hd-logo .burst,
+  .hd-logo .all { animation: none !important; }
+  .hd-logo.a-sunrise { clip-path: none; }
+}
