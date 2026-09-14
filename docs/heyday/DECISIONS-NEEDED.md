@@ -27,6 +27,15 @@ Every placeholder left in the Heyday site spec, grouped by what it's waiting for
 | Other details to decide | Jem and Russell | 113 |
 | Rival facts to check on the day of publishing | Claude Code, on the day each page goes live | 18 |
 | Dates to update when publishing | Claude Code, when publishing | 11 |
+| Heyday's own results on the homepage | Jem and Russell | 2 |
+
+## Heyday's own results on the homepage
+
+The homepage has two places built for Heyday's own customer results, the way Jobber shows "12 hours+ saved a week" and "44% revenue growth". Heyday has no customers yet, so both stand in with sourced figures or example data until real numbers exist.
+
+- **The stats band (spec part 1, homepage section 4a):** three sourced industry figures (time, money, customers) stand in now. The note under them reads "[X] hours saved a week · [X]% more revenue in the first year · [X] average customer rating. [needs approval]". Decide when real results replace them, and approve the numbers.
+- **The goal tabs (spec part 1, homepage section 3a):** the floating stat cards are example data, labelled "Illustration · example data". Decide whether real customers' numbers ever replace them, and approve them if so. The quote slots stay "Placeholder" until a real quote is approved.
+- **Crediting Flashquotes:** the stats band and the "More bookings" tab use Flashquotes' figure (stats bank row 1), as the Instant quotes page does. If you'd rather not credit a direct rival, use row 2 (Harvard Business Review) instead.
 
 ## Prices
 

@@ -35,4 +35,6 @@ Where a document says `~/Projects/heyday-upandup-brief/`, it means this folder. 
 | `assets/heyday-family-sprite.svg` | The small icons: the mark plus one icon for every feature page (46), each with a small version |
 | `assets/heyday-workflow-builder-still.svg` | The drag-and-drop workflow builder, a still standing in for the demo video |
 | `assets/heyday-hero-still.svg` | A still frame of the homepage hero |
+| `reference/heyday-homepage-prototype.html` | **The homepage to match:** the whole homepage as a working page, with the layout, cards, colours and every kind of motion |
 | `reference/heyday-sun-mark.html` | Working page: the sun, every shape, the morph, the bounce and the more-info grow |
+| `reference/site/` | **The whole site as working pages:** one page per template (open `pages.html` for the list), sharing `kit.css` and `kit.js`. The homepage is `index.html` |

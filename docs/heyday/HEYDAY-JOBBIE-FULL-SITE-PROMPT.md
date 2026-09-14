@@ -95,8 +95,17 @@ If this session runs on the Mac where `~/Projects/heyday-upandup-brief` exists, 
    - the measurements taken from the reference sites (anyone.com, allinnhomeofstudents.com, themagic8.co.uk).
 
    Use it for the comparison pages, and check every rival fact again on the day you publish it.
-9. `docs/heyday/reference/heyday-sun-mark.html`: a working page from the design sessions. Open it in a browser.
-   - It runs every shape, the morph, the bounce and the more-info grow. Its script is the reference for `HeydayMark` and `MoreInfoSection`.
+9. `docs/heyday/reference/`: the working pages. Open them in a browser.
+   - **`heyday-homepage-prototype.html` is the homepage to match.** It's the whole homepage built as a working page. It shows:
+     - the two-column hero, with the rising cards;
+     - the sections with 56px rounded tops, and the Magic 8 cards;
+     - the rise and the parallax;
+     - both sideways scrolls and the sticky scroll;
+     - the feature rows growing into the page;
+     - the buttons.
+     Build the real homepage to look and move like it, with the copy from the spec.
+   - **`heyday-sun-mark.html`** runs every shape, the morph, the bounce and the more-info grow. Its script is the reference for `HeydayMark` and `MoreInfoSection`.
+   - **`site/` is the whole site as working pages,** one for every template, all sharing one stylesheet and one script. Open `site/pages.html` for the list, and match each page the way you match the homepage (section 4).
 10. `docs/heyday/assets/`: the files you'll copy in (section 6).
 11. In this repo, `docs/superpowers/specs/2026-09-10-mono-reskin-binary-intro-design.md`: read the "Do not re-propose" table, Addendum 34 and "Environment gotchas".
 
@@ -181,6 +190,7 @@ Tick every item before you call the build finished. The detail for each one is i
 - [ ] Reduced motion switches every movement off, and everything stays readable
 
 **Every page**
+- [ ] The homepage looks and moves like `reference/heyday-homepage-prototype.html`
 - [ ] Every page and section in `spec/` built, with its holding copy, holding images and product illustrations
 
 **Kept from the current site**
@@ -262,7 +272,38 @@ Build each template once and fill it from a data file. Every page follows the ru
 
 This section summarises the templates. The spec files in `spec/` write out every page in full, section by section, with holding copy. Build from those.
 
+**Every template has a working page to match, in `reference/site/`.** Open `reference/site/pages.html` in a browser for the list.
+- **One kit for every page.** The pages all share one stylesheet (`kit.css`) and one script (`kit.js`), and that's what keeps the whole site cohesive. Port them once into the design system: the tokens, `Button`, `Panel`, `Card`, `Sticker`, `SectionReveal`, `StickyScroll`, `HeydayMark`, `MoreInfoSection`, `GoalTabs` and `StatBand`. Then build each page from them.
+- **Match each page's layout, colours and motion.**
+- **Where they disagree:** the spec wins on copy, and the prototype wins on look and motion.
+
+| Template | Working page in `reference/site/` |
+|---|---|
+| T1 Home | `index.html` (the same as `reference/heyday-homepage-prototype.html`) |
+| T2 Feature page | `feature-quotes.html` |
+| T3 Group page | `group-win-the-client.html` |
+| T4 All features | `features.html` |
+| T5 How it works | `how-it-works.html` |
+| T6 Who it's for | `who-its-for.html` |
+| T7 Story page | `story-mobile-bartender.html` |
+| T8 Pricing | `pricing.html` |
+| T9 Compare hub and pages | `compare.html`, `compare-honeybook.html` |
+| T10 Integrations | `integrations.html` |
+| T11 The AI | `ai.html` |
+| T12 Resources hub | `resources.html` |
+| T13 Free tool | `tool-pricing-calculator.html` |
+| T14 The leak check | `leak-check.html` |
+| T15 Guide, blog and What's new | `blog-post.html` |
+| T16 Company and utility pages | `about.html`, `early-access.html`, `404.html` |
+
+The prototype's page titles aren't the search titles. Use the titles in the spec.
+
 ### T1. Home
+
+**Match `reference/heyday-homepage-prototype.html`.** It's the homepage built as a working page: the layout, the cards, the colours and every kind of motion. Build the real one to look and move like it, with the spec's copy.
+- **Two sections were added on 14 September:**
+  - the goal tabs, "What do you want more of?" (spec part 1, section 3a), after "What Heyday is";
+  - the stats band, "Time back. Money in. Happy customers." (section 4a), after the statement.
 
 Build it exactly as `HEYDAY-SITES-DESIGN-BRIEF.md`, B4, sets out, with the copy from SaaS brief 3.7 ("Homepage copy"). The hero uses Jem's new copy in `spec/01-global-and-home.md`, not the SaaS brief's.
 - Take the old site's sections off the homepage: the flock, orb, synergy brain, particle and neural canvases, and the binary intro. Leave their files on disk.

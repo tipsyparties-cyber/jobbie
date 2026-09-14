@@ -250,6 +250,37 @@ always one colour, and never black or orange.
   - The marquee drifts slowly and pauses on hover.
   - With reduced motion, everything is still.
 
+### 3a. What do you want more of? (the goal tabs)
+- **What it's for:** meet visitors at the reason they came. Five goals an owner has, each showing how Heyday gets them there, with a picture that changes to match. It's modelled on getjobber.com's "Get Noticed / Win Jobs / Work Smarter / Boost Profits" tabs.
+- **Layout:** on cream.
+  - The label and heading, centred, then a row of five pills. The pills are allinn buttons: 8px corners at rest, 28px on hover. The chosen pill is ink with cream text and 28px corners.
+  - Under the pills, one big panel (A5, 40px corners, 1px ink outline, hard shadow), in two halves:
+    - **Left, the picture area,** in the goal's colour. It holds a `HoldingImage` slot, a product illustration card (`ScreenIllustration`) and three floating stat cards, each a Magic 8 card with a label, a big number and a small change chip.
+    - **Right, on paper:** the heading, one line, a dark button, a thin rule, one sourced stat, and a customer quote slot signed "Placeholder".
+  - On phones the halves stack, picture first.
+- **Holding copy:**
+  - **Label:** `{ why they come to heyday }`
+  - **Heading (H2):** "What do you want **more of**?"
+
+  | Pill | Colour | Heading | Line | Button | Sourced stat | Stat cards (example data) | Holding image |
+  |---|---|---|---|---|---|---|---|
+  | More bookings | blue #93B7E8 | "Win the booking before the next business replies." | "Instant quotes, online booking and follow-ups that stop the moment they reply, so enquiries turn into bookings while you work." | "See Win the client →" | Row 1: "Quotes sent within 4 hours book 25% more often." | Enquiries this week 32 (↑ 22%) · First reply in 40 sec · Booked online 18 (↑ 13%) | a couple on a sofa booking on a phone, smiling |
+  | More time | lavender #D6D0F5 | "Stop doing the admin at midnight." | "Replies drafted for you, reminders and chasing that run themselves, and one inbox for every message. You handle the exceptions." | "See how it works →" | Row 20: "Small business owners spend 11 hours a week on admin and finance." | Admin this week 3 hrs (↓ 8 hrs) · Messages answered 128 · Follow-ups sent 31 | an owner closing a laptop and heading out in the evening light |
+  | More hands | sky #AEC9EE | "Fill every shift without the group chat." | "Offer the job to the right people and let the first yes take it. Clashes, travel and kit lists are checked before the day." | "See Run the day →" | none | Shifts filled 12 of 12 · Filled in 8 min · Clashes caught 3 | a crew in matching aprons setting up a bar together |
+  | More money, on time | sage #9AAD92 | "Get paid without chasing anyone." | "Deposits when they book, balances collected before the day, reminders that stop once it's paid, and your team paid from the job." | "See Get paid →" | Row 6: "59% of small businesses have invoices overdue by 30+ days." | Paid on time 96% (↑ 18%) · Overdue $0 · Tips this month $640 | an owner smiling at a payment notification, a van behind them |
+  | More regulars | yellow #FCFC72 | "Turn one booking into a regular." | "Next-day feedback, a referral code before the review ask, and win-back messages that go out at the right moment." | "See Get rebooked →" | Row 8: "Increasing customer retention by 5% increases profits by 25% to 95%." | Average rating 4.9 ★ · Referrals 14 (↑ 13%) · Booked again 9 | guests hugging the host at the end of a party |
+
+  - The quote slot reads: "A real customer quote about [the goal] goes here once one is approved." Signed "Placeholder".
+- **Image:** one `HoldingImage` per goal, with the art direction above. Real people mid-work, not posing.
+- **Icons and marks:** none.
+- **Motion:**
+  - The pills change shape on hover.
+  - Switching a pill swaps the panel. The stat cards, the illustration and the text rise 16px and fade in, 80ms apart, over 0.55s.
+  - The section rises in as a whole (SectionReveal).
+  - With reduced motion, it just switches.
+- **Accessibility:** a real tab list (`role="tablist"`, `tab`, `tabpanel`). The left and right arrow keys move between pills.
+- **Rule:** the floating stat cards are labelled "Illustration · example data" until real customers' numbers are approved. Never present them as results.
+
 ### 4. Statement
 - **What it's for:** name the problem in one big sentence.
 - **Layout:** one sentence at large size, centred, with lots of space around it.
@@ -259,6 +290,28 @@ always one colour, and never black or orange.
 - **Image:** none.
 - **Icons and marks:** none.
 - **Motion:** the statement's words reveal on scroll (the existing statement word reveal, Addendum 33).
+
+### 4a. Time, money, customers (the stats band)
+- **What it's for:** three headline numbers on what a business cares about most: its time, its money and its customers. It's modelled on honeybook.com's stats band (and the idea of getjobber.com's "12 hours+ saved" and "44% revenue growth"), but in Heyday's own colours and type: not dark, no tape, no cards.
+- **Layout:** a lavender #D6D0F5 block with ink text, centred.
+  - The label and heading.
+  - Three columns divided by thin ink lines (1.5px), stacked on phones with a line between each. No cards, no tape, no highlight behind the numbers. Each column has:
+    - a Geist Mono category (TIME, MONEY, CUSTOMERS);
+    - the number, large (up to about 88px), in ink, in the heading face;
+    - one line;
+    - the source, in small Geist Mono.
+  - Under the columns, a note in a dashed outline for Heyday's own results.
+- **Holding copy:**
+  - **Label:** `{ what a business cares about most }`
+  - **Heading (H2):** "Time back. Money in. **Happy customers.**"
+  - **Time (row 20):** "11 hours": "a week on admin for the average small business owner. Heyday is built to hand it back." Source: "American Express and Small Business Saturday UK, SME Business Barometer, July 2026. 1,000 UK business owners."
+  - **Money (row 1):** "25%": "more bookings when the quote goes out within 4 hours. Heyday's instant quotes are built to go out in seconds." Source: "Flashquotes, 32,000+ quoted leads from 100+ operators over 12 months. Vendor data."
+  - **Customers (row 18):** "90%": "of customers want an immediate reply. Heyday answers day and night, in your words." Source: "HubSpot Research (2018), cited in HubSpot's State of Service Report 2022."
+  - **Note:** "Heyday's own results go here once early-access customers have them: [X] hours saved a week · [X]% more revenue in the first year · [X] average customer rating. Until then, these sourced figures stand in. [needs approval]"
+- **Rule:** Jobber's numbers are its own customers' results. Heyday doesn't have any yet, so these are sourced industry figures from `STATS-BANK.md`. When real results exist, swap in Heyday's own, in the same three places, once Jem and Russell approve them.
+- **Image:** none.
+- **Icons and marks:** none.
+- **Motion:** the three columns rise in, 150ms apart. Yellow never touches orange, so there's no orange inside the band.
 
 ### 5. How Heyday runs your day (sideways scroll 1)
 - **What it's for:** the whole-workflow idea, which people mustn't miss. It pins, and scrolling moves the twelve steps sideways.

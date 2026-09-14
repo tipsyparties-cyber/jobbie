@@ -358,7 +358,9 @@ The copy comes from `HEYDAY-SAAS-WEBSITE-BRIEF.md` section 3.7, "Homepage copy".
    - **Left:** the label, headline, line and small line (B3), then "Start free trial" (primary, with arrow) and "Book a demo" (ghost).
    - **Right:** `RisingCards` with the eight workflow cards (B5). See `heyday-hero-still.svg`.
 3. **What Heyday is:** the plain description and search wording, with feature links and the business-type marquee (spec part 1, homepage section 3).
+   3a. **What do you want more of?** (getjobber.com's tabbed pills; spec part 1, homepage section 3a): five pills for what an owner comes for (more bookings, more time, more hands, more money on time, more regulars). Clicking a pill swaps the picture, the floating stat cards and the words, with a sourced stat and a quote slot.
 4. **Statement:** `{ why Heyday }` and "Six apps, a group chat and your evenings. That's how most small businesses run. It doesn't have to be." One big sentence, lots of space.
+   4a. **Time, money, customers: the stats band** (after getjobber.com's results band and honeybook.com's stats band, in Heyday's colours, not dark; spec part 1, homepage section 4a): a lavender block with three headline numbers (time, money, customers), big ink numbers divided by thin ink lines, each with its source. Not dark, no tape, no cards. Heyday's own results replace them once real customers have them.
 5. **Sideways scroll 1, "How Heyday runs your day"** (B6): the twelve steps of the real flow, grouped under the six group names, on the Heyday line. Heading: "One workflow for your whole business, from the first hello to the next booking."
 6. **The feature rows, kept as Russell chose them** (the design record's Addendum 34):
    - These are the four "Stop…" rows, with the highlighted phrase inside each headline, alternating sides, and no dividers.
