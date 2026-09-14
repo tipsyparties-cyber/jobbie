@@ -1,14 +1,18 @@
 import type { Metadata, Viewport } from "next";
 import { serif, sans, hero, display, mono } from "@/lib/fonts";
-import { SITE } from "@/lib/site";
+import { SITE, PROJECT } from "@/lib/site";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
 
 /**
- * Locally the tab leads with the product name, so this project can be told
- * apart at a glance from the other site running on localhost. Name first
- * because tabs truncate from the right.
+ * Locally the tab leads with the PROJECT name — "Heyday Jobbie" — so
+ * this repo can be told apart at a glance from the Heyday marketplace
+ * project, which shares the brand and nothing else. Project name first,
+ * because tabs truncate from the right and the first word is the only
+ * one you can rely on seeing.
+ *
+ * In production the tab says Heyday, because that is the product.
  */
 const isDev = process.env.NODE_ENV === "development";
 
@@ -19,7 +23,7 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   title: isDev
-    ? { default: SITE.name, template: `${SITE.name} · %s` }
+    ? { default: PROJECT, template: `${PROJECT} · %s` }
     : {
         default: `${SITE.name} — ${SITE.promise}`,
         template: `%s | ${SITE.name}`,

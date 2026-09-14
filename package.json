@@ -1,5 +1,5 @@
 {
-  "name": "upandup",
+  "name": "heyday-jobbie",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -30,5 +30,6 @@
     "eslint-config-next": "16.2.1",
     "tailwindcss": "^4",
     "typescript": "^5"
-  }
+  },
+  "description": "The Heyday host software marketing site. Not the Heyday marketplace, which is a separate project."
 }

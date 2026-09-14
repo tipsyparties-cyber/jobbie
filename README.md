@@ -1,36 +1,84 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Heyday Jobbie
 
-## Getting Started
+The marketing site for **Heyday**, the host software: quotes, bookings,
+payments, the team who deliver the job, and the aftercare, in one workflow.
 
-First, run the development server:
+> **This is not the Heyday marketplace.** That is a separate project with
+> its own site and its own look — the consumer side, where customers find
+> and book these businesses. The two share a brand and nothing else.
+>
+> The repo is called *Heyday Jobbie* so the two can be told apart at a
+> glance. The product on every page is **Heyday**, one word. The project
+> name never appears on the site.
+
+## Running it
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm run dev:fresh      # port 3001 — use this one
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+`dev:fresh` clears `.next` first. Plain `npm run dev` can serve a **stale
+stylesheet** after `globals.css` changes: the page renders with markup that
+has no rules behind it, which looks like broken HTML rather than a caching
+problem. That has cost real time twice. See AGENTS.md.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm run build:safe     # build without killing a running dev server
+npm run build          # for CI, where nothing else is running
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+`next build` deletes the directory a dev server reads from, so a plain
+build while the preview is open leaves it serving a 500. `build:safe`
+builds elsewhere.
 
-## Learn More
+## Checking it
 
-To learn more about Next.js, take a look at the following resources:
+With the dev server running:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+node scripts/crawl.mjs          # every page: status, title, description, h1
+node scripts/vs-prototype.mjs   # each page against its reference page
+node scripts/check-links.mjs    # hrefs against routes, no server needed
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+`crawl.mjs` is the one that catches a broken link, because a wrong href is
+still a valid href and nothing else on the stack looks at them.
 
-## Deploy on Vercel
+## Where things are
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+| | |
+|---|---|
+| `docs/heyday/` | Jem's brief pack: the briefs, the spec, the research, the assets |
+| `docs/heyday/reference/site/` | **The prototype.** Every template as a working page. Open `pages.html` |
+| `docs/heyday/SITE-PLAN.md` | Every route, its template and its status |
+| `docs/heyday/QUESTIONS-FOR-RUSSELL.md` | What is waiting on a decision, and why |
+| `docs/heyday/STATS-BANK.md` | The only statistics the site may use |
+| `AGENTS.md` | Next.js version notes, and the stale-CSS trap |
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## The rules that are not negotiable
+
+From the brief, and they shape most of the code:
+
+- **Nothing claims more than is true.** No invented customers, numbers,
+  prices, ratings or quotes. Every statistic comes from the stats bank by
+  row number and prints its source, who it covers and what kind of
+  evidence it is.
+- **Every feature says "Coming soon"** until Jem and Russell decide
+  otherwise. The product is not open to other businesses.
+- **Placeholders stay visible,** exactly as written. They live in
+  `src/lib/site.ts`.
+- **Tipsy Parties is never named on the site.**
+- **No other company's logo** until Jem confirms it is allowed. Use names.
+- **Orange `#F26B2A` is a fill, never text,** and never touches yellow.
+
+## The shape of the code
+
+Words live in data; pages come from templates. Forty-six feature pages are
+one component and one JSON file, so the menu and the pages cannot disagree.
+
+| | |
+|---|---|
+| `src/lib/` | The data: features, groups, the flow, stats, compare, integrations |
+| `src/components/heyday/` | The design system and the page furniture |
+| `src/app/(home)/` | The homepage |
+| `src/app/(site)/` | Everything else, sharing one shell |

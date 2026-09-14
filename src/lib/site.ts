@@ -11,6 +11,22 @@
  *  They must appear on the page exactly as written.
  * ==================================================================== */
 
+/**
+ * The PROJECT's name, which is not the product's name.
+ *
+ * The product is Heyday, one word, and that is what every page says —
+ * the brief decided that and nothing here changes it.
+ *
+ * "Heyday Jobbie" exists only so this repo can be told apart from the
+ * Heyday marketplace project, which is a different site with its own
+ * look. They share a brand and nothing else, and two tabs both reading
+ * "Heyday" on localhost has already sent Russell to the wrong one.
+ *
+ * It appears in the dev browser tab, in package.json and in the README.
+ * It must never appear on a page.
+ */
+export const PROJECT = "Heyday Jobbie" as const;
+
 export const SITE = {
   /** The brand. One word (prompt section 1). */
   name: "Heyday",
