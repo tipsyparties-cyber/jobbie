@@ -226,3 +226,51 @@ marks, the 404 and the morphing shapes. Is the new mark replacing that
 too, or is it a logo that sits alongside the sun the way a wordmark does?
 That answer changes a lot more than the favicon, so it is worth being
 explicit about.
+
+---
+
+## 7. ANSWERED — the logo, 14 September 2026
+
+Russell's answers to the two questions in section 6. **These are decided.
+Do not re-ask them.**
+
+### 7.1 The new mark REPLACES the eight-ray sun everywhere
+
+Not alongside it. Everywhere.
+
+That is a bigger job than a favicon swap, because the sun currently does
+real work across the site, not just decoration:
+
+- `HeydayMark` — morphs out of the sun into each of the six group shapes
+- `heyday-mark.ts` / `heyday-shapes.json` — the morph engine, 8 strokes
+  and a core on a 100-unit square, ported from Jem's motion script
+- The six section marks, plus Infinity and the Loop
+- `DecorSuns` — the large sage/lavender/sky marks in the hero and the
+  sections (these are the ones in Russell's screenshot)
+- The footer's slow cycle through the six shapes
+- The 404's bounce-and-become-the-Loop
+- The AI page's sun → Loop → Infinity as the levels rise
+- The loading state (a spinning Loop)
+- `MoreInfoSection` — the shape grows to fill the row
+- The leak check's per-group result marks
+
+**The open question this creates:** the morph only works because all
+seven shapes are the same eight strokes and one core, so every point has
+somewhere to travel to. If the new mark is not built on that skeleton,
+the morph cannot be kept — and the group shapes, the Loop and Infinity
+all have to be rethought with it. Read `docs/heyday/logo/HEYDAY-LOGO-SPEC.md`
+before touching any of this, and if the two systems are incompatible,
+say so rather than quietly dropping the morph.
+
+### 7.2 The header logo animates with "the assemble version"
+
+The assemble animation from the logo pack, not the bounce it does now.
+
+`docs/heyday/logo/HEYDAY-LOGO-SPEC.md` should describe it. Build from
+that rather than from a guess.
+
+### 7.3 Also asked, in the same message
+
+Animate some of the icons used around the site. No further detail given,
+so use judgement and keep it to the motion table's spirit: movement lands
+one point, and anything not listed stays still.
