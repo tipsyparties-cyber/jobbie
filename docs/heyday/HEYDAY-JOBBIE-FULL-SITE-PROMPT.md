@@ -1,7 +1,11 @@
 Claude Code: you're building the whole Heyday host software website in this repo (jobbie, branch `redesign/mono-binary-intro`).
 - Build every page and feature we've planned, set out the way getjobber.com and honeybook.com set out theirs.
 - Use the Heyday brand, colours, marks, icons, transitions and animations across the whole site, but only where they make sense.
-- Keep everything already designed. Nothing gets dropped or simplified; you're expanding on it.
+- Keep everything we've designed together, which is what's in this pack: the briefs, the spec, and the working pages in `reference/`. Nothing in it gets dropped or simplified; you're expanding on it.
+- That doesn't mean keeping the old site's sections. Where the current site and the pack differ, the pack wins.
+  - The homepage is rebuilt to match `reference/heyday-homepage-prototype.html`.
+  - Every other page is built to match `reference/site/`.
+  - The only things kept from the current site are listed under "Kept from the current site" at the end of section 2.
 
 Read "What we're trying to achieve" and section 0 first, then follow the build order in section 7. Commit at the end of every phase.
 
