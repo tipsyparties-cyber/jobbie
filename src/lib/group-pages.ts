@@ -105,7 +105,7 @@ export const GROUP_PAGES: Record<GroupId, GroupPage> = {
   },
 
   "win-the-client": {
-    title: "Win the client: instant quotes, follow-ups and instant booking",
+    title: "Win the client: quotes, follow-ups and instant booking",
     headline: "Win the client, even while you’re busy.",
     highlight: "even while you’re busy",
     stepsHeading: "Caught, priced, followed up, booked.",
