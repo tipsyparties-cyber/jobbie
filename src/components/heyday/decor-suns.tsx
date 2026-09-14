@@ -3,7 +3,7 @@
 import { useRef } from "react";
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { HeydayMark } from "@/components/heyday/heyday-mark";
-import { SAGE, BLUE, SKY, LAVENDER } from "@/lib/palette";
+import { SAGE, SKY, LAVENDER } from "@/lib/palette";
 
 /* ==================================================================== *
  *  Decorative suns — design brief A10, added in pack 4.
@@ -37,13 +37,20 @@ export type DecorSun = {
   turn: number;
 };
 
-/** A default arrangement: three, different sizes, one crossing the edge. */
+/**
+ * The hero's three, matching the prototype: a large lavender one hanging
+ * off the left edge behind the label, a small sky one above the gap
+ * between the columns, and a big sage one low on the left that crosses
+ * into the section below.
+ *
+ * Positions are the prototype's, in the prototype's units — the first two
+ * are pinned to the left edge in pixels rather than percentages because
+ * they are anchored to the headline, not to the width of the page.
+ */
 export const HERO_SUNS: DecorSun[] = [
-  { top: "6%", left: "-5%", size: 190, colour: SAGE, drift: -90, turn: 14 },
-  { top: "4%", left: "80%", size: 130, colour: BLUE, drift: -140, turn: -20 },
-  // Sits low and hangs past the bottom, linking the hero to the section
-  // under it.
-  { top: "78%", left: "88%", size: 240, colour: LAVENDER, drift: -60, turn: 10 },
+  { top: "40px", left: "-50px", size: 150, colour: LAVENDER, drift: -90, turn: 14 },
+  { top: "56px", left: "calc(50% - 96px)", size: 62, colour: SKY, drift: -140, turn: -20 },
+  { top: "72%", left: "-4%", size: 240, colour: SAGE, drift: -60, turn: 10 },
 ];
 
 export const SECTION_SUNS: DecorSun[] = [
@@ -62,7 +69,7 @@ export function DecorSuns({ suns = HERO_SUNS }: { suns?: DecorSun[] }) {
     <div
       ref={ref}
       aria-hidden
-      className="pointer-events-none absolute inset-0 overflow-hidden"
+      className="pointer-events-none absolute inset-0"
     >
       {suns.map((s, i) => (
         <Sun key={i} sun={s} progress={scrollYProgress} />

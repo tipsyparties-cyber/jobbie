@@ -438,3 +438,122 @@ details[open] > .hd-faq-summary::after { content: "–"; }
 @media (max-width: 900px) {
   .hd-sheet ol[style*="--hd-steps"] { --hd-steps: 1; }
 }
+
+/* ==================================================================== *
+ *  The hero's rising cards — design brief A9, and the prototype's
+ *  `.cards-panel` / `.rc` (docs/heyday/reference/site/kit.css).
+ *
+ *  A blue panel with hard edges, and the eight cards rise through it one
+ *  at a time: up from below, a pause at reading height, then out of the
+ *  top. Eight cards, three seconds apart, on a 24-second loop, so one
+ *  card is at rest in the middle at any moment and the next is on its
+ *  way.
+ *
+ *  Driven by CSS keyframes rather than JavaScript because the timing is
+ *  fixed and the browser can run it off the main thread. The stagger is
+ *  one custom property per card.
+ * ==================================================================== */
+
+.hd-cards-panel {
+  position: relative;
+  height: 640px;
+  border-radius: 40px;
+  overflow: hidden;
+  border: 1px solid var(--color-ink);
+  box-shadow: 6px 10px 0 0 rgba(10, 10, 10, 0.08);
+}
+
+/* The faint outline shapes behind the cards (A10, B1). Paper at 55% on
+   blue: present enough to give the panel depth, never enough to compete
+   with the card in front of it. */
+.hd-outline-rects {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  border-radius: 40px;
+}
+.hd-outline-rects i {
+  position: absolute;
+  border: 1px solid rgba(251, 249, 246, 0.55);
+  border-radius: 60px;
+}
+
+.hd-rc {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 300px;
+  height: 420px;
+  margin-left: -150px;
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  animation: hd-rise 24s infinite both;
+  animation-delay: calc(var(--n) * 3s - 3s);
+  transform: translateY(700px);
+}
+
+@keyframes hd-rise {
+  0%     { transform: translateY(700px); animation-timing-function: cubic-bezier(.333, 0, .667, 1); }
+  6.95%  { transform: translateY(110px); }
+  10.4%  { transform: translateY(110px); animation-timing-function: cubic-bezier(.333, 0, .667, 1); }
+  20.8%  { transform: translateY(-520px); }
+  100%   { transform: translateY(-520px); }
+}
+
+/* Reduced motion: one card, held at reading height, and the rest gone.
+   A still stack of eight overlapping cards would be unreadable. */
+@media (prefers-reduced-motion: reduce) {
+  .hd-rc { animation: none; transform: translateY(110px); }
+  .hd-rc:not(:first-of-type) { display: none; }
+}
+
+/* The step dots under the panel (A8). */
+.hd-hline {
+  display: flex;
+  align-items: center;
+  margin: 18px auto 0;
+  max-width: 420px;
+}
+.hd-hline i {
+  flex: none;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 1.5px solid var(--color-ink);
+  background: var(--color-paper);
+  transition: all 0.3s;
+}
+.hd-hline i.is-on {
+  width: 14px;
+  height: 14px;
+  background: var(--color-orange);
+}
+.hd-hline b {
+  flex: 1;
+  height: 1.5px;
+  background: rgba(10, 10, 10, 0.35);
+}
+
+/* The hero headline: each word rises out of its own clipped box. */
+.hd-hero-word {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+  padding-bottom: 0.12em;
+  margin-bottom: -0.12em;
+}
+.hd-hero-word > span {
+  display: inline-block;
+  animation: hd-wordup 0.9s cubic-bezier(.215, .61, .355, 1) both;
+  animation-delay: calc(var(--i) * 70ms + 0.1s);
+}
+@keyframes hd-wordup {
+  from { transform: translateY(105%); }
+  to   { transform: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hd-hero-word > span { animation: none; }
+}

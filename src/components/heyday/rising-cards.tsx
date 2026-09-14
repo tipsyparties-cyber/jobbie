@@ -1,46 +1,40 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { motion, useReducedMotion } from "framer-motion";
-import { HeydayLine } from "@/components/heyday/heyday-line";
+import { useReducedMotion } from "framer-motion";
 import { Icon } from "@/components/heyday/icon";
-import { PAPER, ORANGE, CREAM } from "@/lib/palette";
+import { PAPER, ORANGE, CREAM, BLUE } from "@/lib/palette";
 
 /* ==================================================================== *
- *  The hero's rising cards — design brief A9.
+ *  The hero's rising cards — design brief A9, B5, and the prototype's
+ *  `.cards-panel` at docs/heyday/reference/site/index.html.
  *
- *  A CHAIN, not a window.
+ *  A blue panel with hard edges. The eight cards rise through it one at a
+ *  time: up from below, a pause at reading height, then out of the top.
+ *  Three seconds apart on a 24-second loop, so one card is always at rest
+ *  in the middle while the next is on its way.
  *
- *  The first build had each card rise into a clipped panel, hold, and leave
- *  on its own, which reads as a slideshow in a box. anyone.com and
- *  getjobber.com both do the opposite: the cards are joined in one strip
- *  that travels, so you see the one before and the one after. That is what
- *  makes it say "these are steps in a sequence" rather than "here are some
- *  unrelated screens" — and the sequence IS the argument the hero is
- *  making.
+ *  THIS REPLACES THE CHAIN. Russell asked earlier for one connected strip
+ *  that stepped up a card at a time, clipped by the header above and the
+ *  next section below; he has now seen the prototype and asked for that
+ *  instead. The prototype's panel is a deliberate frame — a bordered blue
+ *  window with faint outline shapes behind the cards — rather than a
+ *  strip that needs page furniture to clip it, so the occlusion problem
+ *  the chain was solving does not arise here at all.
  *
- *  So the whole set is one track, stepped up by exactly one card at a time
- *  and holding for a beat. The move is quick and the hold is long, because
- *  the hold is where the card is actually read; a constant crawl gives the
- *  eye nowhere to land.
- *
- *  The loop is seamless because the first card is rendered again at the
- *  end: the track travels the full length and, by the time it snaps back to
- *  zero, it is already showing that same card, so the reset cannot be seen.
- *
- *  HARD EDGES, no gradient. The strip runs from behind the fixed header
- *  down past the bottom of the hero, and is covered by real page furniture
- *  at both ends — exactly as anyone.com does it. A gradient fade reads as
- *  mist and gives away that the strip is a separate thing sitting on the
- *  page rather than part of it.
+ *  The motion is CSS keyframes, matching kit.css exactly: the timing is
+ *  fixed, so there is nothing for JavaScript to decide and the browser
+ *  can run it off the main thread. The only thing React does is move the
+ *  dots underneath, which have to stay in step with a loop they cannot
+ *  observe.
  * ==================================================================== */
 
 export type RisingCard = {
   /** "STEP 2". Geist Mono. */
   step: string;
   title: string;
-  /** Two or three label-and-value rows. Example data, and the panel's label
-   *  says so — nothing here is a real booking. */
+  /** Two or three label-and-value rows. Example data, and the panel says
+   *  so — nothing here is a real booking. */
   rows: [string, string][];
   /** The orange status pill. */
   pill: string;
@@ -48,12 +42,8 @@ export type RisingCard = {
   icon: string;
 };
 
-const CARD_H = 360;
-const GAP = 24;
-const STEP = CARD_H + GAP;
-/** Quick move, long hold. The hold is where the card is read. */
-const MOVE = 0.55;
-const HOLD = 1.15;
+/** One card every three seconds, matching the CSS loop. */
+const STEP_MS = 3000;
 
 export function RisingCards({
   cards,
@@ -64,20 +54,12 @@ export function RisingCards({
 }) {
   const still = useReducedMotion();
   const wrapRef = useRef<HTMLDivElement | null>(null);
-  const [running, setRunning] = useState(false);
-  const [wide, setWide] = useState(false);
   const [index, setIndex] = useState(0);
+  const [running, setRunning] = useState(false);
 
-  useEffect(() => {
-    const mq = window.matchMedia("(min-width: 1024px)");
-    const sync = () => setWide(mq.matches);
-    sync();
-    mq.addEventListener("change", sync);
-    return () => mq.removeEventListener("change", sync);
-  }, []);
-
-  /* Only while visible, and only while the tab is. An animation looping
-     behind a footer is pure battery. */
+  /* Only tick while the panel is on screen and the tab is visible. The
+     cards themselves are CSS and the browser pauses those for us; the
+     dots are ours to stop. */
   useEffect(() => {
     const el = wrapRef.current;
     if (!el) return;
@@ -95,138 +77,96 @@ export function RisingCards({
     };
   }, []);
 
-  const animate = running && wide && !still;
-  const n = cards.length;
-
-  /* One keyframe pair per card — arrive, then hold there. The final
-     keyframe is one card beyond the end, which is the duplicate. */
-  const { values, times, duration } = (() => {
-    const v: number[] = [];
-    const t: number[] = [];
-    let clock = 0;
-    for (let i = 0; i <= n; i++) {
-      v.push(-i * STEP);
-      t.push(clock);
-      if (i < n) {
-        clock += HOLD;
-        v.push(-i * STEP);
-        t.push(clock);
-        clock += MOVE;
-      }
-    }
-    return { values: v, times: t.map((x) => x / clock), duration: clock };
-  })();
-
-  /** Which card is at the centre, for the line underneath. */
   useEffect(() => {
-    if (!animate) return;
+    if (!running || still) return;
     const t = setInterval(
-      () => setIndex((i) => (i + 1) % n),
-      (HOLD + MOVE) * 1000
+      () => setIndex((i) => (i + 1) % cards.length),
+      STEP_MS
     );
     return () => clearInterval(t);
-  }, [animate, n]);
-
-  const chain = [...cards, cards[0]];
+  }, [running, still, cards.length]);
 
   return (
     <div ref={wrapRef} className={className}>
       <div
+        className="hd-cards-panel"
         role="img"
         aria-label="Example workflow, with example data: an enquiry becomes a quote, a booking, a staffed job, a payment, a review and a rebooking"
-        className="relative overflow-hidden"
-        style={{
-          // Tall enough to run from behind the fixed header down past
-          // the hero. Hard edges, no gradient: the cards are covered by the
-          // header above and the next section below, the way anyone.com
-          // does it. A soft fade reads as mist and hides the fact that the
-          // strip is part of the page rather than a video of one.
-          height: CARD_H + STEP * 2,
-        }}
+        style={{ backgroundColor: BLUE }}
       >
-        {animate ? (
-          <motion.div
-            aria-hidden
-            className="absolute inset-x-0 flex flex-col items-center"
-            style={{ gap: GAP, top: STEP }}
-            animate={{ y: values }}
-            transition={{
-              duration,
-              times,
-              ease: "easeInOut",
-              repeat: Infinity,
-              repeatType: "loop",
-            }}
-          >
-            {chain.map((card, i) => (
-              <CardFace key={`${card.step}-${i}`} card={card} />
-            ))}
-          </motion.div>
-        ) : (
-          /* Narrow, reduced motion, or off screen: the first card, still. */
+        {/* Faint outline shapes behind the cards (A10, B1), giving the
+            panel depth without competing with the card in front. */}
+        <div className="hd-outline-rects" aria-hidden>
+          <i style={{ left: -120, top: 120, width: 420, height: 560 }} />
+          <i style={{ left: 220, top: -160, width: 460, height: 380 }} />
+          <i style={{ left: 300, top: 380, width: 420, height: 420 }} />
+        </div>
+
+        {cards.map((card, i) => (
           <div
-            className="absolute inset-x-0 flex justify-center"
-            style={{ top: STEP }}
+            key={card.step}
+            aria-hidden
+            className="hd-rc rounded-2xl border-2 border-ink"
+            style={
+              {
+                "--n": i + 1,
+                backgroundColor: PAPER,
+                boxShadow: "11px 11px 0 0 rgba(10,10,10,0.08)",
+              } as React.CSSProperties
+            }
           >
-            <CardFace card={cards[0]} />
-          </div>
-        )}
-      </div>
+            <span className="font-mono text-xs font-medium tracking-[0.08em] text-ink/55">
+              {card.step}
+            </span>
 
-      <div className="mt-6 flex justify-center">
-        <HeydayLine
-          steps={cards.map((c) => c.step)}
-          current={animate ? index : 0}
-        />
-      </div>
-    </div>
-  );
-}
+            <span
+              className="grid h-16 w-16 place-items-center rounded-2xl"
+              style={{ backgroundColor: CREAM }}
+            >
+              <Icon name={card.icon} size={46} ground={CREAM} />
+            </span>
 
-function CardFace({ card }: { card: RisingCard }) {
-  return (
-    <div
-      className="flex w-[320px] shrink-0 flex-col rounded-2xl border-2 border-ink p-6"
-      style={{
-        height: CARD_H,
-        backgroundColor: PAPER,
-        boxShadow: "11px 11px 0 0 rgba(10,10,10,0.08)",
-      }}
-    >
-      <div className="flex items-start justify-between gap-3">
-        <span className="font-mono text-[12px] tracking-[0.02em] text-ink/55">
-          {card.step}
-        </span>
-        <span
-          className="inline-block shrink-0 rounded-full px-3 py-1 font-mono text-[11px] tracking-[0.02em] text-ink"
-          style={{ backgroundColor: ORANGE }}
-        >
-          {card.pill}
-        </span>
-      </div>
+            <b className="font-display text-[26px] font-extrabold leading-[1.1] tracking-[-0.01em]">
+              {card.title}
+            </b>
 
-      <span
-        aria-hidden
-        className="mt-5 inline-flex h-12 w-12 items-center justify-center rounded-xl"
-        style={{ backgroundColor: CREAM }}
-      >
-        <Icon name={card.icon} size={28} ground={CREAM} />
-      </span>
+            <dl className="m-0 grid gap-2">
+              {card.rows.map(([k, v]) => (
+                <div
+                  key={k}
+                  className="flex justify-between border-b border-ink/10 pb-1.5 text-[14.5px]"
+                >
+                  <dt className="text-ink/55">{k}</dt>
+                  <dd className="m-0 font-semibold">{v}</dd>
+                </div>
+              ))}
+            </dl>
 
-      <p className="mt-4 font-display text-2xl font-semibold leading-tight">
-        {card.title}
-      </p>
-
-      <dl className="mt-auto flex flex-col gap-2.5 border-t border-ink/12 pt-4">
-        {card.rows.map(([k, v]) => (
-          <div key={k} className="flex items-baseline justify-between gap-4">
-            <dt className="font-mono text-[11px] tracking-[0.02em] text-ink/50">
-              {k}
-            </dt>
-            <dd className="text-right font-body text-sm text-ink/85">{v}</dd>
+            <span
+              className="mt-auto self-start rounded-full border-[1.5px] border-ink px-3.5 py-[7px] font-display text-sm font-bold text-ink"
+              style={{ backgroundColor: ORANGE }}
+            >
+              {card.pill}
+            </span>
           </div>
         ))}
-      </dl>
+
+        {/* The panel says its own contents are made up, in the corner,
+            where a screenshot would carry a caption. */}
+        <span className="absolute bottom-[18px] left-6 font-mono text-[11.5px] text-ink/70">
+          Example data
+        </span>
+      </div>
+
+      {/* The eight step dots. */}
+      <div className="hd-hline" aria-hidden>
+        {cards.map((card, i) => (
+          <span key={card.step} className="contents">
+            {i > 0 ? <b /> : null}
+            <i className={!still && i === index ? "is-on" : undefined} />
+          </span>
+        ))}
+      </div>
     </div>
   );
 }
