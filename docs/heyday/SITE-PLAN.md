@@ -307,3 +307,72 @@ Phase 4, per section 5: `/features/ai` (T11), `/how-it-works` (T5),
 Before that, Russell should read the 46 feature pages. They all come from
 one template and one data file, so a wrong shape is wrong forty-six times,
 and it is far cheaper to fix before phases 4–8 lean on the same patterns.
+
+---
+
+## 7. Build complete — 14 September 2026, overnight
+
+All eight phases are done. **107 pages**, every one returning 200, every
+one with a title, a meta description and exactly one `<h1>`.
+
+### What exists
+
+| Phase | What | Routes |
+|---|---|---|
+| 0–1 | The design system, `/styleguide` | 1 |
+| 2 | Header, footer, the homepage rebuilt from the prototype | 1 |
+| 3 | The features index, six group pages, 46 feature pages | 53 |
+| 4 | `/features/ai`, `/how-it-works`, `/who-its-for`, `/stories` + 7 | 11 |
+| 5 | `/pricing`, `/compare` + 5, `/integrations` + 13 | 21 |
+| 6 | `/resources`, `/tools` + 3, `/templates`, `/guides`, `/blog` | 9 |
+| 7 | About, security, help, contact, demo, early access, login, for-AI, legal, 404 | 11 |
+| 8 | sitemap, robots, the crawl and the prototype comparison | — |
+
+### The three scripts, and what they are for
+
+Run the dev server first (`npm run dev:fresh`).
+
+- **`node scripts/crawl.mjs`** — follows every internal link from `/` and
+  checks status, title, description and heading structure. This is the one
+  that catches a broken link, because a wrong href is still a valid href
+  and nothing else on the stack looks at them.
+- **`node scripts/vs-prototype.mjs`** — reduces each reference page and its
+  live counterpart to visible text and reports what the prototype says that
+  the page does not. Content, not markup: the two are built completely
+  differently and identical markup was never the goal.
+- **`node scripts/check-links.mjs`** — the same link check without a
+  server, for literal hrefs only.
+
+### Two traps that cost real time, now fixed in the tooling
+
+1. **Editing `globals.css` while the dev server runs serves the OLD
+   stylesheet** under an unchanged chunk hash. The page renders with markup
+   that has no rules behind it, which looks like broken HTML — so the time
+   goes on hunting a layout bug that isn't there. `npm run dev:fresh`
+   avoids it; AGENTS.md has the two-command diagnosis.
+2. **`next build` deletes `.next`,** which is what a running dev server
+   reads from, so every production build left the preview showing a 500.
+   `npm run build:safe` builds elsewhere.
+
+### What is deliberately incomplete
+
+Everything in `docs/heyday/QUESTIONS-FOR-RUSSELL.md`. The short version:
+
+- Every price, the trial, support hours and the phone number are
+  placeholders, visible exactly as written.
+- `/about`'s story is unwritten, because it is Jem and Russell's and
+  because the Tipsy Parties question is theirs.
+- `/terms` and `/privacy` are section-by-section structures marked for
+  legal review, not documents. **The privacy notice is the load-bearing
+  one** — until it exists no form on the site may store anything, which is
+  what keeps the early-access form disabled.
+- The guides and blog have titles and one labelled sample. No filler.
+- `/whats-new` is empty.
+
+### The one open visual question
+
+The prototype draws specific product screens as SVG; ours describe what
+each screen shows, labelled as an illustration. That is honest and it is
+also the biggest remaining visual difference between the two. Drawing them
+properly is the single largest piece of work left, and it needs Russell to
+say whether it is worth it — question 4.2.
