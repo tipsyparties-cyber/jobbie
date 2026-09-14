@@ -28,8 +28,11 @@ import { PAPER, ORANGE, CREAM } from "@/lib/palette";
  *  end: the track travels the full length and, by the time it snaps back to
  *  zero, it is already showing that same card, so the reset cannot be seen.
  *
- *  Masked top and bottom with a gradient rather than a hard edge, so cards
- *  arrive and leave instead of being cut off by a frame.
+ *  HARD EDGES, no gradient. The strip runs from behind the fixed header
+ *  down past the bottom of the hero, and is covered by real page furniture
+ *  at both ends — exactly as anyone.com does it. A gradient fade reads as
+ *  mist and gives away that the strip is a separate thing sitting on the
+ *  page rather than part of it.
  * ==================================================================== */
 
 export type RisingCard = {
@@ -125,8 +128,6 @@ export function RisingCards({
   }, [animate, n]);
 
   const chain = [...cards, cards[0]];
-  const MASK =
-    "linear-gradient(to bottom, transparent 0, #000 15%, #000 85%, transparent 100%)";
 
   return (
     <div ref={wrapRef} className={className}>
@@ -135,16 +136,19 @@ export function RisingCards({
         aria-label="Example workflow, with example data: an enquiry becomes a quote, a booking, a staffed job, a payment, a review and a rebooking"
         className="relative overflow-hidden"
         style={{
-          height: CARD_H + STEP,
-          maskImage: MASK,
-          WebkitMaskImage: MASK,
+          // Tall enough to run from behind the fixed header down past
+          // the hero. Hard edges, no gradient: the cards are covered by the
+          // header above and the next section below, the way anyone.com
+          // does it. A soft fade reads as mist and hides the fact that the
+          // strip is part of the page rather than a video of one.
+          height: CARD_H + STEP * 2,
         }}
       >
         {animate ? (
           <motion.div
             aria-hidden
             className="absolute inset-x-0 flex flex-col items-center"
-            style={{ gap: GAP, top: STEP / 2 }}
+            style={{ gap: GAP, top: STEP }}
             animate={{ y: values }}
             transition={{
               duration,
@@ -162,7 +166,7 @@ export function RisingCards({
           /* Narrow, reduced motion, or off screen: the first card, still. */
           <div
             className="absolute inset-x-0 flex justify-center"
-            style={{ top: STEP / 2 }}
+            style={{ top: STEP }}
           >
             <CardFace card={cards[0]} />
           </div>

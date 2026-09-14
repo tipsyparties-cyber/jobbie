@@ -44,7 +44,7 @@ import { CTA, SITE } from "@/lib/site";
 
 export function GsapHero() {
   return (
-    <div className="relative min-h-screen py-24">
+    <div className="relative min-h-screen overflow-visible py-24">
       {/* Decorative suns, replacing the blurred orbs (A10, pack 4). Three,
           different sizes, one colour each, the last hanging past the bottom
           edge so it links the hero to the section under it. They sit behind
@@ -114,7 +114,12 @@ export function GsapHero() {
               (A9, B5). Eight steps, from the first enquiry to the
               rebooking — which is the hero's actual argument: not "here is
               a quoting tool" but "here is your whole year, running". */}
-          <div className="hidden lg:block">
+          {/* Pulled up so the strip starts behind the fixed header and is
+              covered by it — real page furniture doing the clipping, which
+              is how anyone.com gets a hard edge without a fade. The hero
+              itself must not clip, or the strip is cut at its own boundary
+              instead. */}
+          <div className="hidden self-start lg:block" style={{ marginTop: -160 }}>
             <RisingCards cards={HERO_CARDS} />
           </div>
         </div>
