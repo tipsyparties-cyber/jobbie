@@ -29,12 +29,31 @@ export type HeydayFeature = {
   searchLine?: string;
   intro?: string;
   outcomes?: { saves?: string; increases?: string; reduces?: string };
-  stats?: unknown;
-  example?: unknown;
-  howItWorks?: unknown;
-  situations?: unknown;
-  faq?: unknown;
+  /** Row numbers in lib/stats-bank. Never a figure typed in here. */
+  stats?: { statsBankRow: number }[];
+  /**
+   * "What it's costing you": the worked example.
+   *
+   * The maths is shown rather than asserted, because the point of the
+   * section is that the reader can check it against their own numbers —
+   * a total with no working is just another claim.
+   */
+  example?: { inputs?: string; maths?: string; result?: string };
+  /** The sticky scroll: three or four blocks, each with a screen. */
+  howItWorks?: {
+    label: string;
+    heading: string;
+    line: string;
+    /** What the illustration shows. Drawn as a ScreenIllustration. */
+    screen: string;
+  }[];
+  /** Three short situations, from different kinds of business. */
+  situations?: { business: string; situation: string }[];
+  /** Only questions the briefs can answer honestly. */
+  faq?: { q: string; a: string }[];
   related?: string[];
+  /** Jem's internal note. Never rendered. */
+  atTipsyToday?: string;
 };
 
 type Pack = {

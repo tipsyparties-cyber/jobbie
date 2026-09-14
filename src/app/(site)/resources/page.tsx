@@ -8,7 +8,7 @@ import { Card, StatusChip } from "@/components/ui/surfaces";
 import { Button } from "@/components/ui/button";
 import { TOOLS, TEMPLATES } from "@/lib/tools";
 import { GUIDES } from "@/lib/articles";
-import { SITE, TBC } from "@/lib/site";
+import { TBC } from "@/lib/site";
 import { PAPER, CREAM, SKY, LAVENDER } from "@/lib/palette";
 
 /* ==================================================================== *

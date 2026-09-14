@@ -1,367 +1,456 @@
-"use client";
-
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { Panel, Card, Sticker, StatusChip } from "@/components/ui/surfaces";
+import {
+  PageHero,
+  CTABlock,
+  FAQ,
+  Breadcrumbs,
+  Marked,
+} from "@/components/heyday/page-shell";
+import { Sheet, Wrap, SheetLabel } from "@/components/heyday/sheet";
 import { SectionReveal, RevealGroup } from "@/components/heyday/motion";
-import { SectionMark } from "@/components/heyday/heyday-mark";
+import { StickyScroll, type StickyBlock } from "@/components/heyday/sticky-scroll";
 import { Icon } from "@/components/heyday/icon";
-import { HeydayLine } from "@/components/heyday/heyday-line";
-import { DecorSuns, SECTION_SUNS } from "@/components/heyday/decor-suns";
+import { HoldingImage } from "@/components/heyday/holding-image";
+import { Screen, ScreenRow, ScreenAction } from "@/components/heyday/screen";
+import { Card, Panel, Sticker, StatusChip } from "@/components/ui/surfaces";
+import { Button } from "@/components/ui/button";
+import { QuoteLeakCalculator } from "@/components/heyday/quote-leak-calculator";
+import {
+  featureBySlug,
+  featureHref,
+  statusLabel,
+  type HeydayFeature,
+} from "@/lib/heyday-features";
 import { groupById } from "@/lib/groups";
-import { featureBySlug, statusLabel, type HeydayFeature } from "@/lib/heyday-features";
-import { statByRow } from "@/lib/stats-bank";
-import { CTA, TBC } from "@/lib/site";
-import { PAPER, CREAM, INK } from "@/lib/palette";
-import type { ShapeName } from "@/lib/heyday-mark";
+import { statByRow, sourceLine } from "@/lib/stats-bank";
+import { CTA, SITE, TBC } from "@/lib/site";
+import { PAPER, CREAM, SKY, LAVENDER, INK } from "@/lib/palette";
 
 /* ==================================================================== *
- *  The feature page — template T2.
+ *  The feature page — template T2, and the working page at
+ *  docs/heyday/reference/site/feature-quotes.html.
  *
- *  One template for all forty-six. The running order is Jobber's, plus
- *  Jem's additions and HoneyBook's FAQ:
+ *  One template, forty-six pages. Which means every decision here is made
+ *  forty-six times, and a section that is merely adequate is adequate
+ *  forty-six times over.
  *
- *    breadcrumb → hero → saves/increases/reduces → the proof →
- *    what it's costing you → how it works → for your kind of business →
- *    a customer quote → FAQ → related → closing
+ *  The running order is Jobber's, plus Jem's additions and HoneyBook's
+ *  FAQ: breadcrumb, hero, saves/increases/reduces, the proof, what it is
+ *  costing you, how it works, who it suits, a quote, the questions, what
+ *  pairs with it, the ask.
  *
- *  Two rules the template enforces rather than trusting a page to honour:
+ *  Three rules the template enforces rather than trusting each page to:
  *
- *  - The H1 is the owner's PAIN, not the feature name. "Stop losing
- *    bookings while you work out the price" is what someone searches for;
- *    "Instant quotes" is what we call it, and that goes in the line under,
- *    in the words people actually type.
- *  - A statistic can only come from the stats bank, by row number, and
- *    always prints its source and what kind of evidence it is. Row 1 is a
- *    direct rival's own marketing data, and a page that hides that is
- *    passing off a competitor's sales copy as a finding.
+ *  - **The H1 is the PAIN, not the feature name.** "Stop losing bookings
+ *    while you work out the price", not "Instant quotes". The name goes
+ *    underneath in the words people search for, and the same words go in
+ *    the page title.
+ *  - **A statistic comes from the stats bank by row number** and prints
+ *    its source, who it covers and what kind of evidence it is. A feature
+ *    with no approved figure shows nothing rather than borrowing one.
+ *  - **Nothing is drawn as a screenshot.** The data describes what each
+ *    illustration shows; the page renders that description, labelled. A
+ *    convincing fake screenshot of software that does not exist yet is
+ *    the most persuasive lie a page like this could tell.
  * ==================================================================== */
-
-type HowItWorks = { label: string; heading: string; line: string; screen: string };
-type Situation = { business: string; situation: string };
-type Faq = { q: string; a: string };
-type Example = { inputs: string; maths: string; result: string };
 
 export function FeaturePage({ feature }: { feature: HeydayFeature }) {
   const group = groupById(feature.group)!;
-  const how = (feature.howItWorks ?? []) as HowItWorks[];
-  const situations = (feature.situations ?? []) as Situation[];
-  const faq = (feature.faq ?? []) as Faq[];
-  const example = feature.example as Example | undefined;
-  const stats = (feature.stats ?? []) as { statsBankRow: number }[];
-  const related = (feature.related ?? [])
-    .map(featureBySlug)
-    .filter(Boolean)
-    .slice(0, 6) as HeydayFeature[];
+  const stat = feature.stats?.[0]
+    ? statByRow(feature.stats[0].statsBankRow)
+    : null;
 
-  const comingSoon = feature.status !== "live";
-  const cta = comingSoon ? CTA.comingSoon : CTA.primary;
+  const related = (feature.related ?? [])
+    .map((s) => featureBySlug(s))
+    .filter(Boolean)
+    .slice(0, 4) as HeydayFeature[];
+
+  const blocks: StickyBlock[] = (feature.howItWorks ?? []).map((b, i) => ({
+    id: `how-${i}`,
+    label: b.label.toLowerCase(),
+    title: b.heading,
+    colour: [SKY, LAVENDER, CREAM, group.ground][i % 4],
+    body: (
+      <>
+        <p className="m-0">{b.line}</p>
+        <p className="mt-3">
+          <Link
+            href={CTA.comingSoon.href}
+            className="font-display text-sm font-semibold underline underline-offset-[3px]"
+          >
+            {CTA.comingSoon.label} →
+          </Link>
+        </p>
+      </>
+    ),
+    picture: (
+      <Screen title={b.heading}>
+        <ScreenRow meta="illustration">{b.screen}</ScreenRow>
+        <ScreenAction>{CTA.comingSoon.label}</ScreenAction>
+      </Screen>
+    ),
+  }));
+
+  /* Ink is the group colour for Run the day, and an ink panel behind an
+     ink-outlined screen disappears. Sky stands in, the way A11 does for
+     the sun in the same situation. */
+  const heroPanel = group.colour === INK ? SKY : group.colour;
 
   return (
-    <div className="text-ink">
-      {/* ---- Hero ---- */}
-      <header className="relative" style={{ backgroundColor: group.ground }}>
-        <DecorSuns suns={SECTION_SUNS} />
-        <div className="relative mx-auto max-w-[1280px] px-6 pb-20 pt-10">
-          <nav aria-label="Breadcrumb" className="font-mono text-[12px] tracking-[0.02em] text-ink/55">
-            <Link href="/features" className="hover:text-ink">Features</Link>
-            <span className="px-2">›</span>
-            <Link href={`/how-it-works/${group.id}`} className="inline-flex items-center gap-1.5 hover:text-ink">
-              <SectionMark shape={group.shape as ShapeName} size={14} colour={group.colour} />
-              {group.name}
-            </Link>
-            <span className="px-2">›</span>
-            <span className="text-ink/80">{feature.name}</span>
-          </nav>
-
-          <div className="mt-10 grid items-center gap-12 lg:grid-cols-[1.05fr_0.95fr]">
-            <div>
-              <div className="flex flex-wrap items-center gap-3">
-                <StatusChip status={statusLabel(feature.status)} />
-                {feature.onlyOnHeyday && (
-                  <Sticker className="bg-paper px-3 py-1.5" tilt={-6}>
-                    <span className="font-mono text-[11px] tracking-[0.02em]">
-                      Only on Heyday
-                    </span>
-                  </Sticker>
-                )}
-              </div>
-
-              {/* The pain, not the feature name. */}
-              <h1 className="mt-7 max-w-[18ch] font-display text-[clamp(2rem,5vw,3.6rem)] font-semibold leading-[1.03] tracking-[-0.03em]">
-                {feature.pain ?? feature.name}
-              </h1>
-
-              {/* The feature in search words — the same words as the title. */}
-              <p className="mt-5 max-w-xl font-body text-lg leading-relaxed text-ink/70">
-                {feature.searchLine}
-              </p>
-
-              <div className="mt-8 flex flex-wrap gap-3">
-                <Button href={cta.href} variant="primary" arrow>
-                  {cta.label}
-                </Button>
-                <Button href={CTA.secondary.href} variant="ghost">
-                  {CTA.secondary.label}
-                </Button>
-              </div>
-            </div>
-
-            {/* The product screen. A tinted panel where the illustration
-                goes, labelled so nobody mistakes it for a screenshot. */}
-            <div className="relative">
-              <Panel className="!px-0 !py-0 overflow-hidden">
-                <div
-                  aria-hidden
-                  className="flex aspect-[4/3] w-full items-center justify-center"
-                  style={{ backgroundColor: CREAM }}
-                >
-                  <Icon name={feature.icon} size={72} ground={CREAM} />
-                </div>
-                <p className="px-6 py-4 font-mono text-[11px] tracking-[0.02em] text-ink/45">
-                  Illustration · example data
-                </p>
-              </Panel>
-            </div>
+    <>
+      <PageHero
+        crumbs={
+          <Breadcrumbs
+            items={[
+              { label: "Features", href: "/features" },
+              {
+                label: group.name,
+                href: `/how-it-works/${group.id}`,
+                shape: group.shape,
+                colour: group.sun,
+              },
+              { label: feature.name },
+            ]}
+          />
+        }
+        label={feature.name.toLowerCase()}
+        h1={feature.pain ?? feature.name}
+        chips={
+          <>
+            <StatusChip status={statusLabel(feature.status)} />
+            {feature.onlyOnHeyday ? (
+              <Sticker
+                className="px-3 py-1.5 font-display text-[13px] font-bold"
+                tilt={-6}
+                style={{
+                  backgroundColor: LAVENDER,
+                  boxShadow: "6px 6px 0 0 rgba(10,10,10,0.08)",
+                }}
+              >
+                Only on Heyday
+              </Sticker>
+            ) : null}
+          </>
+        }
+        sub={
+          <>
+            <b className="mb-3 block font-display text-xl font-bold text-ink">
+              {feature.searchLine}
+            </b>
+            {feature.intro}
+          </>
+        }
+        actions={
+          <>
+            <Button href={CTA.comingSoon.href} variant="primary" arrow>
+              {CTA.comingSoon.label}
+            </Button>
+            <Button href={CTA.secondary.href} variant="ghost">
+              {CTA.secondary.label}
+            </Button>
+          </>
+        }
+        aside={
+          <div className="relative">
+            {/* The feature's own icon, tilted onto the picture (T2, 2). */}
+            <Sticker
+              className="absolute -left-4 -top-6 z-[2] grid h-[86px] w-[86px] place-items-center p-3"
+              tilt={-8}
+              style={{ backgroundColor: PAPER }}
+            >
+              <Icon name={feature.icon} size={56} ground={PAPER} />
+            </Sticker>
+            <Panel className="!p-6" style={{ backgroundColor: heroPanel }}>
+              <Screen title={feature.name}>
+                <ScreenRow meta={group.name}>{feature.pain}</ScreenRow>
+                <ScreenRow meta="illustration" hot>
+                  {feature.howItWorks?.[0]?.screen ?? feature.searchLine}
+                </ScreenRow>
+                <ScreenAction>{CTA.comingSoon.label}</ScreenAction>
+              </Screen>
+            </Panel>
           </div>
-        </div>
-      </header>
+        }
+      />
 
-      {feature.intro && (
-        <section className="mx-auto max-w-[1280px] px-6 py-20">
-          <SectionReveal>
-            <p className="max-w-[65ch] font-body text-xl leading-relaxed text-ink/80">
-              {feature.intro}
-            </p>
-          </SectionReveal>
-        </section>
-      )}
+      {/* Saves / Increases / Reduces, on the Heyday line. */}
+      {feature.outcomes ? (
+        <Sheet colour={PAPER}>
+          <Wrap>
+            <SectionReveal>
+              <SheetLabel>what it does for you</SheetLabel>
+            </SectionReveal>
+            <div className="relative">
+              <span
+                aria-hidden
+                className="absolute left-[4%] right-[4%] top-1/2 -z-10 hidden h-0.5 bg-ink/25 lg:block"
+              />
+              <RevealGroup className="grid gap-5 lg:grid-cols-3">
+                {(
+                  [
+                    ["SAVES", feature.outcomes.saves],
+                    ["INCREASES", feature.outcomes.increases],
+                    ["REDUCES", feature.outcomes.reduces],
+                  ] as [string, string | undefined][]
+                ).map(([k, v]) =>
+                  v ? (
+                    <Card
+                      key={k}
+                      className="h-full p-[22px]"
+                      style={{ backgroundColor: PAPER }}
+                    >
+                      <b className="mb-1.5 block font-mono text-xs tracking-[0.08em] text-ink/55">
+                        {k}
+                      </b>
+                      <p className="m-0 font-display text-lg font-semibold leading-[1.35]">
+                        {v}
+                      </p>
+                    </Card>
+                  ) : null
+                )}
+              </RevealGroup>
+            </div>
+          </Wrap>
+        </Sheet>
+      ) : null}
 
-      {/* ---- Saves / Increases / Reduces ---- */}
-      {feature.outcomes && (
-        <section className="mx-auto max-w-[1280px] px-6 pb-20">
-          <RevealGroup className="grid gap-6 md:grid-cols-3">
-            {([
-              ["Saves", feature.outcomes.saves],
-              ["Increases", feature.outcomes.increases],
-              ["Reduces", feature.outcomes.reduces],
-            ].filter(([, v]) => v) as [string, string][]).map(([k, v]) => (
-              <Card key={k} className="bg-paper p-7">
-                <p className="font-mono text-[12px] tracking-[0.02em] text-ink/50">{k}</p>
-                <p className="mt-3 font-body text-base leading-relaxed">{v}</p>
-              </Card>
-            ))}
-          </RevealGroup>
-        </section>
-      )}
-
-      {/* ---- The proof ---- */}
-      {stats.length > 0 && (
-        <section className="mx-auto max-w-[1280px] px-6 pb-20">
-          {stats.map(({ statsBankRow }) => {
-            const s = statByRow(statsBankRow);
-            if (!s) return null;
-            return (
-              <SectionReveal key={statsBankRow}>
-                <Panel className="max-w-3xl">
-                  <p className="font-display text-[clamp(1.3rem,2.6vw,2rem)] font-semibold leading-snug">
-                    {s.claim}
+      {/* The proof. Only where a row is approved for this feature. */}
+      {stat ? (
+        <Sheet colour={CREAM}>
+          <Wrap>
+            <SectionReveal>
+              <SheetLabel>the proof</SheetLabel>
+              <div className="grid items-center gap-6 lg:grid-cols-[auto_minmax(0,1fr)]">
+                <p
+                  className="m-0 font-display font-extrabold leading-none tracking-[-0.04em]"
+                  style={{ fontSize: "clamp(56px, 7vw, 96px)" }}
+                >
+                  {stat.headline?.value ?? `Row ${stat.row}`}
+                </p>
+                <div>
+                  <p className="m-0 font-display text-xl font-bold leading-[1.35]">
+                    {stat.claim}
                   </p>
-                  {/* Always printed. The kind matters as much as the source:
-                      row 1 is a rival's own marketing data. */}
-                  <p className="mt-5 font-mono text-[12px] leading-relaxed tracking-[0.02em] text-ink/50">
-                    {s.source} · {s.covers} · {s.kind}
+                  <p className="mt-2 font-mono text-xs leading-relaxed text-ink/55">
+                    {sourceLine(stat)}
+                    {stat.kind.includes("direct rival")
+                      ? " [crediting a rival: Jem and Russell to decide]"
+                      : ""}
+                  </p>
+                </div>
+              </div>
+            </SectionReveal>
+          </Wrap>
+        </Sheet>
+      ) : null}
+
+      {/* What it's costing you: the worked example, with the maths shown. */}
+      {feature.example ? (
+        <Sheet colour={PAPER}>
+          <Wrap>
+            <SectionReveal>
+              <SheetLabel>what it&rsquo;s costing you</SheetLabel>
+              <h2 className="hd-h2 max-w-[24ch]">
+                What it&rsquo;s <span className="hd-hl">costing you</span>.
+              </h2>
+            </SectionReveal>
+
+            <div className="grid gap-10 lg:grid-cols-2">
+              <SectionReveal>
+                <Panel className="!p-[30px]">
+                  <b className="block font-display text-base font-semibold">
+                    Example numbers
+                  </b>
+                  <p className="mt-2 text-[15px] text-ink/65">
+                    {feature.example.inputs}
+                  </p>
+                  {/* The maths is shown, not asserted. A total with no
+                      working is just another claim, and the point of this
+                      section is that a reader can check it against their
+                      own numbers. */}
+                  <pre
+                    className="my-3.5 whitespace-pre-wrap rounded-xl px-[18px] py-4 font-mono text-[15px] leading-[1.7]"
+                    style={{ backgroundColor: CREAM }}
+                  >
+                    {feature.example.maths}
+                  </pre>
+                  <p className="m-0 font-display text-[22px] font-bold">
+                    {feature.example.result?.split(". Then")[0]}
                   </p>
                 </Panel>
               </SectionReveal>
-            );
-          })}
-        </section>
-      )}
 
-      {/* ---- What it's costing you ---- */}
-      {example && (
-        <section className="mx-auto max-w-[1280px] px-6 pb-20">
-          <SectionReveal>
-            <h2 className="font-display text-[clamp(1.6rem,3.4vw,2.6rem)] font-semibold tracking-[-0.02em]">
-              What it&apos;s costing you
-            </h2>
-            <Panel className="mt-8 max-w-3xl">
-              <p className="font-body text-sm leading-relaxed text-ink/65">{example.inputs}</p>
-              <p className="mt-5 font-mono text-[13px] leading-relaxed tracking-[0.02em]">
-                {example.maths}
-              </p>
-              <p className="mt-5 font-display text-lg font-semibold">{example.result}</p>
-            </Panel>
-          </SectionReveal>
-        </section>
-      )}
+              {/* The Quotes page gets the live calculator, per SaaS brief
+                  3.9. Everywhere else the worked example stands alone. */}
+              {feature.slug === "quotes" ? (
+                <SectionReveal delay={0.15}>
+                  <QuoteLeakCalculator />
+                </SectionReveal>
+              ) : null}
+            </div>
+          </Wrap>
+        </Sheet>
+      ) : null}
 
-      {/* ---- How it works ---- */}
-      {how.length > 0 && (
-        <section className="relative" style={{ backgroundColor: PAPER }}>
-          <div className="mx-auto max-w-[1280px] px-6 py-20">
-            <h2 className="font-display text-[clamp(1.6rem,3.4vw,2.6rem)] font-semibold tracking-[-0.02em]">
-              How it works
-            </h2>
-
-            <ul className="mt-8 flex flex-wrap gap-2.5">
-              {how.map((b) => (
-                <li key={b.label}>
+      {/* How it works — the sticky scroll, with jump links above it. */}
+      {blocks.length ? (
+        <Sheet colour={CREAM}>
+          <Wrap>
+            <SectionReveal>
+              <SheetLabel>how it works</SheetLabel>
+              <h2 className="hd-h2 max-w-[26ch]">
+                From the question to the deposit,{" "}
+                <span className="hd-hl">in one step</span>.
+              </h2>
+              <nav
+                aria-label="Jump to a step"
+                className="mb-10 flex flex-wrap gap-2"
+              >
+                {(feature.howItWorks ?? []).map((b, i) => (
                   <a
-                    href={`#${slugify(b.label)}`}
-                    className="inline-block rounded-lg border border-ink/25 px-4 py-2 font-body text-sm transition-[border-radius] duration-200 hover:rounded-[28px] hover:border-ink"
+                    key={b.label}
+                    href={`#how-${i}`}
+                    className="rounded-full border border-ink px-3.5 py-1.5 font-display text-sm font-semibold"
+                    style={{ backgroundColor: PAPER }}
                   >
-                    {b.label}
+                    {b.heading}
                   </a>
-                </li>
-              ))}
-            </ul>
+                ))}
+              </nav>
+            </SectionReveal>
+            <StickyScroll blocks={blocks} />
+          </Wrap>
+        </Sheet>
+      ) : null}
 
-            <div className="mt-14 flex flex-col gap-20">
-              {how.map((b, i) => (
-                <div key={b.label} id={slugify(b.label)}>
-                  <SectionReveal>
-                    <div
-                      className={`grid items-center gap-10 lg:grid-cols-2 ${
-                        i % 2 === 1 ? "lg:[&>*:first-child]:order-2" : ""
-                      }`}
-                    >
-                      <div>
-                        <p className="font-mono text-[12px] tracking-[0.02em] text-ink/50">
-                          {String(i + 1).padStart(2, "0")} · {b.label}
-                        </p>
-                        <h3 className="mt-4 max-w-[20ch] font-display text-[clamp(1.3rem,2.4vw,1.9rem)] font-semibold leading-snug">
-                          {b.heading}
-                        </h3>
-                        <p className="mt-4 max-w-lg font-body text-base leading-relaxed text-ink/70">
-                          {b.line}
-                        </p>
-                      </div>
-                      <Card className="bg-cream p-6">
-                        <p className="font-mono text-[11px] tracking-[0.02em] text-ink/45">
-                          Illustration · example data
-                        </p>
-                        <p className="mt-3 font-body text-sm leading-relaxed text-ink/60">
-                          {b.screen}
-                        </p>
-                      </Card>
-                    </div>
-                  </SectionReveal>
-                </div>
-              ))}
-            </div>
-
-            <div className="mt-16">
-              <HeydayLine steps={how.map((b) => b.label)} current={how.length - 1} labels />
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* ---- For your kind of business ---- */}
-      {situations.length > 0 && (
-        <section className="mx-auto max-w-[1280px] px-6 py-20">
-          <h2 className="font-display text-[clamp(1.6rem,3.4vw,2.6rem)] font-semibold tracking-[-0.02em]">
-            For your kind of business
-          </h2>
-          <RevealGroup className="mt-10 grid gap-6 md:grid-cols-3">
-            {situations.map((s) => (
-              <Card key={s.business} className="bg-paper p-7">
-                <p className="font-mono text-[12px] tracking-[0.02em] text-ink/50">
-                  {s.business}
-                </p>
-                <p className="mt-3 font-body text-base leading-relaxed">{s.situation}</p>
-              </Card>
-            ))}
-          </RevealGroup>
-        </section>
-      )}
-
-      {/* ---- A customer quote ---- */}
-      <section className="mx-auto max-w-[1280px] px-6 pb-20">
-        <SectionReveal>
-          <figure className="max-w-3xl">
-            <blockquote className="font-display text-[clamp(1.4rem,3vw,2.2rem)] font-semibold leading-snug text-ink/30">
-              A customer&apos;s words go here.
-            </blockquote>
-            {/* Signed Placeholder until a real one is approved. Nothing on
-                this site quotes a customer it does not have. */}
-            <figcaption className="mt-5 font-mono text-[12px] tracking-[0.02em] text-ink/45">
-              {TBC.confirm} · Placeholder
-            </figcaption>
-          </figure>
-        </SectionReveal>
-      </section>
-
-      {/* ---- FAQ ---- */}
-      {faq.length > 0 && (
-        <section className="mx-auto max-w-[1280px] px-6 pb-20">
-          <h2 className="font-display text-[clamp(1.6rem,3.4vw,2.6rem)] font-semibold tracking-[-0.02em]">
-            Questions
-          </h2>
-          <div className="mt-8 max-w-3xl">
-            {faq.map((f) => (
-              <details key={f.q} className="border-b border-ink/12 py-5">
-                <summary className="cursor-pointer list-none font-display text-base font-semibold">
-                  {f.q}
-                </summary>
-                <p className="mt-3 max-w-[65ch] font-body text-base leading-relaxed text-ink/70">
-                  {f.a}
-                </p>
-              </details>
-            ))}
-          </div>
-        </section>
-      )}
-
-      {/* ---- Related ---- */}
-      {related.length > 0 && (
-        <section className="mx-auto max-w-[1280px] px-6 pb-20">
-          <h2 className="font-display text-[clamp(1.6rem,3.4vw,2.6rem)] font-semibold tracking-[-0.02em]">
-            Goes well with
-          </h2>
-          <RevealGroup className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {related.map((r) => {
-              const g = groupById(r.group)!;
-              return (
-                <Link key={r.slug} href={`/features/${r.slug}`} className="group block">
-                  <Card className="h-full bg-paper p-6">
-                    <Icon name={r.icon} size={36} ground={PAPER} />
-                    <p className="mt-4 font-display text-base font-semibold">{r.name}</p>
-                    <p className="mt-2 font-mono text-[11px] tracking-[0.02em] text-ink/45">
-                      {g.name} · {statusLabel(r.status)}
+      {/* For your kind of business. */}
+      {feature.situations?.length ? (
+        <Sheet colour={PAPER}>
+          <Wrap>
+            <SectionReveal>
+              <SheetLabel>for your kind of business</SheetLabel>
+              <h2 className="hd-h2 max-w-[26ch]">
+                <Marked
+                  text="However you sell your time, it fits."
+                  phrase="However you sell your time"
+                />
+              </h2>
+            </SectionReveal>
+            <RevealGroup className="grid gap-[22px] lg:grid-cols-3">
+              {feature.situations.map((s) => (
+                <Card
+                  key={s.business}
+                  className="flex h-full flex-col overflow-hidden"
+                  style={{ backgroundColor: PAPER }}
+                >
+                  <HoldingImage
+                    art={`${s.business.toLowerCase()} at work`}
+                    ratio="4:3"
+                    tint={group.ground}
+                    shape={group.shape}
+                    radius={0}
+                    className="!border-0 !border-b-2"
+                  />
+                  <div className="p-5">
+                    <b className="block font-mono text-[11px] font-semibold tracking-[0.04em] text-ink/55">
+                      {s.business.toUpperCase()}
+                    </b>
+                    <p className="mt-1.5 text-[15.5px] text-ink/70">
+                      {s.situation}
                     </p>
-                  </Card>
-                </Link>
-              );
-            })}
-          </RevealGroup>
-        </section>
-      )}
+                  </div>
+                </Card>
+              ))}
+            </RevealGroup>
+          </Wrap>
+        </Sheet>
+      ) : null}
 
-      {/* ---- Closing ---- */}
-      <section className="mx-auto max-w-[1280px] px-6 pb-24">
-        <div
-          className="rounded-[40px] px-8 py-16 text-center md:px-16"
-          style={{ backgroundColor: INK }}
-        >
-          <h2 className="mx-auto max-w-[20ch] font-display text-[clamp(1.8rem,4vw,3rem)] font-semibold leading-tight text-cream">
-            {group.promise}
-          </h2>
-          <div className="mt-9 flex flex-wrap justify-center gap-3">
-            <Button href={cta.href} variant="primary" arrow>
-              {cta.label}
-            </Button>
-            <Button href={CTA.secondary.href} variant="ghost" className="border-cream text-cream">
-              {CTA.secondary.label}
-            </Button>
-          </div>
-        </div>
-      </section>
-    </div>
+      {/* A customer quote, signed Placeholder, because there are none. */}
+      <Sheet colour={SKY}>
+        <Wrap>
+          <SectionReveal>
+            <SheetLabel>a customer&rsquo;s view</SheetLabel>
+            <blockquote className="m-0 max-w-[40ch]">
+              <p
+                className="m-0 font-display font-bold leading-[1.25]"
+                style={{ fontSize: "clamp(26px, 3vw, 38px)" }}
+              >
+                &ldquo;Placeholder: a real customer quote goes here once one
+                is approved.&rdquo;
+              </p>
+              <footer className="mt-4 font-mono text-xs text-ink/55">
+                Placeholder · name and business {TBC.generic}. {SITE.name} has
+                no customers yet, so there is nobody real to quote.
+              </footer>
+            </blockquote>
+          </SectionReveal>
+        </Wrap>
+      </Sheet>
+
+      {/* FAQ. */}
+      {feature.faq?.length ? (
+        <Sheet colour={CREAM}>
+          <Wrap>
+            <SectionReveal>
+              <SheetLabel>faq</SheetLabel>
+              <FAQ
+                heading={`Questions about ${feature.name.toLowerCase()}.`}
+                items={feature.faq}
+              />
+            </SectionReveal>
+          </Wrap>
+        </Sheet>
+      ) : null}
+
+      {/* Related features. */}
+      {related.length ? (
+        <Sheet colour={PAPER}>
+          <Wrap>
+            <SectionReveal>
+              <SheetLabel>related features</SheetLabel>
+              <h2 className="hd-h2">
+                Works even better <span className="hd-hl">with these</span>.
+              </h2>
+            </SectionReveal>
+            <RevealGroup className="grid gap-[22px] sm:grid-cols-2 lg:grid-cols-4">
+              {related.map((r) => (
+                <Card
+                  key={r.slug}
+                  className="flex h-full flex-col gap-2 p-6"
+                  style={{ backgroundColor: PAPER }}
+                >
+                  <Icon name={r.icon} size={40} ground={PAPER} />
+                  <b className="font-display text-[17px] font-bold leading-tight">
+                    {r.name}
+                  </b>
+                  <p className="m-0 text-[15px] text-ink/60">{r.pain}</p>
+                  <div className="mt-auto flex items-center justify-between gap-2 pt-3">
+                    <StatusChip status={statusLabel(r.status)} />
+                    <Link
+                      href={featureHref(r.slug)}
+                      className="font-display text-sm font-semibold underline underline-offset-[3px]"
+                    >
+                      See it →
+                    </Link>
+                  </div>
+                </Card>
+              ))}
+            </RevealGroup>
+          </Wrap>
+        </Sheet>
+      ) : null}
+
+      <CTABlock
+        note={
+          <>
+            Pick the plan that fits. {TBC.price} ·{" "}
+            <Link href="/pricing" className="underline underline-offset-2">
+              See pricing →
+            </Link>
+          </>
+        }
+      />
+    </>
   );
 }
-
-const slugify = (s: string) =>
-  s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");

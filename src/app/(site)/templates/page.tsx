@@ -5,7 +5,6 @@ import { SectionReveal } from "@/components/heyday/motion";
 import { Card, StatusChip } from "@/components/ui/surfaces";
 import { Button } from "@/components/ui/button";
 import { TEMPLATES } from "@/lib/tools";
-import { SITE } from "@/lib/site";
 import { PAPER, CREAM } from "@/lib/palette";
 
 /* ==================================================================== *

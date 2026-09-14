@@ -5,7 +5,6 @@ import { Sheet, Wrap, SheetLabel } from "@/components/heyday/sheet";
 import { SectionReveal, RevealGroup } from "@/components/heyday/motion";
 import { Card } from "@/components/ui/surfaces";
 import { TOOLS } from "@/lib/tools";
-import { SITE } from "@/lib/site";
 import { PAPER } from "@/lib/palette";
 
 /* ==================================================================== *

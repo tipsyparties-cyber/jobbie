@@ -6,7 +6,6 @@ import { SectionReveal, RevealGroup } from "@/components/heyday/motion";
 import { HoldingImage } from "@/components/heyday/holding-image";
 import { Card, StatusChip } from "@/components/ui/surfaces";
 import { GUIDES, SAMPLE } from "@/lib/articles";
-import { SITE } from "@/lib/site";
 import { PAPER, SKY } from "@/lib/palette";
 
 /* ==================================================================== *

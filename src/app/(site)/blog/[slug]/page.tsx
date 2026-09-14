@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Article, ArticleBody } from "@/components/heyday/article";
 import { POSTS, SAMPLE, postBySlug } from "@/lib/articles";
-import { SITE } from "@/lib/site";
 
 /* ==================================================================== *
  *  /blog/[slug] — template T15.
