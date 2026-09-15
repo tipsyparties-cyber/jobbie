@@ -1,0 +1,98 @@
+/* ==================================================================== *
+ *  The AI dial's own motion — homepage section 9.
+ *
+ *  The only genuinely new CSS in the section: everything else (the panel,
+ *  the card, the buttons, the type) is the site's existing components.
+ *  Values are the reference build's, docs/heyday/reference/section-9, and
+ *  each one is doing a job described in SECTION-9-SPEC.md.
+ *
+ *  A CSS module rather than globals.css on purpose: editing globals.css
+ *  under a running dev server serves the old stylesheet (AGENTS.md), and a
+ *  new module file does not have that problem.
+ * ==================================================================== */
+
+.dial {
+  width: 100%;
+  max-width: 320px;
+  height: auto;
+  display: block;
+  overflow: visible;
+}
+
+.track {
+  fill: none;
+  stroke: var(--color-cream);
+  stroke-width: 16;
+  stroke-linecap: round;
+}
+
+/* How much of the job you have handed over: runs from the left stop to
+   the needle, and takes the level's colour. */
+.fill {
+  fill: none;
+  stroke-width: 16;
+  stroke-linecap: round;
+  transition:
+    stroke-dashoffset 0.75s cubic-bezier(0.22, 1, 0.36, 1),
+    stroke 0.45s ease;
+}
+
+/* A slight overshoot, because a real dial settles rather than stopping
+   dead. */
+.needle {
+  transform-box: view-box;
+  transform-origin: 150px 158px;
+  transition: transform 0.75s cubic-bezier(0.34, 1.32, 0.5, 1);
+}
+
+/* The live stop takes the level's colour and swells, so the eye has
+   somewhere to land. Its origin is set inline, in viewBox units. */
+.stop {
+  transform-box: view-box;
+  transition:
+    fill 0.4s ease,
+    transform 0.5s cubic-bezier(0.34, 1.5, 0.5, 1);
+}
+.on {
+  transform: scale(1.45);
+}
+
+/* The ring out of the hub when the needle arrives — the click. */
+.pulse {
+  opacity: 0;
+}
+.go {
+  animation: hd-dial-ring 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+}
+@keyframes hd-dial-ring {
+  from { r: 14px; opacity: 0.55; }
+  to   { r: 38px; opacity: 0; }
+}
+
+/* The sentence and the card change over rather than snapping. The element
+   is remounted on every change, so repeated clicks always animate. */
+.in {
+  animation: hd-dial-swap 0.42s cubic-bezier(0.215, 0.61, 0.355, 1) both;
+}
+@keyframes hd-dial-swap {
+  from { opacity: 0; transform: translateY(9px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* The one word that changed — "Needs doing", "Ready for you", "Done". */
+.in .flag {
+  animation: hd-dial-flag 0.5s cubic-bezier(0.34, 1.5, 0.5, 1) both;
+}
+@keyframes hd-dial-flag {
+  from { transform: scale(0.82); }
+  to   { transform: scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fill,
+  .needle,
+  .stop { transition: none; }
+  .in,
+  .in .flag,
+  .go { animation: none; }
+}

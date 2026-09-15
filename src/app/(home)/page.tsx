@@ -158,8 +158,8 @@ export default function HomePage() {
           <BuildYourWay />
         </Sheet>
 
-        {/* 9. The AI. */}
-        <Sheet colour={PAPER}>
+        {/* 9. The AI: the dial. */}
+        <Sheet colour={PAPER} id="ai">
           <AiLevels />
         </Sheet>
 

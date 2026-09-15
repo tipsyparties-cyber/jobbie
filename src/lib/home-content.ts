@@ -14,7 +14,6 @@
  * ==================================================================== */
 
 import type { GroupId } from "@/lib/groups";
-import type { MarkMotion } from "@/components/heyday/heyday-logo";
 
 /* ---- 3. What Heyday is ---------------------------------------------- */
 
@@ -202,26 +201,105 @@ export const SWITCHING: { title: string; note: string; icon: string }[] = [
   { title: "Talk to a real person when you need one.", note: "[support hours to confirm]", icon: "hd-one-inbox" },
 ];
 
-/* ---- 9. The AI levels ------------------------------------------------ */
+/* ---- 9. The AI dial ------------------------------------------------- */
 
-/* The mark gets livelier as the level rises: still while it waits for you,
-   beating while it is learning from you, turning for good once it is on its
-   own. Three of the logo spec's seven animations, in that order. */
-export const AI_LEVELS: {
-  title: string;
-  line: string;
-  motion?: MarkMotion;
-  soon?: boolean;
-}[] = [
-  { title: "Draft", line: "It writes, you send." },
-  { title: "Draft and train", line: "It learns from every correction.", motion: "beat" },
-  {
-    title: "Autopilot",
-    line: "It handles the simple ones by itself.",
-    motion: "spin",
-    soon: true,
+/*
+ * Homepage section 9, from docs/heyday/reference/section-9 (Russell's pack,
+ * 15 September 2026). It replaces the three static panels — Draft, Draft
+ * and train, Autopilot — which are still in git history and in the
+ * superseded block of spec/01 section 9.
+ *
+ * The copy is the pack's, word for word. Two lines matter more than they
+ * look:
+ *
+ * - The line under the heading names the non-message things. Without it
+ *   the section shrinks to "AI writes your emails" and the whole
+ *   difference from Jobber and HoneyBook is lost. Never cut it for length.
+ * - The closing line says the first setting is not "off". There is no dead
+ *   setting at the bottom of the dial, and that is the point.
+ *
+ * [needs approval] The level names. "Assistant / Semi-automatic / Fully
+ * automatic" is the pack's current wording; "Remind me / Ask me / Just do
+ * it" was considered and is warmer but less clear in a settings screen.
+ */
+
+export type DialLevel = {
+  /** The button, and the bold start of the sentence. */
+  name: string;
+  /** The caption at the stop on the dial. */
+  stop: string;
+  say: string;
+  /** The smaller line under the sentence. */
+  beneath: string;
+  card: {
+    flag: string;
+    title: string;
+    sub: string;
+    /** Muted words before the controls. */
+    lead?: string;
+    /** The first one is the card's single action. */
+    controls: string[];
+    /** Below a dashed rule: it asks to be trusted with more. */
+    trust?: { bold: string; rest: string };
+  };
+};
+
+export const AI_DIAL = {
+  label: "the ai",
+  heading: "AI that works the way you want it to.",
+  line: "As much or as little as you want. Not just replies — quoting, pricing, taking bookings, ordering supplies, chasing money and every job task run at a level you set. Start where you’re comfortable. Move it up when it’s earned it.",
+  /** Semi-automatic: the page at rest shows the approve-and-go story. */
+  defaultLevel: 1,
+  levels: [
+    {
+      name: "Assistant",
+      stop: "assistant",
+      say: "It tells you what needs doing, and who should do it. You do it.",
+      beneath: "Nothing happens without you.",
+      card: {
+        flag: "Needs doing",
+        title: "Transport not arranged",
+        sub: "Friday 12th · Meadow Hall · 6 crew",
+        lead: "Suggested: Sam, ops",
+        controls: ["Assign"],
+      },
+    },
+    {
+      name: "Semi-automatic",
+      stop: "semi-auto",
+      say: "It gets everything ready and waits. You read it, you approve it, it goes.",
+      beneath: "One click instead of twenty minutes.",
+      card: {
+        flag: "Ready for you",
+        title: "Van hire, 8am–6pm Friday",
+        sub: "£48.20 · Meadow Hall · cheapest of 3 quotes",
+        controls: ["Approve", "Change"],
+        trust: {
+          bold: "You have approved this 11 times without changing it.",
+          rest: "Shall I start doing it myself?",
+        },
+      },
+    },
+    {
+      name: "Fully automatic",
+      stop: "fully auto",
+      say: "It does it, and writes down what it did.",
+      beneath: "For the jobs you’ve stopped thinking about.",
+      card: {
+        flag: "Done",
+        title: "Van hire booked, 8am–6pm Friday",
+        sub: "£48.20 paid and logged to the job · Sam and the client sent tracking",
+        lead: "Did I get this right?",
+        controls: ["Yes", "Nearly", "No"],
+      },
+    },
+  ] as DialLevel[],
+  closing: {
+    bold: "The same three choices on quoting, pricing, bookings, ordering, chasing money and every job task.",
+    rest: "The first setting isn’t “off” — it still tells you what needs doing and offers to hand it to someone.",
   },
-];
+  button: { label: "See how it works", href: "/features/ai" },
+};
 
 /* ---- 8. Build it your way -------------------------------------------- */
 

@@ -312,3 +312,42 @@ have the transparent mark — it is five filenames.
 The spec requires the wordmark in DM Sans Bold, and the site did not have
 it. It loads at one weight and is used by one component, so it is one
 font file. Worth knowing it is there.
+
+---
+
+## 9. Homepage section 9, the AI dial — built 15 September 2026
+
+Built from your section 9 pack, which is now saved at
+`docs/heyday/reference/section-9`. The three static panels (Draft, Draft and
+train, Autopilot) are gone from the homepage; the old spec text is kept in
+`spec/01-global-and-home.md`, marked superseded.
+
+### 9.1 I fixed one thing in the reference build
+
+The reference rotates the needle the wrong way. At "assistant" it points
+down and to the right, away from the assistant stop; at "semi-auto" it points
+below the dial. The coloured fill in the same file is right, so it was only
+the needle's starting angle. The site's needle points at the stop each level
+names. Everything else (geometry, timings, copy) is taken from the reference
+unchanged.
+
+### 9.2 "Sam" is an invented name, and the site has a rule against those
+
+The task card says "Suggested: Sam, ops" and "Sam and the client sent
+tracking". It is shipped exactly as your pack wrote it, because the pack says
+not to rewrite the copy. But every other product picture on the site follows
+the brief's rule that people are roles, never names, since an invented name
+reads as an invented customer. If you want it consistent, "Suggested: your
+ops lead" and "Your ops lead and the client sent tracking" is a two-line
+change.
+
+### 9.3 The level names — marked [needs approval] in the pack
+
+"Assistant / Semi-automatic / Fully automatic" is shipped. The pack notes
+"Remind me / Ask me / Just do it" as the warmer alternative.
+
+**Worth knowing before you decide:** the `/features/ai` page still calls the
+three levels "Draft", "Draft and train" and "Autopilot". So right now the
+homepage and the AI page use different names for the same three settings.
+Whichever names you approve, that page needs changing to match. I have not
+touched it, because it was not in the pack.

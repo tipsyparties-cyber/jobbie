@@ -1,15 +1,16 @@
 import Link from "next/link";
 import { Wrap, SheetLabel } from "@/components/heyday/sheet";
-import { SectionReveal, RevealGroup, Parallax } from "@/components/heyday/motion";
+import { SectionReveal, Parallax } from "@/components/heyday/motion";
 import { Icon } from "@/components/heyday/icon";
 import { HeydayLogo } from "@/components/heyday/heyday-logo";
 import { MoreInfoSection } from "@/components/heyday/more-info-section";
+import { AiDial } from "@/components/heyday/ai-dial";
 import { StickyScroll, type StickyBlock } from "@/components/heyday/sticky-scroll";
 import { SideScroll, SideCard } from "@/components/heyday/side-scroll";
 import { Card, Sticker, StatusChip } from "@/components/ui/surfaces";
 import { Button } from "@/components/ui/button";
 import { Screen, ScreenRow, ScreenAction, ScreenPick } from "@/components/heyday/screen";
-import { FEATURE_ROWS, ONLY_ON_HEYDAY, BUILDER_POINTS, AI_LEVELS } from "@/lib/home-content";
+import { FEATURE_ROWS, ONLY_ON_HEYDAY, BUILDER_POINTS } from "@/lib/home-content";
 import { GROUPS, groupById } from "@/lib/groups";
 import { statByRow } from "@/lib/stats-bank";
 import { PAPER, CREAM, INK, BLUE, SKY, LAVENDER } from "@/lib/palette";
@@ -342,59 +343,17 @@ export function BuildYourWay() {
   );
 }
 
-/* ---- 9. The AI -------------------------------------------------------- */
+/* ---- 9. The AI: the dial --------------------------------------------- */
 
 /**
- * Three levels, joined by the Heyday line, which is the whole argument: the
- * levels go UP, and the owner decides how far. The line filling left to
- * right is the picture of that.
+ * The dial and the task card live in their own client component; this
+ * keeps the homepage's section list reading as one name per section. The
+ * three static panels it replaced are in git history.
  */
 export function AiLevels() {
   return (
     <Wrap>
-      <SectionReveal>
-        <SheetLabel>the ai</SheetLabel>
-        <h2 className="hd-h2 max-w-[24ch]">
-          AI that works the way you do,{" "}
-          <span className="hd-hl">and only as much as you want.</span>
-        </h2>
-        <p className="hd-sub">
-          It reads the booking, your prices and your policies before it
-          writes a word. You decide what it sends.
-        </p>
-      </SectionReveal>
-
-      <div className="relative">
-        {/* The line behind the three panels. */}
-        <span
-          aria-hidden
-          className="absolute left-[8%] right-[8%] top-[58px] -z-10 hidden h-0.5 lg:block"
-          style={{ backgroundColor: "#F26B2A" }}
-        />
-        <RevealGroup className="grid gap-5 lg:grid-cols-3">
-          {AI_LEVELS.map((l) => (
-            <div
-              key={l.title}
-              className="flex flex-col gap-3 rounded-[32px] border border-ink px-6 py-7"
-              style={{
-                backgroundColor: PAPER,
-                boxShadow: "6px 10px 0 0 rgba(10,10,10,0.08)",
-              }}
-            >
-              <HeydayLogo size={60} colour={BLUE} motion={l.motion} />
-              <b className="font-display text-[22px] font-bold">{l.title}</b>
-              <p className="m-0 text-ink/60">{l.line}</p>
-              {l.soon ? <StatusChip /> : null}
-            </div>
-          ))}
-        </RevealGroup>
-      </div>
-
-      <div className="mt-8">
-        <Button href="/features/ai" variant="ghost">
-          How the AI works →
-        </Button>
-      </div>
+      <AiDial />
     </Wrap>
   );
 }

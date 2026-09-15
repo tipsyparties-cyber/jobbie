@@ -1,0 +1,159 @@
+<title>The Autonomy Dial</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,700&family=Schibsted+Grotesk:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--cream:#F2E9E1;--paper:#FBF9F6;--ink:#0A0A0A;--muted:#5C554C;--shadow:rgba(10,10,10,.08);--blue:#93B7E8}
+*{box-sizing:border-box}
+body{margin:0;background:var(--cream);color:var(--ink);font:16px/1.55 "Inter",system-ui,sans-serif}
+.wrap{max-width:1120px;margin:0 auto;padding-inline:clamp(16px,4vw,44px);padding-block:36px 72px}
+.brand{display:flex;align-items:center;gap:3px;margin-bottom:30px}
+.brand svg{width:26px;height:26px;display:block}
+.brand b{font:700 24px/1 "DM Sans",system-ui,sans-serif;letter-spacing:-.02em}
+
+.label{font:600 12.5px "Inter",sans-serif;letter-spacing:.1em;color:var(--muted);margin:0 0 14px}
+h1{font:800 clamp(30px,5vw,50px)/1.02 "Schibsted Grotesk",system-ui,sans-serif;letter-spacing:-.032em;
+   margin:0 0 16px;max-width:17ch;text-wrap:balance}
+h1 em{font-style:normal;color:var(--muted)}
+.lede{color:var(--muted);max-width:56ch;margin:0 0 4px;font-size:17px}
+
+.stage{display:grid;grid-template-columns:minmax(0,340px) minmax(0,1fr);gap:clamp(20px,4vw,46px);
+     align-items:center;margin-top:34px;background:var(--paper);border:2px solid var(--ink);
+     border-radius:22px;box-shadow:12px 12px 0 0 var(--shadow);padding:clamp(20px,3.4vw,34px)}
+.dialbox{display:flex;flex-direction:column;align-items:center;gap:16px}
+svg.dial{width:100%;max-width:320px;height:auto;display:block}
+.track{fill:none;stroke:#F2E9E1;stroke-width:16;stroke-linecap:round}
+.fill{fill:none;stroke-width:16;stroke-linecap:round;stroke-dasharray:339.3;
+     transition:stroke-dashoffset .75s cubic-bezier(.22,1,.36,1),stroke .45s ease}
+.needle{transform-origin:150px 158px;transition:transform .75s cubic-bezier(.34,1.32,.5,1)}
+.stop{transition:fill .4s ease,transform .5s cubic-bezier(.34,1.5,.5,1)}
+.stop.on{transform:scale(1.45)}
+.pulse{opacity:0}
+.pulse.go{animation:ring .75s cubic-bezier(.22,1,.36,1)}
+@keyframes ring{from{r:14;opacity:.55}to{r:38;opacity:0}}
+/* the sentence and the card change over rather than snapping */
+.say.in,.card.in{animation:swap .42s cubic-bezier(.215,.61,.355,1) both}
+@keyframes swap{from{opacity:0;transform:translateY(9px)}to{opacity:1;transform:none}}
+.card{transition:border-color .4s ease}
+.flag{transition:background .4s ease}
+.card.in .flag{animation:flagpop .5s cubic-bezier(.34,1.5,.5,1) both}
+@keyframes flagpop{from{transform:scale(.82)}to{transform:scale(1)}}
+
+.chips{display:flex;gap:7px;flex-wrap:wrap;justify-content:center}
+.chip{display:inline-flex;align-items:center;gap:7px;font:600 13px "Inter",sans-serif;color:var(--ink);
+     background:var(--paper);border:2px solid var(--ink);border-radius:999px;padding:7px 14px;cursor:pointer}
+.chip i{width:10px;height:10px;border-radius:50%;border:1.5px solid var(--ink)}
+.chip[aria-pressed=true]{background:var(--ink);color:var(--paper)}
+.chip[aria-pressed=true] i{border-color:var(--paper)}
+
+.say{margin:0 0 20px;font-size:16.5px;color:var(--muted);max-width:46ch;min-height:78px}
+.say b{color:var(--ink)}
+.say span{display:block;margin-top:6px;font-size:14px}
+
+.card{background:var(--cream);border:2px solid var(--ink);border-radius:16px;padding:18px 20px;
+     box-shadow:7px 7px 0 0 var(--shadow)}
+.card h3{font:700 19px/1.25 "Schibsted Grotesk",system-ui,sans-serif;margin:9px 0 5px}
+.card .sub{margin:0;color:var(--muted);font-size:14px}
+.flag{display:inline-block;font:700 10.5px "Inter",sans-serif;letter-spacing:.09em;text-transform:uppercase;
+     background:#9AAD92;border:1.5px solid var(--ink);border-radius:999px;padding:3px 10px}
+.flag.wait{background:#93B7E8}
+.flag.done{background:#D6D0F5}
+.act{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:15px}
+.btn{font:700 12.5px "Inter",sans-serif;border:2px solid var(--ink);border-radius:999px;padding:5px 13px;
+     background:var(--paper)}
+.btn.go{background:var(--ink);color:var(--paper)}
+.who,.ask{font-size:13px;color:var(--muted);margin-right:2px}
+.trust{margin:15px 0 0;padding-top:13px;border-top:1.5px dashed rgba(10,10,10,.25);font-size:13.5px;color:var(--muted)}
+.trust b{color:var(--ink)}
+.foot{margin:24px 0 0;font-size:14.5px;color:var(--muted);max-width:70ch}
+.foot b{color:var(--ink)}
+.note{margin:30px 0 0;font-size:13px;color:var(--muted)}
+@media (max-width:760px){.stage{grid-template-columns:1fr}.say{min-height:0}}
+@media (prefers-reduced-motion:reduce){
+  .fill,.needle,.stop{transition:none}
+  .say.in,.card.in,.card.in .flag,.pulse.go{animation:none}
+}
+</style>
+<div class="wrap">
+  <span class="brand"><svg viewBox="0 0 100 100" aria-hidden="true"><path d="M48.44 0.50L52.92 0.70L57.50 1.36L61.88 2.42L66.82 4.18L66.92 4.58L63.09 11.28L62.64 11.28L61.73 10.83L59.11 10.02L54.83 9.06L49.60 8.56L46.42 8.61L40.99 9.26L37.97 9.97L34.79 10.98L31.22 12.49L27.29 14.65L24.62 16.52L21.85 18.83L19.13 21.55L16.36 24.97L14.45 27.95L12.94 30.77L11.18 34.89L9.97 38.97L9.06 44.66L8.96 49.85L9.62 55.34L10.88 60.32L11.93 63.19L13.60 66.72L14.80 68.78L17.62 72.76L19.34 74.72L22.16 77.49L24.02 79.00L23.87 79.61L20.29 85.80L19.84 85.95L18.63 85.10L15.61 82.43L12.94 79.71L9.57 75.48L6.14 69.89L3.58 63.90L2.17 59.11L1.26 54.23L0.86 49.55L0.91 45.17L1.41 40.68L2.37 36.00L3.78 31.12L5.24 27.69L7.80 22.96L9.97 19.74L12.74 16.52L16.62 12.69L20.04 9.87L24.82 6.75L28.90 4.68L33.28 2.97L38.72 1.51L43.55 0.76L48.44 0.55ZM68.78 4.98L69.28 5.09L78.55 10.47L78.85 10.73L78.85 11.03L66.06 32.93L65.96 33.53L66.62 33.38L70.54 31.22L72.81 29.76L88.67 20.80L89.22 21.05L89.88 22.46L94.86 30.87L94.56 31.32L92.95 32.07L90.89 33.43L88.57 34.59L76.59 41.59L72.66 43.66L72.31 44.16L72.61 44.31L76.33 44.41L98.34 44.51L98.69 44.86L98.74 55.24L98.69 56.19L98.44 56.45L74.22 56.34L72.51 56.19L72.21 56.34L72.21 56.55L94.71 69.54L94.96 69.84L94.91 70.34L89.48 79.71L88.97 79.96L67.07 67.27L66.06 66.87L66.06 67.32L66.52 67.82L79.20 89.68L79.10 90.03L78.10 90.68L69.28 95.57L68.73 95.42L67.98 93.86L65.01 89.07L57.55 76.03L56.80 75.08L55.99 73.36L55.44 73.01L55.29 75.68L55.44 77.39L55.44 99.14L55.09 99.35L45.97 99.35L45.17 99.19L43.71 99.30L43.45 99.09L43.40 75.93L43.30 73.11L43.15 72.91L42.70 73.31L38.62 80.61L31.37 92.80L31.22 93.40L21.00 87.51L68.78 5.04ZM47.53 19.99L50.15 19.99L52.57 20.29L55.54 20.90L57.10 21.50L53.27 28.50L52.62 28.60L49.70 28.10L46.42 28.15L44.66 28.40L41.49 29.31L38.47 30.72L35.65 32.63L32.83 35.50L31.02 38.17L29.61 41.19L29.05 43.00L28.50 46.73L28.50 49.60L28.80 51.96L29.61 54.78L30.92 57.65L32.53 60.12L33.94 61.78L33.79 62.34L30.06 68.83L29.71 68.88L28.75 68.03L26.23 65.21L24.42 62.59L22.76 59.42L21.05 54.18L20.59 51.76L20.39 49.35L20.39 46.73L20.75 43.20L22.16 38.07L24.62 33.13L26.03 31.07L28.00 28.75L31.82 25.38L33.94 23.97L36.81 22.46L39.27 21.50L42.09 20.69L44.91 20.19L47.53 20.04Z" fill="#93B7E8" fill-rule="evenodd"/></svg><b>heyday</b></span>
+
+  <p class="label">{ the ai }</p>
+  <h1>AI that works the way you want it to.</h1>
+  <p class="lede">As much or as little as you want. Not just replies — quoting, pricing, taking bookings, ordering supplies, chasing money and every job task run at a level you set. Start where you're comfortable. Move it up when it's earned it.</p>
+
+  <div class="stage">
+    <div class="dialbox">
+      <svg class="dial" viewBox="0 0 300 200" role="img" aria-label="A dial with three positions: assistant, semi-automatic and fully automatic.">
+        <path class="track" d="M42 158 A108 108 0 0 1 258 158"/>
+        <path class="fill" id="fill" d="M42 158 A108 108 0 0 1 258 158" stroke="#93B7E8"
+              stroke-dashoffset="169.6"/>
+        <circle class="stop" data-stop="0" cx="42.0" cy="158.0" r="7" fill="#FBF9F6" stroke="#0A0A0A" stroke-width="2.5" style="transform-origin:42.0px 158.0px"/><circle class="stop" data-stop="1" cx="150.0" cy="50.0" r="7" fill="#FBF9F6" stroke="#0A0A0A" stroke-width="2.5" style="transform-origin:150.0px 50.0px"/><circle class="stop" data-stop="2" cx="258.0" cy="158.0" r="7" fill="#FBF9F6" stroke="#0A0A0A" stroke-width="2.5" style="transform-origin:258.0px 158.0px"/>
+        <g class="needle" id="needle" transform="rotate(90)">
+          <line x1="150" y1="158" x2="232" y2="158" stroke="#0A0A0A" stroke-width="6" stroke-linecap="round"/>
+        </g>
+        <circle class="pulse" id="pulse" cx="150" cy="158" r="14" fill="none" stroke="#0A0A0A" stroke-width="2.5"/>
+        <circle cx="150" cy="158" r="14" fill="#FBF9F6" stroke="#0A0A0A" stroke-width="3"/>
+        <text x="42" y="188" text-anchor="middle" font-size="12.5" font-weight="700" fill="#5C554C">assistant</text>
+        <text x="150" y="28" text-anchor="middle" font-size="12.5" font-weight="700" fill="#5C554C">semi-auto</text>
+        <text x="258" y="188" text-anchor="middle" font-size="12.5" font-weight="700" fill="#5C554C">fully auto</text>
+      </svg>
+      <div class="chips" role="group" aria-label="Choose a level"><button class="chip" type="button" data-level="0" aria-pressed="false"><i style="background:#9AAD92"></i>Assistant</button><button class="chip" type="button" data-level="1" aria-pressed="true"><i style="background:#93B7E8"></i>Semi-automatic</button><button class="chip" type="button" data-level="2" aria-pressed="false"><i style="background:#D6D0F5"></i>Fully automatic</button></div>
+    </div>
+
+    <div>
+      <p class="say" data-say="0" hidden><b>Assistant.</b> It tells you what needs doing, and who should do it. You do it. <span>Nothing happens without you.</span></p><p class="say" data-say="1"><b>Semi-automatic.</b> It gets everything ready and waits. You read it, you approve it, it goes. <span>One click instead of twenty minutes.</span></p><p class="say" data-say="2" hidden><b>Fully automatic.</b> It does it, and writes down what it did. <span>For the jobs you have stopped thinking about.</span></p>
+      <div id="cards"><div class="card" data-card="0" hidden><span class="flag">Needs doing</span><h3>Transport not arranged</h3><p class="sub">Friday 12th · Meadow Hall · 6 crew</p><div class="act"><span class="who">Suggested: Sam, ops</span><span class="btn">Assign</span></div></div><div class="card" data-card="1"><span class="flag wait">Ready for you</span><h3>Van hire, 8am–6pm Friday</h3><p class="sub">£48.20 · Meadow Hall · cheapest of 3 quotes</p><div class="act"><span class="btn go">Approve</span><span class="btn">Change</span></div><p class="trust"><b>You have approved this 11 times without changing it.</b> Shall I start doing it myself?</p></div><div class="card" data-card="2" hidden><span class="flag done">Done</span><h3>Van hire booked, 8am–6pm Friday</h3><p class="sub">£48.20 paid and logged to the job · Sam and the client sent tracking</p><div class="act"><span class="ask">Did I get this right?</span><span class="btn go">Yes</span><span class="btn">Nearly</span><span class="btn">No</span></div></div></div>
+    </div>
+  </div>
+
+  <p class="foot"><b>The same three choices on everything.</b> Quoting, pricing, taking bookings, ordering supplies, chasing money, and every task a job needs. The first setting isn't "off" — it still tells you what needs doing and offers to hand it to someone.</p>
+  <p class="note">Turn the dial. One task, seen three ways.</p>
+</div>
+
+<script>
+(function(){
+  var ARC = 339.3, COL = ['#9AAD92', '#93B7E8', '#D6D0F5'];
+  var fill = document.getElementById('fill'), needle = document.getElementById('needle');
+  var pulse = document.getElementById('pulse');
+  var chips = document.querySelectorAll('.chip');
+
+  function set(n){
+    fill.setAttribute('stroke', COL[n]);
+    fill.style.strokeDashoffset = (ARC * (1 - n / 2)).toFixed(1);
+    needle.setAttribute('transform', 'rotate(' + (n * 90) + ' 150 158)');
+    chips.forEach(function(c){ c.setAttribute('aria-pressed', String(+c.dataset.level === n)); });
+    document.querySelectorAll('.stop').forEach(function(st){
+      var on = +st.dataset.stop === n;
+      st.classList.toggle('on', on);
+      st.setAttribute('fill', on ? COL[n] : '#FBF9F6');
+    });
+    ['say', 'card'].forEach(function(kind){
+      document.querySelectorAll('.' + kind).forEach(function(el){
+        var mine = +el.dataset[kind] === n;
+        el.classList.remove('in');
+        el.hidden = !mine;
+        if (mine) { void el.offsetWidth; el.classList.add('in'); }   // restart the change-over
+      });
+    });
+    if (pulse) {
+      pulse.classList.remove('go'); void pulse.getBoundingClientRect(); pulse.classList.add('go');
+    }
+  }
+  chips.forEach(function(c){ c.addEventListener('click', function(){ set(+c.dataset.level); }); });
+  document.querySelector('.stop[data-stop="1"]').setAttribute('fill', COL[1]);
+  document.querySelector('.stop[data-stop="1"]').classList.add('on');
+
+  // one sweep across the whole range the first time it comes into view, so the dial reads as a dial
+  var swept = false;
+  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches && 'IntersectionObserver' in window) {
+    new IntersectionObserver(function(es, o){
+      es.forEach(function(e){
+        if (!e.isIntersecting || swept) return;
+        swept = true; o.disconnect();
+        setTimeout(function(){ set(0); }, 260);
+        setTimeout(function(){ set(2); }, 1150);
+        setTimeout(function(){ set(1); }, 2100);
+      });
+    }, { threshold: .4 }).observe(document.querySelector('.stage'));
+  }
+})();
+</script>
