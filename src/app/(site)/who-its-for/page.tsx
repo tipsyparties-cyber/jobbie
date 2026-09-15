@@ -3,7 +3,7 @@ import Link from "next/link";
 import { PageHero, CTABlock, Marked, LineSteps } from "@/components/heyday/page-shell";
 import { Sheet, Wrap, SheetLabel } from "@/components/heyday/sheet";
 import { SectionReveal, RevealGroup } from "@/components/heyday/motion";
-import { SectionMark } from "@/components/heyday/heyday-mark";
+import { HeydayLogo } from "@/components/heyday/heyday-logo";
 import { Icon } from "@/components/heyday/icon";
 import { HoldingImage } from "@/components/heyday/holding-image";
 import { RotatingLine } from "@/components/heyday/rotating-line";
@@ -237,7 +237,7 @@ export default function WhoItsForPage() {
                 className="flex h-full flex-col gap-2 p-6"
                 style={{ backgroundColor: PAPER }}
               >
-                <SectionMark shape={g.shape} size={48} colour={g.sun} />
+                <HeydayLogo size={48} colour={g.markColour} />
                 <b className="font-display text-[22px] font-bold">{g.name}</b>
                 <p className="m-0 text-ink/60">{g.promise}</p>
                 <div className="mt-2 flex flex-col gap-1.5">

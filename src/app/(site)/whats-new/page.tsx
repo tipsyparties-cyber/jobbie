@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { PageHero, CTABlock } from "@/components/heyday/page-shell";
 import { Sheet, Wrap, SheetLabel } from "@/components/heyday/sheet";
 import { SectionReveal } from "@/components/heyday/motion";
-import { HeydayMark } from "@/components/heyday/heyday-mark";
+import { HeydayLogo } from "@/components/heyday/heyday-logo";
 import { Button } from "@/components/ui/button";
 import { UPDATES } from "@/lib/articles";
 import { CTA, SITE } from "@/lib/site";
@@ -42,7 +42,7 @@ export default function WhatsNewPage() {
             <SectionReveal>
               <div className="mx-auto max-w-[52ch] py-10 text-center">
                 <div className="mb-6 flex justify-center">
-                  <HeydayMark size={72} sun={BLUE} morphInView />
+                  <HeydayLogo size={72} colour={BLUE} motion="assemble" />
                 </div>
                 <h2 className="hd-h2">Nothing yet.</h2>
                 <p className="hd-sub mx-auto">

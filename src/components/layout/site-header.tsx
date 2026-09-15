@@ -5,13 +5,11 @@ import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { Wordmark } from "@/components/ui/wordmark";
 import { Button } from "@/components/ui/button";
-import { SectionMark } from "@/components/heyday/heyday-mark";
 import { HeydayLogo } from "@/components/heyday/heyday-logo";
 import { Icon } from "@/components/heyday/icon";
 import { NAV, HEADER_ACTIONS, type NavItem, type NavPanel } from "@/lib/nav";
 import { BLUE, CREAM, PAPER } from "@/lib/palette";
 import { TBC } from "@/lib/site";
-import type { ShapeName } from "@/lib/heyday-mark";
 
 /* ==================================================================== *
  *  The header — spec part 1, A3.
@@ -41,11 +39,7 @@ function PanelBody({ panel }: { panel: NavPanel }) {
           {panel.columns.map((col) => (
             <div key={col.head}>
               <p className="flex items-center gap-2">
-                <SectionMark
-                  shape={col.shape as ShapeName}
-                  size={18}
-                  colour={col.colour}
-                />
+                <HeydayLogo size={20} colour={col.colour} />
                 <span className="font-mono text-[12px] tracking-[0.02em] text-ink/55">
                   {col.head}
                 </span>
@@ -214,11 +208,19 @@ export function SiteHeader() {
     <header className="fixed inset-x-0 top-0 z-[100]" onMouseLeave={scheduleClose}>
       <div className="bg-paper">
         <div className="relative mx-auto flex h-[72px] max-w-[1280px] items-center gap-3 px-6">
-          <Link href="/" aria-label="Heyday, home" className="flex items-center gap-2.5">
-            {/* Assemble, once per page load, per the logo spec section 2. Click
-              round on hover, which is what the spec gives hover. */}
+          <Link
+            href="/"
+            aria-label="Heyday, home"
+            className="flex items-center"
+            style={{ gap: 3 }}
+          >
+            {/* Mark first, 24px, 3px from the word — tight on purpose, so it
+                reads as part of the word rather than an icon beside it. The
+                burst's rays already reach right, so the optical gap is wider
+                than the number; do not add air to make it breathe.
+                Assemble once per page load, click round on hover. */}
             <HeydayLogo
-              size={28}
+              size={24}
               colour={BLUE}
               motion="assemble"
               hoverMotion="click"

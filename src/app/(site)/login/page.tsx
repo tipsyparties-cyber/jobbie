@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { PageHero } from "@/components/heyday/page-shell";
 import { Sheet, Wrap } from "@/components/heyday/sheet";
 import { SectionReveal } from "@/components/heyday/motion";
-import { HeydayMark } from "@/components/heyday/heyday-mark";
+import { HeydayLogo } from "@/components/heyday/heyday-logo";
 import { Button } from "@/components/ui/button";
 import { SITE, CTA } from "@/lib/site";
 import { PAPER, BLUE } from "@/lib/palette";
@@ -40,7 +40,7 @@ export default function LoginPage() {
           <SectionReveal>
             <div className="mx-auto max-w-[52ch] py-6 text-center">
               <div className="mb-6 flex justify-center">
-                <HeydayMark size={72} sun={BLUE} morphInView />
+                <HeydayLogo size={72} colour={BLUE} motion="assemble" />
               </div>
               <p className="hd-sub mx-auto">
                 Accounts open with early access. When yours is ready

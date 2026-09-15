@@ -123,8 +123,8 @@ export function FeaturePage({ feature }: { feature: HeydayFeature }) {
               {
                 label: group.name,
                 href: `/how-it-works/${group.id}`,
-                shape: group.shape,
-                colour: group.sun,
+                mark: true,
+                colour: group.markColour,
               },
               { label: feature.name },
             ]}
@@ -370,7 +370,6 @@ export function FeaturePage({ feature }: { feature: HeydayFeature }) {
                     art={`${s.business.toLowerCase()} at work`}
                     ratio="4:3"
                     tint={group.ground}
-                    shape={group.shape}
                     radius={0}
                     className="!border-0 !border-b-2"
                   />

@@ -9,7 +9,7 @@ import {
 } from "@/components/heyday/page-shell";
 import { Sheet, Wrap, SheetLabel } from "@/components/heyday/sheet";
 import { SectionReveal, RevealGroup } from "@/components/heyday/motion";
-import { HeydayMark } from "@/components/heyday/heyday-mark";
+import { HeydayLogoInView } from "@/components/heyday/heyday-logo-in-view";
 import { Icon } from "@/components/heyday/icon";
 import { HoldingImage } from "@/components/heyday/holding-image";
 import { MoreInfoSection } from "@/components/heyday/more-info-section";
@@ -94,13 +94,15 @@ export default async function GroupPage({
         }
         aside={
           <div className="flex justify-center lg:justify-end">
-            {/* The group's mark, morphing out of the sun as it arrives. */}
-            <HeydayMark
+            {/* The mark in this group's colour, arriving on Together —
+                the arcs from the left, the burst from the lower right. A
+                group is told apart by its colour, not by a shape of its
+                own; the six shapes went with the old sun. */}
+            <HeydayLogoInView
               size={260}
-              shape={g.shape}
-              sun={g.sun}
-              morphInView
-              label={`The ${g.name} mark`}
+              colour={g.markColour}
+              motion="together"
+              label={`The Heyday mark, in ${g.name} colours`}
             />
           </div>
         }
@@ -259,7 +261,6 @@ export default async function GroupPage({
                   art={e.art}
                   ratio="16:9"
                   tint={g.ground}
-                  shape={g.shape}
                   radius={0}
                   className="!border-0 !border-b-2"
                 />

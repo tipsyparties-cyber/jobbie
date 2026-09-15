@@ -2,7 +2,7 @@
 
 import { useMemo, useRef, useState } from "react";
 import Link from "next/link";
-import { SectionMark } from "@/components/heyday/heyday-mark";
+import { HeydayLogo } from "@/components/heyday/heyday-logo";
 import { Icon } from "@/components/heyday/icon";
 import { Button } from "@/components/ui/button";
 import { QUESTIONS, MAX_PER_ANSWER, band } from "@/lib/leak-check";
@@ -86,7 +86,7 @@ export function QuizEngine() {
           />
           {GROUPS.map((g) => (
             <span key={g.id} className="relative flex-1">
-              <SectionMark shape={g.shape} size={56} colour={g.sun} />
+              <HeydayLogo size={56} colour={g.markColour} />
             </span>
           ))}
         </div>
@@ -132,7 +132,7 @@ export function QuizEngine() {
                   boxShadow: "11px 11px 0 0 rgba(10,10,10,0.08)",
                 }}
               >
-                <SectionMark shape={s.group.shape} size={52} colour={s.group.sun} />
+                <HeydayLogo size={52} colour={s.group.markColour} />
                 <p className="mt-2.5 font-display text-[44px] font-extrabold leading-none tracking-[-0.03em]">
                   {s.pct}%
                 </p>
@@ -209,7 +209,7 @@ export function QuizEngine() {
       </div>
 
       <div className="flex items-center gap-3.5">
-        <SectionMark shape={group.shape} size={64} colour={group.sun} />
+        <HeydayLogo size={64} colour={group.markColour} />
         <p className="hd-label !mb-0">{group.name.toLowerCase()}</p>
       </div>
 

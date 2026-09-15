@@ -14,6 +14,7 @@
  * ==================================================================== */
 
 import type { GroupId } from "@/lib/groups";
+import type { MarkMotion } from "@/components/heyday/heyday-logo";
 
 /* ---- 3. What Heyday is ---------------------------------------------- */
 
@@ -203,10 +204,23 @@ export const SWITCHING: { title: string; note: string; icon: string }[] = [
 
 /* ---- 9. The AI levels ------------------------------------------------ */
 
-export const AI_LEVELS: { title: string; line: string; shape: "sun" | "loop" | "inf"; soon?: boolean }[] = [
-  { title: "Draft", line: "It writes, you send.", shape: "sun" },
-  { title: "Draft and train", line: "It learns from every correction.", shape: "loop" },
-  { title: "Autopilot", line: "It handles the simple ones by itself.", shape: "inf", soon: true },
+/* The mark gets livelier as the level rises: still while it waits for you,
+   beating while it is learning from you, turning for good once it is on its
+   own. Three of the logo spec's seven animations, in that order. */
+export const AI_LEVELS: {
+  title: string;
+  line: string;
+  motion?: MarkMotion;
+  soon?: boolean;
+}[] = [
+  { title: "Draft", line: "It writes, you send." },
+  { title: "Draft and train", line: "It learns from every correction.", motion: "beat" },
+  {
+    title: "Autopilot",
+    line: "It handles the simple ones by itself.",
+    motion: "spin",
+    soon: true,
+  },
 ];
 
 /* ---- 8. Build it your way -------------------------------------------- */

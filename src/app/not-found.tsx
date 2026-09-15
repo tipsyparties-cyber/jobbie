@@ -2,7 +2,7 @@ import Link from "next/link";
 import { SiteHeader } from "@/components/layout/site-header";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { Wrap } from "@/components/heyday/sheet";
-import { HeydayMark } from "@/components/heyday/heyday-mark";
+import { HeydayLogo } from "@/components/heyday/heyday-logo";
 import { Button } from "@/components/ui/button";
 import { SITE } from "@/lib/site";
 import { BLUE } from "@/lib/palette";
@@ -26,13 +26,13 @@ export default function NotFound() {
         <Wrap>
           <div className="mx-auto max-w-[52ch] py-28 text-center">
             <div className="mb-7 flex justify-center">
-              <HeydayMark
+              {/* Click round: the mark turns 45 degrees, once. A wrong
+                  turn, which is what this page is. */}
+              <HeydayLogo
                 size={96}
-                sun={BLUE}
-                shape="loop"
-                morphInView
-                bounceOnLoad
-                label="The Heyday sun, turning into the Loop"
+                colour={BLUE}
+                motion="click"
+                label="The Heyday mark"
               />
             </div>
             <p className="hd-label">404</p>

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { HeydayMark } from "@/components/heyday/heyday-mark";
+import { HeydayLogo } from "@/components/heyday/heyday-logo";
 import { Button } from "@/components/ui/button";
 import { KINDS } from "@/lib/who-its-for";
 import { TBC } from "@/lib/site";
@@ -36,7 +36,7 @@ export function EarlyAccessForm() {
     return (
       <div className="max-w-[520px]">
         <div className="mb-6">
-          <HeydayMark size={72} sun={BLUE} bounceOnLoad />
+          <HeydayLogo size={72} colour={BLUE} motion="assemble" />
         </div>
         <h2 className="hd-h2">
           You&rsquo;re on the <span className="hd-hl">list</span>.

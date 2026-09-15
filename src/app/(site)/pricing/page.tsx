@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { PageHero, CTABlock, FAQ, Marked } from "@/components/heyday/page-shell";
 import { Sheet, Wrap, SheetLabel } from "@/components/heyday/sheet";
 import { SectionReveal, RevealGroup } from "@/components/heyday/motion";
-import { SectionMark } from "@/components/heyday/heyday-mark";
+import { HeydayLogo } from "@/components/heyday/heyday-logo";
 import { Icon } from "@/components/heyday/icon";
 import { Panel, Card, Sticker, StatusChip } from "@/components/ui/surfaces";
 import { Button } from "@/components/ui/button";
@@ -280,7 +280,7 @@ export default function PricingPage() {
                         style={{ backgroundColor: CREAM }}
                       >
                         <span className="inline-flex items-center gap-2">
-                          <SectionMark shape={g.shape} size={18} colour={g.sun} />
+                          <HeydayLogo size={20} colour={g.markColour} />
                           {g.name.toUpperCase()}
                         </span>
                       </th>

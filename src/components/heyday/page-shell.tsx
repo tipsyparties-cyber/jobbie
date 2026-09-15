@@ -2,12 +2,11 @@ import type { CSSProperties, ReactNode } from "react";
 import Link from "next/link";
 import { Sheet, Wrap } from "@/components/heyday/sheet";
 import { SectionReveal } from "@/components/heyday/motion";
-import { SectionMark } from "@/components/heyday/heyday-mark";
+import { HeydayLogo } from "@/components/heyday/heyday-logo";
 import { Button } from "@/components/ui/button";
-import { HeydayMark } from "@/components/heyday/heyday-mark";
+import { HeydayLogoInView } from "@/components/heyday/heyday-logo-in-view";
 import { CTA } from "@/lib/site";
 import { SKY, INK, PAPER, ORANGE } from "@/lib/palette";
-import type { ShapeName } from "@/lib/heyday-mark";
 
 /* ==================================================================== *
  *  The page furniture every inner page shares — spec A1, and the
@@ -105,7 +104,7 @@ export function Marked({ text, phrase }: { text: string; phrase?: string }) {
 export function Breadcrumbs({
   items,
 }: {
-  items: { label: string; href?: string; shape?: ShapeName; colour?: string }[];
+  items: { label: string; href?: string; mark?: boolean; colour?: string }[];
 }) {
   return (
     <nav
@@ -115,9 +114,7 @@ export function Breadcrumbs({
       {items.map((it, i) => (
         <span key={it.label} className="inline-flex items-center gap-1.5">
           {i > 0 ? <span aria-hidden>›</span> : null}
-          {it.shape ? (
-            <SectionMark shape={it.shape} size={16} colour={it.colour} />
-          ) : null}
+          {it.mark ? <HeydayLogo size={20} colour={it.colour} /> : null}
           {it.href ? (
             <Link href={it.href} className="text-ink/55 hover:underline">
               {it.label}
@@ -148,7 +145,8 @@ export function CTABlock({
       <Wrap className="text-center">
         <SectionReveal>
           <div className="mb-6 flex justify-center">
-            <HeydayMark size={64} sun={SKY} morphInView />
+            {/* Together: the arcs and the burst meet as you reach the ask. */}
+            <HeydayLogoInView size={64} colour={SKY} motion="together" />
           </div>
           <h2 className="hd-h2 mx-auto max-w-[18ch]">
             <Marked text={heading} phrase={highlight} />

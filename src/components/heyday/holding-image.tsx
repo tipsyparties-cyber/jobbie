@@ -1,7 +1,6 @@
 import type { CSSProperties } from "react";
-import { SectionMark } from "@/components/heyday/heyday-mark";
-import { PAPER } from "@/lib/palette";
-import type { ShapeName } from "@/lib/heyday-mark";
+import { HeydayLogo } from "@/components/heyday/heyday-logo";
+import { INK, PAPER } from "@/lib/palette";
 
 /* ==================================================================== *
  *  HoldingImage — spec A6.
@@ -37,9 +36,6 @@ export function HoldingImage({
   /** The section's ground colour. The box is that colour mixed 35% with
    *  paper, so it belongs to its section rather than sitting on it. */
   tint,
-  /** The group shape to ghost behind it. The sun, where a section has no
-   *  group of its own. */
-  shape = "sun",
   /** Card corners are 16px, panel corners 40px. */
   radius = 16,
   className = "",
@@ -48,7 +44,6 @@ export function HoldingImage({
   art: string;
   ratio?: keyof typeof RATIOS;
   tint?: string;
-  shape?: ShapeName;
   radius?: number;
   className?: string;
   style?: CSSProperties;
@@ -69,7 +64,7 @@ export function HoldingImage({
       }}
     >
       <span aria-hidden className="w-[36%] opacity-[0.12]">
-        <SectionMark shape={shape} size="100%" />
+        <HeydayLogo size="100%" colour={INK} />
       </span>
       <span
         aria-hidden

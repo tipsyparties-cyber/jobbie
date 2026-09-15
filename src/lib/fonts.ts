@@ -1,5 +1,6 @@
 import {
   Cormorant_Garamond,
+  DM_Sans,
   Inter,
   Plus_Jakarta_Sans,
   Schibsted_Grotesk,
@@ -69,5 +70,19 @@ export const serif = Cormorant_Garamond({
   subsets: ["latin"],
   weight: ["300", "400", "500", "600"],
   variable: "--font-serif",
+  display: "swap",
+});
+
+/**
+ * The logo word, and nothing else — logo spec § 2.
+ *
+ * DM Sans Bold is a brand requirement, not a type choice: the spec names
+ * the face, the weight, the case and the tracking. It is loaded at one
+ * weight and used by one component, so it costs a single file.
+ */
+export const logo = DM_Sans({
+  subsets: ["latin"],
+  weight: ["700"],
+  variable: "--font-logo",
   display: "swap",
 });

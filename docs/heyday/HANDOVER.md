@@ -58,61 +58,86 @@ node scripts/vs-prototype.mjs  # each page against its reference page
 
 ---
 
-## 3. THE JOB THAT IS HALF DONE
+## 3. THE LOGO REPLACEMENT — DONE, AND WHAT IT COST
 
 **Jem's new mark replaces the eight-ray sun everywhere.** Russell's
-decision, and it is not "alongside".
+decision, and it was not "alongside". It is now done.
 
-### Done
+### What the mark does now
 
-- `src/lib/heyday-logo-paths.ts` — the mark's three sub-paths, split out
-  of `logo/assets/heyday-mark-jem.svg` and named by geometry. The two
-  nested curves are the arcs; the one spanning the diagonal with the rays
-  is the burst.
-- `src/components/heyday/heyday-logo.tsx` — `HeydayLogo`, exposing
-  `.outer` / `.inner` / `.burst` inside `<g class="all">`, which is what
-  every animation in the spec acts on.
-- All seven animations in `globals.css`, taken from the spec verbatim.
-- **Header**: Assemble once on load, click-round on hover.
-- **Footer**: Spin.
-- **DecorSuns**: the big marks in the hero and sections — the ones in
-  `reference/screenshots/07-decor-suns-to-replace.png`.
-- Favicon and app icon still point at `public/favicon.png`, which is a
-  **160×153 screenshot crop**. The pack has proper files now
-  (`logo/assets/heyday-favicon*.png`, up to 512, plus a full-bleed
-  variant for the home-screen icon). **Swap those in — it is five
-  minutes and it is the first thing to do.**
+| Where | Motion |
+|---|---|
+| Header lockup | Assemble on load, Click round on hover |
+| Footer | Spin |
+| Group pages, closing blocks, the homepage's last block | Together, once, as they arrive |
+| "It runs itself", the AI page's Autopilot level, "See every feature" | Spin |
+| The AI page's middle level | Beat |
+| 404 | Click round — a wrong turn |
+| Everything small: menus, breadcrumbs, pricing rows, quiz results, holding images | Still |
 
-### Not done, and it needs a decision before it can be
+All seven animations are in `globals.css`, taken from the spec verbatim,
+and the styleguide shows them side by side with where each belongs.
 
-Everything built on the **morph engine** still uses the old sun:
+### The morph is gone. Russell should know that.
 
-- `src/lib/heyday-mark.ts` + `heyday-shapes.json` — the engine
-- `src/components/heyday/heyday-mark.tsx` — `HeydayMark`, `SectionMark`
-- The six group section marks, plus the Loop and Infinity
-- `MoreInfoSection` — the shape grows to fill a feature row
-- The AI page's sun → Loop → Infinity as the levels rise
-- The 404's bounce-and-become-the-Loop
-- The leak check's per-group result marks
-- The loading state (a spinning Loop)
+The old sun could fold into six group shapes, a Loop and an Infinity.
+That is gone, and it was a lot of the site's character. **It was not
+dropped to save effort** — two lines in the logo spec rule it out:
 
-**Why this is not a swap.** The morph works because all seven shapes are
-*the same eight strokes and one core* on a 100-unit square — every point
-has somewhere to travel to. Jem's new mark is three filled paths with a
-different construction. The two systems do not interoperate.
+- § 7, Don't: *"Redraw, re-trace, stretch, skew, or rotate it (except the
+  Click round and Spin animations)."* A morph into six other shapes is
+  redrawing it.
+- § 8, Still to do: *"The six section shapes and the 46 feature icons are
+  still drawn from the **old** sun and need redrawing from this mark."*
+  So there is nothing to morph into until Jem draws them.
 
-**So somebody has to decide:**
+The morph also only worked because all seven shapes were *the same eight
+strokes and one core* on a 100-unit square. The new mark is three filled
+paths. The two systems never could have interoperated.
 
-1. Do the six groups still get their own marks? If so, what are they now?
-2. If not, what does a group page's hero show, and what does the features
-   index put beside each group heading?
-3. What replaces `MoreInfoSection`'s grow — the shape swelling until the
-   section is its colour? That is one of the nicest things on the site.
-4. What replaces the Loop and Infinity on the AI page's three levels?
+**What took its place, one for one:**
 
-**Do not quietly drop the morph.** If the answer is that it goes, say so
-to Russell explicitly, because it is a lot of the site's character and he
-should choose to lose it rather than discover it gone.
+| Was | Now |
+|---|---|
+| Six group shapes | One mark in six colours. A group is told apart by its **colour and its number**, both of which were already in the data |
+| The group page's hero morphing out of the sun | The mark at 260px in the group's colour, arriving on Together |
+| `MoreInfoSection`'s grow — the best thing on the site | **Kept.** A disc behind the mark fades in as it scales, so the colour floods out of it; the mark fades into the flood. The disc is what the old engine's `boost` was doing |
+| The homepage closing block's pass through six shapes | Together, once |
+| Loop and Infinity on the AI levels | Beat, then Spin |
+| The footer's cycle through six shapes | Spin |
+
+**If Jem draws six new section shapes from this mark, the morph can come
+back** — the engine is in git at `920f2a6`, in `src/lib/heyday-mark.ts`
+and `heyday-shapes.json`. That is the only thing that would bring it
+back, and it is Jem's call, not a coding problem.
+
+### The lockup was wrong, and is fixed
+
+Two things Russell spotted in the header, both real:
+
+1. **The word was the old PNG, set with a capital H.** The spec is
+   explicit: *"Always lowercase: heyday. Not Heyday, not HeyDay."* It is
+   now live text in DM Sans Bold at −0.02em, which is also what lets it
+   take `currentColor` and stay selectable.
+2. **The mark was drawing a quarter smaller than the number said.** The
+   spec's viewBox of `-16 -16 132 132` is 32% padding, so `size={28}`
+   drew a 21px mark. `HeydayLogo` now grows the *box* by the padding
+   instead, so `size` means the mark. Every small mark on the site was
+   affected, not just the header.
+
+Header is now mark 24, gap 3px, word 22. Footer is mark 26, gap 3px,
+word 24 — the spec's own proportions.
+
+### The favicon is the pack's files now
+
+The 160×153 screenshot crop is gone. `public/favicon-{16,32,48,512}.png`
+are the pack's, each built from its 512 rather than scaled from a smaller
+one, and `apple-touch-icon.png` is the badge flattened onto its own blue
+so iOS does not mask black corners onto it.
+
+**The blue tile, not the transparent mark.** The spec leaves that open for
+Jem, but Russell chose paper-on-blue when he asked for the favicon. One
+rename away if Jem disagrees.
 
 ---
 

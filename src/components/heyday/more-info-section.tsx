@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useId, useRef, useState } from "react";
-import { motion, useReducedMotion, useSpring } from "framer-motion";
-import { Mark, reducedMotion } from "@/lib/heyday-mark";
+import { motion, useReducedMotion, useSpring, useTransform } from "framer-motion";
+import { MARK_OUTER, MARK_BURST, MARK_INNER } from "@/lib/heyday-logo-paths";
 import { Button } from "@/components/ui/button";
 import { SectionReveal } from "@/components/heyday/motion";
 import { INK, CREAM } from "@/lib/palette";
@@ -11,15 +11,19 @@ import type { Group } from "@/lib/groups";
 /* ==================================================================== *
  *  More info: the shape grows into the page — design brief A12.
  *
- *  Jem's idea. The section's shape sits beside the headline; press the
- *  button and it grows around its own core until the whole section is its
- *  colour, and the detail is underneath.
+ *  Jem's idea, and the nicest thing on the site. The mark sits beside the
+ *  headline; press the button and it grows until the whole section is its
+ *  colour, with the detail underneath.
  *
- *  Two details make it read as the section filling rather than as a spider
- *  expanding, and both come from the engine:
+ *  Two details make it read as the section filling rather than as a logo
+ *  being zoomed:
  *
- *  - `boost` swells the core to radius 46 as it grows, closing the gaps
- *    between the arrows. Without it you get a growing asterisk.
+ *  - A disc behind the mark fades in as it grows, so the gaps close and
+ *    what expands is a field of colour. This is what replaced the old
+ *    sun engine's `boost`, which swelled the sun's core to do the same
+ *    job. Without it you get a growing ring.
+ *  - The mark itself fades out into that disc, so at no settled moment is
+ *    the mark showing two colours — the logo spec is strict about that.
  *  - The scale is worked out from the section's own farthest corner, so it
  *    always covers and never overshoots by a random multiple.
  *
@@ -58,47 +62,53 @@ export function MoreInfoSection({
   const still = useReducedMotion();
   const sectionRef = useRef<HTMLDivElement | null>(null);
   const svgRef = useRef<SVGSVGElement | null>(null);
-  const markRef = useRef<Mark | null>(null);
+  const markRef = useRef<HTMLSpanElement | null>(null);
   const buttonRef = useRef<HTMLDivElement | null>(null);
   const backRef = useRef<HTMLButtonElement | null>(null);
   const [open, setOpen] = useState(false);
-  /** The shape's scale while it grows to cover the section. */
+  const [arrived, setArrived] = useState(false);
+  /** The mark's scale while it grows to cover the section. */
   const scale = useSpring(1, { duration: 900, bounce: 0 });
+  /** The colour flooding out of it, 0 to 1, on the same timing. */
+  const flood = useSpring(0, { duration: 900, bounce: 0 });
+  /** The mark fades into the flood rather than riding on top of it. It goes
+   *  by a little over half way, so it is still legible as the grow starts. */
+  const markOpacity = useTransform(flood, [0, 0.55], [1, 0]);
   const panelId = useId();
 
-  /* The mark. It idles as its shape and, about every seven seconds, turns
-     back into the sun, bounces, and returns — so you see where it came
-     from without having to be told. */
+  /* The mark arrives on Together — the arcs in from the left, the burst
+     from the lower right — once, as the row scrolls in, and then rests.
+     The old sun turned itself back into a sun every seven seconds to show
+     you where its shape came from; there is one shape now, so there is
+     nothing left to explain and the fidget goes with it. */
   useEffect(() => {
-    const svg = svgRef.current;
-    if (!svg) return;
-    svg.innerHTML = "";
-    const mark = new Mark(svg, svg.parentElement, "sun", { sun: group.sun });
-    markRef.current = mark;
-    mark.morph(group.shape, reducedMotion() ? 0 : 900);
-
-    if (reducedMotion()) return () => mark.destroy();
-
-    const t = setInterval(() => {
-      if (!mark.visible) return;
-      mark.morph("sun", 700).then(() => {
-        mark.bounce();
-        setTimeout(() => mark.morph(group.shape, 900), 400);
-      });
-    }, 7000);
-
-    return () => {
-      clearInterval(t);
-      mark.destroy();
-    };
-  }, [group.shape, group.sun]);
+    const el = markRef.current;
+    if (!el || typeof IntersectionObserver === "undefined") {
+      // Nothing to observe: show it as already arrived, but on the next
+      // frame rather than in the effect body. A synchronous setState here
+      // costs a cascading render for a branch that only fires where there
+      // is no IntersectionObserver at all.
+      const id = requestAnimationFrame(() => setArrived(true));
+      return () => cancelAnimationFrame(id);
+    }
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return;
+        setArrived(true);
+        io.disconnect();
+      },
+      { rootMargin: "0px 0px -10% 0px" }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
 
   /**
    * How far the shape has to grow to cover the section.
    *
-   * The mark is drawn on a 100-unit square and its rays reach 46% of that
-   * from the core, so the scale is (distance to the farthest corner) ÷ (46%
-   * of the rendered width), plus 8% of headroom (A12).
+   * The disc is drawn on a 100-unit square at radius 49.5, so it reaches
+   * 49.5% of the rendered width from its centre. The scale is (distance to
+   * the farthest corner) ÷ that, plus 8% of headroom (A12).
    */
   function coverScale() {
     const section = sectionRef.current;
@@ -114,30 +124,26 @@ export function MoreInfoSection({
       Math.hypot(cx - s.left, s.bottom - cy),
       Math.hypot(s.right - cx, s.bottom - cy)
     );
-    return (far / (m.width * 0.46)) * 1.08;
+    return (far / (m.width * 0.495)) * 1.08;
   }
 
   async function openPanel() {
-    const mark = markRef.current;
     setOpen(true);
-    if (still || reducedMotion() || !mark) {
+    if (still) {
       backRef.current?.focus();
       return;
     }
 
-    // Grow around the core, slowly then fast, while the core swells to close
-    // the gaps between the arrows. Both halves run together: the scale is a
-    // motion value, the core swell is the engine's own `boost`.
-    await Promise.all([
-      scale.set(coverScale()),
-      mark.to({ boost: 1 }, 900),
-    ]);
+    // Grow and flood together: the scale carries the mark out to the
+    // section's farthest corner while the disc behind it fades up, so what
+    // expands reads as the section's colour arriving.
+    await Promise.all([scale.set(coverScale()), flood.set(1)]);
     backRef.current?.focus();
 
     // Reset behind the detail layer, which is now covering it, so closing
-    // starts from the shape's resting size rather than snapping.
+    // starts from the mark's resting size rather than snapping.
     scale.jump(1);
-    mark.to({ boost: 0 }, 0);
+    flood.jump(0);
   }
 
   /** Focus goes back to the button that opened it — otherwise closing
@@ -216,7 +222,10 @@ export function MoreInfoSection({
             className={`relative z-[1] flex justify-center ${flip ? "lg:order-1" : ""}`}
           >
             <motion.span
-              className="inline-block w-[min(100%,320px)]"
+              ref={markRef}
+              className={`hd-logo inline-block w-[min(100%,320px)]${
+                arrived ? " a-together" : ""
+              }`}
               style={{
                 aspectRatio: "1",
                 transformOrigin: "50% 88%",
@@ -226,8 +235,24 @@ export function MoreInfoSection({
               <svg
                 ref={svgRef}
                 viewBox="0 0 100 100"
+                aria-hidden
                 className="block h-full w-full overflow-visible"
-              />
+              >
+                {/* The flood. Behind the mark, and the thing that actually
+                    fills the section. */}
+                <motion.circle
+                  cx="50"
+                  cy="50"
+                  r="49.5"
+                  fill={group.colour}
+                  style={{ opacity: flood }}
+                />
+                <motion.g className="all" style={{ opacity: markOpacity }}>
+                  <path className="outer" d={MARK_OUTER} fill={group.markColour} fillRule="evenodd" />
+                  <path className="inner" d={MARK_INNER} fill={group.markColour} fillRule="evenodd" />
+                  <path className="burst" d={MARK_BURST} fill={group.markColour} fillRule="evenodd" />
+                </motion.g>
+              </svg>
             </motion.span>
           </div>
         </div>

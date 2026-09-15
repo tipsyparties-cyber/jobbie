@@ -2,7 +2,7 @@ import Link from "next/link";
 import { Wrap, SheetLabel } from "@/components/heyday/sheet";
 import { SectionReveal, RevealGroup, Parallax } from "@/components/heyday/motion";
 import { Icon } from "@/components/heyday/icon";
-import { SectionMark } from "@/components/heyday/heyday-mark";
+import { HeydayLogo } from "@/components/heyday/heyday-logo";
 import { MoreInfoSection } from "@/components/heyday/more-info-section";
 import { StickyScroll, type StickyBlock } from "@/components/heyday/sticky-scroll";
 import { SideScroll, SideCard } from "@/components/heyday/side-scroll";
@@ -381,7 +381,7 @@ export function AiLevels() {
                 boxShadow: "6px 10px 0 0 rgba(10,10,10,0.08)",
               }}
             >
-              <SectionMark shape={l.shape} size={60} colour={BLUE} />
+              <HeydayLogo size={60} colour={BLUE} motion={l.motion} />
               <b className="font-display text-[22px] font-bold">{l.title}</b>
               <p className="m-0 text-ink/60">{l.line}</p>
               {l.soon ? <StatusChip /> : null}
@@ -451,7 +451,7 @@ export function OnlyOnHeyday() {
         className="justify-center"
         style={{ backgroundColor: INK, color: CREAM }}
       >
-        <SectionMark shape="inf" size={40} colour={SKY} />
+        <HeydayLogo size={40} colour={SKY} motion="spin" />
         <p className="m-0 text-[15.5px] text-cream/80">
           Everything Heyday does, in one list.
         </p>

@@ -2,29 +2,29 @@ import Link from "next/link";
 import { SITE } from "@/lib/site";
 
 /**
- * The wordmark — design brief A1.
+ * The wordmark — logo spec § 2.
  *
- * Jem's Heyday wordmark, drawn as a CSS mask rather than an `<img>`. The
- * PNG is a solid shape with an alpha channel, so masking a coloured box
- * with it means the mark takes `currentColor` and can sit in ink on cream,
- * paper on blue, or anything else a section needs. An `<img>` would be
- * locked to whatever colour the file was exported at, and we would end up
- * with a second file per colour.
+ * **Live text, not an image.** DM Sans Bold, lowercase, −0.02em tracking.
+ * That is the spec's first line about the word and it rules out the PNG
+ * this used to be: the old file was a mask of the word set with a capital
+ * H, which the spec forbids in as many words — "Always lowercase: heyday.
+ * Not Heyday, not HeyDay."
  *
- * It stays a single component, so a rename or a redraw is one edit rather
- * than a hunt through the header, the footer and every page that repeated
- * the markup. That was the reason the last one was collapsed into here.
+ * Live text also means it takes `currentColor` for free, stays selectable,
+ * scales without a second file, and is read out as text rather than as an
+ * image with a label. The ready-made lockup SVGs in the pack are for
+ * everywhere that is not a web page.
  *
- * The aspect ratio is the file's own: 1493 × 427, or 3.497:1. Width is
- * derived from the height so the mark can be sized by a single number and
- * cannot be squashed.
+ * Size is given as a height so a caller can size the lockup with one
+ * number, the way it could when this was an image. DM Sans's cap height is
+ * about 0.7 of its em, and the word is all lowercase with a descender in
+ * the y, so the font-size that fills a given height is close to the height
+ * itself — the spec's own lockup proportions are a 24px mark against a
+ * 26px word, and this keeps that relationship.
  */
-
-const RATIO = 1493 / 427;
-
 export function Wordmark({
   className = "",
-  /** Height in px. Width follows from the file's aspect ratio. */
+  /** Type size in px, per the spec's lockup proportions. */
   height = 26,
   href = "/",
   asLink = true,
@@ -36,22 +36,14 @@ export function Wordmark({
 }) {
   const mark = (
     <span
-      role="img"
-      aria-label={SITE.name}
-      className={`inline-block bg-current align-middle ${className}`}
+      className={`inline-block select-none align-middle ${className}`}
       style={{
-        height,
-        width: height * RATIO,
-        WebkitMaskImage: "url(/brand/heyday-wordmark.png)",
-        maskImage: "url(/brand/heyday-wordmark.png)",
-        WebkitMaskRepeat: "no-repeat",
-        maskRepeat: "no-repeat",
-        WebkitMaskSize: "contain",
-        maskSize: "contain",
-        WebkitMaskPosition: "center",
-        maskPosition: "center",
+        font: `700 ${height}px/1 var(--font-logo), var(--font-sans), system-ui, sans-serif`,
+        letterSpacing: "-0.02em",
       }}
-    />
+    >
+      heyday
+    </span>
   );
 
   if (!asLink) return mark;

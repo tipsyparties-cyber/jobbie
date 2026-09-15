@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useReducedMotion } from "framer-motion";
-import { HeydayMark } from "@/components/heyday/heyday-mark";
+import { HeydayLogo } from "@/components/heyday/heyday-logo";
 import { Wordmark } from "@/components/ui/wordmark";
 import { PAPER, CREAM, INK, ORANGE, SKY, SAGE } from "@/lib/palette";
 
@@ -339,7 +339,7 @@ export function OldWayNewWay() {
                   boxShadow: "8px 8px 0 0 rgba(10,10,10,0.14)",
                 }}
               >
-                <HeydayMark size={26} sun={SKY} />
+                <HeydayLogo size={26} colour={SKY} />
                 <Wordmark height={20} asLink={false} className="text-ink" />
               </div>
 
@@ -479,7 +479,7 @@ function Sky({ t, pinned }: { t: number; pinned: boolean }) {
           className="absolute block h-20 w-20"
           style={{ left: sun.left, top: sun.top, opacity: sun.opacity }}
         >
-          <HeydayMark size={80} sun={PAPER} />
+          <HeydayLogo size={80} colour={PAPER} motion="spin" />
         </span>
       ) : null}
 

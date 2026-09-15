@@ -2,14 +2,12 @@ import Link from "next/link";
 import { Wrap, SheetLabel } from "@/components/heyday/sheet";
 import { SectionReveal, RevealGroup, Parallax } from "@/components/heyday/motion";
 import { Icon } from "@/components/heyday/icon";
-import { HeydayMark } from "@/components/heyday/heyday-mark";
+import { HeydayLogoInView } from "@/components/heyday/heyday-logo-in-view";
 import { HoldingImage } from "@/components/heyday/holding-image";
 import { Card, Sticker, StatusChip } from "@/components/ui/surfaces";
 import { Button } from "@/components/ui/button";
 import { Screen, ScreenRow } from "@/components/heyday/screen";
 import { STORIES, STAGES, SWITCHING, BUSINESS_TYPES } from "@/lib/home-content";
-import { GROUPS } from "@/lib/groups";
-import type { ShapeName } from "@/lib/heyday-mark";
 import { SITE, CTA, TBC } from "@/lib/site";
 import { PAPER, SKY, ORANGE } from "@/lib/palette";
 
@@ -300,21 +298,19 @@ export function Switching() {
 
 /* ---- 15. Closing call to action --------------------------------------- */
 
-const CYCLE = GROUPS.map((g) => g.shape as ShapeName);
-
 export function Closing() {
   return (
     <Wrap className="text-center">
       <SectionReveal>
         <div className="mb-6 flex justify-center">
-          {/* One pass through the six group shapes as the block
-              arrives, then it rests as the sun. Every group, once, at the
-              point the page asks for a decision. */}
-          <HeydayMark
+          {/* Together, once, as the block arrives: the two arcs and the
+              burst meet on the diagonal. It lands at the point the page
+              asks for a decision and then stays still. */}
+          <HeydayLogoInView
             size={80}
-            sun={SKY}
-            cycle={{ shapes: CYCLE, every: 900, once: true }}
-            label="The Heyday sun, turning through the six groups"
+            colour={SKY}
+            motion="together"
+            label="The Heyday mark"
           />
         </div>
         <h2 className="hd-h2 mx-auto max-w-[18ch]">

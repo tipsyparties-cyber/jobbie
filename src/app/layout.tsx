@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { serif, sans, hero, display, mono } from "@/lib/fonts";
+import { serif, sans, hero, display, mono, logo } from "@/lib/fonts";
 import { SITE, PROJECT } from "@/lib/site";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
@@ -43,26 +43,34 @@ export const metadata: Metadata = {
     images: ["/og-image.png"],
   },
   /**
-   * Russell's new master logo.
+   * The mark, from the logo pack's own files — logo spec § 5.
    *
-   * CAVEAT, and it matters: the file in `public/brand/heyday-logo.png` is
-   * a 160×153 screenshot crop, because that is what was available. It is
-   * plenty for a 16 or 32px browser tab, which is what a favicon is. It
-   * is NOT enough for the 180px home-screen icon, and it has the rounded
-   * cream tile baked into it — iOS applies its own mask, so a pre-rounded
-   * tile will show a halo at the corners.
+   * These replace the 160×153 screenshot crop that stood in while there
+   * was no source file. Each size is the pack's, built from its 512 with
+   * its own 1px of air; none of them is a smaller one scaled up, which is
+   * what the spec asks for and what keeps 16px legible.
    *
-   * Both of those need the vector. Until it arrives, the tab is right and
-   * the home-screen icon is passable rather than good. See
-   * QUESTIONS-FOR-RUSSELL.
+   * **The blue tile, not the transparent mark.** The spec leaves that
+   * open for Jem, but Russell chose these colours — paper on blue — when
+   * he asked for the favicon, so the tile family ships. Swapping to the
+   * transparent one is five filenames: drop "-tile" in scripts/icons.
    *
-   * The H that was here has gone. It only existed because the old sun
-   * turned to mush at 16px; this mark is drawn to hold at small sizes and
-   * is the actual logo, so it wins on both counts.
+   * The 16 is the burst alone. That is deliberate in the pack: the arcs
+   * close up and turn to mush at that size, so they are dropped rather
+   * than drawn badly.
+   *
+   * The home-screen icon is the badge flattened onto its own blue, so it
+   * is full-bleed. iOS masks an app icon to a squircle, and a circle on
+   * transparency would show black at the corners.
    */
   icons: {
-    icon: [{ url: "/favicon.png", type: "image/png" }],
-    apple: [{ url: "/favicon.png", type: "image/png" }],
+    icon: [
+      { url: "/favicon-16.png", type: "image/png", sizes: "16x16" },
+      { url: "/favicon-32.png", type: "image/png", sizes: "32x32" },
+      { url: "/favicon-48.png", type: "image/png", sizes: "48x48" },
+      { url: "/favicon-512.png", type: "image/png", sizes: "512x512" },
+    ],
+    apple: [{ url: "/apple-touch-icon.png", type: "image/png", sizes: "180x180" }],
   },
 };
 
@@ -72,7 +80,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${serif.variable} ${sans.variable} ${hero.variable} ${display.variable} ${mono.variable}`}>
+    <html lang="en" className={`${serif.variable} ${sans.variable} ${hero.variable} ${display.variable} ${mono.variable} ${logo.variable}`}>
       {/* Cream, which is the site's ground. Sections paint their own
           colour over it; this is what shows in the gaps and behind the
           rounded tops. */}

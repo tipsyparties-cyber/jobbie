@@ -16,6 +16,9 @@ import { SAGE, SKY, LAVENDER } from "@/lib/palette";
  *  The brief's rules, all of which are easy to break by accident:
  *
  *  - Different sizes, each in ONE colour (A11), three per screen at most.
+ *    The numbers are the mark AS DRAWN — they were measured against the
+ *    prototype, so they were rescaled when HeydayLogo's size stopped
+ *    meaning the padded box and started meaning the mark.
  *  - One may cross a section edge, to link two sections.
  *  - They sit BEHIND text and never make it harder to read. That is why
  *    they are low-opacity and pointer-events-none, and why nothing here
@@ -48,8 +51,8 @@ export type DecorSun = {
  * they are anchored to the headline, not to the width of the page.
  */
 export const HERO_SUNS: DecorSun[] = [
-  { top: "40px", left: "-50px", size: 150, colour: LAVENDER, drift: -90, turn: 14 },
-  { top: "56px", left: "calc(50% - 96px)", size: 62, colour: SKY, drift: -140, turn: -20 },
+  { top: "40px", left: "-50px", size: 114, colour: LAVENDER, drift: -90, turn: 14 },
+  { top: "56px", left: "calc(50% - 96px)", size: 47, colour: SKY, drift: -140, turn: -20 },
 ];
 
 /**
@@ -59,12 +62,12 @@ export const HERO_SUNS: DecorSun[] = [
  * decoration dropped on top.
  */
 export const WHAT_SUNS: DecorSun[] = [
-  { top: "-150px", left: "-190px", size: 520, colour: SAGE, drift: -40, turn: 8 },
+  { top: "-150px", left: "-190px", size: 394, colour: SAGE, drift: -40, turn: 8 },
 ];
 
 export const SECTION_SUNS: DecorSun[] = [
-  { top: "12%", left: "86%", size: 150, colour: SKY, drift: -110, turn: 16 },
-  { top: "70%", left: "-4%", size: 120, colour: SAGE, drift: -70, turn: -12 },
+  { top: "12%", left: "86%", size: 114, colour: SKY, drift: -110, turn: 16 },
+  { top: "70%", left: "-4%", size: 91, colour: SAGE, drift: -70, turn: -12 },
 ];
 
 export function DecorSuns({ suns = HERO_SUNS }: { suns?: DecorSun[] }) {

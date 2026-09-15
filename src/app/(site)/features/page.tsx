@@ -4,13 +4,12 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/surfaces";
 import { StatusChip } from "@/components/ui/surfaces";
 import { SectionReveal, RevealGroup } from "@/components/heyday/motion";
-import { SectionMark } from "@/components/heyday/heyday-mark";
+import { HeydayLogo } from "@/components/heyday/heyday-logo";
 import { Icon } from "@/components/heyday/icon";
 import { GROUPS } from "@/lib/groups";
 import { FEATURES, featuresInGroup, statusLabel } from "@/lib/heyday-features";
 import { CTA, SITE } from "@/lib/site";
 import { PAPER } from "@/lib/palette";
-import type { ShapeName } from "@/lib/heyday-mark";
 
 /**
  * All features — template T4.
@@ -54,7 +53,7 @@ export default function FeaturesIndex() {
               href={`#${g.id}`}
               className="inline-flex shrink-0 items-center gap-2 rounded-lg border border-ink/20 px-3.5 py-2 font-body text-sm transition-[border-radius] duration-200 hover:rounded-[28px] hover:border-ink"
             >
-              <SectionMark shape={g.shape as ShapeName} size={16} colour={g.colour} />
+              <HeydayLogo size={20} colour={g.colour} />
               {g.name}
             </a>
           ))}
@@ -66,7 +65,7 @@ export default function FeaturesIndex() {
           <div className="mx-auto max-w-[1280px] px-6 py-16">
             <SectionReveal>
               <div className="flex items-start gap-4">
-                <SectionMark shape={g.shape as ShapeName} size={40} colour={g.colour} />
+                <HeydayLogo size={40} colour={g.colour} />
                 <div>
                   <h2 className="font-display text-[clamp(1.6rem,3.4vw,2.6rem)] font-semibold tracking-[-0.02em]">
                     {g.name}

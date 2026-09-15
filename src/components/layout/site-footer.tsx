@@ -80,11 +80,11 @@ export function SiteFooter() {
     <footer className="relative z-10 -mt-14 rounded-t-[56px] bg-ink pb-12 pt-16 text-cream">
       <div className="mx-auto max-w-[1280px] px-6">
         <div className="flex flex-wrap items-start justify-between gap-8">
-          <div className="flex items-center gap-3">
-            {/* Spin, slowly. The spec gives the footer the spin, and it
-                replaces the old cycle through six shapes — there are no
-                six shapes any more. */}
-            <HeydayLogo size={40} colour={SKY} motion="spin" />
+          <div className="flex items-center" style={{ gap: 3 }}>
+            {/* Mark 26 in the footer, per the spec. Spin, slowly: the spec
+                gives the footer the spin, and it replaces the old cycle
+                through six shapes — there are no six shapes any more. */}
+            <HeydayLogo size={26} colour={SKY} motion="spin" />
             <Wordmark height={24} className="text-cream" />
           </div>
 

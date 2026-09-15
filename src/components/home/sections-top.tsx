@@ -2,11 +2,11 @@ import Link from "next/link";
 import { Wrap, SheetLabel } from "@/components/heyday/sheet";
 import { SectionReveal, RevealGroup } from "@/components/heyday/motion";
 import { Icon } from "@/components/heyday/icon";
-import { SectionMark } from "@/components/heyday/heyday-mark";
+import { HeydayLogo } from "@/components/heyday/heyday-logo";
 import { SideScroll, SideCard } from "@/components/heyday/side-scroll";
 import { DecorSuns, WHAT_SUNS } from "@/components/heyday/decor-suns";
 import { WHAT_CHIPS, BUSINESS_TYPES, FLOW } from "@/lib/home-content";
-import { GROUPS, RUNS_ITSELF } from "@/lib/groups";
+import { GROUPS } from "@/lib/groups";
 import { PAPER, CREAM, INK } from "@/lib/palette";
 
 /* ==================================================================== *
@@ -126,7 +126,7 @@ export function WorkflowScroll() {
             style={{ backgroundColor: PAPER }}
           >
             <span className="flex items-center gap-2">
-              <SectionMark shape={group.shape} size={22} colour={group.sun} />
+              <HeydayLogo size={24} colour={group.markColour} />
               <Icon name={s.icon} size={26} ground={PAPER} />
             </span>
             <p className="m-0 text-[15.5px] text-ink/60">{s.line}</p>
@@ -141,7 +141,7 @@ export function WorkflowScroll() {
         className="justify-center"
         style={{ backgroundColor: INK, color: CREAM }}
       >
-        <SectionMark shape={RUNS_ITSELF.shape} size={40} colour={CREAM} />
+        <HeydayLogo size={40} colour={CREAM} motion="spin" />
         <p className="m-0 text-[15.5px] text-cream/80">
           You oversee the exceptions. Heyday does the rest.
         </p>

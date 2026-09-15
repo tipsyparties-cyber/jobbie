@@ -4,7 +4,7 @@ import { PageHero, CTABlock, Marked } from "@/components/heyday/page-shell";
 import { Sheet, Wrap, SheetLabel } from "@/components/heyday/sheet";
 import { SectionReveal, RevealGroup } from "@/components/heyday/motion";
 import { StickyScroll, type StickyBlock } from "@/components/heyday/sticky-scroll";
-import { SectionMark } from "@/components/heyday/heyday-mark";
+import { HeydayLogo } from "@/components/heyday/heyday-logo";
 import { Card, Sticker } from "@/components/ui/surfaces";
 import { Button } from "@/components/ui/button";
 import { Screen, ScreenRow, ScreenAction } from "@/components/heyday/screen";
@@ -183,7 +183,7 @@ export default function HowItWorksPage() {
                 className="flex h-full flex-col gap-2 p-6"
                 style={{ backgroundColor: PAPER }}
               >
-                <SectionMark shape={g.shape} size={48} colour={g.sun} />
+                <HeydayLogo size={48} colour={g.markColour} />
                 <b className="font-display text-[22px] font-bold">{g.name}</b>
                 <p className="m-0 text-ink/60">{g.promise}</p>
                 <Link

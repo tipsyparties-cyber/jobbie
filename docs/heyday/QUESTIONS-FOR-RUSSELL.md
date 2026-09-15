@@ -274,3 +274,41 @@ that rather than from a guess.
 Animate some of the icons used around the site. No further detail given,
 so use judgement and keep it to the motion table's spirit: movement lands
 one point, and anything not listed stays still.
+
+---
+
+## 8. The logo swap is finished — two things for Jem
+
+**Done, 15 September 2026.** The mark is everywhere the sun was; the
+header lockup is the spec's geometry with the word as live lowercase
+text; the favicon and app icon are the pack's files. Full account in
+`HANDOVER.md` § 3.
+
+### 8.1 The morph is gone, and you should know before you notice
+
+The sun used to fold into six group shapes, a Loop and an Infinity. That
+was a lot of the site's character and it has gone.
+
+It is not a coding decision. The logo spec forbids redrawing the mark
+(§ 7), and § 8 says the six section shapes "need redrawing from this
+mark" — so there is nothing to morph into yet.
+
+A group is now told apart by **its colour and its number**. The grow on
+the feature rows survived: the mark floods its colour out to fill the
+section, which is the same idea by other means.
+
+**If Jem draws six shapes from the new mark, the morph comes back.** The
+engine is still in git history. That is the only route back and it is
+Jem's call.
+
+### 8.2 Transparent favicon, or the blue tile?
+
+The logo spec leaves this open (§ 5, "Still open"). The **blue tile** is
+shipped, because that is the colouring you asked for. Say if you'd rather
+have the transparent mark — it is five filenames.
+
+### 8.3 DM Sans is now loaded for one word
+
+The spec requires the wordmark in DM Sans Bold, and the site did not have
+it. It loads at one weight and is used by one component, so it is one
+font file. Worth knowing it is there.

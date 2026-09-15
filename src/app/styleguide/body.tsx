@@ -2,14 +2,14 @@
 
 import { Button } from "@/components/ui/button";
 import { Panel, Card, Sticker, StatusChip } from "@/components/ui/surfaces";
-import { HeydayMark, SectionMark } from "@/components/heyday/heyday-mark";
+import { HeydayLogo, type MarkMotion } from "@/components/heyday/heyday-logo";
 import { HeydayLine } from "@/components/heyday/heyday-line";
 import { Icon } from "@/components/heyday/icon";
 import { RisingCards } from "@/components/heyday/rising-cards";
 import { MoreInfoSection } from "@/components/heyday/more-info-section";
 import { SectionReveal, RevealGroup, Parallax } from "@/components/heyday/motion";
 import { Wordmark } from "@/components/ui/wordmark";
-import { GROUPS, RUNS_ITSELF } from "@/lib/groups";
+import { GROUPS } from "@/lib/groups";
 import { HERO_CARDS } from "@/lib/hero-cards";
 import {
   INK,
@@ -70,6 +70,17 @@ function Section({
     </section>
   );
 }
+
+/** The logo spec's motion table, section 6, in its own order. */
+const MOTIONS: { name: MarkMotion; where: string }[] = [
+  { name: "assemble", where: "The header, on load. Page transitions." },
+  { name: "click", where: "Hover. The 404." },
+  { name: "together", where: "Something completes. Closing blocks." },
+  { name: "signal", where: "Loading. The header while a page works." },
+  { name: "spin", where: "The footer. It runs itself. Long waits." },
+  { name: "beat", where: "A button that is waiting." },
+  { name: "sunrise", where: "First load only — it starts empty." },
+];
 
 export function StyleguideBody() {
   return (
@@ -195,43 +206,52 @@ export function StyleguideBody() {
       </Section>
 
       {/* ---- The mark ---- */}
-      <Section title="The Heyday sun, and the section marks" refs="A11">
+      <Section
+        title="The mark, and what it does"
+        refs="logo spec §1, §6"
+      >
         <div className="flex flex-wrap items-end gap-10">
           <div>
-            <HeydayMark shape="sun" sun={BLUE} size={120} label="The Heyday sun" />
-            <p className="mt-2 font-mono text-[12px] text-ink/45">sun · blue on paper</p>
+            <HeydayLogo size={120} colour={BLUE} label="The Heyday mark" />
+            <p className="mt-2 font-mono text-[12px] text-ink/45">blue on paper</p>
           </div>
           {GROUPS.map((g) => (
             <div key={g.id}>
-              <HeydayMark shape={g.shape} sun={g.sun} size={120} morphInView />
+              <HeydayLogo size={120} colour={g.markColour} />
               <p className="mt-2 font-mono text-[12px] text-ink/45">
-                {g.shape} · {g.name}
+                {g.n} · {g.name}
               </p>
             </div>
           ))}
-          <div>
-            <HeydayMark shape={RUNS_ITSELF.shape} sun={RUNS_ITSELF.sun} size={120} morphInView />
-            <p className="mt-2 font-mono text-[12px] text-ink/45">inf · It runs itself</p>
-          </div>
         </div>
         <p className="mt-8 max-w-2xl font-body text-sm leading-relaxed text-ink/60">
-          Each starts as the sun and folds into its shape as it scrolls in, so
-          you see where every shape comes from. The sun is always one colour,
-          never black and never orange — where a group&apos;s own colour is
-          one of those, it falls back to blue.
+          One mark, in the colour of whatever it sits in. A group is told
+          apart by its colour and its number, not by a shape of its own — the
+          six shapes the old sun folded into are gone, because the logo spec
+          does not allow the mark to be redrawn. The mark is never black and
+          never orange, so where a group&apos;s own colour is one of those it
+          falls back to blue.
         </p>
 
         <p className="mt-10 font-mono text-[12px] text-ink/40">
-          Still versions, for menus and breadcrumbs
+          The seven animations, and where each one belongs
         </p>
-        <div className="mt-3 flex flex-wrap items-center gap-6">
-          {GROUPS.map((g) => (
-            <span key={g.id} className="flex items-center gap-2">
-              <SectionMark shape={g.shape} size={24} colour={g.colour} />
-              <span className="font-body text-sm text-ink/70">{g.name}</span>
-            </span>
+        <div className="mt-3 flex flex-wrap items-end gap-8">
+          {MOTIONS.map((m) => (
+            <div key={m.name} className="w-[168px]">
+              <HeydayLogo size={72} colour={BLUE} motion={m.name} />
+              <p className="mt-2 font-mono text-[12px] text-ink/60">{m.name}</p>
+              <p className="font-body text-[13px] leading-snug text-ink/45">
+                {m.where}
+              </p>
+            </div>
           ))}
         </div>
+        <p className="mt-6 max-w-2xl font-body text-sm leading-relaxed text-ink/60">
+          Signal, Spin and Beat loop. The rest run once — and the once-only
+          ones on this page only play as the page loads, which is the point:
+          movement lands one point and then stops.
+        </p>
       </Section>
 
       {/* ---- Icons ---- */}

@@ -34,7 +34,6 @@ export type NavPanel =
       columns: {
         head: string;
         /** The group's section mark, small and still. */
-        shape: string;
         colour: string;
         links: NavLink[];
         more?: NavLink;
@@ -59,7 +58,6 @@ const PRODUCT_COLUMNS = GROUPS.map((g) => {
   const all = featuresInGroup(g.id);
   return {
     head: g.name,
-    shape: g.shape,
     colour: g.colour,
     links: all.slice(0, COLUMN_CAP).map((f) => ({
       label: f.name,
