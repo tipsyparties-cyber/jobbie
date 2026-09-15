@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start -p 3001",
     "lint": "eslint",
-    "dev:fresh": "node -e \"require('fs').rmSync('.next',{recursive:true,force:true})\" && next dev -p 3001",
+    "dev:fresh": "node scripts/dev-fresh.mjs 3001",
     "build:safe": "node -e \"process.env.NEXT_DIST_DIR='.next-build';require('child_process').execSync('npx next build',{stdio:'inherit',env:process.env})\""
   },
   "dependencies": {

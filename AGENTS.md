@@ -33,3 +33,8 @@ reload (Ctrl+Shift+R), because the browser caches the stylesheet too.
 Running `next build` also deletes `.next`, so a production build while
 the dev server is up leaves the dev server serving from a directory that
 no longer exists. Restart it afterwards.
+
+**`npm run dev:fresh` now refuses to run if the port is already taken**,
+and deletes nothing in that case. It used to delete `.next` and then fail
+to bind, which broke the server that was already running — the command
+that exists to prevent a broken preview caused one. Twice.
