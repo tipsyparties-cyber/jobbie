@@ -50,21 +50,27 @@ export const metadata: Metadata = {
    * its own 1px of air; none of them is a smaller one scaled up, which is
    * what the spec asks for and what keeps 16px legible.
    *
-   * **The blue tile, not the transparent mark.** The spec leaves that
-   * open for Jem, but Russell chose these colours — paper on blue — when
-   * he asked for the favicon, so the tile family ships. Swapping to the
-   * transparent one is five filenames: drop "-tile" in scripts/icons.
+   * **The transparent mark, not the blue tile.** Russell's call — the
+   * spec left it open for Jem (§ 5, "Still open") and it is now decided.
+   * The mark sits on whatever the browser's tab strip is, light or dark.
+   *
+   * The SVG goes first, because a browser that takes it gets a mark that
+   * is sharp at any size and on any display. The PNGs are the fallback,
+   * each built by the pack from its own 512 rather than scaled down from
+   * a bigger one.
    *
    * The 16 is the burst alone. That is deliberate in the pack: the arcs
    * close up and turn to mush at that size, so they are dropped rather
    * than drawn badly.
    *
-   * The home-screen icon is the badge flattened onto its own blue, so it
-   * is full-bleed. iOS masks an app icon to a squircle, and a circle on
-   * transparency would show black at the corners.
+   * THE HOME-SCREEN ICON IS NOT A FAVICON and stays the badge — the mark
+   * in paper on a solid blue square. iOS masks an app icon to a squircle
+   * and paints black behind anything transparent, so a transparent mark
+   * there would be a black tile with a hole in it.
    */
   icons: {
     icon: [
+      { url: "/favicon.svg", type: "image/svg+xml" },
       { url: "/favicon-16.png", type: "image/png", sizes: "16x16" },
       { url: "/favicon-32.png", type: "image/png", sizes: "32x32" },
       { url: "/favicon-48.png", type: "image/png", sizes: "48x48" },
