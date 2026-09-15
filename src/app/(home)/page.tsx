@@ -29,7 +29,7 @@ import {
   Closing,
 } from "@/components/home/sections-bottom";
 import { SITE } from "@/lib/site";
-import { PAPER, CREAM, LAVENDER, SKY, BLUE, INK } from "@/lib/palette";
+import { PAPER, CREAM, LAVENDER, SKY, BLUE, SAGE } from "@/lib/palette";
 
 /* ==================================================================== *
  *  The homepage — spec part 1, section B, and the working page at
@@ -190,8 +190,9 @@ export default function HomePage() {
           <Switching />
         </Sheet>
 
-        {/* 15. The closing call to action. */}
-        <Sheet colour={INK} ink>
+        {/* 15. The closing call to action. Sage, matching CTABlock on
+            every other page — see the note there for why not orange. */}
+        <Sheet colour={SAGE}>
           <Closing />
         </Sheet>
       </main>

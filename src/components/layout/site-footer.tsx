@@ -5,18 +5,24 @@ import { Wordmark } from "@/components/ui/wordmark";
 import { Button } from "@/components/ui/button";
 import { HeydayLogo } from "@/components/heyday/heyday-logo";
 import { SITE, TBC, CTA } from "@/lib/site";
-import { SKY } from "@/lib/palette";
+import { BLUE } from "@/lib/palette";
 
 /* ==================================================================== *
  *  The footer — spec part 1, A5.
  *
- *  Ink with cream text, and the 56px rounded top sitting over the section
+ *  Cream with ink text, and the 56px rounded top sitting over the section
  *  above, so the page ends the way every other section joins.
  *
- *  Its one piece of motion is the sun, slowly cycling through the six
- *  shapes. It stops off screen and with reduced motion. Everything else
- *  here holds still — a footer is where people go when they are looking
- *  for something specific, and movement there is only in the way.
+ *  It was ink, which is what the brief and the prototype both give it.
+ *  Russell asked for it light: with the ink closing block directly above
+ *  it, the bottom of every page was one continuous black slab about two
+ *  screens tall. Cream is the ground the site opens on, so the page now
+ *  settles onto it rather than ending in a wall.
+ *
+ *  Its one piece of motion is the mark, turning slowly. It stops off
+ *  screen and with reduced motion. Everything else here holds still — a
+ *  footer is where people go when they are looking for something
+ *  specific, and movement there is only in the way.
  * ==================================================================== */
 
 const COLUMNS: { head: string; links: { label: string; href: string }[] }[] = [
@@ -77,22 +83,22 @@ const COLUMNS: { head: string; links: { label: string; href: string }[] }[] = [
 
 export function SiteFooter() {
   return (
-    <footer className="relative z-10 -mt-14 rounded-t-[56px] bg-ink pb-12 pt-16 text-cream">
+    <footer className="relative z-10 -mt-14 rounded-t-[56px] bg-cream pb-12 pt-16 text-ink">
       <div className="mx-auto max-w-[1280px] px-6">
         <div className="flex flex-wrap items-start justify-between gap-8">
           <div className="flex items-center" style={{ gap: 3 }}>
             {/* Mark 26 in the footer, per the spec. Spin, slowly: the spec
                 gives the footer the spin, and it replaces the old cycle
                 through six shapes — there are no six shapes any more. */}
-            <HeydayLogo size={26} colour={SKY} motion="spin" />
-            <Wordmark height={24} className="text-cream" />
+            <HeydayLogo size={26} colour={BLUE} motion="spin" />
+            <Wordmark height={24} className="text-ink" />
           </div>
 
           <div className="text-right">
             <p className="font-display text-xl font-semibold">{SITE.tagline}</p>
             <Link
               href="/features/marketplace-listing"
-              className="mt-2 inline-block font-body text-sm text-cream/70 underline-offset-4 hover:underline"
+              className="mt-2 inline-block font-body text-sm text-ink/70 underline-offset-4 hover:underline"
             >
               Find something to do →
             </Link>
@@ -102,7 +108,7 @@ export function SiteFooter() {
         <div className="mt-16 grid gap-10 sm:grid-cols-2 lg:grid-cols-5">
           {COLUMNS.map((col) => (
             <nav key={col.head}>
-              <p className="font-mono text-[12px] tracking-[0.02em] text-cream/45">
+              <p className="font-mono text-[12px] tracking-[0.02em] text-ink/55">
                 {col.head}
               </p>
               <ul className="mt-4 flex flex-col gap-2">
@@ -110,7 +116,7 @@ export function SiteFooter() {
                   <li key={l.href + l.label}>
                     <Link
                       href={l.href}
-                      className="font-body text-sm text-cream/80 transition-opacity hover:opacity-60"
+                      className="font-body text-sm text-ink/75 transition-opacity hover:opacity-60"
                     >
                       {l.label}
                     </Link>
@@ -121,15 +127,15 @@ export function SiteFooter() {
           ))}
         </div>
 
-        <div className="mt-16 flex flex-wrap items-end justify-between gap-8 border-t border-cream/15 pt-8">
+        <div className="mt-16 flex flex-wrap items-end justify-between gap-8 border-t border-ink/15 pt-8">
           <div className="max-w-xl">
-            <p className="font-body text-xs text-cream/45">
+            <p className="font-body text-xs text-ink/60">
               &copy; {new Date().getFullYear()} {TBC.generic} company name
             </p>
             {/* Said once, here, rather than hedged on every page: it is the
                 honest footnote to a site where every feature currently says
                 Coming soon. */}
-            <p className="mt-2 font-body text-xs leading-relaxed text-cream/45">
+            <p className="mt-2 font-body text-xs leading-relaxed text-ink/60">
               Pages marked &ldquo;Coming soon&rdquo; describe features that
               are not live yet. {SITE.name} is opening to businesses in early
               access.
@@ -140,11 +146,7 @@ export function SiteFooter() {
             <Button href={CTA.primary.href} variant="primary" arrow>
               {CTA.primary.label}
             </Button>
-            <Button
-              href={CTA.secondary.href}
-              variant="ghost"
-              className="border-cream text-cream"
-            >
+            <Button href={CTA.secondary.href} variant="ghost">
               {CTA.secondary.label}
             </Button>
           </div>

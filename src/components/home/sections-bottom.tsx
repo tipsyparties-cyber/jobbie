@@ -308,7 +308,7 @@ export function Closing() {
               asks for a decision and then stays still. */}
           <HeydayLogoInView
             size={80}
-            colour={SKY}
+            colour={PAPER}
             motion="together"
             label="The Heyday mark"
           />
@@ -326,7 +326,7 @@ export function Closing() {
           <Button
             href={CTA.secondary.href}
             variant="ghost"
-            className="border-cream bg-transparent text-cream"
+  
           >
             {CTA.secondary.label}
           </Button>
@@ -334,7 +334,7 @@ export function Closing() {
         {/* Said once, plainly, at the point of the ask: the trial button
             opens an early-access form, because there is no product to try
             yet. Burying that until the next page would be a bait. */}
-        <p className="mx-auto mt-6 max-w-[46ch] font-mono text-xs text-cream/55">
+        <p className="mx-auto mt-6 max-w-[46ch] font-mono text-xs text-ink/60">
           {SITE.name} isn&rsquo;t open to other businesses yet, so
           &ldquo;{CTA.primary.label}&rdquo; joins the early-access list.
           Pricing is {TBC.price}.
