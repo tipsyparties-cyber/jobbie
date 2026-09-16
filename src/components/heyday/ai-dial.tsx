@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { Panel, Card } from "@/components/ui/surfaces";
 import { Button } from "@/components/ui/button";
 import { ScreenAction } from "@/components/heyday/screen";
-import { SectionReveal } from "@/components/heyday/motion";
+import { SectionReveal, RevealGroup } from "@/components/heyday/motion";
 import { SheetLabel } from "@/components/heyday/sheet";
 import { AI_DIAL } from "@/lib/home-content";
 import { INK, CREAM, PAPER, SAGE, BLUE, LAVENDER } from "@/lib/palette";
@@ -307,8 +307,21 @@ export function AiDial() {
         </div>
       </SectionReveal>
 
+      {/* The argument for the dial, under it. The three levels are the
+          picture; these are the reasons it matters that they are yours. */}
+      <RevealGroup className="mt-12 grid gap-7 lg:grid-cols-3" step={0.12}>
+        {AI_DIAL.control.map((c) => (
+          <div key={c.title}>
+            <b className="mb-1.5 block font-display text-[19px] font-bold leading-tight">
+              {c.title}
+            </b>
+            <p className="m-0 text-ink/65">{c.line}</p>
+          </div>
+        ))}
+      </RevealGroup>
+
       <SectionReveal delay={0.3}>
-        <p className="mb-6 mt-8 max-w-[70ch] text-ink/65">
+        <p className="mb-6 mt-10 max-w-[70ch] text-ink/65">
           <b className="font-semibold text-ink">{AI_DIAL.closing.bold}</b>{" "}
           {AI_DIAL.closing.rest}
         </p>

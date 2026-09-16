@@ -351,3 +351,26 @@ three levels "Draft", "Draft and train" and "Autopilot". So right now the
 homepage and the AI page use different names for the same three settings.
 Whichever names you approve, that page needs changing to match. I have not
 touched it, because it was not in the pack.
+
+### 9.4 New copy under the dial — mine, not the pack's (16 September 2026)
+
+You said the section needed more copy selling the fact that the customer is
+in control of how automated everything is. I added three points under the
+panel. They are holding copy and you should change them freely:
+
+- **You set it, and you can unset it.** Start where you're comfortable. Move
+  it up when it has earned it, and move it back down whenever you want.
+- **One job at a time, not all or nothing.** Let quoting run itself while
+  payments still wait for your say-so. Every part of the work has its own
+  setting.
+- **Nothing happens quietly.** Every automatic action is written down — what
+  it did, what it cost and who it told — so you can check it after the fact.
+
+Each one describes something the site already says elsewhere rather than a
+new promise: the dial's own three levels, the pack's line that the same three
+choices apply to every job task, and the fully automatic card that writes
+down what it did. **One thing to confirm: "move it back down whenever you
+want."** The `/features/ai` page says level 3 has one switch to stop it and
+each message type is switched on separately, which is where I take that from
+— but if turning a level back down is not going to work that way, say so and
+it comes out.

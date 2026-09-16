@@ -294,6 +294,31 @@ export const AI_DIAL = {
       },
     },
   ] as DialLevel[],
+  /*
+   * Added 16 September 2026, at Russell's request: the dial showed control
+   * but barely argued for it, so the section needed copy that sells being
+   * in charge of how much runs itself.
+   *
+   * Each point is something the product does elsewhere on the site rather
+   * than a new claim. In order: the dial's own three levels and the pack's
+   * "start where you're comfortable"; the pack's line that the same three
+   * choices apply to every job task separately; and the fully automatic
+   * card, which writes down what it did and what it cost.
+   */
+  control: [
+    {
+      title: "You set it, and you can unset it.",
+      line: "Start where you’re comfortable. Move it up when it has earned it, and move it back down whenever you want.",
+    },
+    {
+      title: "One job at a time, not all or nothing.",
+      line: "Let quoting run itself while payments still wait for your say-so. Every part of the work has its own setting.",
+    },
+    {
+      title: "Nothing happens quietly.",
+      line: "Every automatic action is written down — what it did, what it cost and who it told — so you can check it after the fact.",
+    },
+  ],
   closing: {
     bold: "The same three choices on quoting, pricing, bookings, ordering, chasing money and every job task.",
     rest: "The first setting isn’t “off” — it still tells you what needs doing and offers to hand it to someone.",
