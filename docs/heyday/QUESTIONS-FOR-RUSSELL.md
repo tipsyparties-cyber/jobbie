@@ -374,3 +374,22 @@ want."** The `/features/ai` page says level 3 has one switch to stop it and
 each message type is switched on separately, which is where I take that from
 — but if turning a level back down is not going to work that way, say so and
 it comes out.
+
+### 9.5 The yellow footer breaks a palette rule, deliberately (16 September 2026)
+
+You asked for a yellow footer in the shape of the all.inn one. It is built:
+yellow ground, the link columns, a round "Up" button top right, and the
+wordmark across the full width at the bottom. The block above it is paper
+(white) instead of sage.
+
+**Two things in A2 that this touches:**
+
+1. **"Yellow is highlights only, never a ground."** Overruled by you, and
+   noted in the footer's own comment so nobody quietly reverts it.
+2. **"Orange never touches yellow."** This one I handled rather than broke:
+   the footer's "Start free trial" button is now the `dark` (ink) button
+   instead of the orange one. The button set already had `dark` for exactly
+   this case. Every other orange button on the site is untouched.
+
+If you would rather the footer keep an orange button, tell me — but the two
+colours side by side is the thing the brief is most explicit about.

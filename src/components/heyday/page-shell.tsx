@@ -6,7 +6,7 @@ import { HeydayLogo } from "@/components/heyday/heyday-logo";
 import { Button } from "@/components/ui/button";
 import { HeydayLogoInView } from "@/components/heyday/heyday-logo-in-view";
 import { CTA } from "@/lib/site";
-import { PAPER, SAGE, ORANGE } from "@/lib/palette";
+import { PAPER, BLUE, ORANGE } from "@/lib/palette";
 
 /* ==================================================================== *
  *  The page furniture every inner page shares — spec A1, and the
@@ -150,14 +150,13 @@ export function CTABlock({
   note?: ReactNode;
 }) {
   return (
-    <Sheet colour={SAGE}>
+    <Sheet colour={PAPER}>
       <Wrap className="text-center">
         <SectionReveal>
           <div className="mb-6 flex justify-center">
             {/* Together: the arcs and the burst meet as you reach the ask.
-                Paper on sage — the mark takes the ground's opposite, and
-                sky would disappear into it. */}
-            <HeydayLogoInView size={64} colour={PAPER} motion="together" />
+                Blue on paper — paper would disappear into this ground. */}
+            <HeydayLogoInView size={64} colour={BLUE} motion="together" />
           </div>
           <h2 className="hd-h2 mx-auto max-w-[18ch]">
             <Marked text={heading} phrase={highlight} />

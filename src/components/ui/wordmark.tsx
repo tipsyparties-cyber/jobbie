@@ -24,13 +24,14 @@ import { SITE } from "@/lib/site";
  */
 export function Wordmark({
   className = "",
-  /** Type size in px, per the spec's lockup proportions. */
+  /** Type size. A number is px, per the spec's lockup proportions; a
+   *  string is passed through, for the giant one in the footer. */
   height = 26,
   href = "/",
   asLink = true,
 }: {
   className?: string;
-  height?: number;
+  height?: number | string;
   href?: string;
   asLink?: boolean;
 }) {
@@ -38,7 +39,7 @@ export function Wordmark({
     <span
       className={`inline-block select-none align-middle ${className}`}
       style={{
-        font: `700 ${height}px/1 var(--font-logo), var(--font-sans), system-ui, sans-serif`,
+        font: `700 ${typeof height === "number" ? `${height}px` : height}/1 var(--font-logo), var(--font-sans), system-ui, sans-serif`,
         letterSpacing: "-0.02em",
       }}
     >

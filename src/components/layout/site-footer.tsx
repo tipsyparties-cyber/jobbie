@@ -5,19 +5,24 @@ import { Wordmark } from "@/components/ui/wordmark";
 import { Button } from "@/components/ui/button";
 import { HeydayLogo } from "@/components/heyday/heyday-logo";
 import { SITE, TBC, CTA } from "@/lib/site";
-import { BLUE } from "@/lib/palette";
+import { INK } from "@/lib/palette";
 
 /* ==================================================================== *
  *  The footer — spec part 1, A5.
  *
- *  Cream with ink text, and the 56px rounded top sitting over the section
+ *  Yellow with ink text, and the 56px rounded top sitting over the section
  *  above, so the page ends the way every other section joins.
  *
- *  It was ink, which is what the brief and the prototype both give it.
- *  Russell asked for it light: with the ink closing block directly above
- *  it, the bottom of every page was one continuous black slab about two
- *  screens tall. Cream is the ground the site opens on, so the page now
- *  settles onto it rather than ending in a wall.
+ *  It was ink, then cream, and is now yellow on Russell's call, built to
+ *  the shape of the all.inn footer he sent: the columns of links at the
+ *  top, a round "Up" button in the corner, and the wordmark across the
+ *  full width at the bottom.
+ *
+ *  YELLOW BREAKS TWO PALETTE RULES ON PURPOSE (A2): yellow is "highlights
+ *  only, never a ground", and orange must never touch yellow. Russell
+ *  overrules the first. The second is handled rather than ignored — the
+ *  footer's call to action uses the `dark` button, which exists in the
+ *  button set for exactly this case, so no orange sits on the yellow.
  *
  *  Its one piece of motion is the mark, turning slowly. It stops off
  *  screen and with reduced motion. Everything else here holds still — a
@@ -83,25 +88,37 @@ const COLUMNS: { head: string; links: { label: string; href: string }[] }[] = [
 
 export function SiteFooter() {
   return (
-    <footer className="relative z-10 -mt-14 rounded-t-[56px] bg-cream pb-12 pt-16 text-ink">
+    <footer className="relative z-10 -mt-14 overflow-hidden rounded-t-[56px] bg-yellow pb-10 pt-16 text-ink">
       <div className="mx-auto max-w-[1280px] px-6">
         <div className="flex flex-wrap items-start justify-between gap-8">
           <div className="flex items-center" style={{ gap: 3 }}>
             {/* Mark 26 in the footer, per the spec. Spin, slowly: the spec
                 gives the footer the spin, and it replaces the old cycle
                 through six shapes — there are no six shapes any more. */}
-            <HeydayLogo size={26} colour={BLUE} motion="spin" />
+            <HeydayLogo size={26} colour={INK} motion="spin" />
             <Wordmark height={24} className="text-ink" />
           </div>
 
-          <div className="text-right">
-            <p className="font-display text-xl font-semibold">{SITE.tagline}</p>
-            <Link
-              href="/features/marketplace-listing"
-              className="mt-2 inline-block font-body text-sm text-ink/70 underline-offset-4 hover:underline"
+          <div className="flex items-start gap-8">
+            <div className="text-right">
+              <p className="font-display text-xl font-semibold">{SITE.tagline}</p>
+              <Link
+                href="/features/marketplace-listing"
+                className="mt-2 inline-block font-body text-sm text-ink/70 underline-offset-4 hover:underline"
+              >
+                Find something to do →
+              </Link>
+            </div>
+
+            {/* Back to the top, the way the all.inn footer does it. A real
+                anchor to the page's own main element, so it works before
+                hydration and gives the keyboard a proper target. */}
+            <a
+              href="#main"
+              className="inline-flex h-[72px] w-[72px] flex-none items-center justify-center rounded-full border border-ink bg-ink font-display text-base font-semibold text-cream transition-opacity hover:opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[3px] focus-visible:outline-ink"
             >
-              Find something to do →
-            </Link>
+              Up
+            </a>
           </div>
         </div>
 
@@ -143,7 +160,7 @@ export function SiteFooter() {
           </div>
 
           <div className="flex flex-wrap gap-3">
-            <Button href={CTA.primary.href} variant="primary" arrow>
+            <Button href={CTA.primary.href} variant="dark" arrow>
               {CTA.primary.label}
             </Button>
             <Button href={CTA.secondary.href} variant="ghost">
@@ -151,6 +168,17 @@ export function SiteFooter() {
             </Button>
           </div>
         </div>
+      </div>
+
+      {/* The wordmark across the full width, the way all.inn ends its page.
+          Decorative: the lockup at the top of the footer already names the
+          company, and a screen reader does not need it twice. */}
+      <div aria-hidden className="mt-12 px-6">
+        <Wordmark
+          asLink={false}
+          height="clamp(64px, 27vw, 420px)"
+          className="block w-full text-center text-ink"
+        />
       </div>
     </footer>
   );

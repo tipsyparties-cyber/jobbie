@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Screen, ScreenRow } from "@/components/heyday/screen";
 import { STORIES, STAGES, SWITCHING, BUSINESS_TYPES } from "@/lib/home-content";
 import { SITE, CTA, TBC } from "@/lib/site";
-import { PAPER, SKY, ORANGE } from "@/lib/palette";
+import { PAPER, SKY, BLUE, ORANGE } from "@/lib/palette";
 
 /* ==================================================================== *
  *  Homepage sections 11 to 15 — who it's for, and the way out.
@@ -308,7 +308,7 @@ export function Closing() {
               asks for a decision and then stays still. */}
           <HeydayLogoInView
             size={80}
-            colour={PAPER}
+            colour={BLUE}
             motion="together"
             label="The Heyday mark"
           />
