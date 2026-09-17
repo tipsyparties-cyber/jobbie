@@ -6,8 +6,8 @@ import { HeydayLogoInView } from "@/components/heyday/heyday-logo-in-view";
 import { HoldingImage } from "@/components/heyday/holding-image";
 import { Card, Sticker, StatusChip } from "@/components/ui/surfaces";
 import { Button } from "@/components/ui/button";
-import { Screen, ScreenRow } from "@/components/heyday/screen";
-import { STORIES, STAGES, SWITCHING, BUSINESS_TYPES } from "@/lib/home-content";
+import { Screen, ScreenRow, ScreenAction } from "@/components/heyday/screen";
+import { STORIES, STAGES, SWITCHING, BUSINESS_TYPES, COLLECTIVE } from "@/lib/home-content";
 import { SITE, CTA, TBC } from "@/lib/site";
 import { PAPER, SKY, BLUE, ORANGE } from "@/lib/palette";
 
@@ -292,6 +292,76 @@ export function Switching() {
         <Button href={CTA.secondary.href} variant="ghost">
           {CTA.secondary.label}
         </Button>
+      </div>
+    </Wrap>
+  );
+}
+
+/* ---- 14a. Heyday Collective: the free listing ------------------------ */
+
+/**
+ * The bonus, in its own section rather than as a line in a table.
+ *
+ * Neither Jobber nor HoneyBook can answer this: they sell software, they
+ * do not send anyone customers. It is the last argument the page makes
+ * before it asks for the decision.
+ */
+export function CollectiveBoost() {
+  return (
+    <Wrap>
+      <div className="grid items-center gap-12 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)]">
+        <div>
+          <SectionReveal>
+            <SheetLabel>{COLLECTIVE.label}</SheetLabel>
+            <h2 className="hd-h2 max-w-[20ch]">
+              {COLLECTIVE.heading.split(COLLECTIVE.highlight)[0]}
+              <span className="hd-hl">{COLLECTIVE.highlight}</span>
+            </h2>
+            <p className="hd-sub">{COLLECTIVE.line}</p>
+            <div className="mb-8">
+              <StatusChip />
+            </div>
+          </SectionReveal>
+
+          <RevealGroup className="grid gap-5 sm:grid-cols-3">
+            {COLLECTIVE.points.map((pt) => (
+              <div key={pt.title}>
+                <b className="mb-1.5 block font-display text-[16px] font-bold leading-snug">
+                  {pt.title}
+                </b>
+                <p className="m-0 text-[15px] text-ink/65">{pt.line}</p>
+              </div>
+            ))}
+          </RevealGroup>
+
+          <SectionReveal delay={0.3}>
+            <div className="mt-9 flex flex-wrap items-center gap-4">
+              <Button href="/features/marketplace-listing" variant="ghost" arrow>
+                How listings work
+              </Button>
+              <Link
+                href="/pricing"
+                className="font-display text-sm font-semibold underline underline-offset-[3px]"
+              >
+                It comes with every plan →
+              </Link>
+            </div>
+          </SectionReveal>
+        </div>
+
+        {/* What the listing looks like to the person booking it. Example
+            data, labelled as an illustration, with the price a placeholder
+            like every other price on the site. */}
+        <SectionReveal delay={0.15}>
+          <Parallax amount={30}>
+            <Screen title={`${SITE.marketplace} · your listing`}>
+              <ScreenRow meta="at yours">Cocktail masterclass</ScreenRow>
+              <ScreenRow meta="live from your diary">Friday, 7pm · 4 places left</ScreenRow>
+              <ScreenRow meta={TBC.price}>Per person</ScreenRow>
+              <ScreenAction>Book</ScreenAction>
+            </Screen>
+          </Parallax>
+        </SectionReveal>
       </div>
     </Wrap>
   );

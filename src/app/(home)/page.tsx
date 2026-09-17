@@ -22,6 +22,7 @@ import {
   OnlyOnHeyday,
 } from "@/components/home/sections-product";
 import {
+  CollectiveBoost,
   WhoAndStories,
   GrowsWithYou,
   SellEverywhere,
@@ -189,6 +190,12 @@ export default function HomePage() {
         {/* 14. Switching. */}
         <Sheet colour={CREAM}>
           <Switching />
+        </Sheet>
+
+        {/* 14a. The free listing on the Collective — the last argument
+            before the ask, and the one neither rival can answer. */}
+        <Sheet colour={LAVENDER}>
+          <CollectiveBoost />
         </Sheet>
 
         {/* 15. The closing call to action. Paper, matching CTABlock on

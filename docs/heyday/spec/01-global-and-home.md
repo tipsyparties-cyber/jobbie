@@ -597,6 +597,32 @@ always one colour, and never black or orange.
 - **Icons and marks:** hd-tasks, hd-ai-replies and hd-one-inbox.
 - **Motion:** the steps rise in turn, and the line fills.
 
+
+### 14a. Heyday Collective: the free listing — ADDED 17 September 2026
+
+- **Russell's call.** A section about the free listing, after switching and
+  before the closing call to action: "boost your business even further".
+- **Why here:** by this point the reader has been told what the software
+  does and that moving to it is easy. The listing is the thing that comes
+  on top, so it reads as "and there is this as well" rather than as another
+  feature to weigh up. It is also the last argument the page makes before
+  it asks for the decision, and the one neither Jobber nor HoneyBook can
+  answer — they sell software, they do not send anyone customers.
+- **Ground:** lavender, between Switching (cream) and the closing block (paper).
+- **Layout:** two columns. Left: label `{ heyday collective }`, heading
+  "And a free listing, **to boost it further.**", the line explaining what
+  the Collective is, a "Coming soon" chip, three points, then a ghost
+  button to `/features/marketplace-listing` and a link to `/pricing`.
+  Right: a Screen illustration of the listing as the customer sees it.
+- **The three points:** free with any plan (and what the Collective takes
+  on a booking is still being decided); real prices and live dates, read
+  from the same diary; bookings land tagged in the same diary and inbox.
+- **The money:** the listing is free, but no rate is promised anywhere —
+  the price in the illustration is `[PRICE TBC]` like every other price on
+  the site, and the commission is `[commission TBC]`.
+- **Copy:** `COLLECTIVE` in `src/lib/home-content.ts`. **Built:**
+  `CollectiveBoost` in `src/components/home/sections-bottom.tsx`.
+
 ### 15. Closing call to action
 - **What it's for:** the last push to sign up.
 - **Layout:** an ink block with cream text, centred, with the sun beside the heading.

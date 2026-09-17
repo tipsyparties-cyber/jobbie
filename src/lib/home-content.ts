@@ -148,6 +148,41 @@ export const FEATURE_ROWS: FeatureRow[] = [
   },
 ];
 
+/* ---- 14a. Heyday Collective --------------------------------------- */
+
+/**
+ * The free listing, after switching — Russell's call, 17 September 2026.
+ *
+ * It sits where it does on purpose. By this point in the page the reader
+ * has been told what the software does and that moving to it is easy; the
+ * listing is the thing that comes on top, so it reads as "and there is
+ * this as well" rather than as another feature to weigh up.
+ *
+ * What it must not do is promise a rate. The listing is free — Russell's
+ * ruling — but what the Collective takes on a booking is not decided, and
+ * shows as a placeholder.
+ */
+export const COLLECTIVE = {
+  label: "heyday collective",
+  heading: "And a free listing, to boost it further.",
+  highlight: "to boost it further.",
+  line: "Heyday Collective is our consumer site: where people go to find something to do, and book it. Switch a listing on and your experiences and services appear there with your real prices and your live diary.",
+  points: [
+    {
+      title: "Free with any plan.",
+      line: "No fee to be listed. What the Collective takes on a booking it sends you is still being decided.",
+    },
+    {
+      title: "Your real prices, your live dates.",
+      line: "The listing reads the same prices, rules and diary as your own booking page, so there is nothing to keep in step by hand.",
+    },
+    {
+      title: "Bookings land where the rest do.",
+      line: "A booking from the Collective arrives tagged, in the same diary and the same inbox as everything else.",
+    },
+  ],
+};
+
 /* ---- 10. What else you get ------------------------------------------- */
 
 /**
