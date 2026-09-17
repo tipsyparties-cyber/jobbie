@@ -227,7 +227,15 @@ export function SiteHeader() {
               motion="together"
               hoverMotion="click"
             />
-            <Wordmark height={22} asLink={false} className="text-ink" />
+            {/* The word rises into place as the mark meets itself. This is
+                the hero's own word-rise (globals.css, .hd-hero-word): a
+                clipped box with the word starting below it. --i 1 puts it
+                170ms behind the mark, so the mark leads and the word
+                follows rather than both arriving at once. Reduced motion
+                turns it off with the hero's. */}
+            <span className="hd-hero-word" style={{ ["--i"]: 1 } as React.CSSProperties}>
+              <Wordmark height={22} asLink={false} className="text-ink" />
+            </span>
           </Link>
 
           <nav className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-1 lg:flex">
