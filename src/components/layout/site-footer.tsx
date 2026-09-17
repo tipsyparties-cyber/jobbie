@@ -10,19 +10,29 @@ import { INK } from "@/lib/palette";
 /* ==================================================================== *
  *  The footer — spec part 1, A5.
  *
- *  Yellow with ink text, and the 56px rounded top sitting over the section
+ *  Orange with ink text, and the 56px rounded top sitting over the section
  *  above, so the page ends the way every other section joins.
  *
- *  It was ink, then cream, and is now yellow on Russell's call, built to
- *  the shape of the all.inn footer he sent: the columns of links at the
- *  top, a round "Up" button in the corner, and the wordmark across the
- *  full width at the bottom.
+ *  It was ink, then cream, then yellow. Orange because Russell asked how
+ *  to look least like HoneyBook, and the answer is in the brief: the
+ *  pastels — cream, sage, blue, yellow, paper and lavender — were taken
+ *  FROM honeybook.com, so none of them can tell the two apart. Orange and
+ *  ink are the only colours on this site that are Heyday's own, and the
+ *  brief names "Heyday orange for every action" as the first thing that
+ *  separates them. Purple would have moved toward HoneyBook, not away.
  *
- *  YELLOW BREAKS TWO PALETTE RULES ON PURPOSE (A2): yellow is "highlights
- *  only, never a ground", and orange must never touch yellow. Russell
- *  overrules the first. The second is handled rather than ignored — the
- *  footer's call to action uses the `dark` button, which exists in the
- *  button set for exactly this case, so no orange sits on the yellow.
+ *  The shape is still the all.inn footer Russell sent: columns of links,
+ *  a round "Up" button in the corner, the wordmark across the full width.
+ *
+ *  TWO RULES THIS RESPECTS (A2):
+ *
+ *  - Orange is a FILL, never text. It is a ground here, with ink on it —
+ *    about 6:1, which passes AA. Ink is never faded below full strength
+ *    on it: ink at 60% over orange falls to roughly 3.5:1 and stops
+ *    passing, which is why every muted grey in this footer is now solid.
+ *  - Orange never touches yellow, so nothing yellow may enter this
+ *    footer, and the call to action stays the `dark` button rather than
+ *    the orange one, which would vanish into the ground anyway.
  *
  *  Its one piece of motion is the mark, turning slowly. It stops off
  *  screen and with reduced motion. Everything else here holds still — a
@@ -88,7 +98,7 @@ const COLUMNS: { head: string; links: { label: string; href: string }[] }[] = [
 
 export function SiteFooter() {
   return (
-    <footer className="relative z-10 -mt-14 overflow-hidden rounded-t-[56px] bg-yellow pb-10 pt-16 text-ink">
+    <footer className="relative z-10 -mt-14 overflow-hidden rounded-t-[56px] bg-orange pb-10 pt-16 text-ink">
       <div className="mx-auto max-w-[1280px] px-6">
         <div className="flex flex-wrap items-start justify-between gap-8">
           <div className="flex items-center" style={{ gap: 3 }}>
@@ -104,7 +114,7 @@ export function SiteFooter() {
               <p className="font-display text-xl font-semibold">{SITE.tagline}</p>
               <Link
                 href="/features/marketplace-listing"
-                className="mt-2 inline-block font-body text-sm text-ink/70 underline-offset-4 hover:underline"
+                className="mt-2 inline-block font-body text-sm text-ink underline-offset-4 hover:underline"
               >
                 Find something to do →
               </Link>
@@ -125,7 +135,7 @@ export function SiteFooter() {
         <div className="mt-16 grid gap-10 sm:grid-cols-2 lg:grid-cols-5">
           {COLUMNS.map((col) => (
             <nav key={col.head}>
-              <p className="font-mono text-[12px] tracking-[0.02em] text-ink/55">
+              <p className="font-mono text-[12px] tracking-[0.02em] text-ink/80">
                 {col.head}
               </p>
               <ul className="mt-4 flex flex-col gap-2">
@@ -133,7 +143,7 @@ export function SiteFooter() {
                   <li key={l.href + l.label}>
                     <Link
                       href={l.href}
-                      className="font-body text-sm text-ink/75 transition-opacity hover:opacity-60"
+                      className="font-body text-sm text-ink transition-opacity hover:opacity-70"
                     >
                       {l.label}
                     </Link>
@@ -144,15 +154,15 @@ export function SiteFooter() {
           ))}
         </div>
 
-        <div className="mt-16 flex flex-wrap items-end justify-between gap-8 border-t border-ink/15 pt-8">
+        <div className="mt-16 flex flex-wrap items-end justify-between gap-8 border-t border-ink/30 pt-8">
           <div className="max-w-xl">
-            <p className="font-body text-xs text-ink/60">
+            <p className="font-body text-xs text-ink/80">
               &copy; {new Date().getFullYear()} {TBC.generic} company name
             </p>
             {/* Said once, here, rather than hedged on every page: it is the
                 honest footnote to a site where every feature currently says
                 Coming soon. */}
-            <p className="mt-2 font-body text-xs leading-relaxed text-ink/60">
+            <p className="mt-2 font-body text-xs leading-relaxed text-ink/80">
               Pages marked &ldquo;Coming soon&rdquo; describe features that
               are not live yet. {SITE.name} is opening to businesses in early
               access.

@@ -393,3 +393,34 @@ wordmark across the full width at the bottom. The block above it is paper
 
 If you would rather the footer keep an orange button, tell me — but the two
 colours side by side is the thing the brief is most explicit about.
+
+### 9.6 The footer is orange now — and why not purple (17 September 2026)
+
+You asked whether to try purple, and what would best separate Heyday from
+HoneyBook. Purple is the wrong way round:
+
+**Every pastel on this site was taken from honeybook.com.** The SaaS brief
+lists them: cream, sage, blue, yellow, paper and lavender. The design brief
+says outright that "the colours alone won't set us apart", and
+`src/lib/palette.ts` says the same at the top of the file. So a lavender
+footer would be a HoneyBook colour on the biggest block of the page.
+
+**Orange and ink are the only colours here that are Heyday's own.** The
+first thing the brief names as what makes the site look like Heyday and not
+HoneyBook is "Heyday orange (#F26B2A) for every action". So the footer is
+orange, with the wordmark and all its text in ink.
+
+Two rules kept while doing it: orange is a fill and never text, so ink sits
+on it at about 6:1; and no faded ink, because ink at 60% over orange drops
+to roughly 3.5:1 and stops being readable. Nothing yellow may go in this
+footer, and the call to action stays the ink button.
+
+**Switching is one word** in `site-footer.tsx` — `bg-orange`, `bg-yellow`,
+`bg-lavender` or `bg-cream` — if you want to see any of the others.
+
+**The brief's own list of what actually separates you from HoneyBook**, none
+of which is colour: orange on every action; thin ink outlines and hard
+offset shadows with no blur; buttons whose corners round off on hover;
+grotesque type with a mono for small labels and no serif; airy 56px
+overlapping sheets; the rising cards in the hero; and our own icon set. All
+seven are already built.
