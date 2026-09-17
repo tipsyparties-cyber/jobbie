@@ -139,7 +139,7 @@ export const RIVALS: Rival[] = [
           {
             feature: "A marketplace listing",
             them: `Not stated as a listing tied to live prices ${TBC.checkOnTheDay}`,
-            us: "Coming soon: the Heyday marketplace, with real prices and live availability",
+            us: "Coming soon: Heyday Collective, with real prices and live availability",
           },
           {
             feature: "Ad tracking",
@@ -307,7 +307,7 @@ export const RIVALS: Rival[] = [
           {
             feature: "A marketplace where customers find you",
             them: "Not stated as a consumer marketplace with live prices",
-            us: "Coming soon: the Heyday marketplace",
+            us: "Coming soon: Heyday Collective",
           },
           {
             feature: "Campaigns and referrals",

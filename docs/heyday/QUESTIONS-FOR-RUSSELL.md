@@ -424,3 +424,43 @@ offset shadows with no blur; buttons whose corners round off on hover;
 grotesque type with a mono for small labels and no serif; airy 56px
 overlapping sheets; the rising cards in the hero; and our own icon set. All
 seven are already built.
+
+## 10. Heyday Collective, advertised as a perk (17 September 2026)
+
+Your call: sell the marketplace listing as a perk of the software, and say
+what the Collective is. Both are in.
+
+**The name is now "Heyday Collective" everywhere on this site**, replacing
+"the Heyday marketplace" — 14 mentions across the homepage, the compare
+pages, /about, the footer and the feature data. Generic "marketplace"
+wording was left alone, because that means the other platforms a host
+already sells on, which is a different thing and still true.
+
+**What it now says.** The listing page opens with: "Heyday Collective is our
+consumer site: people go there to find something to do and book it. Switch
+on a listing and your experiences and services appear with your real prices
+and live availability... The listing is free with any plan."
+
+**Where the perk appears:**
+
+- **Pricing**, in the Solo plan, which Crew and Operator both inherit: "A
+  free listing on Heyday Collective (commission TBC)".
+- **The homepage**, as a card in "Only on Heyday": "A free listing on Heyday
+  Collective — our consumer site, where people go to find something to do."
+- **The compare pages** already said "Coming soon", and now name it.
+
+**The money stays a visible placeholder**, as you asked: `[commission TBC]`
+is a new entry in `TBC` in `src/lib/site.ts`, so the day you set the rate it
+is one edit. A free listing that quietly takes a cut is the kind of claim
+this site does not make.
+
+### 10.1 Two things I did not do
+
+- **I did not name ClassBento, Yuup or Togather on the site.** "Like
+  ClassBento x Yuup x Togather" is a good shorthand for you and me, but on
+  the page it explains Heyday by three brands most visitors do not know, and
+  it points them at three places to go instead. Say the word if you want
+  them named on the compare pages, where naming rivals is already the job.
+- **The listing is still "Coming soon"**, like every other feature, and
+  `marketplaceUrl` is still `[marketplace URL]`. When the Collective is live
+  at a real address, that constant is the one place to change.

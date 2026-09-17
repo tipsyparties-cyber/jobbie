@@ -130,7 +130,7 @@ export function WhatItDoes() {
       body: (
         <>
           Your own booking page with the instant quote built in, a listing on
-          the Heyday marketplace, and every other platform in one diary.
+          Heyday Collective, and every other platform in one diary.
         </>
       ),
       links: [

@@ -430,7 +430,7 @@
     },
     {
       "slug": "marketplace-listing",
-      "name": "Get listed on the Heyday marketplace",
+      "name": "Get listed on Heyday Collective",
       "group": "get-found",
       "status": "coming-soon",
       "onlyOnHeyday": true,
@@ -438,11 +438,11 @@
       "modelledOn": "(Heyday only)",
       "icon": "hd-marketplace-listing",
       "pain": "Get found by people looking for something to do.",
-      "searchLine": "List your experiences and services on the Heyday marketplace",
+      "searchLine": "List your experiences and services on Heyday Collective",
       "outcomes": {
         "increases": "Increases new customers."
       },
-      "intro": "Switch on a listing on the Heyday marketplace, with your real prices and live availability. Customers find you and book you, and the booking lands in your diary.",
+      "intro": "Heyday Collective is our consumer site: people go there to find something to do and book it. Switch on a listing and your experiences and services appear with your real prices and live availability. Customers find you and book you, and the booking lands in your diary. The listing is free with any plan.",
       "stats": [],
       "example": null,
       "howItWorks": [
@@ -450,13 +450,13 @@
           "label": "Switch it on",
           "heading": "One switch per experience",
           "line": "Choose which experiences and services show on the marketplace.",
-          "screen": "An experience settings card with a 'Show on the Heyday marketplace' switch turned on."
+          "screen": "An experience settings card with a 'Show on Heyday Collective' switch turned on."
         },
         {
           "label": "Real prices",
           "heading": "Real prices, live dates",
           "line": "The listing uses the same prices, rules and diary as your own page.",
-          "screen": "A Heyday marketplace listing card: photo slot, title, an 'At yours' tag and 'from $…'."
+          "screen": "A Heyday Collective listing card: photo slot, title, an 'At yours' tag and 'from $…'."
         },
         {
           "label": "It lands with you",
@@ -482,7 +482,7 @@
       "faq": [
         {
           "q": "Where do I make my listing?",
-          "a": "In Heyday. Each experience has a “Show on the Heyday marketplace” switch."
+          "a": "In Heyday. Each experience has a “Show on Heyday Collective” switch."
         },
         {
           "q": "What does the marketplace cost?",
@@ -526,7 +526,7 @@
           "label": "One diary",
           "heading": "Every booking in one place",
           "line": "Each booking shows where it came from.",
-          "screen": "A week view with bookings tagged by source: Own page, Heyday marketplace, another platform."
+          "screen": "A week view with bookings tagged by source: Own page, Heyday Collective, another platform."
         },
         {
           "label": "At a glance",

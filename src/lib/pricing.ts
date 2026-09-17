@@ -1,4 +1,4 @@
-import { TBC } from "@/lib/site";
+import { SITE, TBC } from "@/lib/site";
 
 /* ==================================================================== *
  *  Pricing — template T8, spec part 4, and the working page at
@@ -49,6 +49,10 @@ export const PLANS: Plan[] = [
       "Follow-ups and reminders",
       "Reviews and referrals",
       "AI replies as drafts you approve (AI level 1)",
+      // The one thing neither Jobber nor HoneyBook can offer: they sell
+      // software, they do not send you customers. Free listing is
+      // Russell's ruling; the commission is not decided and says so.
+      `A free listing on ${SITE.marketplace} (${TBC.commission.replace(/[[\]]/g, "")})`,
     ],
     cta: { label: "Join early access", href: "/early-access" },
     mostPopular: false,

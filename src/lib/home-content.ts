@@ -159,6 +159,7 @@ export const ONLY_ON_HEYDAY: { title: string; line: string; icon: string; href: 
   { title: "Group bookings with split payments", line: "Each guest pays their share by link.", icon: "hd-group-bookings", href: "/features/group-bookings" },
   { title: "Referral code first, then the review", line: "More word of mouth, and more reviews.", icon: "hd-reviews", href: "/features/referrals" },
   { title: "Sell everywhere, in one diary", line: "Bookings from other platforms, and your marketplace listing, in one place.", icon: "hd-sell-everywhere", href: "/features/sell-everywhere" },
+  { title: "A free listing on Heyday Collective", line: "Our consumer site, where people go to find something to do. Free with any plan.", icon: "hd-marketplace-listing", href: "/features/marketplace-listing" },
 ];
 
 /* ---- 11. The example stories ---------------------------------------- */

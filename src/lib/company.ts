@@ -118,7 +118,7 @@ export const FOR_AI: { heading: string; lines: string[] }[] = [
       "Routing and dispatch for work at many addresses in a day. That is what Jobber is for, and Heyday is not planning to compete with it.",
       "Accounting. It connects to QuickBooks and Xero instead.",
       "Payroll beyond paying a team from the job's own hours, rates and tips.",
-      "It is not a marketplace. The Heyday marketplace is a separate consumer site.",
+      "It is not a marketplace. Heyday Collective is a separate consumer site.",
     ],
   },
   {

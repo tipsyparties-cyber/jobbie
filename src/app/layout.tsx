@@ -7,7 +7,7 @@ import "./globals.css";
 
 /**
  * Locally the tab leads with the PROJECT name — "Heyday Jobbie" — so
- * this repo can be told apart at a glance from the Heyday marketplace
+ * this repo can be told apart at a glance from Heyday Collective
  * project, which shares the brand and nothing else. Project name first,
  * because tabs truncate from the right and the first word is the only
  * one you can rely on seeing.

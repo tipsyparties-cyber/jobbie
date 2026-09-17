@@ -18,7 +18,7 @@
  * the brief decided that and nothing here changes it.
  *
  * "Heyday Jobbie" exists only so this repo can be told apart from the
- * Heyday marketplace project, which is a different site with its own
+ * Heyday Collective project — the marketplace, a different site with its own
  * look. They share a brand and nothing else, and two tabs both reading
  * "Heyday" on localhost has already sent Russell to the wrong one.
  *
@@ -30,8 +30,12 @@ export const PROJECT = "Heyday Jobbie" as const;
 export const SITE = {
   /** The brand. One word (prompt section 1). */
   name: "Heyday",
-  /** Where customers find these businesses. */
-  marketplace: "the Heyday marketplace",
+  /**
+   * Where customers find these businesses: Heyday Collective, the
+   * consumer site. Russell's ruling, 17 September 2026 — it was "the
+   * Heyday marketplace" and is now the Collective on both sites.
+   */
+  marketplace: "Heyday Collective",
   tagline: "Make your day a Heyday.",
   /** The positioning line, used in metadata and on /for-ai. */
   promise:
@@ -53,6 +57,15 @@ export const TBC = {
   supportHours: "[support hours to confirm]",
   /** Money-back guarantee, free setup call, and anything else promised. */
   confirm: "[to confirm]",
+  /**
+   * What Heyday Collective takes on a booking it sends you.
+   *
+   * The listing itself is free — Russell's ruling — but the commission is
+   * not decided, and a free listing that quietly takes a cut is the kind
+   * of claim this site does not make. So it shows as a placeholder
+   * wherever the perk is advertised.
+   */
+  commission: "[commission TBC]",
   trial: "[trial to confirm]",
   importMethod: "[import method to confirm]",
   /** Rival facts. Re-check on the day the page goes live. */
