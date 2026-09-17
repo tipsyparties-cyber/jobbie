@@ -10,7 +10,7 @@ import { StickyScroll, type StickyBlock } from "@/components/heyday/sticky-scrol
 import { Card, Sticker, StatusChip } from "@/components/ui/surfaces";
 import { Button } from "@/components/ui/button";
 import { Screen, ScreenRow, ScreenAction, ScreenPick } from "@/components/heyday/screen";
-import { FEATURE_ROWS, BUILDER_POINTS } from "@/lib/home-content";
+import { FEATURE_ROWS, BUILDER_POINTS, HOME_BONUS } from "@/lib/home-content";
 import { onlyOnHeyday, featureHref, statusLabel } from "@/lib/heyday-features";
 import { GROUPS, groupById } from "@/lib/groups";
 import { statByRow } from "@/lib/stats-bank";
@@ -377,16 +377,19 @@ export function AiLevels() {
  */
 export function OnlyOnHeyday() {
   const only = onlyOnHeyday();
+  /* The Collective listing is lifted out of Get found and shown as a
+     bonus at the end, on Russell's call — it is a listing on a different
+     product, not one more thing this software does. */
   const byProduct = GROUPS.map((g) => ({
     group: g,
-    rows: only.filter((f) => f.group === g.id),
+    rows: only.filter((f) => f.group === g.id && f.slug !== "marketplace-listing"),
   })).filter((x) => x.rows.length > 0);
 
   return (
     <Wrap>
       <SectionReveal>
         <div className="flex flex-wrap items-center gap-4">
-          <SheetLabel>only on heyday</SheetLabel>
+          <SheetLabel>the extras</SheetLabel>
           <Sticker
             className="px-3 py-1.5 font-display text-[13px] font-bold"
             tilt={-6}
@@ -396,7 +399,7 @@ export function OnlyOnHeyday() {
           </Sticker>
         </div>
         <h2 className="hd-h2 max-w-[20ch]">
-          The things <span className="hd-hl">neither of them</span> does.
+          What <span className="hd-hl">else</span> you get.
         </h2>
       </SectionReveal>
 
@@ -471,6 +474,42 @@ export function OnlyOnHeyday() {
                     </tr>
                   ))}
                 </Fragment>
+              ))}
+
+              <tr>
+                <th
+                  scope="colgroup"
+                  colSpan={3}
+                  className="border-b border-ink/10 px-[18px] py-3 text-left font-mono text-xs font-bold tracking-[0.06em]"
+                  style={{ backgroundColor: CREAM }}
+                >
+                  <span className="inline-flex items-center gap-2">
+                    <HeydayLogo size={20} colour={BLUE} />
+                    BONUS
+                  </span>
+                </th>
+              </tr>
+              {HOME_BONUS.map((b) => (
+                <tr key={b.name}>
+                  <th
+                    scope="row"
+                    className="border-b border-ink/10 px-[18px] py-3.5 text-left align-top font-display text-[15px] font-semibold"
+                  >
+                    {b.href ? (
+                      <Link href={b.href} className="underline-offset-[3px] hover:underline">
+                        {b.name}
+                      </Link>
+                    ) : (
+                      b.name
+                    )}
+                  </th>
+                  <td className="border-b border-ink/10 px-[18px] py-3.5 align-top text-[15px] text-ink/70">
+                    {b.line}
+                  </td>
+                  <td className="border-b border-ink/10 px-[18px] py-3.5 align-top">
+                    <StatusChip />
+                  </td>
+                </tr>
               ))}
             </tbody>
           </table>

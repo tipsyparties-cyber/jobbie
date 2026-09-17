@@ -530,6 +530,10 @@ always one colour, and never black or orange.
 - **Scrolling:** the table is the one thing on the homepage allowed to scroll sideways on a phone, inside a labelled, focusable region.
 - **Built:** `OnlyOnHeyday` in `src/components/home/sections-product.tsx`.
 
+- **Renamed 17 September 2026 (Russell).** The label was `{ only on heyday }` and the heading "The things **neither of them** does." — the label and the sticker beside it said the same four words twice. It is now `{ the extras }` and "What **else** you get.", which also covers the bonuses below. The "Only on Heyday" sticker stays: it is a site-wide device used on the feature pages and the AI page.
+- **The bonus block (Russell, same day).** After the product groups, a BONUS row heading two lines: a free listing on Heyday Collective, and the Heyday app, both "Coming soon". They come from `HOME_BONUS` in `home-content.ts`, NOT from the feature data — the Collective is a separate product with its own site, and the app is a way of reaching Heyday rather than a thing Heyday does. A feature record for either would put it in the 46, in the Product menu and in the comparison grids.
+- **The Collective listing is lifted out of Get found** and shown only in the bonus block, so it is not listed twice.
+
 ### 11. Who it's for, and the example stories
 - **What it's for:** show that it suits every kind of business that sells time, skills or an experience, through stories rather than a list.
 - **Layout:** a heading and line, a wrapped row of business-type chips, then a swipe row of seven story cards. It isn't pinned.

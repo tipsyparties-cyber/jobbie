@@ -505,3 +505,28 @@ twice, both in `AI_DIAL` in `src/lib/home-content.ts`: "Suggested: Sam, ops"
 on the Assistant card, and "Sam and the client sent tracking" on the Fully
 automatic card. On the page you only see them by turning the dial to those
 two levels — the default, Semi-automatic, has no name on it.
+
+## 12. The Heyday app is now announced on the homepage (17 September 2026)
+
+Your call: the extras table lists "The Heyday app — run the day from your
+phone: the diary, the inbox, the team and the money", marked Coming soon.
+
+**Two things to be aware of, because this is a public promise:**
+
+1. **It has no feature page**, so the row does not link anywhere. That is
+   deliberate — every other row links to a page that explains it, and a
+   link to nothing is worse than no link. If you want the app to have a
+   page, it needs the same content as any feature: what it does, how it
+   works, and what is and isn't in it.
+2. **It is not in the feature data**, so it stays out of the 46 features,
+   the Product menu and the comparison grids. The same goes for the
+   Collective listing, which is a separate product with its own site. Both
+   live in `HOME_BONUS` in `home-content.ts`.
+
+**Worth deciding before launch:** whether "the app" means iOS and Android,
+or a phone-shaped web app. The line as written implies a real app in a real
+app store, and that is the reading a visitor will take.
+
+The section is also renamed: `{ the extras }` and "What **else** you get."
+It was `{ only on heyday }` above a sticker reading "Only on Heyday", which
+said the same four words twice.

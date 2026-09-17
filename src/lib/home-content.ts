@@ -148,7 +148,39 @@ export const FEATURE_ROWS: FeatureRow[] = [
   },
 ];
 
-/* ---- 10. Only on Heyday ---------------------------------------------- */
+/* ---- 10. What else you get ------------------------------------------- */
+
+/**
+ * The bonuses, under the table of features.
+ *
+ * These are not features in the feature data and should not be: the
+ * Collective is a separate product with its own site, and the app is a
+ * way of reaching Heyday rather than a thing Heyday does. Giving either a
+ * feature record would put it in the 46, in the Product menu and in the
+ * comparison grids, where neither belongs.
+ *
+ * Russell's call, 17 September 2026: the Collective listing reads as a
+ * bonus rather than as one more line under Get found, and the app is
+ * announced as coming.
+ */
+export const HOME_BONUS: {
+  name: string;
+  line: string;
+  /** Omitted where there is no page to send anyone to yet. */
+  href?: string;
+}[] = [
+  {
+    name: "A free listing on Heyday Collective",
+    line: "Your experiences and services on our consumer site, where people go to find something to do. Free with any plan.",
+    href: "/features/marketplace-listing",
+  },
+  {
+    name: "The Heyday app",
+    line: "Run the day from your phone: the diary, the inbox, the team and the money.",
+  },
+];
+
+/* ---- 10a. Only on Heyday (the table's rows) --------------------------- */
 
 /*
  * The hand-written list of eight that used to live here is gone. Section
