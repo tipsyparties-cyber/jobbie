@@ -163,10 +163,11 @@ export default function HomePage() {
           <AiLevels />
         </Sheet>
 
-        {/* 10. Sideways scroll two: only on Heyday. Well away from the
+        {/* 10. Only on Heyday: the table of features by product. Was a
+            sideways scroll; Russell asked for a table.
             first one, which is the brief's rule and a sound one — two
             pinned scrolls back to back feel like the page is stuck. */}
-        <Sheet colour={CREAM} flush>
+        <Sheet colour={CREAM}>
           <OnlyOnHeyday />
         </Sheet>
 

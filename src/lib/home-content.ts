@@ -148,19 +148,14 @@ export const FEATURE_ROWS: FeatureRow[] = [
   },
 ];
 
-/* ---- 10. Only on Heyday (sideways scroll 2) ------------------------- */
+/* ---- 10. Only on Heyday ---------------------------------------------- */
 
-export const ONLY_ON_HEYDAY: { title: string; line: string; icon: string; href: string }[] = [
-  { title: "AI autopilot levels", line: "Start safe, then hand over more as trust grows.", icon: "hd-ai-replies", href: "/features/ai" },
-  { title: "Missed-call messages by caller type", line: "Every missed caller hears back within minutes, in the right words.", icon: "hd-missed-calls", href: "/features/missed-call-capture" },
-  { title: "AI setup assistant", line: "Set up in an afternoon, not a month.", icon: "hd-ai-setup-assistant", href: "/features/ai-setup-assistant" },
-  { title: "Lead types with replies to match", line: "Your best leads get the fastest, most personal answer.", icon: "hd-enquiries", href: "/features/enquiries" },
-  { title: "Fill quiet dates", line: "Offers go to the customers most likely to book the dates that look thin.", icon: "hd-campaigns", href: "/features/campaigns" },
-  { title: "Group bookings with split payments", line: "Each guest pays their share by link.", icon: "hd-group-bookings", href: "/features/group-bookings" },
-  { title: "Referral code first, then the review", line: "More word of mouth, and more reviews.", icon: "hd-reviews", href: "/features/referrals" },
-  { title: "Sell everywhere, in one diary", line: "Bookings from other platforms, and your marketplace listing, in one place.", icon: "hd-sell-everywhere", href: "/features/sell-everywhere" },
-  { title: "A free listing on Heyday Collective", line: "Our consumer site, where people go to find something to do. Free with any plan.", icon: "hd-marketplace-listing", href: "/features/marketplace-listing" },
-];
+/*
+ * The hand-written list of eight that used to live here is gone. Section
+ * 10 is a table now, and it reads from the feature data — onlyOnHeyday()
+ * in lib/heyday-features — so the homepage and the feature pages cannot
+ * disagree about what is only on Heyday.
+ */
 
 /* ---- 11. The example stories ---------------------------------------- */
 

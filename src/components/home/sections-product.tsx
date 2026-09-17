@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import Link from "next/link";
 import { Wrap, SheetLabel } from "@/components/heyday/sheet";
 import { SectionReveal, Parallax } from "@/components/heyday/motion";
@@ -6,14 +7,14 @@ import { HeydayLogo } from "@/components/heyday/heyday-logo";
 import { MoreInfoSection } from "@/components/heyday/more-info-section";
 import { AiDial } from "@/components/heyday/ai-dial";
 import { StickyScroll, type StickyBlock } from "@/components/heyday/sticky-scroll";
-import { SideScroll, SideCard } from "@/components/heyday/side-scroll";
 import { Card, Sticker, StatusChip } from "@/components/ui/surfaces";
 import { Button } from "@/components/ui/button";
 import { Screen, ScreenRow, ScreenAction, ScreenPick } from "@/components/heyday/screen";
-import { FEATURE_ROWS, ONLY_ON_HEYDAY, BUILDER_POINTS } from "@/lib/home-content";
+import { FEATURE_ROWS, BUILDER_POINTS } from "@/lib/home-content";
+import { onlyOnHeyday, featureHref, statusLabel } from "@/lib/heyday-features";
 import { GROUPS, groupById } from "@/lib/groups";
 import { statByRow } from "@/lib/stats-bank";
-import { PAPER, CREAM, INK, BLUE, SKY, LAVENDER } from "@/lib/palette";
+import { PAPER, CREAM, INK, BLUE, LAVENDER } from "@/lib/palette";
 
 /* ==================================================================== *
  *  Homepage sections 6 to 10 — the product itself.
@@ -358,69 +359,132 @@ export function AiLevels() {
   );
 }
 
-/* ---- 10. Only on Heyday (sideways scroll 2) --------------------------- */
+/* ---- 10. Only on Heyday (the table) ---------------------------------- */
 
+/**
+ * Every feature no rival has, as a table grouped by product.
+ *
+ * It was a sideways scroll of eight hand-written cards. Russell asked for
+ * a table of the features and products instead, and the table reads from
+ * the feature data rather than from a second list — so it shows all
+ * eighteen, and it cannot drift from the feature pages the way a
+ * duplicated list of eight had already started to.
+ *
+ * The heading stays "The things neither of them does", which is a claim
+ * about Jobber and HoneyBook. The table itself makes no claim about
+ * either: naming what a rival does not do belongs on the compare pages,
+ * where every line carries the date it was checked.
+ */
 export function OnlyOnHeyday() {
-  return (
-    <SideScroll
-      head={
-        <SectionReveal>
-          <div className="flex flex-wrap items-center gap-4">
-            <SheetLabel>only on heyday</SheetLabel>
-            <Sticker
-              className="px-3 py-1.5 font-display text-[13px] font-bold"
-              tilt={-6}
-              style={{ backgroundColor: LAVENDER, boxShadow: "6px 6px 0 0 rgba(10,10,10,0.08)" }}
-            >
-              Only on Heyday
-            </Sticker>
-          </div>
-          <h2 className="hd-h2 max-w-[20ch]">
-            The things <span className="hd-hl">neither of them</span> does.
-          </h2>
-        </SectionReveal>
-      }
-    >
-      {ONLY_ON_HEYDAY.map((c) => (
-        <SideCard
-          key={c.title}
-          /* The label is on every card, not only in the section heading —
-             the cards travel sideways, so a reader can meet one without
-             ever having seen the heading. */
-          group="ONLY ON HEYDAY"
-          title={c.title}
-          style={{ backgroundColor: PAPER }}
-        >
-          <Icon name={c.icon} size={40} ground={PAPER} />
-          <p className="m-0 text-[15.5px] text-ink/60">{c.line}</p>
-          <div className="mt-auto flex items-center justify-between gap-3">
-            <StatusChip />
-            <Link
-              href={c.href}
-              className="font-display text-sm font-semibold underline underline-offset-[3px]"
-            >
-              See it →
-            </Link>
-          </div>
-        </SideCard>
-      ))}
+  const only = onlyOnHeyday();
+  const byProduct = GROUPS.map((g) => ({
+    group: g,
+    rows: only.filter((f) => f.group === g.id),
+  })).filter((x) => x.rows.length > 0);
 
-      <SideCard
-        title="See every feature"
-        className="justify-center"
-        style={{ backgroundColor: INK, color: CREAM }}
-      >
-        <HeydayLogo size={40} colour={SKY} motion="spin" />
-        <p className="m-0 text-[15.5px] text-cream/80">
-          Everything Heyday does, in one list.
-        </p>
-        <Link
-          href="/features"
-          className="font-display text-sm font-semibold text-cream underline underline-offset-[3px]"
+  return (
+    <Wrap>
+      <SectionReveal>
+        <div className="flex flex-wrap items-center gap-4">
+          <SheetLabel>only on heyday</SheetLabel>
+          <Sticker
+            className="px-3 py-1.5 font-display text-[13px] font-bold"
+            tilt={-6}
+            style={{ backgroundColor: LAVENDER, boxShadow: "6px 6px 0 0 rgba(10,10,10,0.08)" }}
+          >
+            Only on Heyday
+          </Sticker>
+        </div>
+        <h2 className="hd-h2 max-w-[20ch]">
+          The things <span className="hd-hl">neither of them</span> does.
+        </h2>
+      </SectionReveal>
+
+      <SectionReveal delay={0.15}>
+        {/* The only thing on the page allowed to scroll sideways on a
+            phone, and it says so to a screen reader. */}
+        <div
+          className="mt-10 overflow-x-auto rounded-2xl border-2 border-ink"
+          style={{ backgroundColor: PAPER, boxShadow: "11px 11px 0 0 rgba(10,10,10,0.08)" }}
+          tabIndex={0}
+          role="region"
+          aria-label="Features only on Heyday"
         >
-          All features →
-        </Link>
-      </SideCard>
-    </SideScroll>
+          <table className="w-full min-w-[640px] border-collapse text-left">
+            <thead>
+              <tr>
+                <th
+                  scope="col"
+                  className="border-b border-ink/20 px-[18px] py-3 font-mono text-[11px] font-semibold uppercase tracking-[0.06em] text-ink/70"
+                >
+                  Feature
+                </th>
+                <th
+                  scope="col"
+                  className="border-b border-ink/20 px-[18px] py-3 font-mono text-[11px] font-semibold uppercase tracking-[0.06em] text-ink/70"
+                >
+                  What it does
+                </th>
+                <th
+                  scope="col"
+                  className="border-b border-ink/20 px-[18px] py-3 font-mono text-[11px] font-semibold uppercase tracking-[0.06em] text-ink/70"
+                >
+                  Status
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {byProduct.map(({ group, rows }) => (
+                <Fragment key={group.id}>
+                  <tr>
+                    <th
+                      scope="colgroup"
+                      colSpan={3}
+                      className="border-b border-ink/10 px-[18px] py-3 text-left font-mono text-xs font-bold tracking-[0.06em]"
+                      style={{ backgroundColor: CREAM }}
+                    >
+                      <span className="inline-flex items-center gap-2">
+                        <HeydayLogo size={20} colour={group.markColour} />
+                        {group.n} · {group.name.toUpperCase()}
+                      </span>
+                    </th>
+                  </tr>
+                  {rows.map((f) => (
+                    <tr key={f.slug}>
+                      <th
+                        scope="row"
+                        className="border-b border-ink/10 px-[18px] py-3.5 text-left align-top font-display text-[15px] font-semibold"
+                      >
+                        <Link
+                          href={featureHref(f.slug)}
+                          className="underline-offset-[3px] hover:underline"
+                        >
+                          {f.name}
+                        </Link>
+                      </th>
+                      <td className="border-b border-ink/10 px-[18px] py-3.5 align-top text-[15px] text-ink/70">
+                        {f.pain}
+                      </td>
+                      <td className="border-b border-ink/10 px-[18px] py-3.5 align-top">
+                        <StatusChip status={statusLabel(f.status)} />
+                      </td>
+                    </tr>
+                  ))}
+                </Fragment>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </SectionReveal>
+
+      <SectionReveal delay={0.3}>
+        <div className="mt-8">
+          <Button href="/features" variant="ghost" arrow>
+            Every feature Heyday has
+          </Button>
+        </div>
+      </SectionReveal>
+    </Wrap>
   );
 }
+

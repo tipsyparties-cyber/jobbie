@@ -497,7 +497,11 @@ always one colour, and never black or orange.
 - **[needs approval]** Level names. "Assistant / Semi-automatic / Fully automatic" is the current wording. Alternatives considered: "Remind me / Ask me / Just do it", which is warmer but less clear in a nav or a settings screen where the same three words have to work.
   - **Built:** `src/components/heyday/ai-dial.tsx`, data in `AI_DIAL` in `src/lib/home-content.ts`.
 
-### 10. Only on Heyday (sideways scroll 2)
+### 10. Only on Heyday (sideways scroll 2) — SUPERSEDED 17 September 2026
+> Russell asked for a table of the features and products instead of the
+> card scroll. Kept for the record; what shipped first is below, and the
+> table that replaced it is after it.
+
 - **What it's for:** the features no rival has, which people mustn't miss.
 - **Layout:** `SideScroll` again, well apart from section 5. A heading block, eight cards, and an end card.
 - **Holding copy:**
@@ -516,6 +520,15 @@ always one colour, and never black or orange.
 - **Image:** none.
 - **Icons and marks:** each card's small icon. The label carries a small "Only on Heyday" sticker.
 - **Motion:** SideScroll, as in section 5. With reduced motion, or on phones, it's a normal swipe row.
+
+### 10. Only on Heyday (the table)
+- **What it's for:** unchanged — the features no rival has, which people mustn't miss.
+- **Layout:** the same heading block (label, "Only on Heyday" sticker, "The things **neither of them** does."), then one table, then a ghost button to `/features`.
+- **The table:** three columns — Feature, What it does, Status — with a row per product group (the group's number, name and mark) heading its features.
+- **Where the rows come from:** `onlyOnHeyday()` in `src/lib/heyday-features.ts`, i.e. every feature flagged `onlyOnHeyday` in the feature data. Eighteen at the time of writing, across five of the six groups (Get paid has none). **It is not a second hand-written list** — the old eight-card list had already drifted from the feature data, and this cannot.
+- **What it does NOT do:** make any claim about Jobber or HoneyBook. The heading carries the comparison; naming what a rival lacks belongs on the compare pages, where every line carries the date it was checked.
+- **Scrolling:** the table is the one thing on the homepage allowed to scroll sideways on a phone, inside a labelled, focusable region.
+- **Built:** `OnlyOnHeyday` in `src/components/home/sections-product.tsx`.
 
 ### 11. Who it's for, and the example stories
 - **What it's for:** show that it suits every kind of business that sells time, skills or an experience, through stories rather than a list.
