@@ -464,3 +464,44 @@ this site does not make.
 - **The listing is still "Coming soon"**, like every other feature, and
   `marketplaceUrl` is still `[marketplace URL]`. When the Collective is live
   at a real address, that constant is the one place to change.
+
+## 11. ANSWERED — 17 September 2026. Do not re-ask.
+
+**11.1 The header animation is Together.** Russell's pick of the spec's
+seven. It plays once on load; hover is still Click round.
+
+**11.2 "Move it back down whenever you want" is confirmed true.** It stays
+in the dial copy, and the AI page's FAQ now says it too: "Fully automatic
+has one switch to stop it, each type of message is switched on separately,
+and you can move any product back down a level whenever you want."
+
+**11.3 The level names now agree: Assistant / Semi-automatic / Fully
+automatic, everywhere.** `/features/ai` said Draft / Draft and train /
+Autopilot.
+
+This was not a relabel, and it is worth knowing why. The two sets described
+**different ladders**. "Draft" meant *the AI writes it, you press send* —
+which is what the dial calls **Semi-automatic**. And the dial's
+**Assistant** — it tells you what needs doing and who should do it, you do
+it — had no equivalent on the AI page at all.
+
+So the definitions moved with the names:
+
+| Level | Was | Now |
+|---|---|---|
+| 1 | "Draft. The AI writes the reply. A person reads it and presses send." | "Assistant. The AI writes the reply and tells you it is waiting. You read it and you press send. Nothing leaves without you." |
+| 2 | "Draft and train. You correct the draft, and each correction becomes a rule." | "Semi-automatic. It gets the reply ready and waits. You read it, you approve it, it goes. Correct it instead and the correction becomes a rule." |
+| 3 | "Autopilot." | "Fully automatic." Body unchanged — it already described exactly this. |
+
+**One wrinkle to look at.** That page also has a section called "Assistant
+or agent?", which explains that levels 1 and 2 are an assistant and level 3
+is an agent. Level 1 is now itself *called* Assistant, so the word does two
+jobs on one page. It reads acceptably because the section talks in level
+numbers, but if it grates the fix is to rename that section to something
+like "Does it act on its own?".
+
+**11.4 Still open: "Sam" in the dial's example card.** See 9.2. It appears
+twice, both in `AI_DIAL` in `src/lib/home-content.ts`: "Suggested: Sam, ops"
+on the Assistant card, and "Sam and the client sent tracking" on the Fully
+automatic card. On the page you only see them by turning the dial to those
+two levels — the default, Semi-automatic, has no name on it.

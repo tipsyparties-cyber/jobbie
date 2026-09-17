@@ -30,8 +30,14 @@ import { PAPER, CREAM, SKY, LAVENDER } from "@/lib/palette";
  *  the promise.
  *
  *  The three levels run as a sticky scroll on ONE email, so you watch the
- *  same message being drafted, corrected and then sent alone. The mark
- *  climbs with it: sun, Loop, Infinity.
+ *  same message being drafted, corrected and then sent alone.
+ *
+ *  THE NAMES ARE THE DIAL'S (homepage section 9), as of 17 September 2026.
+ *  They were Draft / Draft and train / Autopilot, which named a ladder for
+ *  MESSAGES only; the dial's three are the same three settings applied to
+ *  every job task, which is the bigger claim. The definitions moved with
+ *  the names: level 1 is now the one where you act, not just the one where
+ *  the AI drafts.
  *
  *  Level 3 says "Coming soon" and so does every AI feature, because none
  *  of it is live. The safeguards are listed in full even though nothing
@@ -114,10 +120,15 @@ export default function AiPage() {
   const levels: StickyBlock[] = [
     {
       id: "level-1",
-      label: "level 1 · ai assistant",
-      title: "Level 1: Draft.",
+      label: "level 1 · assistant",
+      title: "Level 1: Assistant.",
       colour: SKY,
-      body: <>The AI writes the reply. A person reads it and presses send.</>,
+      body: (
+        <>
+          The AI writes the reply and tells you it is waiting. You read it
+          and you press send. Nothing leaves without you.
+        </>
+      ),
       picture: (
         <Screen title="Inbox · The customer">
           <ScreenRow meta="the customer">
@@ -133,14 +144,15 @@ export default function AiPage() {
     },
     {
       id: "level-2",
-      label: "level 2 · ai assistant that learns",
-      title: "Level 2: Draft and train.",
+      label: "level 2 · semi-automatic",
+      title: "Level 2: Semi-automatic.",
       colour: LAVENDER,
       body: (
         <>
-          You correct the draft, and each correction becomes a rule it
-          follows from then on. It keeps getting closer to how you&rsquo;d
-          answer.
+          It gets the reply ready and waits. You read it, you approve it, it
+          goes. Correct it instead and the correction becomes a rule it
+          follows from then on, so it keeps getting closer to how
+          you&rsquo;d answer.
         </>
       ),
       picture: (
@@ -161,8 +173,8 @@ export default function AiPage() {
     },
     {
       id: "level-3",
-      label: "level 3 · ai agent",
-      title: "Level 3: Autopilot.",
+      label: "level 3 · fully automatic · ai agent",
+      title: "Level 3: Fully automatic.",
       colour: CREAM,
       body: (
         <>
@@ -400,7 +412,7 @@ export default function AiPage() {
                 },
                 {
                   q: "Can I turn it off?",
-                  a: "Yes. Level 3 has one switch to stop it, and each type of message is switched on separately.",
+                  a: "Yes. Fully automatic has one switch to stop it, each type of message is switched on separately, and you can move any product back down a level whenever you want.",
                 },
                 {
                   q: "Which plans include which level?",

@@ -18,11 +18,10 @@ import { TBC } from "@/lib/site";
  *  differently, and the grace delay when the pointer leaves. What is in it
  *  is new.
  *
- *  Left is the Heyday wordmark in ink with the sun beside it in blue,
- *  bouncing once on first load and never again — the brief is specific that
- *  this is the header's only motion, and it is right. A header that
- *  animates on every route change reads as a page that has not finished
- *  loading.
+ *  Left is the lockup: Jem's mark in blue, then the wordmark in ink. The
+ *  mark plays Together once on first load and never again — Russell's pick
+ *  of the logo spec's seven. A header that animates on every route change
+ *  reads as a page that has not finished loading.
  *
  *  The grace delay is the detail most often missed: without it the panel
  *  closes while the pointer is crossing the gap between the trigger and the
@@ -218,11 +217,14 @@ export function SiteHeader() {
                 reads as part of the word rather than an icon beside it. The
                 burst's rays already reach right, so the optical gap is wider
                 than the number; do not add air to make it breathe.
-                Assemble once per page load, click round on hover. */}
+                Together once per page load — Russell's pick of the
+                spec's seven: the arcs come in from the left and the burst
+                from the lower right, meeting on the diagonal. Click round
+                on hover. */}
             <HeydayLogo
               size={24}
               colour={BLUE}
-              motion="assemble"
+              motion="together"
               hoverMotion="click"
             />
             <Wordmark height={22} asLink={false} className="text-ink" />
