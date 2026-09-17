@@ -116,7 +116,7 @@ export function SiteFooter() {
                 href="/features/marketplace-listing"
                 className="mt-2 inline-block font-body text-sm text-ink underline-offset-4 hover:underline"
               >
-                Find something to do →
+                Get your free listing on {SITE.marketplace} →
               </Link>
             </div>
 

@@ -189,7 +189,8 @@ export function SellEverywhere() {
               href="/features/marketplace-listing"
               className="font-display text-sm font-semibold underline underline-offset-[3px]"
             >
-              Find something to do on {SITE.marketplace} →
+              Get your free listing on {SITE.marketplace}, and get more
+              bookings →
             </Link>
           </div>
         </SectionReveal>
